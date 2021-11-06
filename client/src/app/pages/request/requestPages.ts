@@ -1,4 +1,5 @@
 import { largeRepNavItem, repNavItem } from '../../navigation/nav-items';
+import {largeRepresentativeResponse} from "../../types";
 
 export type RequestBodyParameters = {
     propertyName: string;
@@ -11,11 +12,13 @@ export type RequestBodyParameters = {
 export const requestPages: Array<{
     route: string;
     requestPath: string;
+    responseType: Object;
     body: Array<RequestBodyParameters>;
 }> = [
     {
         route: `${repNavItem.route}/${largeRepNavItem.route}`,
         requestPath: 'representatives/large',
+        responseType: largeRepresentativeResponse,
         body: [
             {
                 propertyName: 'minimumWeight',

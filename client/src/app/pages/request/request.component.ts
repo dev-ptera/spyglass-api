@@ -14,6 +14,7 @@ export class RequestComponent {
     requestPath: string;
     requestBodyParameters: Array<RequestBodyParameters>;
     requestResponse: any;
+    requestResponseType: any;
 
     constructor(private readonly _router: Router,
                 private readonly _apiService: ApiService) {
@@ -30,6 +31,7 @@ export class RequestComponent {
                     if (url === `/${requestPage.route}`) {
                         this.requestPath = requestPage.requestPath;
                         this.requestBodyParameters = requestPage.body;
+                        this.requestResponseType = requestPage.responseType;
                         break;
                     }
                 }

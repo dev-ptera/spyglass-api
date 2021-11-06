@@ -1,3 +1,1 @@
-export * from './AccountBalanceDto';
-export * from './AliasDto';
-export * from './PriceDataDto';
+export * from './response/LargeRepresentativeResponse';
