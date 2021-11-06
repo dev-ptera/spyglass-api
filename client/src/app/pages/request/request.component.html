@@ -1,0 +1,25 @@
+<div style="width: 800px; padding: 16px 32px;">
+    <div class="mat-display-1" style="margin-top: 64px">Request Path</div>
+    <div style="background-color: #fff9f1; padding: 16px; margin-top: 32px; font-family: monospace">/v1/{{ requestPath }}</div>
+
+    <div class="mat-display-1" style="margin-top: 64px">Response Type</div>
+    <div style="background-color: #fff9f1; padding: 16px; margin-top: 32px;">
+        <div>
+
+        </div>
+    </div>
+
+
+
+    <div style="display: flex; justify-content: space-between; margin-top: 64px;">
+        <div class="mat-display-1">Request Output</div>
+        <button mat-flat-button color="primary" (click)="sendRequest()">Send</button>
+    </div>
+
+    <div *ngIf="requestResponse" style="max-height: 40vh; overflow: scroll; background-color: #fff9f1; padding: 16px; margin-top: 32px;">
+        <ngx-json-viewer [json]="requestResponse"></ngx-json-viewer>
+    </div>
+    <div *ngIf="!requestResponse" style="background-color: #fff9f1; padding: 16px;  margin-top: 32px;">N/A</div>
+
+
+</div>

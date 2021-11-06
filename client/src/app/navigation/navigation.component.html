@@ -1,0 +1,45 @@
+<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()">
+    <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
+        <pxb-drawer-header title="Banano API" subtitle="Title Pending">
+            <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </pxb-drawer-header>
+        <pxb-drawer-body>
+            <pxb-drawer-nav-group>
+                <pxb-drawer-nav-item
+                    *ngFor="let navItem of navItems"
+                    [divider]="true"
+                    [title]="navItem.title"
+                    [selected]="navItem.title === getSelectedItem()"
+                    (select)="selectItem(navItem)"
+                >
+                    <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
+                    <pxb-drawer-nav-item
+                        *ngFor="let nestedNavItem of navItem.children"
+                        [divider]="true"
+                        [title]="nestedNavItem.title"
+                        [selected]="navItem.route + '/' + nestedNavItem.route === getSelectedItem()"
+                        (select)="selectNestedNavItem(navItem, nestedNavItem)"
+                    >
+                    </pxb-drawer-nav-item>
+                </pxb-drawer-nav-item>
+            </pxb-drawer-nav-group>
+        </pxb-drawer-body>
+    </pxb-drawer>
+    <div pxb-content class="page-container">
+        <div class="header-container mat-elevation-z0" responsive>
+            <div class="title" [class.mat-display-3]="!vp.sm" [class.mat-display-2]="vp.sm">
+                <img class="banano-logo" responsive src="assets/bananologo.svg" /> API
+            </div>
+            <div class="subtitle" responsive [class.mat-h1]="!vp.sm" [class.mat-h4]="vp.sm">
+                for all things Banano-Related
+            </div>
+            <a href="https://github.com/dev-ptera" target="_blank">
+                <img class="github-icon" src="assets/github-logo.svg" />
+            </a>
+        </div>
+        <router-outlet></router-outlet>
+        <div style="text-align: center; margin: 8px 0px">Powered by YellowSpyglass API</div>
+    </div>
+</pxb-drawer-layout>

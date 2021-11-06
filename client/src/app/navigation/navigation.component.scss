@@ -1,0 +1,110 @@
+.toolbar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0 24px;
+}
+
+.drawer-content {
+}
+
+:host {
+    height: 100vh;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23469a16' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 0h35v35H0V0zm5 5h25v25H5V5zm5 5h15v15H10V10zm5 5h5v5h-5v-5zM40 5h25v25H40V5zm5 5h15v15H45V10zm5 5h5v5h-5v-5zM70 35H35v35h35V35zm-5 5H40v25h25V40zm-5 5H45v15h15V45zm-5 5h-5v5h5v-5zM30 40H5v25h25V40zm-5 5H10v15h15V45zm-5 5h-5v5h5v-5z'/%3E%3C/g%3E%3C/svg%3E");
+
+    .mat-subheading-2 {
+        line-height: 24px;
+    }
+
+    .github-icon {
+        height: 24px;
+        width: 24px;
+        top: 8px;
+        right: 24px;
+        position: absolute;
+        color: white;
+        fill: white;
+        cursor: pointer;
+    }
+
+    @media only screen and (max-width: 1450px) {
+        .header-container {
+            background-size: cover !important;
+        }
+    }
+    .header-container {
+        position: relative;
+        width: 100%;
+        color: white;
+        padding-top: 96px;
+        padding-bottom: 96px;
+        padding-left: 16px;
+        padding-right: 16px;
+        box-sizing: border-box;
+        background-size: contain;
+        background-image: url('../../assets/bg-footer.svg');
+        &.md {
+            padding-top: 72px;
+            padding-bottom: 72px;
+        }
+        &.sm {
+            padding-top: 46px;
+            padding-bottom: 46px;
+        }
+        .title {
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .banano-logo {
+            width: 350px;
+            height: 56px;
+            margin: 0 24px;
+            &.sm {
+                width: 250px;
+            }
+        }
+        .subtitle {
+            margin-bottom: 0;
+            margin-top: 16px;
+            &.sm {
+                margin-top: 32px;
+            }
+        }
+    }
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 64px;
+    width: 400px;
+    &.sm {
+        margin-top: 16px;
+        width: 320px;
+        button {
+            width: 100% !important;
+        }
+    }
+}
