@@ -1,27 +1,36 @@
-<div style="width: 800px; padding: 16px 32px;">
-    <div class="mat-display-1" style="margin-top: 64px">Request Path</div>
-    <div style="background-color: #fff9f1; padding: 16px; margin-top: 32px; font-family: monospace">/v1/{{ requestPath }}</div>
+<div class="page-container">
+    <div class="section-title">Request Path</div>
+    <div class="section-body">/v1/{{ requestPath }}</div>
 
-    <div class="mat-display-1" style="margin-top: 64px">Response Type</div>
-    <div style="background-color: #fff9f1; padding: 16px; margin-top: 32px;">
+    <div class="section-title">Response Type</div>
+    <div class="section-body">
         <div>
             <ngx-json-viewer [json]="requestResponseType"></ngx-json-viewer>
-
-
         </div>
     </div>
 
 
-
-    <div style="display: flex; justify-content: space-between; margin-top: 64px;">
-        <div class="mat-display-1">Request Output</div>
+    <div class="section-title">
+        <div class="">Request Knobs</div>
         <button mat-flat-button color="primary" (click)="sendRequest()">Send</button>
     </div>
+    <div class="section-body">
+        <div *ngIf="!requestBodyParameters || requestBodyParameters.length === 0">N/A</div>
+        <div *ngFor="let requestParam of requestBodyParameters">
+            <ng-container *ngIf="requestParam.propertyType === 'boolean'">
+                <mat-checkbox [checked]="requestParam.defaultValue">{{requestParam.propertyName}}</mat-checkbox>
 
-    <div *ngIf="requestResponse" style="max-height: 40vh; overflow: scroll; background-color: #fff9f1; padding: 16px; margin-top: 32px;">
-        <ngx-json-viewer [json]="requestResponse"></ngx-json-viewer>
+            </ng-container>
+        </div>
     </div>
-    <div *ngIf="!requestResponse" style="background-color: #fff9f1; padding: 16px;  margin-top: 32px;">N/A</div>
+
+    <div class="section-title">Request Output</div>
+    <div class="section-body">
+        <div *ngIf="requestResponse" style="max-height: 40vh; overflow: scroll;">
+            <ngx-json-viewer [json]="requestResponse"></ngx-json-viewer>
+        </div>
+        <div *ngIf="!requestResponse">Send Request to View</div>
+    </div>
 
 
 </div>

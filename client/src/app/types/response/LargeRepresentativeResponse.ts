@@ -1,6 +1,7 @@
 export const largeRepresentativeResponse = {
     array: {
         address: 'string',
-        weight: 'number'
+        weight: 'number',
+        'delegators?': 'number'
     }
 }

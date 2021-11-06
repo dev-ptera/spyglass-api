@@ -30,7 +30,7 @@ export class RequestComponent {
                 for (const requestPage of requestPages) {
                     if (url === `/${requestPage.route}`) {
                         this.requestPath = requestPage.requestPath;
-                        this.requestBodyParameters = requestPage.body;
+                        this.requestBodyParameters = requestPage.requestParameters;
                         this.requestResponseType = requestPage.responseType;
                         break;
                     }

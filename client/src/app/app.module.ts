@@ -18,6 +18,7 @@ import {AppRoutingModule} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RequestComponent} from './pages/request/request.component';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {NgxJsonViewerModule} from 'ngx-json-viewer';
         RouterModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        MatCheckboxModule,
     ],
     bootstrap: [AppComponent],
 })
