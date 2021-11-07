@@ -1,8 +1,30 @@
 export const REPRESENTATIVES_LARGE = {
     array: {
         address: 'string',
+        delegatorCount: 'number',
+        isOnline: 'boolean',
+        isPrincipal: 'boolean',
+        'nodeMonitorStats?': {
+                address: 'string',
+                cementedBlocks: 'number',
+                confirmedBlocks: 'number',
+                currentBlock: 'number',
+                delegatorsCount: 'number',
+                ip: 'string',
+                location: 'string',
+                name: 'string',
+                nodeUptimeStartup: 'number',
+                online: 'boolean',
+                peers: 'number',
+                representative: 'string',
+                systemLoad: 'number',
+                totalMem: 'number',
+                uncheckedBlocks: 'number',
+                usedMem: 'number',
+                version: 'string',
+                weight: 'number',
+        },
         weight: 'number',
-        'delegators?': 'number',
     },
 };
 

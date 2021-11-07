@@ -1,5 +1,5 @@
 const moduleAlias = require('module-alias');
-moduleAlias.addAlias('@app/doc-config', __dirname + '/doc-config');
+moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
 moduleAlias.addAlias('@app/services', __dirname + '/services');
 moduleAlias.addAlias('@app/types', __dirname + '/types');
@@ -41,7 +41,7 @@ import {
     LOG_INFO,
     parseRichListFromFile,
     sleep,
-    getLargeReps
+    getLargeReps, getOnlineRepsTada
 } from '@app/services';
 
 const corsOptions = {
@@ -66,6 +66,7 @@ app.use(cors(corsOptions));
 
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineRepsTada(req, res));
 
 
 

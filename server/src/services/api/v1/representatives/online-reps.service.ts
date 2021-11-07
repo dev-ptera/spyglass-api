@@ -111,6 +111,22 @@ export const getOnlineWeight = (): Promise<number> =>
         .catch((err) => Promise.reject(LOG_ERR('cacheRepresentatives.getOnlineWeight', err)));
 
 /** Returns the list of online representatives from AppCache. */
-export const getOnlineReps = (req, res): void => {
+export const getOnlineRepsTada = (req, res): void => {
     res.send(AppCache.representatives.onlineReps);
+    //const response = await NANO_CLIENT.representatives_online(false);
+
 };
+
+
+
+export const getOnlineReps = async (req, res): Promise<string[]> => {
+    const start = LOG_INFO('Updating Online Reps');
+    const rpcData = await NANO_CLIENT.representatives_online(false);
+    const response: string[] = [];
+    for (const rep of rpcData.representatives as string[]) {
+        response.push(rep);
+    }
+    res.send(response);
+    LOG_INFO('Online Reps Updated', start);
+    return response;
+}

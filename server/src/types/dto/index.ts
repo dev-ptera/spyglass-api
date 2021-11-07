@@ -10,7 +10,7 @@ export * from './DelegatorDto';
 export * from './HostNodeStatsDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';
-export * from './LargeRepresentativeDto';
+export * from './RepresentativeLargeDto';
 export * from './MicroRepresentativeDto';
 export * from './MonitoredRepDto';
 export * from './NetworkStatsDto';

@@ -20,11 +20,16 @@ export const repMonitoredNavItem: NavItem = {
     route: 'monitored',
 };
 
+export const repUptimeNavItem: NavItem = {
+    title: 'Uptime',
+    route: 'uptime',
+};
+
 export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
     icon: 'how_to_vote',
-    children: [repLargeNavItem, repOnlineNavItem, repMonitoredNavItem],
+    children: [repLargeNavItem,  repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
 };
 
 const pageOneNavItem: NavItem = {
