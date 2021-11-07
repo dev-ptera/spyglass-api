@@ -1,8 +1,8 @@
-import {RepresentativeLargeDto} from '@app/types';
-import {NANO_CLIENT} from '@app/config';
-import {LOG_INFO} from '@app/services';
-import {rawToBan} from 'banano-unit-converter';
-import {populateDelegatorsCount} from "./rep-utils";
+import { RepresentativeLargeDto } from '@app/types';
+import { NANO_CLIENT } from '@app/config';
+import { LOG_INFO } from '@app/services';
+import { rawToBan } from 'banano-unit-converter';
+import { populateDelegatorsCount } from './rep-utils';
 
 const DEFAULT_MIN_WEIGHT = 100000;
 const MINIMUM_MIN_WEIGHT = 1000;
@@ -12,9 +12,11 @@ type LargeRepresentativesBodyParameter = {
     minimumWeight: number;
     maximumWeight: number;
     includeDelegatorCount: boolean;
-}
+};
 
-export const getLargeRepsPromise = async (params: LargeRepresentativesBodyParameter): Promise<RepresentativeLargeDto[]> => {
+export const getLargeRepsPromise = async (
+    params: LargeRepresentativesBodyParameter
+): Promise<RepresentativeLargeDto[]> => {
     // Representative data is returned with weight descending.
     const rpcData = await NANO_CLIENT.representatives(5000, true);
     const largeRepMap = new Map<string, Partial<RepresentativeLargeDto>>();
@@ -25,7 +27,7 @@ export const getLargeRepsPromise = async (params: LargeRepresentativesBodyParame
         const weight = Math.round(Number(rawToBan(raw)));
         if (params.maximumWeight) {
             if (weight <= params.maximumWeight && weight >= params.minimumWeight) {
-                largeRepMap.set(address, {weight})
+                largeRepMap.set(address, { weight });
             } else {
                 continue;
             }
@@ -52,7 +54,7 @@ export const getLargeRepsPromise = async (params: LargeRepresentativesBodyParame
         });
     }
     return largeReps;
-}
+};
 
 /**
  * Gets the top 5000 representatives & filters out smaller ones.
@@ -77,7 +79,7 @@ export const getLargeReps = async (req, res): Promise<RepresentativeLargeDto[]> 
     const largeReps = await getLargeRepsPromise({
         includeDelegatorCount,
         minimumWeight,
-        maximumWeight
+        maximumWeight,
     });
 
     res.send(largeReps);

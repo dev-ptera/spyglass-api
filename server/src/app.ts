@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json()); //utilizes the body-parser package
 
-import {AppCache, IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST,} from '@app/config';
+import { AppCache, IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST } from '@app/config';
 import {
     cacheKnownAccounts,
     cacheNetworkStats,
@@ -41,7 +41,9 @@ import {
     LOG_INFO,
     parseRichListFromFile,
     sleep,
-    getLargeReps, getOnlineRepsTada, getRepresentatives
+    getLargeReps,
+    getRepresentatives,
+    getMonitoredReps,
 } from '@app/services';
 
 const corsOptions = {
@@ -67,10 +69,8 @@ app.use(cors(corsOptions));
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineRepsTada(req, res));
-
-
-
+app.post(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
+app.post(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
 
 app.get(`/${PATH_ROOT}/accounts-balance`, (req, res) => getRichList(req, res));
 app.get(`/${PATH_ROOT}/account-overview/*`, (req, res) => getAccountOverview(req, res));

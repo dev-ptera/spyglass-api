@@ -23,7 +23,7 @@ export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
-    navItems = [APP_NAV_ITEMS.representative, APP_NAV_ITEMS.page1, APP_NAV_ITEMS.page2];
+    navItems = [APP_NAV_ITEMS.representative, APP_NAV_ITEMS.supply, APP_NAV_ITEMS.network];
 
     scrollEl: Element;
 

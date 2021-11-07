@@ -4,11 +4,10 @@ export const sleep = (ms) =>
         setTimeout(resolve, ms);
     });
 
-
 export const defineBodyParams = (paramNames: string[]): any => {
     let params = {};
     for (const name of paramNames) {
         params[name] = name;
     }
     return params;
-}
+};

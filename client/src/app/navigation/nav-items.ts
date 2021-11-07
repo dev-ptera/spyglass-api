@@ -37,20 +37,20 @@ export const repNavItem: NavItem = {
     children: [repRootNavItem, repLargeNavItem,  repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
 };
 
-const pageOneNavItem: NavItem = {
-    title: 'Page 1',
-    route: 'page-one',
+const supplyNavItem: NavItem = {
+    title: 'Supply',
+    route: 'supply',
     icon: 'looks_one',
 };
 
-const pageTwoNavItem: NavItem = {
-    title: 'Page 2',
-    route: 'page-two',
+const networkNavItem: NavItem = {
+    title: 'Network',
+    route: 'network',
     icon: 'looks_two',
 };
 
 export const APP_NAV_ITEMS = {
     representative: repNavItem,
-    page1: pageOneNavItem,
-    page2: pageTwoNavItem,
+    supply: supplyNavItem,
+    network: networkNavItem,
 };

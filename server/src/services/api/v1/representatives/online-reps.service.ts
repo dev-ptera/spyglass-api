@@ -45,63 +45,6 @@ const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesO
             });
         });
 
-/** Makes a handful of async calls to various nodes & fetches a string array of online representatives.
- *  Responsible for populating the AppCache repPings object.  */
-export const getOnlineRepsPromise = (): Promise<string[]> => {
-    const start = LOG_INFO('Updating Online Reps');
-
-    // Uses BACKUP_NODES public apis for getting a more complete list of online representatives.
-    // May not be applicable anymore in V22.
-    const externalCalls: Promise<any>[] = [];
-    for (const api of BACKUP_NODES) {
-        externalCalls.push(getOnlineRepsFromExternalApi(api));
-    }
-
-    return new Promise((resolve) => {
-        const currentPingOnlineReps = new Set<string>();
-
-        Promise.all([NANO_CLIENT.representatives_online(false), ...externalCalls])
-            .then((data: Array<RPC.RepresentativesOnlineResponse>) => {
-                // Update online pings
-                AppCache.repPings.currPing++;
-                console.log(AppCache.repPings.currPing);
-
-                // Iterate through the results, add all unique reps to a set.
-                for (const resultSet of data) {
-                    if (resultSet && resultSet.representatives) {
-                        resultSet.representatives.map((rep) => currentPingOnlineReps.add(rep));
-                    } else {
-                        LOG_ERR('getOnlineRepsPromise', {
-                            error: `Malformed response for representatives_online RPC: ${JSON.stringify(
-                                resultSet || ''
-                            )}`,
-                        });
-                    }
-                }
-
-                // The following representatives get to increase their last-known ping since they were included in representatives_online result.
-                for (const address of Array.from(currentPingOnlineReps)) {
-                    markRepAsOnline(address);
-                }
-
-                // Use the pings to update the AppCache online reps.
-                const onlineReps = new Set<string>();
-                for (const rep of AppCache.repPings.map.keys()) {
-                    if (isRepOnline(rep)) {
-                        onlineReps.add(rep);
-                    }
-                }
-
-                LOG_INFO('Online Reps Updated', start);
-                resolve(Array.from(onlineReps));
-            })
-            .catch((err) => {
-                LOG_ERR('getOnlineRepsPromise', err);
-                resolve([]);
-            });
-    });
-};
-
 /** Get online voting weight (BAN) */
 export const getOnlineWeight = (): Promise<number> =>
     NANO_CLIENT.confirmation_quorum()
@@ -110,23 +53,20 @@ export const getOnlineWeight = (): Promise<number> =>
         )
         .catch((err) => Promise.reject(LOG_ERR('cacheRepresentatives.getOnlineWeight', err)));
 
-/** Returns the list of online representatives from AppCache. */
-export const getOnlineRepsTada = (req, res): void => {
-    res.send(AppCache.representatives.onlineReps);
-    //const response = await NANO_CLIENT.representatives_online(false);
-
-};
-
-
-
-export const getOnlineReps = async (req, res): Promise<string[]> => {
-    const start = LOG_INFO('Updating Online Reps');
+export const getOnlineRepsPromise = async (): Promise<string[]> => {
     const rpcData = await NANO_CLIENT.representatives_online(false);
     const response: string[] = [];
     for (const rep of rpcData.representatives as string[]) {
         response.push(rep);
     }
+    return response;
+};
+
+/** Returns a string array of online representative addresses. */
+export const getOnlineReps = async (req, res): Promise<string[]> => {
+    const start = LOG_INFO('Updating Online Reps');
+    const response = await getOnlineRepsPromise();
     res.send(response);
     LOG_INFO('Online Reps Updated', start);
     return response;
-}
+};

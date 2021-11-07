@@ -1,8 +1,8 @@
-import {RepresentativeLargeDto} from '@app/types';
-import {NANO_CLIENT} from '@app/config';
-import {defineBodyParams, LOG_INFO} from '@app/services';
-import {rawToBan} from 'banano-unit-converter';
-import {populateDelegatorsCount} from "./rep-utils";
+import { RepresentativeLargeDto } from '@app/types';
+import { NANO_CLIENT } from '@app/config';
+import { defineBodyParams, LOG_INFO } from '@app/services';
+import { rawToBan } from 'banano-unit-converter';
+import { populateDelegatorsCount } from './rep-utils';
 
 const DEFAULT_MIN_WEIGHT = 100000;
 const MINIMUM_MIN_WEIGHT = 1000;
@@ -21,9 +21,8 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeLargeD
         'isOnline',
         'isPrincipal',
         'minimumWeight',
-        'maximumWeight'
+        'maximumWeight',
     ]);
-
 
     // minimumWeight
     let minWeightToBeCounted = Number(req.body[BODY_PARAMS.minimumWeight] || DEFAULT_MIN_WEIGHT);

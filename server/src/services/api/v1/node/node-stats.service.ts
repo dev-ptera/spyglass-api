@@ -1,7 +1,8 @@
 import { ErrorResponse } from '@dev-ptera/nano-node-rpc';
-import { getMonitoredReps, LOG_ERR } from '@app/services';
+import { getMonitoredRepsPromise, LOG_ERR } from '@app/services';
 import { AppCache, HOST_NODE_NAME, LEDGER_LOCATION } from '@app/config';
 import { HostNodeStatsDto, MonitoredRepDto } from '@app/types';
+
 const getSize = require('get-folder-size');
 const spawn = require('child_process');
 
@@ -15,7 +16,7 @@ export const getNodeStats = async (req, res): Promise<void> => {
     let hostNode = findYellowSpyglassHost();
     if (!hostNode) {
         // Go fetch the monitored reps again; this is not right.
-        const monitoredReps = await getMonitoredReps();
+        const monitoredReps = await getMonitoredRepsPromise();
         AppCache.representatives.monitoredReps = monitoredReps;
         hostNode = findYellowSpyglassHost();
         if (!hostNode) {

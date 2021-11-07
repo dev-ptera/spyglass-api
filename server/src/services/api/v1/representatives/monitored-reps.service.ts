@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { MonitoredRepDto, PeerMonitorStats } from '@app/types';
 import { peersRpc, Peers } from '@app/rpc';
-import { isRepOnline, LOG_ERR, LOG_INFO, markRepAsOnline } from '@app/services';
+import {  LOG_ERR, LOG_INFO, markRepAsOnline } from '@app/services';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import {
     isRepPrincipal,
@@ -10,13 +10,6 @@ import {
     sortMonitoredRepsByStatus,
 } from './rep-utils';
 
-const logMonitoredRepStatus = (rep: PeerMonitorStats, repCount: number): void => {
-    console.log(
-        `${repCount}\t${isRepOnline(rep.nanoNodeAccount) ? '✔' : '✗'} ${
-            rep.nanoNodeAccount
-        } ${rep.nanoNodeName.padStart(40, ' ')}  ${setCustomMonitorPageUrl(rep) || formatMonitorUrl(rep.ip)}`
-    );
-};
 
 /** Some monitored representatives will require their representative page to not link redirectly to the statistics page.
  *  Resolve these custom reps here.
@@ -91,19 +84,6 @@ const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepD
     let offlineCount = 0;
     const sortedByStatus = sortMonitoredRepsByStatus(Array.from(uniqueMonitors.values()));
     for (const rep of sortedByStatus) {
-        // V22 changes make it so that non-PRs no longer appear in the representatives_online rpc call, since they do not rebroadcast votes.
-        // If a node-monitor is discovered for these smaller representatives, mark them as online; whenever they gain enough votes to be considered a PR, expect them to appear within the representatives_online rpc call.
-        // This might actually be fixed in v23
-        if (!isRepPrincipal(rep.votingWeight)) {
-            markRepAsOnline(rep.nanoNodeAccount, true);
-        } else if (!isRepOnline(rep.nanoNodeAccount)) {
-            // Only show monitors that are actually online;
-            offlineCount++;
-            logMonitoredRepStatus(rep, ++repCount);
-            continue;
-        }
-
-        logMonitoredRepStatus(rep, ++repCount);
         delegatorsCountMap.set(rep.nanoNodeAccount, { delegatorsCount: 0 });
         groomedDetails.push({
             address: rep.nanoNodeAccount,
@@ -186,34 +166,24 @@ export const getPeers = (req, res): void => {
         });
 };
 
-/** Given a list of currently online monitored reps & Monitored Reps from the AppCache, return an aggregate list of 'online' monitored reps.
- *  Reps are marked as online until unresponsive for OFFLINE_AFTER_PINGS pings. */
-const includeCachedOnlineMonitoredReps = (currentReps: MonitoredRepDto[]): MonitoredRepDto[] => {
-    const allMonitoredReps = new Map<string, MonitoredRepDto>();
-    AppCache.representatives.monitoredReps.map((rep) => allMonitoredReps.set(rep.address, rep));
-    currentReps.map((rep) => allMonitoredReps.set(rep.address, rep));
-    const onlineMonitoredReps: MonitoredRepDto[] = [];
-    for (const address of allMonitoredReps.keys()) {
-        if (isRepOnline(address)) {
-            onlineMonitoredReps.push(allMonitoredReps.get(address));
-        }
-    }
-    return onlineMonitoredReps;
-};
-
-/** Given a list of MonitoredRepDto, sorts by name. */
 
 /** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
-export const getMonitoredReps = async (): Promise<MonitoredRepDto[]> => {
+export const getMonitoredReps = async (req, res): Promise<MonitoredRepDto[]> => {
     const start = LOG_INFO('Refreshing Monitored Reps');
+    const response = await getMonitoredRepsPromise();
+    console.log(response);
+    res.send(response);
+    LOG_INFO('Monitored Reps Updated', start);
+    return response;
+};
+
+export const getMonitoredRepsPromise = async (): Promise<MonitoredRepDto[]> => {
     return new Promise((resolve, reject) => {
         peersRpc()
             .then((peers: Peers) => {
                 getRepDetails(peers)
                     .then((repDetails: MonitoredRepDto[]) => {
-                        const monitoredReps = sortMonitoredRepsByName(includeCachedOnlineMonitoredReps(repDetails));
-                        LOG_INFO('Monitored Reps Updated', start);
-                        resolve(monitoredReps);
+                        resolve(sortMonitoredRepsByName(repDetails));
                     })
                     .catch((err) => reject(LOG_ERR('getMonitoredReps', err)));
             })
