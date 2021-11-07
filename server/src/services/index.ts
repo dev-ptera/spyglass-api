@@ -7,10 +7,10 @@ export * from './api/v1/explore/block-info.service';
 export * from './api/v1/explore/confirmed-transactions.service';
 export * from './api/v1/explore/pending-transactions.services';
 
-export * from './api/v1/representatives/monitored-reps.service';
-export * from './api/v1/representatives/online-reps.service';
-export * from './api/v1/representatives/representative-uptime.service';
-export * from './api/v1/representatives/large-reps.service';
+export * from './api/v1/representatives/monitored-representatives.service';
+export * from './api/v1/representatives/online-representatives.service';
+export * from './api/v1/representatives/representatives-uptime.service';
+export * from './api/v1/representatives/large-representatives.service';
 export * from './api/v1/representatives/representatives.service';
 
 export * from './api/v1/node/node-stats.service';

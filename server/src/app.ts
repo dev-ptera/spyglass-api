@@ -31,7 +31,6 @@ import {
     getConfirmedTransactions,
     getNodeStats,
     getOnlineReps,
-    getPeers,
     getPeerVersions,
     getPendingTransactions,
     getQuorum,
@@ -80,7 +79,6 @@ app.get(`/${PATH_ROOT}/confirmed-transactions`, (req, res) => getConfirmedTransa
 app.get(`/${PATH_ROOT}/insights/*`, (req, res) => getAccountInsights(req, res));
 app.get(`/${PATH_ROOT}/node`, (req, res) => getNodeStats(req, res));
 app.get(`/${PATH_ROOT}/online-reps`, (req, res) => getOnlineReps(req, res));
-app.get(`/${PATH_ROOT}/peers`, (req, res) => getPeers(req, res));
 app.get(`/${PATH_ROOT}/peer-versions`, (req, res) => getPeerVersions(req, res));
 app.get(`/${PATH_ROOT}/pending-transactions`, (req, res) => getPendingTransactions(req, res));
 app.get(`/${PATH_ROOT}/representative-uptime/*`, (req, res) => getRepresentativeUptime(req, res));

@@ -1,14 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
-import { MonitoredRepDto, PeerMonitorStats } from '@app/types';
-import { peersRpc, Peers } from '@app/rpc';
-import {  LOG_ERR, LOG_INFO, markRepAsOnline } from '@app/services';
-import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import {
-    isRepPrincipal,
-    populateDelegatorsCount,
-    sortMonitoredRepsByName,
-    sortMonitoredRepsByStatus,
-} from './rep-utils';
+import axios, {AxiosResponse} from 'axios';
+import {MonitoredRepDto, PeerMonitorStats} from '@app/types';
+import {Peers, peersRpc} from '@app/rpc';
+import {LOG_ERR, LOG_INFO} from '@app/services';
+import {MANUAL_PEER_MONITOR_URLS} from '@app/config';
+import {populateDelegatorsCount, sortMonitoredRepsByName, sortMonitoredRepsByStatus,} from './representatives-utils';
 
 
 /** Some monitored representatives will require their representative page to not link redirectly to the statistics page.
@@ -149,34 +144,6 @@ const getRepDetails = (rpcData: Peers): Promise<MonitoredRepDto[]> => {
         .catch((err) => Promise.reject(LOG_ERR('getMonitoredReps.getRepDetails', err)));
 };
 
-// banano creeper does not have a api.php.  Let's add it to the list of monitored representatives at some point.
-export const getPeers = (req, res): void => {
-    peersRpc()
-        .then((peers: Peers) => {
-            getRepDetails(peers)
-                .then((details: MonitoredRepDto[]) => {
-                    res.send(JSON.stringify(details));
-                })
-                .catch((err) => {
-                    res.status(500).send(LOG_ERR('getPeers', err));
-                });
-        })
-        .catch((err) => {
-            res.status(500).send(LOG_ERR('getPeers', err));
-        });
-};
-
-
-/** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
-export const getMonitoredReps = async (req, res): Promise<MonitoredRepDto[]> => {
-    const start = LOG_INFO('Refreshing Monitored Reps');
-    const response = await getMonitoredRepsPromise();
-    console.log(response);
-    res.send(response);
-    LOG_INFO('Monitored Reps Updated', start);
-    return response;
-};
-
 export const getMonitoredRepsPromise = async (): Promise<MonitoredRepDto[]> => {
     return new Promise((resolve, reject) => {
         peersRpc()
@@ -189,4 +156,13 @@ export const getMonitoredRepsPromise = async (): Promise<MonitoredRepDto[]> => {
             })
             .catch((err) => reject(LOG_ERR('getMonitoredReps', err)));
     });
+};
+
+/** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
+export const getMonitoredReps = async (req, res): Promise<MonitoredRepDto[]> => {
+    const start = LOG_INFO('Refreshing Monitored Reps');
+    const response = await getMonitoredRepsPromise();
+    res.send(response);
+    LOG_INFO('Monitored Reps Updated', start);
+    return response;
 };
