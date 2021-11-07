@@ -5,7 +5,7 @@ export const sleep = (ms) =>
     });
 
 
-export const defineBodyParams = (...paramNames): any => {
+export const defineBodyParams = (paramNames: string[]): any => {
     let params = {};
     for (const name of paramNames) {
         params[name] = name;

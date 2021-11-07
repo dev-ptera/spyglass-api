@@ -41,7 +41,7 @@ import {
     LOG_INFO,
     parseRichListFromFile,
     sleep,
-    getLargeReps, getOnlineRepsTada
+    getLargeReps, getOnlineRepsTada, getRepresentatives
 } from '@app/services';
 
 const corsOptions = {
@@ -65,6 +65,7 @@ const sendCached = (res, noCacheMethod: () => Promise<void>, cacheKey: keyof App
 app.use(cors(corsOptions));
 
 /* Real time results */
+app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineRepsTada(req, res));
 

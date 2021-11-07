@@ -25,11 +25,16 @@ export const repUptimeNavItem: NavItem = {
     route: 'uptime',
 };
 
+export const repRootNavItem: NavItem = {
+    title: 'Root',
+    route: 'root',
+};
+
 export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
     icon: 'how_to_vote',
-    children: [repLargeNavItem,  repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
+    children: [repRootNavItem, repLargeNavItem,  repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
 };
 
 const pageOneNavItem: NavItem = {

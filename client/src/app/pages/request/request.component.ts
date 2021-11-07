@@ -50,8 +50,8 @@ export class RequestComponent {
     }
 
     sendRequest(): void {
+        this.requestResponse = undefined;
         this._apiService.send(this.requestPath, this.createRequestBody()).then((data) => {
-            console.log(data);
             this.requestResponse = data;
         });
     }

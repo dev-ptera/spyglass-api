@@ -1,4 +1,10 @@
-import { repLargeNavItem, repMonitoredNavItem, repNavItem, repOnlineNavItem } from '../navigation/nav-items';
+import {
+    repLargeNavItem,
+    repMonitoredNavItem,
+    repNavItem,
+    repOnlineNavItem,
+    repRootNavItem
+} from '../navigation/nav-items';
 import * as ResponseTypes from './response-types';
 import * as RequestParams from './request-params';
 import { RequestBodyParameters } from './request-params';
@@ -9,6 +15,12 @@ export const apiDocumentationPages: Array<{
     responseType: Object;
     requestParameters: Array<RequestBodyParameters>;
 }> = [
+    {
+        route: `${repNavItem.route}/${repRootNavItem.route}`,
+        apiPath: 'representatives',
+        responseType: ResponseTypes.REPRESENTATIVES_ROOT,
+        requestParameters: RequestParams.REPRESENTATIVES_ROOT,
+    },
     {
         route: `${repNavItem.route}/${repLargeNavItem.route}`,
         apiPath: 'representatives/large',

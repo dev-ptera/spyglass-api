@@ -11,6 +11,7 @@ export * from './api/v1/representatives/monitored-reps.service';
 export * from './api/v1/representatives/online-reps.service';
 export * from './api/v1/representatives/representative-uptime.service';
 export * from './api/v1/representatives/large-reps.service';
+export * from './api/v1/representatives/representatives.service';
 
 export * from './api/v1/node/node-stats.service';
 
