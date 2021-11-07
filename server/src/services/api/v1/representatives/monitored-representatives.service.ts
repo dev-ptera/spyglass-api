@@ -1,10 +1,9 @@
-import axios, {AxiosResponse} from 'axios';
-import {MonitoredRepDto, PeerMonitorStats} from '@app/types';
-import {Peers, peersRpc} from '@app/rpc';
-import {LOG_ERR, LOG_INFO} from '@app/services';
-import {MANUAL_PEER_MONITOR_URLS} from '@app/config';
-import {populateDelegatorsCount, sortMonitoredRepsByName, sortMonitoredRepsByStatus,} from './representatives-utils';
-
+import axios, { AxiosResponse } from 'axios';
+import { MonitoredRepDto, PeerMonitorStats } from '@app/types';
+import { Peers, peersRpc } from '@app/rpc';
+import { LOG_ERR, LOG_INFO } from '@app/services';
+import { MANUAL_PEER_MONITOR_URLS } from '@app/config';
+import { populateDelegatorsCount, sortMonitoredRepsByName, sortMonitoredRepsByStatus } from './representatives-utils';
 
 /** Some monitored representatives will require their representative page to not link redirectly to the statistics page.
  *  Resolve these custom reps here.
