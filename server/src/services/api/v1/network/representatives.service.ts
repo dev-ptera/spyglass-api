@@ -48,7 +48,7 @@ const processNodeResponse = async (data: RPC.RepresentativesResponse): Promise<B
         }
     }
 
-    // Construct response array
+    // Construct response-types array
     for (const address of weightedReps.keys()) {
         reps.push({
             address,

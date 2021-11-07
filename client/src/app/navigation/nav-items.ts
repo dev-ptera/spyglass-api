@@ -5,16 +5,26 @@ export type NavItem = {
     children?: NavItem[];
 };
 
-export const largeRepNavItem: NavItem = {
+export const repLargeNavItem: NavItem = {
     title: 'Large',
     route: 'large',
+};
+
+export const repOnlineNavItem: NavItem = {
+    title: 'Online',
+    route: 'online',
+};
+
+export const repMonitoredNavItem: NavItem = {
+    title: 'Monitored',
+    route: 'monitored',
 };
 
 export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
-    icon: 'looks_zero',
-    children: [largeRepNavItem],
+    icon: 'how_to_vote',
+    children: [repLargeNavItem, repOnlineNavItem, repMonitoredNavItem],
 };
 
 const pageOneNavItem: NavItem = {

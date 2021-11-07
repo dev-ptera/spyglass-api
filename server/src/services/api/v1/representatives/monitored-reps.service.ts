@@ -139,7 +139,7 @@ const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepD
 /** Sample: [::ffff:178.128.46.252]:7071 */
 const extractIpAddress = (dirtyIp: string): string => dirtyIp.replace('::ffff:', '').match(/(?<=\[).+?(?=\])/)[0];
 
-/** Fetches monitored peer details, then sends groomed response. */
+/** Fetches monitored peer details, then sends groomed response-types. */
 const getRepDetails = (rpcData: Peers): Promise<MonitoredRepDto[]> => {
     const peerMonitorStatsPromises: Array<Promise<PeerMonitorStats>> = [];
     const peerIpAddresses = new Set<string>();

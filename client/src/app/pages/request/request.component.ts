@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { RequestBodyParameters, requestPages } from './requestPages';
-import {ApiService} from "../../services/api.service";
+import { apiDocumentationPages } from '../../doc-config';
+import { ApiService } from '../../services/api.service';
+import { RequestBodyParameters } from '../../doc-config/request-params';
+import { ViewportService } from '../../services/viewport.service';
 
 @Component({
     selector: 'app-request',
@@ -16,8 +18,11 @@ export class RequestComponent {
     requestResponse: any;
     requestResponseType: any;
 
-    constructor(private readonly _router: Router,
-                private readonly _apiService: ApiService) {
+    constructor(
+        public vp: ViewportService,
+        private readonly _router: Router,
+        private readonly _apiService: ApiService
+    ) {
         this._listenForRouteChanges();
     }
 
@@ -26,12 +31,17 @@ export class RequestComponent {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const url = route.urlAfterRedirects;
-                console.log(url);
-                for (const requestPage of requestPages) {
+                this.requestResponse = undefined;
+                for (const requestPage of apiDocumentationPages) {
                     if (url === `/${requestPage.route}`) {
-                        this.requestPath = requestPage.requestPath;
+                        this.requestPath = requestPage.apiPath;
                         this.requestBodyParameters = requestPage.requestParameters;
                         this.requestResponseType = requestPage.responseType;
+
+                        // Set values
+                        for (const param of this.requestBodyParameters) {
+                            param.value = param.defaultValue;
+                        }
                         break;
                     }
                 }
@@ -40,10 +50,27 @@ export class RequestComponent {
     }
 
     sendRequest(): void {
-
-        this._apiService.send(this.requestPath).then((data) => {
+        this._apiService.send(this.requestPath, this.createRequestBody()).then((data) => {
             console.log(data);
             this.requestResponse = data;
         });
+    }
+
+    createRequestBody(): Object {
+        const body = {};
+        for (const param of this.requestBodyParameters) {
+            if (
+                param.value === undefined ||
+                (param.value === false && (param.defaultValue === undefined || param.defaultValue === false))
+            ) {
+                continue;
+            }
+            body[param.propertyName] = param.value;
+        }
+        return body;
+    }
+
+    isEmptyBody(): boolean {
+        return JSON.stringify(this.createRequestBody()) === '{}';
     }
 }

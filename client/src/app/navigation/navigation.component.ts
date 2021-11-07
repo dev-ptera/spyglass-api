@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { DrawerLayoutVariantType } from '@pxblue/angular-components';
-import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { APP_NAV_ITEMS, NavItem } from './nav-items';
-import { ViewportService } from '../services/viewport.service';
-import { DrawerStateService } from '../services/drawer-state.service';
+import {Component} from '@angular/core';
+import {DrawerLayoutVariantType} from '@pxblue/angular-components';
+import {NavigationEnd, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {APP_NAV_ITEMS, NavItem} from './nav-items';
+import {ViewportService} from '../services/viewport.service';
+import {DrawerStateService} from '../services/drawer-state.service';
 import * as Colors from '@pxblue/colors';
-import { ApiService } from '../services/api.service';
 
 @Component({
     selector: 'app-navigation',
@@ -15,10 +14,18 @@ import { ApiService } from '../services/api.service';
 })
 export class NavigationComponent {
     colors = Colors;
+    isCollapsed: boolean;
+
+    scrollContainerClassName = {
+        name: 'mat-sidenav-content',
+        index: 0
+    };
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
     navItems = [APP_NAV_ITEMS.representative, APP_NAV_ITEMS.page1, APP_NAV_ITEMS.page2];
+
+    scrollEl: Element;
 
     constructor(
         public vp: ViewportService,

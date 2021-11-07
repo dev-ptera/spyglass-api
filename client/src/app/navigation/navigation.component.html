@@ -1,4 +1,4 @@
-<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()">
+<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="280">
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
         <pxb-drawer-header title="Banano API" subtitle="Title Pending">
             <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
@@ -28,17 +28,32 @@
         </pxb-drawer-body>
     </pxb-drawer>
     <div pxb-content class="page-container">
-        <div class="header-container mat-elevation-z0" responsive>
-            <div class="title" [class.mat-display-3]="!vp.sm" [class.mat-display-2]="vp.sm">
-                <img class="banano-logo" responsive src="assets/bananologo.svg" /> API
+        <pxb-app-bar [variant]="vp.sm ? 'collapsed' : 'expanded'" [scrollThreshold]="100" [scrollContainerClassName]="scrollContainerClassName"
+                     class="header-container"
+                     (collapsedChange)="isCollapsed = $event">
+
+            <pxb-three-liner
+                subtitle="Empowering the jungle to make cool stuff"
+                [style.top.px]="isCollapsed ? 0 : 80">
+
+                <div pxb-title class="title" [style.fontSize.px]="vp.sm ? 24 : 48">
+                    <img class="banano-logo" responsive src="assets/bananologo.svg" /> Spyglass API
+                </div>
+            </pxb-three-liner>
+            <!--
+            <div class="header-container mat-elevation-z0" responsive>
+                <div class="title" [class.mat-display-3]="!vp.sm" [class.mat-display-2]="vp.sm">
+                    <img class="banano-logo" responsive src="assets/bananologo.svg" /> API
+                </div>
+                <div class="subtitle" responsive [class.mat-h1]="!vp.sm" [class.mat-h4]="vp.sm">
+                    Fueling jungle ventures
+                </div>
+                <a href="https://github.com/dev-ptera" target="_blank">
+                    <img class="github-icon" src="assets/github-logo.svg" />
+                </a>
             </div>
-            <div class="subtitle" responsive [class.mat-h1]="!vp.sm" [class.mat-h4]="vp.sm">
-                for all things Banano-Related
-            </div>
-            <a href="https://github.com/dev-ptera" target="_blank">
-                <img class="github-icon" src="assets/github-logo.svg" />
-            </a>
-        </div>
+            -->
+        </pxb-app-bar>
         <router-outlet></router-outlet>
         <div style="text-align: center; margin: 8px 0px">Powered by YellowSpyglass API</div>
     </div>

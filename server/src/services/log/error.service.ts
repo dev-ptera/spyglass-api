@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { ErrorResponse } from '@dev-ptera/nano-node-rpc';
 
 /** An AxiosError<ErrorResponse> implies there was an issue fetching the data from the nano RPC node.
- *  An ErrorResponse implies there was a response from the nano RPC node, but it contained an error.
+ *  An ErrorResponse implies there was a response-types from the nano RPC node, but it contained an error.
  */
 export const logError = (err: ErrorResponse | AxiosError<ErrorResponse>) => {
     const nodeRpcError = err as ErrorResponse;

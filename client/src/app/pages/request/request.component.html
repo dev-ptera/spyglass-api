@@ -1,14 +1,22 @@
-<div class="page-container">
+<ng-template #paramName let-requestParam="requestParam">
+    <span style="padding: 0 16px" [matTooltip]="vp.md ? requestParam.notes : ''">
+        <span
+            class="prop-name"
+            [matBadgeSize]="'small'"
+            [matBadge]="requestParam.notes && (vp.md || vp.sm) ? 'i' : ''"
+            [matBadgeOverlap]="false"
+        >
+            {{ requestParam.propertyName }}
+        </span>
+    </span>
+</ng-template>
+
+<div class="page-container" responsive>
     <div class="section-title">Request Path</div>
     <div class="section-body">/v1/{{ requestPath }}</div>
 
-    <div class="section-title">Response Type</div>
-    <div class="section-body">
-        <div>
-            <ngx-json-viewer [json]="requestResponseType"></ngx-json-viewer>
-        </div>
-    </div>
-
+    <div class="section-title">Request Type</div>
+    <div class="section-body">POST</div>
 
     <div class="section-title">
         <div class="">Request Knobs</div>
@@ -17,20 +25,51 @@
     <div class="section-body">
         <div *ngIf="!requestBodyParameters || requestBodyParameters.length === 0">N/A</div>
         <div *ngFor="let requestParam of requestBodyParameters">
-            <ng-container *ngIf="requestParam.propertyType === 'boolean'">
-                <mat-checkbox [checked]="requestParam.defaultValue">{{requestParam.propertyName}}</mat-checkbox>
-
-            </ng-container>
+            <div class="property-line">
+                <div *ngIf="requestParam.propertyType === 'boolean'">
+                    <mat-checkbox
+                        class="input-option"
+                        [checked]="requestParam.value"
+                        [(ngModel)]="requestParam.value"
+                    ></mat-checkbox>
+                    <ng-container
+                        [ngTemplateOutlet]="paramName"
+                        [ngTemplateOutletContext]="{ requestParam: requestParam }"
+                    ></ng-container>
+                </div>
+                <div *ngIf="requestParam.propertyType === 'string' || requestParam.propertyType === 'number'">
+                    <input class="input-option" [type]="requestParam.propertyType" [(ngModel)]="requestParam.value" />
+                    <ng-container
+                        [ngTemplateOutlet]="paramName"
+                        [ngTemplateOutletContext]="{ requestParam: requestParam }"
+                    ></ng-container>
+                </div>
+                <div *ngIf="!vp.sm && !vp.md">{{ requestParam.notes }}</div>
+            </div>
         </div>
     </div>
 
-    <div class="section-title">Request Output</div>
+    <ng-container *ngIf="!isEmptyBody()">
+        <div class="section-title">Request Body</div>
+        <div class="section-body">
+            &#x007B;
+            <ngx-json-viewer [json]="createRequestBody()"></ngx-json-viewer>
+            &#x007D;
+        </div>
+    </ng-container>
+
+    <div class="section-title">Response Type</div>
     <div class="section-body">
-        <div *ngIf="requestResponse" style="max-height: 40vh; overflow: scroll;">
+        <div>
+            <ngx-json-viewer [json]="requestResponseType"></ngx-json-viewer>
+        </div>
+    </div>
+
+    <div class="section-title">Response Content</div>
+    <div class="section-body">
+        <div *ngIf="requestResponse" style="max-height: 40vh; overflow: scroll">
             <ngx-json-viewer [json]="requestResponse"></ngx-json-viewer>
         </div>
-        <div *ngIf="!requestResponse">Send Request to View</div>
+        <div *ngIf="!requestResponse" (click)="sendRequest()" style="cursor: pointer">Send Request to View</div>
     </div>
-
-
 </div>

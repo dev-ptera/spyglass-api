@@ -16,6 +16,28 @@
     flex-direction: column;
 }
 
+::ng-deep {
+    .pxb-app-bar-expanded .pxb-app-bar-background {
+        background-image: url('../../assets/bg-footer.svg');
+        background-size: contain;
+        opacity: 1;
+    }
+    .pxb-app-bar-body-wrapper, .pxb-three-liner {
+        width: 100%;
+        justify-content: center;
+        margin: 0!important;
+    }
+    .pxb-three-liner-subtitle {
+        text-align: center;
+        margin-top: 8px;
+    }
+    @media only screen and (max-width: 1450px) {
+        .pxb-app-bar-expanded .pxb-app-bar-background {
+            background-size: cover !important;
+        }
+    }
+}
+
 .page-container {
     display: flex;
     flex-direction: column;
@@ -23,10 +45,6 @@
     min-height: 100vh;
     width: 100%;
     box-sizing: border-box;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    flex-direction: column;
     background-color: #ffffff;
     background-image: url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23469a16' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 0h35v35H0V0zm5 5h25v25H5V5zm5 5h15v15H10V10zm5 5h5v5h-5v-5zM40 5h25v25H40V5zm5 5h15v15H45V10zm5 5h5v5h-5v-5zM70 35H35v35h35V35zm-5 5H40v25h25V40zm-5 5H45v15h15V45zm-5 5h-5v5h5v-5zM30 40H5v25h25V40zm-5 5H10v15h15V45zm-5 5h-5v5h5v-5z'/%3E%3C/g%3E%3C/svg%3E");
 
@@ -45,29 +63,15 @@
         cursor: pointer;
     }
 
-    @media only screen and (max-width: 1450px) {
-        .header-container {
-            background-size: cover !important;
-        }
-    }
     .header-container {
-        position: relative;
         width: 100%;
         color: white;
-        padding-top: 96px;
-        padding-bottom: 96px;
+        background-color: #4cbe4b;
         padding-left: 16px;
         padding-right: 16px;
         box-sizing: border-box;
-        background-size: contain;
-        background-image: url('../../assets/bg-footer.svg');
-        &.md {
-            padding-top: 72px;
-            padding-bottom: 72px;
-        }
-        &.sm {
-            padding-top: 46px;
-            padding-bottom: 46px;
+        ::ng-deep .mat-toolbar {
+            background-color: unset;
         }
         .title {
             justify-content: center;
@@ -76,35 +80,12 @@
             align-items: center;
         }
         .banano-logo {
-            width: 350px;
-            height: 56px;
-            margin: 0 24px;
+            height: 42px;
+            margin-right: 24px;
             &.sm {
-                width: 250px;
+                height: 28px;
+                margin-right: 16px;
             }
-        }
-        .subtitle {
-            margin-bottom: 0;
-            margin-top: 16px;
-            &.sm {
-                margin-top: 32px;
-            }
-        }
-    }
-}
-
-.body-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 64px;
-    width: 400px;
-    &.sm {
-        margin-top: 16px;
-        width: 320px;
-        button {
-            width: 100% !important;
         }
     }
 }
