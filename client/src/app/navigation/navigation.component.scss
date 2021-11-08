@@ -79,18 +79,16 @@
             justify-content: center;
             display: flex;
             flex-wrap: wrap;
+            font-size: 48px;
             align-items: center;
             &.sm {
+                font-size: 22px;
                 font-weight: 400;
             }
         }
         .banano-logo {
             height: 42px;
             margin-right: 24px;
-            &.sm {
-                height: 25px;
-                margin-right: 16px;
-            }
         }
     }
 }

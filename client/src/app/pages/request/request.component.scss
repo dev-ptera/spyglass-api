@@ -75,7 +75,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .response-container {
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 65vh;
     @media screen and (max-width: $splitScreenCutoff) {
         max-height: 40vh;
