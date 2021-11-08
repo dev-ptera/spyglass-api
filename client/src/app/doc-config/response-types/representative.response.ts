@@ -50,7 +50,7 @@ export const REPRESENTATIVES_ROOT = {
                 onlineDate: 'string',
                 offlineDate: 'string',
                 durationMinutes: 'number',
-            }
+            },
         },
         weight: 'number',
     },

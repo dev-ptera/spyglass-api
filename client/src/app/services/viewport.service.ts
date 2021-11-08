@@ -30,7 +30,7 @@ export class ViewportService {
             });
     }
 
-    isSmall(): boolean {
-        return this.sm;
+    isMediumOrLess(): boolean {
+        return this.sm || this.md;
     }
 }

@@ -22,10 +22,11 @@
         background-size: contain;
         opacity: 1;
     }
-    .pxb-app-bar-body-wrapper, .pxb-three-liner {
+    .pxb-app-bar-body-wrapper,
+    .pxb-three-liner {
         width: 100%;
         justify-content: center;
-        margin: 0!important;
+        margin: 0 !important;
     }
     .pxb-three-liner-subtitle {
         text-align: center;
@@ -70,6 +71,7 @@
         padding-left: 16px;
         padding-right: 16px;
         box-sizing: border-box;
+        position: relative;
         ::ng-deep .mat-toolbar {
             background-color: unset;
         }
@@ -78,12 +80,15 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
+            &.sm {
+                font-weight: 400;
+            }
         }
         .banano-logo {
             height: 42px;
             margin-right: 24px;
             &.sm {
-                height: 28px;
+                height: 25px;
                 margin-right: 16px;
             }
         }

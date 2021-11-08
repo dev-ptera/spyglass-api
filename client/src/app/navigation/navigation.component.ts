@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {DrawerLayoutVariantType} from '@pxblue/angular-components';
-import {NavigationEnd, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {APP_NAV_ITEMS, NavItem} from './nav-items';
-import {ViewportService} from '../services/viewport.service';
-import {DrawerStateService} from '../services/drawer-state.service';
+import { Component } from '@angular/core';
+import { DrawerLayoutVariantType } from '@pxblue/angular-components';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { APP_NAV_ITEMS, NavItem } from './nav-items';
+import { ViewportService } from '../services/viewport.service';
+import { DrawerStateService } from '../services/drawer-state.service';
 import * as Colors from '@pxblue/colors';
 
 @Component({
@@ -18,7 +18,7 @@ export class NavigationComponent {
 
     scrollContainerClassName = {
         name: 'mat-sidenav-content',
-        index: 0
+        index: 0,
     };
     toolbarTitle: string;
     routeListener: Subscription;
@@ -30,7 +30,7 @@ export class NavigationComponent {
     constructor(
         public vp: ViewportService,
         private readonly _router: Router,
-        private readonly _stateService: DrawerStateService,
+        private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();
     }
@@ -48,14 +48,14 @@ export class NavigationComponent {
             return;
         }
         this.navigate(navItem.route);
-        if (this.vp.isSmall()) {
+        if (this.vp.isMediumOrLess()) {
             this._stateService.setDrawerOpen(false);
         }
     }
 
     selectNestedNavItem(parent: NavItem, child: NavItem): void {
         this.navigate(`${parent.route}/${child.route}`);
-        if (this.vp.isSmall()) {
+        if (this.vp.isMediumOrLess()) {
             this._stateService.setDrawerOpen(false);
         }
     }
@@ -112,12 +112,12 @@ export class NavigationComponent {
     }
 
     getVariant(): DrawerLayoutVariantType {
-        if (this.variant === 'persistent' && this.vp.isSmall()) {
+        if (this.variant === 'persistent' && this.vp.isMediumOrLess()) {
             this._stateService.setDrawerOpen(false);
-        } else if (this.variant === 'temporary' && !this.vp.isSmall()) {
+        } else if (this.variant === 'temporary' && !this.vp.isMediumOrLess()) {
             this._stateService.setDrawerOpen(true);
         }
-        this.variant = this.vp.isSmall() ? 'temporary' : 'persistent';
+        this.variant = this.vp.isMediumOrLess() ? 'temporary' : 'persistent';
         return this.variant;
     }
 }

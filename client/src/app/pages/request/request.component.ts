@@ -17,6 +17,7 @@ export class RequestComponent {
     requestBodyParameters: Array<RequestBodyParameters>;
     requestResponse: any;
     requestResponseType: any;
+    requestType: 'POST' | 'GET';
 
     constructor(
         public vp: ViewportService,
@@ -37,8 +38,9 @@ export class RequestComponent {
                         this.requestPath = requestPage.apiPath;
                         this.requestBodyParameters = requestPage.requestParameters;
                         this.requestResponseType = requestPage.responseType;
+                        this.requestType = requestPage.requestType;
 
-                        // Set values
+                        // Set parameter values (editable by user)
                         for (const param of this.requestBodyParameters) {
                             param.value = param.defaultValue;
                         }
@@ -51,7 +53,7 @@ export class RequestComponent {
 
     sendRequest(): void {
         this.requestResponse = undefined;
-        this._apiService.send(this.requestPath, this.createRequestBody()).then((data) => {
+        this._apiService.send(this.requestPath, this.requestType, this.createRequestBody()).then((data) => {
             this.requestResponse = data;
         });
     }

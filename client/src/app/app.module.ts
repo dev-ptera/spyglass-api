@@ -10,7 +10,13 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import {AppBarModule, DrawerModule, EmptyStateModule, SpacerModule, ThreeLinerModule} from '@pxblue/angular-components';
+import {
+    AppBarModule,
+    DrawerModule,
+    EmptyStateModule,
+    SpacerModule,
+    ThreeLinerModule,
+} from '@pxblue/angular-components';
 import { ResponsiveDirective } from './directives/responsive.directive';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';

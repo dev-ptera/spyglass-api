@@ -68,8 +68,8 @@ app.use(cors(corsOptions));
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
-app.post(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
-app.post(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
 
 app.get(`/${PATH_ROOT}/accounts-balance`, (req, res) => getRichList(req, res));
 app.get(`/${PATH_ROOT}/account-overview/*`, (req, res) => getAccountOverview(req, res));

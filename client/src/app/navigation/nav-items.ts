@@ -34,7 +34,7 @@ export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
     icon: 'how_to_vote',
-    children: [repRootNavItem, repLargeNavItem,  repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
+    children: [repRootNavItem, repLargeNavItem, repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
 };
 
 const supplyNavItem: NavItem = {

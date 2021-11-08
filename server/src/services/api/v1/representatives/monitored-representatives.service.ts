@@ -49,13 +49,6 @@ const getPeerMonitorStats = (url: string): Promise<PeerMonitorStats> =>
         })
         .catch(() => Promise.resolve(undefined));
 
-const formatMonitorUrl = (ip: string): string => {
-    if (ip && (ip.includes('http') || ip.includes('https'))) {
-        return ip;
-    }
-    return `http://${ip}`;
-};
-
 /** Prunes & grooms data that is returned to client.
  *  Only monitors with an online representative will be returned to the client.
  *  This is because some peers may be online but with a misconfigured node. (e.g. a monitor with an incorrect address displayed.)

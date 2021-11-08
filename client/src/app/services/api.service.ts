@@ -9,7 +9,11 @@ export class ApiService {
 
     constructor(private readonly _http: HttpClient) {}
 
-    send(path: string, body: any = {}): Promise<any> {
-        return this._http.post<void>(`${this.url}/${path}`, body).toPromise();
+    send(path: string, type: 'GET' | 'POST', body: any = {}): Promise<any> {
+        if (type === 'GET') {
+            return this._http.get<void>(`${this.url}/${path}`).toPromise();
+        } else {
+            return this._http.post<void>(`${this.url}/${path}`, body).toPromise();
+        }
     }
 }

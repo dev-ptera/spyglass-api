@@ -9,7 +9,7 @@ export class DrawerStateService {
     private selectedItem: string;
 
     constructor(viewportService: ViewportService) {
-        this.drawerOpen = !viewportService.isSmall();
+        this.drawerOpen = !viewportService.md;
     }
 
     setDrawerOpen(drawerOpen: boolean): void {
