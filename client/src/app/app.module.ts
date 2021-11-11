@@ -30,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
     declarations: [AppComponent, RequestComponent, ResponsiveDirective, NavigationComponent],
@@ -57,6 +58,7 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatBadgeModule,
         AppBarModule,
         ThreeLinerModule,
+        MatProgressSpinnerModule,
     ],
     bootstrap: [AppComponent],
 })

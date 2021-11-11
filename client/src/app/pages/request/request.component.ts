@@ -17,6 +17,7 @@ export class RequestComponent {
     requestBodyParameters: Array<RequestBodyParameters>;
     requestResponse: any;
     requestResponseType: any;
+    isLoading = false;
     requestType: 'POST' | 'GET';
 
     constructor(
@@ -52,10 +53,19 @@ export class RequestComponent {
     }
 
     sendRequest(): void {
+        if (this.isLoading) {
+            return;
+        }
+
+        this.isLoading = true;
         this.requestResponse = undefined;
         this._apiService.send(this.requestPath, this.requestType, this.createRequestBody()).then((data) => {
             this.requestResponse = data;
-        });
+            this.isLoading = false;
+        }).catch((err: any) => {
+            this.requestResponse = err;
+            this.isLoading = false;
+        })
     }
 
     createRequestBody(): Object {

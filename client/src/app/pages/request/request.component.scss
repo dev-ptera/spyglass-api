@@ -50,6 +50,7 @@ $splitScreenCutoff: 1850px;
         padding: 16px;
         margin-top: 32px;
         font-family: monospace;
+        transition: all 3s;
     }
     &.sm .section-body {
         margin-top: 16px;
@@ -79,5 +80,56 @@ $splitScreenCutoff: 1850px;
     max-height: 65vh;
     @media screen and (max-width: $splitScreenCutoff) {
         max-height: 40vh;
+    }
+}
+
+
+.send-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    $duration: 200ms;
+    $animationTimingFunction: ease-out;
+    .button-text-container {
+        animation: fadeInAnimation $duration $animationTimingFunction;
+         &.isLoading {
+             display: none;
+         }
+    }
+    .spinner-container {
+        animation: fadeInAnimation $duration $animationTimingFunction;
+        display: none;
+        margin: 0 auto;
+        &.isLoading {
+            display: block;
+        }
+
+        ::ng-deep .mat-progress-spinner,
+        .mat-spinner {
+            circle {
+                stroke: white;
+            }
+        }
+    }
+}
+
+
+@keyframes fadeInAnimation {
+    0%,
+    20% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.3;
+    }
+    60% {
+        opacity: 0.5;
+    }
+    80% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
     }
 }

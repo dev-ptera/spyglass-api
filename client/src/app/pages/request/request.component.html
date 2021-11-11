@@ -1,9 +1,9 @@
 <ng-template #paramName let-requestParam="requestParam">
-    <span style="padding: 0 16px" [matTooltip]="vp.md ? requestParam.notes : ''">
+    <span style="padding: 0 16px" [matTooltip]="requestParam.notes">
         <span
             class="prop-name"
             [matBadgeSize]="'small'"
-            [matBadge]="requestParam.notes && (vp.md || vp.sm) ? 'i' : ''"
+            [matBadge]="requestParam.notes ? 'i' : ''"
             [matBadgeOverlap]="false"
         >
             {{ requestParam.propertyName }}
@@ -12,7 +12,14 @@
 </ng-template>
 
 <ng-template #sendButton>
-    <button mat-flat-button color="primary" (click)="sendRequest()">Send</button>
+    <button mat-flat-button class="send-button" color="primary" (click)="sendRequest()">
+        <div class="button-text-container" *ngIf="!isLoading">
+            Send
+        </div>
+        <div class="spinner-container" [class.isLoading]="isLoading" >
+            <mat-spinner class="primary-spinner" diameter="20"></mat-spinner>
+        </div>
+    </button>
 </ng-template>
 
 <div class="page-container" responsive>
@@ -56,7 +63,6 @@
                                 [ngTemplateOutletContext]="{ requestParam: requestParam }"
                             ></ng-container>
                         </div>
-                        <div *ngIf="!vp.sm && !vp.md">{{ requestParam.notes }}</div>
                     </div>
                 </div>
             </div>
