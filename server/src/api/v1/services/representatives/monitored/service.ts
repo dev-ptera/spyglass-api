@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import {populateDelegatorsCount, sortMonitoredRepsByName} from './representatives-utils';
-import {MonitoredRepresentativeDto} from "@app/api";
+import {MonitoredRepresentativeDto, populateDelegatorsCount, sortMonitoredRepsByName} from "@app/api";
 import {LOG_ERR, LOG_INFO} from "@app/util";
 
 export type PeerMonitorStats = {

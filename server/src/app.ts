@@ -27,7 +27,6 @@ import {
     getRepresentatives,
     getAliasedRepresentatives,
     getKnownAccounts,
-    LargeRepresentativesConfig,
 } from '@app/api';
 
 import {LOG_INFO, sleep} from "@app/util";

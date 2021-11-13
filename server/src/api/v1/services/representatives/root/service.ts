@@ -1,8 +1,7 @@
 import { NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
-import { populateDelegatorsCount } from './representatives-utils';
 import {defineBodyParams, LOG_INFO} from "@app/util";
-import {LargeRepresentativeDto} from "@app/api";
+import {LargeRepresentativeDto, populateDelegatorsCount} from "@app/api";
 
 const DEFAULT_MIN_WEIGHT = 100000;
 const MINIMUM_MIN_WEIGHT = 1000;
