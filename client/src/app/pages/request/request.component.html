@@ -12,31 +12,29 @@
 </ng-template>
 
 <ng-template #sendButton>
-    <button mat-flat-button class="send-button" color="primary" (click)="sendRequest()">
-        <div class="button-text-container" *ngIf="!isLoading">
-            Send
-        </div>
-        <div class="spinner-container" [class.isLoading]="isLoading" >
+    <button mat-flat-button class="send-button" responsive color="primary" (click)="sendRequest()">
+        <div class="button-text-container" *ngIf="!isLoading">Send</div>
+        <div class="spinner-container" [class.isLoading]="isLoading">
             <mat-spinner class="primary-spinner" diameter="20"></mat-spinner>
         </div>
     </button>
 </ng-template>
 
 <div class="page-container" responsive>
-
     <div>
-        <div class="section-title">Request Path</div>
-        <div class="section-body">/v1/{{ requestPath }}</div>
-
         <div class="section-title">
             <div>Request Type</div>
             <ng-template [ngTemplateOutlet]="sendButton"></ng-template>
         </div>
-        <div class="section-body">{{ requestType }}</div>
+        <div class="section-body" style="display: flex">
+            /v1/{{ requestPath }}
+            <pxb-spacer></pxb-spacer>
+            {{ requestType }}
+        </div>
 
         <ng-container *ngIf="requestType === 'POST'">
             <div class="section-title">Request Knobs</div>
-            <div class="section-body">
+            <div class="section-body" responsive>
                 <div *ngIf="!requestBodyParameters || requestBodyParameters.length === 0">N/A</div>
                 <div *ngFor="let requestParam of requestBodyParameters">
                     <div class="property-line">
@@ -85,15 +83,27 @@
         </div>
     </div>
 
-
     <div>
-        <div class="section-title">Response Content</div>
+        <div class="section-title">
+            <div>Response Content</div>
+            <mat-checkbox
+                style="font-size: 16px"
+                color="primary"
+                [checked]="showRawResponse"
+                [(ngModel)]="showRawResponse"
+                ><span style="margin-left: 8px">Show Raw</span></mat-checkbox
+            >
+        </div>
         <div class="section-body">
-            <div *ngIf="requestResponse"  class="response-container">
-                <ngx-json-viewer [json]="requestResponse"></ngx-json-viewer>
+            <div *ngIf="requestResponse" class="response-container">
+                <!--  {{ requestResponse }} -->
+                <ngx-json-viewer *ngIf="!showRawResponse" [json]="requestResponse"></ngx-json-viewer>
+                <pre *ngIf="showRawResponse">{{ requestResponse | json }}</pre>
             </div>
-            <div *ngIf="!requestResponse" (click)="sendRequest()" style="cursor: pointer">Send Request to View</div>
+            <div *ngIf="!requestResponse" (click)="sendRequest()" style="cursor: pointer">
+                <ng-container *ngIf="!isLoading">Send Request to View</ng-container>
+                <ng-container *ngIf="isLoading">Loading...</ng-container>
+            </div>
         </div>
     </div>
-
 </div>

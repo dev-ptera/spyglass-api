@@ -35,7 +35,13 @@
             class="header-container"
             (collapsedChange)="isCollapsed = $event"
         >
-            <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()"  *ngIf="vp.isMediumOrLess()" style="margin-left: -24px;">
+            <button
+                pxb-icon
+                mat-icon-button
+                (click)="toggleDrawerOpen()"
+                *ngIf="vp.isMediumOrLess()"
+                style="margin-left: -24px"
+            >
                 <mat-icon>menu</mat-icon>
             </button>
             <pxb-three-liner subtitle="Empowering the jungle to make cool stuff" [style.top.px]="isCollapsed ? 0 : 60">

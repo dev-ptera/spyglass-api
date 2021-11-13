@@ -8,7 +8,8 @@
     "scripts": {
         "build": "tsc",
         "start": "yarn build && node --max-old-space-size=8192 dist/app.js",
-        "prettier": "prettier \"src/**/**.{ts,js}\" --write"
+        "prettier": "prettier \"src/**/**.{ts,js}\" --write",
+        "schema": "typescript-json-schema \"src/api/v1/types/*Dto.ts\" * -o ../client/src/app/doc-config/schema.json --required=true"
     },
     "dependencies": {
         "@dev-ptera/nano-node-rpc": "^2.0.2",
@@ -19,7 +20,6 @@
         "dotenv": "^10.0.0",
         "esm": "^3.2.25",
         "express": "^4.16.4",
-        "firebase-admin": "^9.10.0",
         "get-folder-size": "^2.0.0",
         "morgan": "^1.10.0"
     },
@@ -30,7 +30,8 @@
         "module-alias": "^2.2.2",
         "prettier": "^2.1.2",
         "tslib": "^2.1.0",
-        "typescript": "~4.0.2"
+        "typescript": "~4.0.2",
+        "typescript-json-schema": "^0.51.0"
     },
     "prettier": "@pxblue/prettier-config"
 }

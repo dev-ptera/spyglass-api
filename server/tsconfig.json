@@ -4,10 +4,10 @@
         "target": "es2017",
         "baseUrl": "./src",
         "paths": {
+            "@app/api": ["api/index.ts"],
             "@app/config": ["config/index.ts"],
             "@app/rpc": ["rpc/index.ts"],
-            "@app/services": ["services/index.ts"],
-            "@app/types": ["types/index.ts"],
+            "@app/util": ["util/index.ts"]
         },
         "outDir": "dist"
     },

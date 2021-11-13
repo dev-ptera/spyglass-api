@@ -1,0 +1,159 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "AliasedRepresentativeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "alias": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "alias"
+            ],
+            "type": "object"
+        },
+        "KnownAccountDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "alias": {
+                    "type": "string"
+                },
+                "illicit": {
+                    "type": "number"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "alias"
+            ],
+            "type": "object"
+        },
+        "LargeRepresentativeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "delegatorsCount": {
+                    "type": "number"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "weight"
+            ],
+            "type": "object"
+        },
+        "MonitoredRepresentativeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "cementedBlocks": {
+                    "type": "number"
+                },
+                "confirmationInfo": {
+                    "properties": {
+                        "average": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "average"
+                    ],
+                    "type": "object"
+                },
+                "confirmedBlocks": {
+                    "type": "number"
+                },
+                "currentBlock": {
+                    "type": "number"
+                },
+                "customMonitorPageUrl": {
+                    "type": "string"
+                },
+                "delegatorsCount": {
+                    "type": "number"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nodeUptimeStartup": {
+                    "type": "number"
+                },
+                "online": {
+                    "type": "boolean"
+                },
+                "peers": {
+                    "type": "number"
+                },
+                "protocolVersion": {
+                    "type": "string"
+                },
+                "representative": {
+                    "type": "string"
+                },
+                "systemLoad": {
+                    "type": "number"
+                },
+                "systemUptime": {
+                    "type": "string"
+                },
+                "totalMem": {
+                    "type": "number"
+                },
+                "uncheckedBlocks": {
+                    "type": "number"
+                },
+                "usedMem": {
+                    "type": "number"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "delegatorsCount",
+                "online",
+                "weight"
+            ],
+            "type": "object"
+        },
+        "OnlineRepresentativeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address"
+            ],
+            "type": "object"
+        }
+    }
+}
+

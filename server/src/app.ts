@@ -1,8 +1,8 @@
 const moduleAlias = require('module-alias');
+moduleAlias.addAlias('@app/api', __dirname + '/api');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
-moduleAlias.addAlias('@app/services', __dirname + '/services');
-moduleAlias.addAlias('@app/types', __dirname + '/types');
+moduleAlias.addAlias('@app/util', __dirname + '/util');
 
 import * as express from 'express';
 import * as cors from 'cors';
@@ -19,31 +19,18 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json()); //utilizes the body-parser package
 
-import { AppCache, IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST } from '@app/config';
+import {IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST} from '@app/config';
 import {
-    cacheKnownAccounts,
-    cacheNetworkStats,
-    cachePriceData,
-    getAccountInsights,
-    getAccountOverview,
-    getAliases,
-    getBlockInfo,
-    getConfirmedTransactions,
-    getNodeStats,
-    getOnlineReps,
-    getPeerVersions,
-    getPendingTransactions,
-    getQuorum,
-    getRepresentativeUptime,
-    getRichList,
-    getSupply,
-    LOG_INFO,
-    parseRichListFromFile,
-    sleep,
     getLargeReps,
-    getRepresentatives,
     getMonitoredReps,
-} from '@app/services';
+    getOnlineReps,
+    getRepresentatives,
+    getAliasedRepresentatives,
+    getKnownAccounts
+} from '@app/api';
+
+import {LOG_INFO, sleep} from "@app/util";
+
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -55,14 +42,6 @@ const corsOptions = {
     },
 };
 
-const sendCached = (res, noCacheMethod: () => Promise<void>, cacheKey: keyof AppCache): void => {
-    AppCache[cacheKey]
-        ? res.send(JSON.stringify(AppCache[cacheKey]))
-        : noCacheMethod()
-              .then(() => res.send(JSON.stringify(AppCache[cacheKey])))
-              .catch((err) => res.status(500).send(JSON.stringify(err)));
-};
-
 app.use(cors(corsOptions));
 
 /* Real time results */
@@ -70,28 +49,10 @@ app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(re
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/aliased`, (req, res) => getAliasedRepresentatives(req, res));
+app.get(`/${PATH_ROOT}/v1/accounts/known`, (req, res) => getKnownAccounts(req, res));
 
-app.get(`/${PATH_ROOT}/accounts-balance`, (req, res) => getRichList(req, res));
-app.get(`/${PATH_ROOT}/account-overview/*`, (req, res) => getAccountOverview(req, res));
-app.get(`/${PATH_ROOT}/aliases`, (req, res) => getAliases(req, res));
-app.get(`/${PATH_ROOT}/block/*`, (req, res) => getBlockInfo(req, res));
-app.get(`/${PATH_ROOT}/confirmed-transactions`, (req, res) => getConfirmedTransactions(req, res));
-app.get(`/${PATH_ROOT}/insights/*`, (req, res) => getAccountInsights(req, res));
-app.get(`/${PATH_ROOT}/node`, (req, res) => getNodeStats(req, res));
 app.get(`/${PATH_ROOT}/online-reps`, (req, res) => getOnlineReps(req, res));
-app.get(`/${PATH_ROOT}/peer-versions`, (req, res) => getPeerVersions(req, res));
-app.get(`/${PATH_ROOT}/pending-transactions`, (req, res) => getPendingTransactions(req, res));
-app.get(`/${PATH_ROOT}/representative-uptime/*`, (req, res) => getRepresentativeUptime(req, res));
-app.get(`/${PATH_ROOT}/quorum`, (req, res) => getQuorum(req, res));
-app.get(`/${PATH_ROOT}/supply`, (req, res) => getSupply(req, res));
-
-/* Cached Results */
-app.get(`/${PATH_ROOT}/accounts-distribution`, (req, res) =>
-    sendCached(res, parseRichListFromFile, 'accountDistributionStats')
-);
-app.get(`/${PATH_ROOT}/known-accounts`, (req, res) => sendCached(res, cacheKnownAccounts, 'knownAccounts'));
-app.get(`/${PATH_ROOT}/network-stats`, (req, res) => sendCached(res, cacheNetworkStats, 'networkStats'));
-app.get(`/${PATH_ROOT}/price`, (req, res) => sendCached(res, cachePriceData, 'priceData'));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);

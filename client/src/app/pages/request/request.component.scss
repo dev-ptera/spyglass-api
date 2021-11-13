@@ -36,13 +36,14 @@ $splitScreenCutoff: 1850px;
 
     .section-title {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         margin-top: 64px;
         font-size: 34px;
     }
     &.sm .section-title {
         margin-top: 32px;
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .section-body {
@@ -50,11 +51,10 @@ $splitScreenCutoff: 1850px;
         padding: 16px;
         margin-top: 32px;
         font-family: monospace;
-        transition: all 3s;
+        //transition: all 300ms;
     }
     &.sm .section-body {
         margin-top: 16px;
-        margin-bottom: 64px;
     }
 }
 
@@ -63,6 +63,11 @@ $splitScreenCutoff: 1850px;
     box-sizing: border-box;
     margin-right: 48px;
     margin-bottom: 16px;
+}
+.section-body.sm .input-option {
+    width: 80px;
+    margin-right: 8px;
+    font-size: 16px;
 }
 
 .property-line {
@@ -74,28 +79,34 @@ $splitScreenCutoff: 1850px;
     display: inline-flex;
     margin-left: 16px;
 }
+.section-body.sm .prop-name {
+    font-size: 12px;
+}
 
 .response-container {
     overflow-y: scroll;
-    max-height: 65vh;
+    max-height: 60vh;
     @media screen and (max-width: $splitScreenCutoff) {
         max-height: 40vh;
     }
 }
-
 
 .send-button {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100px;
+    height: 40px;
+    &.sm {
+        height: 32px;
+    }
     $duration: 200ms;
     $animationTimingFunction: ease-out;
     .button-text-container {
         animation: fadeInAnimation $duration $animationTimingFunction;
-         &.isLoading {
-             display: none;
-         }
+        &.isLoading {
+            display: none;
+        }
     }
     .spinner-container {
         animation: fadeInAnimation $duration $animationTimingFunction;
@@ -113,7 +124,6 @@ $splitScreenCutoff: 1850px;
         }
     }
 }
-
 
 @keyframes fadeInAnimation {
     0%,

@@ -23,7 +23,7 @@ export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
-    navItems = [APP_NAV_ITEMS.representative, APP_NAV_ITEMS.supply, APP_NAV_ITEMS.network];
+    navItems = APP_NAV_ITEMS;
 
     scrollEl: Element;
 
@@ -81,13 +81,12 @@ export class NavigationComponent {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const url = route.urlAfterRedirects;
-                for (const route in APP_NAV_ITEMS) {
-                    const routeObj = APP_NAV_ITEMS[route];
-                    if (this.matchesRoute(url, routeObj)) {
+                for (const route of APP_NAV_ITEMS) {
+                    if (this.matchesRoute(url, route)) {
                         return;
                     }
-                    for (const child of routeObj.children || []) {
-                        if (this.matchesRoute(url, routeObj, child)) {
+                    for (const child of route.children || []) {
+                        if (this.matchesRoute(url, route, child)) {
                             return;
                         }
                     }

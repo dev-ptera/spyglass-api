@@ -30,11 +30,16 @@ export const repRootNavItem: NavItem = {
     route: 'root',
 };
 
+export const repAliasNavItem: NavItem = {
+    title: 'Alias',
+    route: 'aliased',
+};
+
 export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
     icon: 'how_to_vote',
-    children: [repRootNavItem, repLargeNavItem, repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
+    children: [repRootNavItem, repAliasNavItem, repLargeNavItem, repMonitoredNavItem, repOnlineNavItem, repUptimeNavItem],
 };
 
 const supplyNavItem: NavItem = {
@@ -49,8 +54,19 @@ const networkNavItem: NavItem = {
     icon: 'looks_two',
 };
 
-export const APP_NAV_ITEMS = {
-    representative: repNavItem,
-    supply: supplyNavItem,
-    network: networkNavItem,
+export const knownAccountsRootNavItem: NavItem = {
+    title: 'Root',
+    route: 'root',
 };
+export const knownAccountsAliasNavItem: NavItem = {
+    title: 'Alias',
+    route: 'alias',
+};
+export const knownAccountsNavItem: NavItem = {
+    title: 'Known Accounts',
+    route: 'known_accounts',
+    icon: 'person',
+    children: [knownAccountsRootNavItem, knownAccountsAliasNavItem],
+};
+
+export const APP_NAV_ITEMS = [repNavItem, supplyNavItem, networkNavItem, knownAccountsNavItem];
