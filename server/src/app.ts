@@ -26,7 +26,8 @@ import {
     getOnlineReps,
     getRepresentatives,
     getAliasedRepresentatives,
-    getKnownAccounts
+    getKnownAccounts,
+    LargeRepresentativesConfig,
 } from '@app/api';
 
 import {LOG_INFO, sleep} from "@app/util";
@@ -43,7 +44,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));

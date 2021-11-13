@@ -1,25 +1,14 @@
 import { NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
-import { populateDelegatorsCount } from './representatives-utils';
-import {LargeRepresentativeDto} from "@app/api";
 import {LOG_INFO} from "@app/util";
+import {LargeRepresentativeDto, populateDelegatorsCount } from "@app/api";
+import * as LargeRepresentativesConfig from './config';
 
-/* Defaults */
-const DEFAULT_MIN_WEIGHT = 100000;
-const DEFAULT_INCLUDE_DELEGATORS_COUNT = false;
-
-/* API Restrictions */
-const MINIMUM_MIN_WEIGHT = 1000;
-
-
-type LargeRepresentativesBodyParameter = {
-    minimumWeight: number;
-    maximumWeight: number;
-    includeDelegatorCount: boolean;
-};
+type RequestBody = LargeRepresentativesConfig.RequestBody;
+const DEFAULT_BODY = LargeRepresentativesConfig.DEFAULT_BODY;
 
 export const getLargeRepsPromise = async (
-    params: LargeRepresentativesBodyParameter
+    params: RequestBody
 ): Promise<LargeRepresentativeDto[]> => {
 
     // Representative data is returned with weight descending.
@@ -66,27 +55,17 @@ export const getLargeRepsPromise = async (
  */
 export const getLargeReps = async (req, res): Promise<LargeRepresentativeDto[]> => {
     const start = LOG_INFO('Refreshing Large Reps');
-    const body = req.body as LargeRepresentativesBodyParameter;
-
-    // minimumWeight
-    let minimumWeight = Number(body.minimumWeight || DEFAULT_MIN_WEIGHT);
-    minimumWeight = Math.max(MINIMUM_MIN_WEIGHT, minimumWeight);
-
-    // maximumWeight
-    let maximumWeight = Number(body.maximumWeight || undefined);
-
-    // delegators
-    let includeDelegatorCount: boolean = body.includeDelegatorCount;
-    if (includeDelegatorCount === undefined) {
-        includeDelegatorCount = DEFAULT_INCLUDE_DELEGATORS_COUNT;
+    const body = req.body as RequestBody;
+    if (body.maximumWeight === undefined) {
+        body.maximumWeight = DEFAULT_BODY.maximumWeight
     }
-
-    const largeReps = await getLargeRepsPromise({
-        includeDelegatorCount,
-        minimumWeight,
-        maximumWeight,
-    });
-
+    if (body.minimumWeight === undefined) {
+        body.minimumWeight = DEFAULT_BODY.minimumWeight;
+    }
+    if (body.includeDelegatorCount === undefined) {
+        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
+    }
+    const largeReps = await getLargeRepsPromise(body);
     res.send(largeReps);
     LOG_INFO('Large Reps Updated', start);
     return largeReps;

@@ -4,4 +4,4 @@ export * from './KnownAccountDto';
 export * from './LargeRepresentativeDto';
 export * from './MonitoredRepresentativeDto';
 export * from './OnlineRepresentativeDto';
-
+export * from './RequestBody';

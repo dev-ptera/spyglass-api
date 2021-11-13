@@ -3,8 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
-import { RequestBodyParameters } from '../../doc-config/request-params';
-import { ViewportService } from '../../services/viewport.service';
 // @ts-ignore
 import ApiSchema from '../../doc-config/schema.json';
 
@@ -16,7 +14,7 @@ import ApiSchema from '../../doc-config/schema.json';
 export class RequestComponent {
     routeListener: Subscription;
     requestPath: string;
-    requestBodyParameters: Array<RequestBodyParameters>;
+    requestBodyParameters: Array<any>;
     requestResponse: any;
     requestResponseType: any;
     isLoading = false;
@@ -40,7 +38,7 @@ export class RequestComponent {
                 for (const requestPage of apiDocumentationPages) {
                     if (url === `/${requestPage.route}`) {
                         this.requestPath = requestPage.apiPath;
-                        this.requestBodyParameters = requestPage.requestParameters;
+                        this.requestBodyParameters = requestPage.knobs;
                         this.createResponseType(requestPage.responseSchema);
                         this.requestType = requestPage.requestType;
 
@@ -55,7 +53,7 @@ export class RequestComponent {
         });
     }
 
-    /** Reading from the JSON schema found in the doc-config folder, creates a displayable response object. */
+    /** Reading from the JSON schema found in the doc-service-config folder, creates a displayable response object. */
     createResponseType(dtoType: string): void {
         let isArrray = false;
         if (dtoType && dtoType.includes('[]')) {

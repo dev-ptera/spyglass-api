@@ -1,7 +1,7 @@
 module.exports =  {
         root: true,
         parser:  '@typescript-eslint/parser',
-        extends:  [ '@pxblue/eslint-doc-config/ts' ],
+        extends:  [ '@pxblue/eslint-doc-service-config/ts' ],
         parserOptions:  {
             project: "./tsconfig.json",
         },
