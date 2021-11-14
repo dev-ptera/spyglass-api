@@ -1,6 +1,21 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "AccountAliasDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "alias": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "alias"
+            ],
+            "type": "object"
+        },
         "AliasedRepresentativeDto": {
             "properties": {
                 "address": {
@@ -77,16 +92,7 @@
                     ],
                     "type": "object"
                 },
-                "confirmedBlocks": {
-                    "type": "number"
-                },
                 "currentBlock": {
-                    "type": "number"
-                },
-                "customMonitorPageUrl": {
-                    "type": "string"
-                },
-                "delegatorsCount": {
                     "type": "number"
                 },
                 "ip": {
@@ -107,17 +113,11 @@
                 "peers": {
                     "type": "number"
                 },
-                "protocolVersion": {
-                    "type": "string"
-                },
                 "representative": {
                     "type": "string"
                 },
                 "systemLoad": {
                     "type": "number"
-                },
-                "systemUptime": {
-                    "type": "string"
                 },
                 "totalMem": {
                     "type": "number"
@@ -137,8 +137,20 @@
             },
             "required": [
                 "address",
-                "delegatorsCount",
+                "cementedBlocks",
+                "currentBlock",
+                "ip",
+                "location",
+                "name",
+                "nodeUptimeStartup",
                 "online",
+                "peers",
+                "representative",
+                "systemLoad",
+                "totalMem",
+                "uncheckedBlocks",
+                "usedMem",
+                "version",
                 "weight"
             ],
             "type": "object"
@@ -151,6 +163,112 @@
             },
             "required": [
                 "address"
+            ],
+            "type": "object"
+        },
+        "RepresentativeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "delegatorsCount": {
+                    "type": "number"
+                },
+                "isOnline": {
+                    "type": "boolean"
+                },
+                "isPrincipal": {
+                    "type": "boolean"
+                },
+                "nodeMonitorStats": {
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "cementedBlocks": {
+                            "type": "number"
+                        },
+                        "confirmationInfo": {
+                            "properties": {
+                                "average": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "average"
+                            ],
+                            "type": "object"
+                        },
+                        "currentBlock": {
+                            "type": "number"
+                        },
+                        "ip": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "nodeUptimeStartup": {
+                            "type": "number"
+                        },
+                        "online": {
+                            "type": "boolean"
+                        },
+                        "peers": {
+                            "type": "number"
+                        },
+                        "representative": {
+                            "type": "string"
+                        },
+                        "systemLoad": {
+                            "type": "number"
+                        },
+                        "totalMem": {
+                            "type": "number"
+                        },
+                        "uncheckedBlocks": {
+                            "type": "number"
+                        },
+                        "usedMem": {
+                            "type": "number"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "weight": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "address",
+                        "cementedBlocks",
+                        "currentBlock",
+                        "ip",
+                        "location",
+                        "name",
+                        "nodeUptimeStartup",
+                        "online",
+                        "peers",
+                        "representative",
+                        "systemLoad",
+                        "totalMem",
+                        "uncheckedBlocks",
+                        "usedMem",
+                        "version",
+                        "weight"
+                    ],
+                    "type": "object"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "weight"
             ],
             "type": "object"
         }

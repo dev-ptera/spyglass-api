@@ -1,3 +1,4 @@
+
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/api', __dirname + '/api');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
@@ -27,6 +28,7 @@ import {
     getRepresentatives,
     getAliasedRepresentatives,
     getKnownAccounts,
+    getAccountAliases,
 } from '@app/api';
 
 import {LOG_INFO, sleep} from "@app/util";
@@ -48,8 +50,10 @@ app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(re
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/aliased`, (req, res) => getAliasedRepresentatives(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
+
 app.get(`/${PATH_ROOT}/v1/accounts/known`, (req, res) => getKnownAccounts(req, res));
+app.get(`/${PATH_ROOT}/v1/accounts/aliases`, (req, res) => getAccountAliases(req, res));
 
 app.get(`/${PATH_ROOT}/online-reps`, (req, res) => getOnlineReps(req, res));
 

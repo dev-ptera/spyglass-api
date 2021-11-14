@@ -55,19 +55,30 @@ export class RequestComponent {
 
     /** Reading from the JSON schema found in the doc-service-config folder, creates a displayable response object. */
     createResponseType(dtoType: string): void {
-        let isArrray = false;
+        let isArray = false;
         if (dtoType && dtoType.includes('[]')) {
-            isArrray = true;
+            isArray = true;
             dtoType = dtoType.split('[]')[0];
+        }
+        if (!ApiSchema || !ApiSchema.definitions || !ApiSchema.definitions[dtoType]) {
+            return;
         }
         const responseType = {};
         const properties = ApiSchema.definitions[dtoType].properties;
         const requiredProps = ApiSchema.definitions[dtoType].required;
+
         for (const prop in properties) {
             const isRequired = requiredProps.includes(prop);
-            responseType[`${prop}${isRequired ? '' : '?'}`] = properties[prop].type;
+            const topLevelAttribute = `${prop}${isRequired ? '' : '?'}`;
+            responseType[topLevelAttribute] = properties[prop].type;
+            if ( properties[prop].properties) {
+                responseType[topLevelAttribute] = {};
+            } // This can be refactored to be slick, maybe recursive.
+            for (const nestedProp in properties[prop].properties) {
+                responseType[topLevelAttribute][nestedProp] = properties[prop].properties[nestedProp].type;
+            }
         }
-        this.requestResponseType = isArrray ? { array: responseType } : responseType;
+        this.requestResponseType = isArray ? { array: responseType } : responseType;
     }
 
     sendRequest(): void {

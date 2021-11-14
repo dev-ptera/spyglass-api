@@ -9,7 +9,7 @@ import {
     repRootNavItem,
 } from '../navigation/nav-items';
 import {Knob} from "./knobs/Knob";
-import {LARGE_REPRESENTATIVES_KNOBS} from "./knobs/large-representatives.knobs";
+import {LARGE_REPRESENTATIVES_KNOBS, ROOT_REPRESENTATIVES_KNOBS} from "./knobs/representatives.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -21,13 +21,13 @@ export const apiDocumentationPages: Array<{
     {
         route: `${repNavItem.route}/${repRootNavItem.route}`,
         apiPath: 'representatives',
-        responseSchema: undefined,
-        knobs: [],
+        responseSchema: 'RepresentativeDto[]',
+        knobs: ROOT_REPRESENTATIVES_KNOBS,
         requestType: 'POST',
     },
     {
         route: `${repNavItem.route}/${repAliasNavItem.route}`,
-        apiPath: 'representatives/aliased',
+        apiPath: 'representatives/aliases',
         responseSchema: 'AliasedRepresentativeDto[]',
         knobs: [],
         requestType: 'GET',
@@ -69,8 +69,8 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${knownAccountsNavItem.route}/${knownAccountsAliasNavItem.route}`,
-        apiPath: 'knownAccounts/alias',
-        responseSchema: undefined,
+        apiPath: 'accounts/aliases',
+        responseSchema: 'AccountAliasDto[]',
         knobs: [],
         requestType: 'GET',
     },

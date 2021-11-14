@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import {MonitoredRepresentativeDto, populateDelegatorsCount, sortMonitoredRepsByName} from "@app/api";
+import {MonitoredRepresentativeDto, sortMonitoredRepsByName} from "@app/api";
 import {LOG_ERR, LOG_INFO} from "@app/util";
 
-export type PeerMonitorStats = {
+type PeerMonitorStats = {
     nanoNodeAccount: string;
     nanoNodeName: string;
     version: string;
@@ -27,20 +27,6 @@ export type PeerMonitorStats = {
     nodeLocation: string;
 } & { ip: string };
 
-
-/** Some monitored representatives will require their representative page to not link redirectly to the statistics page.
- *  Resolve these custom reps here.
- * */
-const setCustomMonitorPageUrl = (rep: PeerMonitorStats): string => {
-    // TODO: This part of this service is just horribly unreadable.  Figure this out later.
-    if (!rep || !rep.ip) {
-        return undefined;
-    }
-    if (rep.ip.includes('node.nanners.cc')) {
-        return '' + ''; /// ??? Wtf am I doing here?
-    }
-    // TODO: Creeper
-};
 
 /** Given either an IP or HTTP address of a node monitor, returns the address used to lookup node stats. */
 export const getMonitoredUrl = (url: string): string => {
@@ -91,41 +77,33 @@ const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepr
     }
 
     for (const rep of Array.from(uniqueMonitors.values())) {
-        delegatorsCountMap.set(rep.nanoNodeAccount, { delegatorsCount: 0 });
         groomedDetails.push({
             address: rep.nanoNodeAccount,
             representative: rep.repAccount,
             weight: rep.votingWeight,
-            delegatorsCount: 0, // This is populated by an rpc command further down.
             name: rep.nanoNodeName,
             peers: Number(rep.numPeers),
             online: true,
             cementedBlocks: rep.cementedBlocks,
             confirmationInfo: rep.confirmationInfo,
             ip: rep.ip,
-            customMonitorPageUrl: setCustomMonitorPageUrl(rep),
             version: rep.version,
             location: rep.nodeLocation,
             nodeUptimeStartup: rep.nodeUptimeStartup,
-            confirmedBlocks: Number(rep.confirmedBlocks),
             uncheckedBlocks: Number(rep.uncheckedBlocks),
             currentBlock: Number(rep.currentBlock),
             systemLoad: rep.systemLoad,
             totalMem: rep.totalMem,
-            usedMem: rep.usedMem,
+            usedMem: rep.usedMem
         });
     }
-
-    // Populate the delegators count to each rep.
-    await populateDelegatorsCount(delegatorsCountMap).catch((err) => Promise.reject(err));
-    groomedDetails.map((dto) => (dto.delegatorsCount = delegatorsCountMap.get(dto.address).delegatorsCount));
     return Promise.resolve(groomedDetails);
 };
 
 /** Sample: [::ffff:178.128.46.252]:7071 */
 const extractIpAddress = (dirtyIp: string): string => dirtyIp.replace('::ffff:', '').match(/(?<=\[).+?(?=\])/)[0];
 
-/** Fetches monitored peer details, then sends groomed response-types. */
+/** Fetches monitored peer details and returns MonitoredRepresentativeDto[]. */
 const getRepDetails = (rpcData: Peers): Promise<MonitoredRepresentativeDto[]> => {
     const peerMonitorStatsPromises: Array<Promise<PeerMonitorStats>> = [];
     const peerIpAddresses = new Set<string>();
@@ -137,11 +115,10 @@ const getRepDetails = (rpcData: Peers): Promise<MonitoredRepresentativeDto[]> =>
         peerMonitorStatsPromises.push(getPeerMonitorStats(url));
     });
 
-    // Add all peer ips to the list of ips to fetch
+    // Add all peer ips to the list of ips to fetch.
     for (const dirtyIp in rpcData.peers) {
         const ip = extractIpAddress(dirtyIp);
-        const rpcDetails = rpcData.peers[dirtyIp];
-        if (ip && rpcDetails && !peerIpAddresses.has(ip)) {
+        if (!peerIpAddresses.has(ip)) {
             peerIpAddresses.add(ip);
             peerMonitorStatsPromises.push(getPeerMonitorStats(ip));
         }
@@ -161,7 +138,8 @@ export const getMonitoredRepsPromise = async (): Promise<MonitoredRepresentative
             .then((peers: Peers) => {
                 getRepDetails(peers)
                     .then((repDetails: MonitoredRepresentativeDto[]) => {
-                        resolve(sortMonitoredRepsByName(repDetails));
+                        const sorted = sortMonitoredRepsByName(repDetails);
+                        resolve(sorted);
                     })
                     .catch((err) => reject(LOG_ERR('getMonitoredReps', err)));
             })

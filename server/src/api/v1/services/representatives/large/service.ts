@@ -62,6 +62,7 @@ export const getLargeReps = async (req, res): Promise<LargeRepresentativeDto[]> 
     if (body.minimumWeight === undefined) {
         body.minimumWeight = DEFAULT_BODY.minimumWeight;
     }
+    body.minimumWeight = Math.max(body.minimumWeight, 1000);
     if (body.includeDelegatorCount === undefined) {
         body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
     }

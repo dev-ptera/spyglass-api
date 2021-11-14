@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
-import {MANUAL_ACCOUNTS} from './manual-accounts';
 import {KnownAccountDto} from "@app/api";
 import {LOG_ERR, LOG_INFO} from "@app/util";
+import {MANUAL_ACCOUNTS} from "../manual-accounts";
 
 /** Makes API call to Kirby's API to fetch known accounts list. */
 const getRemoveKnownAccounts = (): Promise<KnownAccountDto[]> =>

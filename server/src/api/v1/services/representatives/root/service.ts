@@ -1,95 +1,114 @@
-import { NANO_CLIENT } from '@app/config';
-import { rawToBan } from 'banano-unit-converter';
-import {defineBodyParams, LOG_INFO} from "@app/util";
-import {LargeRepresentativeDto, populateDelegatorsCount} from "@app/api";
+import {NANO_CLIENT} from '@app/config';
+import {rawToBan} from 'banano-unit-converter';
+import {LOG_INFO} from "@app/util";
+import {
+    getMonitoredRepsPromise,
+    getOnlineRepsPromise,
+    getPrincipalRequirementPromise,
+    populateDelegatorsCount,
+    RepresentativeDto
+} from "@app/api";
+import * as RootRepresentativesConfig from './config';
 
-const DEFAULT_MIN_WEIGHT = 100000;
-const MINIMUM_MIN_WEIGHT = 1000;
-const DEFAULT_INCLUDE_DELEGATORS_COUNT = false;
+type RequestBody = RootRepresentativesConfig.RequestBody;
+const DEFAULT_BODY = RootRepresentativesConfig.DEFAULT_BODY;
 
 /**
  * Gets the top 5000 representatives & filters out smaller ones.
  */
-export const getRepresentatives = async (req, res): Promise<LargeRepresentativeDto[]> => {
-    const start = LOG_INFO('Refreshing Large Reps');
+export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]> => {
+    const start = LOG_INFO('Refreshing Root Reps');
 
-    const BODY_PARAMS = defineBodyParams([
-        'includeDelegatorCount',
-        'includeNodeMonitorStats',
-        'includeUptimeStats',
-        'isOnline',
-        'isPrincipal',
-        'minimumWeight',
-        'maximumWeight',
-    ]);
-
-    // minimumWeight
-    let minWeightToBeCounted = Number(req.body[BODY_PARAMS.minimumWeight] || DEFAULT_MIN_WEIGHT);
-    minWeightToBeCounted = Math.max(MINIMUM_MIN_WEIGHT, minWeightToBeCounted);
-
-    // maximumWeight
-    const maxWeightToBeCounted = Number(req.body[BODY_PARAMS.maximumWeight]);
-
-    // includeDelegatorsCount
-    let includeDelegatorCount: boolean = req.body[BODY_PARAMS.includeDelegatorCount];
-    if (includeDelegatorCount === undefined) {
-        includeDelegatorCount = DEFAULT_INCLUDE_DELEGATORS_COUNT;
+    const body = req.body as RequestBody;
+    if (body.maximumWeight === undefined) {
+        body.maximumWeight = DEFAULT_BODY.maximumWeight
+    }
+    if (body.minimumWeight === undefined) {
+        body.minimumWeight = DEFAULT_BODY.minimumWeight;
+    }
+    body.minimumWeight = Math.max(body.minimumWeight, 1000);
+    if (body.includeDelegatorCount === undefined) {
+        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
+    }
+    if (body.isPrincipal === undefined) {
+        body.isPrincipal = DEFAULT_BODY.isPrincipal
+    }
+    if (body.isOnline === undefined) {
+        body.isOnline = DEFAULT_BODY.isOnline
+    }
+    if (body.includeUptimeStats === undefined) {
+        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats
+    }
+    if (body.includeNodeMonitorStats === undefined) {
+        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats
     }
 
-    // includeMonitorStats
-    let includeMonitorStats: boolean = req.body[BODY_PARAMS.includeMonitorStats];
-
-    // includeUptimeStats
-    let includeUptimeStats: boolean = req.body[BODY_PARAMS.includeUptimeStats];
-
-    // isOnline
-    let isOnline: boolean = req.body[BODY_PARAMS.isOnline];
-
-    // isPrincipal
-    let isPrincipal: boolean = req.body[BODY_PARAMS.isPrincipal];
-
-    console.log(maxWeightToBeCounted);
-    console.log(minWeightToBeCounted);
-    console.log(includeMonitorStats);
-    console.log(includeUptimeStats);
-    console.log(isPrincipal);
-    console.log(isOnline);
-    console.log(isPrincipal);
-
     const rpcData = await NANO_CLIENT.representatives(5000, true);
-    const largeRepMap = new Map<string, Partial<LargeRepresentativeDto>>();
+    const repMap = new Map<string, Partial<RepresentativeDto>>();
+
+    console.log(body);
 
     // Add all reps with high-enough weight to a map.
     for (const address in rpcData.representatives) {
         const raw = rpcData.representatives[address];
         const weight = Math.round(Number(rawToBan(raw)));
-        if (maxWeightToBeCounted > 0 && weight <= maxWeightToBeCounted) {
-            largeRepMap.set(address, { weight });
+        if (body.maximumWeight > 0 && weight <= body.maximumWeight) {
+            repMap.set(address, { weight });
         }
-        if (weight >= minWeightToBeCounted) {
-            largeRepMap.set(address, { weight });
+        if (weight >= body.minimumWeight) {
+            repMap.set(address, { weight });
         } else {
             break;
         }
     }
 
+    // Filter map to only include Online Representatives
+    if (body.isOnline) {
+        const onlineReps = await getOnlineRepsPromise();
+        const onlineAddresses = new Set<string>();
+        onlineReps.map((rep) => onlineAddresses.add(rep));
+        for (const address of repMap.keys()) {
+            if (onlineAddresses.has(address)) {
+                repMap.get(address).isOnline = true;
+            } else {
+                repMap.delete(address);
+            }
+        }
+    }
+
+    // Filter map to only include Principal Representatives
+    if (body.isPrincipal) {
+        const principalWeightRequirement = await getPrincipalRequirementPromise();
+        for (const address of repMap.keys()) {
+            if (repMap.get(address).weight >= principalWeightRequirement) {
+                repMap.get(address).isPrincipal = true;
+            } else {
+                repMap.delete(address);
+            }
+        }
+    }
+
     // Adds delegatorsCount to each weightedRep.
-    if (includeDelegatorCount) {
-        await populateDelegatorsCount(largeRepMap);
+    if (body.includeDelegatorCount) {
+        await populateDelegatorsCount(repMap);
     }
 
     // Construct large rep response-types dto
-    const largeReps: LargeRepresentativeDto[] = [];
-    for (const address of largeRepMap.keys()) {
-        const rep = largeRepMap.get(address);
-        largeReps.push({
+    const reps: RepresentativeDto[] = [];
+    for (const address of repMap.keys()) {
+        const rep = repMap.get(address);
+        reps.push({
             address,
             weight: rep.weight,
             delegatorsCount: rep.delegatorsCount,
         });
     }
 
-    res.send(largeReps);
-    LOG_INFO('Large Reps Updated', start);
-    return largeReps;
+    if (body.includeNodeMonitorStats) {
+        const nodeMonitorStats = await getMonitoredRepsPromise();
+    }
+
+    res.send(reps);
+    LOG_INFO('Root Reps Updated', start);
+    return reps;
 };

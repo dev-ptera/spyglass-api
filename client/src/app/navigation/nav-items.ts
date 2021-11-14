@@ -64,7 +64,7 @@ export const knownAccountsAliasNavItem: NavItem = {
 };
 export const knownAccountsNavItem: NavItem = {
     title: 'Known Accounts',
-    route: 'known_accounts',
+    route: 'known-accounts',
     icon: 'person',
     children: [knownAccountsRootNavItem, knownAccountsAliasNavItem],
 };
