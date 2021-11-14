@@ -9,8 +9,7 @@
         "build": "tsc",
         "start": "yarn build && node --max-old-space-size=8192 dist/app.js",
         "prettier": "prettier \"src/**/**.{ts,js}\" --write",
-        "schema": "typescript-json-schema \"src/api/v1/types/*Dto.ts\" * -o ../client/src/app/doc-config/schema.json --required=true",
-        "body": "cp -r src/api/v1/services/**/**/config.ts ../client/src/app/doc-config"
+        "schema": "typescript-json-schema \"src/types/*Dto.ts\" * -o ../client/src/app/doc-config/schema.json --required=true",
     },
     "dependencies": {
         "@dev-ptera/nano-node-rpc": "^2.0.2",

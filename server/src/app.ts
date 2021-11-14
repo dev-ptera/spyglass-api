@@ -1,9 +1,8 @@
-
 const moduleAlias = require('module-alias');
-moduleAlias.addAlias('@app/api', __dirname + '/api');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
-moduleAlias.addAlias('@app/util', __dirname + '/util');
+moduleAlias.addAlias('@app/services', __dirname + '/services');
+moduleAlias.addAlias('@app/types', __dirname + '/types');
 
 import * as express from 'express';
 import * as cors from 'cors';
@@ -20,7 +19,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json()); //utilizes the body-parser package
 
-import {IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST} from '@app/config';
+import { IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST } from '@app/config';
 import {
     getLargeReps,
     getMonitoredReps,
@@ -29,10 +28,9 @@ import {
     getAliasedRepresentatives,
     getKnownAccounts,
     getAccountAliases,
-} from '@app/api';
-
-import {LOG_INFO, sleep} from "@app/util";
-
+    LOG_INFO,
+    sleep,
+} from '@app/services';
 
 const corsOptions = {
     origin: function (origin, callback) {

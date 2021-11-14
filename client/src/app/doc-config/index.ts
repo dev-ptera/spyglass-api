@@ -41,14 +41,14 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
-        apiPath: 'representatives/online',
+        apiPath: 'representatives/online-reps.3',
         responseSchema: 'OnlineRepresentativeDto[]',
         knobs: [],
         requestType: 'GET',
     },
     {
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
-        apiPath: 'representatives/online',
+        apiPath: 'representatives/online-reps.3',
         responseSchema: 'OnlineRepresentativeDto[]',
         knobs: [],
         requestType: 'GET',
