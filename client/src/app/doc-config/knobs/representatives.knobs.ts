@@ -16,6 +16,14 @@ export const LARGE_REPRESENTATIVES_KNOBS: Array<Knob> = [
     },
 ];
 
+export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
+    {
+        propertyName: 'representatives',
+        propertyType: 'string',
+    },
+];
+
+
 export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'includeDelegatorCount',

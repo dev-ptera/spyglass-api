@@ -14,7 +14,7 @@ import ApiSchema from '../../doc-config/schema.json';
 export class RequestComponent {
     routeListener: Subscription;
     requestPath: string;
-    requestBodyParameters: Array<any>;
+    requestKnobs: Array<any>;
     requestResponse: any;
     requestResponseType: any;
     isLoading = false;
@@ -38,12 +38,12 @@ export class RequestComponent {
                 for (const requestPage of apiDocumentationPages) {
                     if (url === `/${requestPage.route}`) {
                         this.requestPath = requestPage.apiPath;
-                        this.requestBodyParameters = requestPage.knobs;
+                        this.requestKnobs = requestPage.knobs;
                         this.createResponseType(requestPage.responseSchema);
                         this.requestType = requestPage.requestType;
 
                         // Set parameter values (editable by user)
-                        for (const param of this.requestBodyParameters) {
+                        for (const param of this.requestKnobs) {
                             param.value = param.defaultValue;
                         }
                         break;
@@ -108,7 +108,7 @@ export class RequestComponent {
 
     createRequestBody(): Object {
         const body = {};
-        for (const param of this.requestBodyParameters) {
+        for (const param of this.requestKnobs) {
             if (
                 param.value === undefined ||
                 (param.value === false && (param.defaultValue === undefined || param.defaultValue === false))

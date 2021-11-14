@@ -35,8 +35,8 @@
         <ng-container *ngIf="requestType === 'POST'">
             <div class="section-title">Request Knobs</div>
             <div class="section-body" responsive>
-                <div *ngIf="!requestBodyParameters || requestBodyParameters.length === 0">N/A</div>
-                <div *ngFor="let requestParam of requestBodyParameters">
+                <div *ngIf="!requestKnobs || requestKnobs.length === 0">N/A</div>
+                <div *ngFor="let requestParam of requestKnobs">
                     <div class="property-line">
                         <div *ngIf="requestParam.propertyType === 'boolean'">
                             <mat-checkbox

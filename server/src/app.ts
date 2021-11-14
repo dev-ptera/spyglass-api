@@ -30,6 +30,8 @@ import {
     getAccountAliases,
     LOG_INFO,
     sleep,
+    getRepresentativesUptime,
+    getRepresentativeUptime,
 } from '@app/services';
 
 const corsOptions = {
@@ -43,12 +45,15 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
+app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/uptime/*`, (req, res) => getRepresentativeUptime(req, res));
 
 app.get(`/${PATH_ROOT}/v1/accounts/known`, (req, res) => getKnownAccounts(req, res));
 app.get(`/${PATH_ROOT}/v1/accounts/aliases`, (req, res) => getAccountAliases(req, res));

@@ -6,4 +6,5 @@ export * from './LargeRepresentativeDto';
 export * from './MonitoredRepresentativeDto';
 export * from './OnlineRepresentativeDto';
 export * from './RepresentativeDto';
+export * from './RepresentativeUptimeDto';
 export * from './RequestBody';

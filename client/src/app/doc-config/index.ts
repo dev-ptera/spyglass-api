@@ -7,10 +7,14 @@ import {
     repMonitoredNavItem,
     repNavItem,
     repOnlineNavItem,
-    repRootNavItem,
+    repRootNavItem, repUptimeNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
-import { LARGE_REPRESENTATIVES_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
+import {
+    LARGE_REPRESENTATIVES_KNOBS,
+    REPRESENTATIVES_UPTIME_KNOBS,
+    ROOT_REPRESENTATIVES_KNOBS
+} from './knobs/representatives.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -42,17 +46,17 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
-        apiPath: 'representatives/online-reps.3',
+        apiPath: 'representatives/online',
         responseSchema: 'OnlineRepresentativeDto[]',
         knobs: [],
         requestType: 'GET',
     },
     {
-        route: `${repNavItem.route}/${repOnlineNavItem.route}`,
-        apiPath: 'representatives/online-reps.3',
-        responseSchema: 'OnlineRepresentativeDto[]',
-        knobs: [],
-        requestType: 'GET',
+        route: `${repNavItem.route}/${repUptimeNavItem.route}`,
+        apiPath: 'representatives/uptime',
+        responseSchema: 'RepresentativeUptimeDto',
+        knobs: REPRESENTATIVES_UPTIME_KNOBS,
+        requestType: 'POST',
     },
     {
         route: `${repNavItem.route}/${repMonitoredNavItem.route}`,

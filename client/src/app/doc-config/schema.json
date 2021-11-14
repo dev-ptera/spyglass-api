@@ -10,7 +10,10 @@
                     "type": "string"
                 }
             },
-            "required": ["address", "alias"],
+            "required": [
+                "address",
+                "alias"
+            ],
             "type": "object"
         },
         "AliasedRepresentativeDto": {
@@ -22,7 +25,10 @@
                     "type": "string"
                 }
             },
-            "required": ["address", "alias"],
+            "required": [
+                "address",
+                "alias"
+            ],
             "type": "object"
         },
         "KnownAccountDto": {
@@ -43,7 +49,10 @@
                     "type": "string"
                 }
             },
-            "required": ["address", "alias"],
+            "required": [
+                "address",
+                "alias"
+            ],
             "type": "object"
         },
         "LargeRepresentativeDto": {
@@ -58,7 +67,37 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "weight"],
+            "required": [
+                "address",
+                "weight"
+            ],
+            "type": "object"
+        },
+        "LastOutage": {
+            "properties": {
+                "durationMinutes": {
+                    "type": "number"
+                },
+                "offlineDate": {
+                    "type": "string"
+                },
+                "offlineUnixTimestamp": {
+                    "type": "number"
+                },
+                "onlineDate": {
+                    "type": "string"
+                },
+                "onlineUnixTimestamp": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "durationMinutes",
+                "offlineDate",
+                "offlineUnixTimestamp",
+                "onlineDate",
+                "onlineUnixTimestamp"
+            ],
             "type": "object"
         },
         "MonitoredRepresentativeDto": {
@@ -75,7 +114,9 @@
                             "type": "number"
                         }
                     },
-                    "required": ["average"],
+                    "required": [
+                        "average"
+                    ],
                     "type": "object"
                 },
                 "currentBlock": {
@@ -147,12 +188,17 @@
                     "type": "string"
                 }
             },
-            "required": ["address"],
+            "required": [
+                "address"
+            ],
             "type": "object"
         },
         "RepresentativeDto": {
             "properties": {
                 "address": {
+                    "type": "string"
+                },
+                "alias": {
                     "type": "string"
                 },
                 "delegatorsCount": {
@@ -178,7 +224,9 @@
                                     "type": "number"
                                 }
                             },
-                            "required": ["average"],
+                            "required": [
+                                "average"
+                            ],
                             "type": "object"
                         },
                         "currentBlock": {
@@ -248,8 +296,82 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "weight"],
+            "required": [
+                "address",
+                "weight"
+            ],
+            "type": "object"
+        },
+        "RepresentativeUptimeDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "creationDate": {
+                    "type": "string"
+                },
+                "creationUnixTimestamp": {
+                    "type": "number"
+                },
+                "lastOutage": {
+                    "properties": {
+                        "durationMinutes": {
+                            "type": "number"
+                        },
+                        "offlineDate": {
+                            "type": "string"
+                        },
+                        "offlineUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "onlineDate": {
+                            "type": "string"
+                        },
+                        "onlineUnixTimestamp": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "durationMinutes",
+                        "offlineDate",
+                        "offlineUnixTimestamp",
+                        "onlineDate",
+                        "onlineUnixTimestamp"
+                    ],
+                    "type": "object"
+                },
+                "online": {
+                    "type": "boolean"
+                },
+                "uptimePercentDay": {
+                    "type": "number"
+                },
+                "uptimePercentMonth": {
+                    "type": "number"
+                },
+                "uptimePercentSemiAnnual": {
+                    "type": "number"
+                },
+                "uptimePercentWeek": {
+                    "type": "number"
+                },
+                "uptimePercentYear": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "creationDate",
+                "creationUnixTimestamp",
+                "online",
+                "uptimePercentDay",
+                "uptimePercentMonth",
+                "uptimePercentSemiAnnual",
+                "uptimePercentWeek",
+                "uptimePercentYear"
+            ],
             "type": "object"
         }
     }
 }
+

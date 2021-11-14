@@ -26,7 +26,8 @@ type PeerMonitorStats = {
     systemLoad: number;
     nodeUptimeStartup: number;
     nodeLocation: string;
-} & { ip: string };
+    ip: string;
+};
 
 /** Given either an IP or HTTP address of a node monitor, returns the address used to lookup node stats. */
 export const getMonitoredUrl = (url: string): string => {
@@ -64,7 +65,6 @@ const getPeerMonitorStats = (url: string): Promise<PeerMonitorStats> =>
  * */
 const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepresentativeDto[]> => {
     const groomedDetails: MonitoredRepresentativeDto[] = [];
-    const delegatorsCountMap = new Map<string, { delegatorsCount: number }>();
 
     // Prune duplicate monitors by address
     const uniqueMonitors = new Set<PeerMonitorStats>();

@@ -1,21 +1,12 @@
 import { NANO_CLIENT } from '@app/config';
-import { ConfirmationQuorumResponse } from '@dev-ptera/nano-node-rpc';
-import { rawToBan } from 'banano-unit-converter';
-import { LOG_ERR, LOG_INFO } from '@app/services';
-
-/** Get online-reps.3 voting weight (BAN) */
-export const getOnlineWeight = (): Promise<number> =>
-    NANO_CLIENT.confirmation_quorum()
-        .then((quorumResponse: ConfirmationQuorumResponse) =>
-            Promise.resolve(Number(rawToBan(quorumResponse.online_stake_total)))
-        )
-        .catch((err) => Promise.reject(LOG_ERR('cacheRepresentatives.getOnlineWeight', err)));
+import {LOG_INFO, writeRepStatistics} from '@app/services';
 
 export const getOnlineRepsPromise = async (): Promise<string[]> => {
     const rpcData = await NANO_CLIENT.representatives_online(false);
     const response: string[] = [];
     for (const rep of rpcData.representatives as string[]) {
         response.push(rep);
+        await writeRepStatistics(rep, true);
     }
     return response;
 };
