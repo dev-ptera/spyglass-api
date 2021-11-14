@@ -1,15 +1,16 @@
 import {
     knownAccountsAliasNavItem,
     knownAccountsNavItem,
-    knownAccountsRootNavItem, repAliasNavItem,
+    knownAccountsRootNavItem,
+    repAliasNavItem,
     repLargeNavItem,
     repMonitoredNavItem,
     repNavItem,
     repOnlineNavItem,
     repRootNavItem,
 } from '../navigation/nav-items';
-import {Knob} from "./knobs/Knob";
-import {LARGE_REPRESENTATIVES_KNOBS, ROOT_REPRESENTATIVES_KNOBS} from "./knobs/representatives.knobs";
+import { Knob } from './knobs/Knob';
+import { LARGE_REPRESENTATIVES_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;

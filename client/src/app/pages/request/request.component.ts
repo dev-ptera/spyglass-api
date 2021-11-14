@@ -71,7 +71,7 @@ export class RequestComponent {
             const isRequired = requiredProps.includes(prop);
             const topLevelAttribute = `${prop}${isRequired ? '' : '?'}`;
             responseType[topLevelAttribute] = properties[prop].type;
-            if ( properties[prop].properties) {
+            if (properties[prop].properties) {
                 responseType[topLevelAttribute] = {};
             } // This can be refactored to be slick, maybe recursive.
             for (const nestedProp in properties[prop].properties) {
@@ -96,7 +96,7 @@ export class RequestComponent {
                 this._ref.detectChanges();
                 const scrollEl = document.getElementsByClassName('mat-sidenav-content')[0];
                 const width = scrollEl.clientWidth;
-                if (width < 1833 ) {
+                if (width < 1833) {
                     scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
                 }
             })

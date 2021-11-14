@@ -10,10 +10,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "address",
-                "alias"
-            ],
+            "required": ["address", "alias"],
             "type": "object"
         },
         "AliasedRepresentativeDto": {
@@ -25,10 +22,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "address",
-                "alias"
-            ],
+            "required": ["address", "alias"],
             "type": "object"
         },
         "KnownAccountDto": {
@@ -49,10 +43,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "address",
-                "alias"
-            ],
+            "required": ["address", "alias"],
             "type": "object"
         },
         "LargeRepresentativeDto": {
@@ -67,10 +58,7 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "address",
-                "weight"
-            ],
+            "required": ["address", "weight"],
             "type": "object"
         },
         "MonitoredRepresentativeDto": {
@@ -87,9 +75,7 @@
                             "type": "number"
                         }
                     },
-                    "required": [
-                        "average"
-                    ],
+                    "required": ["average"],
                     "type": "object"
                 },
                 "currentBlock": {
@@ -161,9 +147,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "address"
-            ],
+            "required": ["address"],
             "type": "object"
         },
         "RepresentativeDto": {
@@ -194,9 +178,7 @@
                                     "type": "number"
                                 }
                             },
-                            "required": [
-                                "average"
-                            ],
+                            "required": ["average"],
                             "type": "object"
                         },
                         "currentBlock": {
@@ -266,12 +248,8 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "address",
-                "weight"
-            ],
+            "required": ["address", "weight"],
             "type": "object"
         }
     }
 }
-
