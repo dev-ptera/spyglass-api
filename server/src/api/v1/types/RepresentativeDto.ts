@@ -7,4 +7,5 @@ export type RepresentativeDto = {
     nodeMonitorStats?: MonitoredRepresentativeDto;
     isOnline?: boolean;
     isPrincipal?: boolean;
+    alias?: string;
 };

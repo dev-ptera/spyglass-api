@@ -26,6 +26,10 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
         propertyType: 'boolean',
     },
     {
+        propertyName: 'includeAlias',
+        propertyType: 'boolean',
+    },
+    {
         propertyName: 'includeUptimeStats',
         propertyType: 'boolean',
     },

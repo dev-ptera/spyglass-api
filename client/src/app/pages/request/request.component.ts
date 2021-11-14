@@ -95,7 +95,10 @@ export class RequestComponent {
                 this.isLoading = false;
                 this._ref.detectChanges();
                 const scrollEl = document.getElementsByClassName('mat-sidenav-content')[0];
-                scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+                const width = scrollEl.clientWidth;
+                if (width < 1833 ) {
+                    scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+                }
             })
             .catch((err: any) => {
                 this.requestResponse = err;

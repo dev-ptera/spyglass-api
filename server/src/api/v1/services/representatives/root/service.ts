@@ -2,6 +2,7 @@ import {NANO_CLIENT} from '@app/config';
 import {rawToBan} from 'banano-unit-converter';
 import {LOG_INFO} from "@app/util";
 import {
+    getAliasedRepresentatives, getAliasedRepsPromise,
     getMonitoredRepsPromise,
     getOnlineRepsPromise,
     getPrincipalRequirementPromise,
@@ -88,9 +89,31 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
         }
     }
 
-    // Adds delegatorsCount to each weightedRep.
+    // Append delegatorsCount to each rep.
     if (body.includeDelegatorCount) {
         await populateDelegatorsCount(repMap);
+    }
+
+    // Append alias to each rep.
+    if (body.includeAlias) {
+        const aliasedReps = await getAliasedRepsPromise();
+        for (const aliasedRep of aliasedReps) {
+            const rep = repMap.get(aliasedRep.address);
+            if (rep) {
+                rep.alias = aliasedRep.alias;
+            }
+        }
+    }
+
+    // Append node monitor stats to each rep.
+    if (body.includeNodeMonitorStats) {
+        const monitoredReps = await getMonitoredRepsPromise();
+        for (const stats of monitoredReps) {
+            const rep = repMap.get(stats.address);
+            if (rep) {
+                rep.nodeMonitorStats = stats;
+            }
+        }
     }
 
     // Construct large rep response-types dto
@@ -100,12 +123,12 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
         reps.push({
             address,
             weight: rep.weight,
+            alias: rep.alias,
             delegatorsCount: rep.delegatorsCount,
+            nodeMonitorStats: rep.nodeMonitorStats,
+            isOnline: rep.isOnline,
+            isPrincipal: rep.isPrincipal,
         });
-    }
-
-    if (body.includeNodeMonitorStats) {
-        const nodeMonitorStats = await getMonitoredRepsPromise();
     }
 
     res.send(reps);
