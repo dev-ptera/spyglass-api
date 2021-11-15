@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "banano-whales": {
+        "spyglass-api": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/banano-whales",
+                        "outputPath": "dist/spyglass-api",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -43,7 +43,7 @@
                                 {
                                     "type": "initial",
                                     "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumError": "2mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
@@ -74,10 +74,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "banano-whales:build:production"
+                            "browserTarget": "spyglass-api:build:production"
                         },
                         "development": {
-                            "browserTarget": "banano-whales:build:development"
+                            "browserTarget": "spyglass-api:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -85,7 +85,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "banano-whales:build"
+                        "browserTarget": "spyglass-api:build"
                     }
                 },
                 "test": {
@@ -111,5 +111,5 @@
             }
         }
     },
-    "defaultProject": "banano-whales"
+    "defaultProject": "spyglass-api"
 }

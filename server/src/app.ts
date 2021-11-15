@@ -21,7 +21,6 @@ app.use(bodyParser.json()); //utilizes the body-parser package
 
 import { IS_PRODUCTION, PATH_ROOT, URL_WHITE_LIST } from '@app/config';
 import {
-    getLargeReps,
     getMonitoredReps,
     getOnlineReps,
     getRepresentatives,
@@ -47,7 +46,6 @@ app.use(cors(corsOptions));
 
 /* Real time results */
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));

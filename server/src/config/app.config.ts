@@ -16,6 +16,8 @@ export const URL_WHITE_LIST = [
     'https://www.banano-whales.web.app',
     'https://yellow-spyglass-dev.web.app',
     'https://www.yellow-spyglass-dev.web.app',
+    'https://spyglass-api.web.app',
+    'https://www.spyglass-api.web.app',
 ];
 
 /** Used to read data from the BANANO node */

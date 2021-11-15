@@ -1,5 +1,5 @@
 {
-    "name": "banano-whales",
+    "name": "spyglass-api",
     "version": "0.0.0",
     "scripts": {
         "start": "ng serve --open --host 0.0.0.0",

@@ -6,3 +6,4 @@ export type KnownAccountDto = {
     type?: string;
     // tags?: 'representative' | 'exchange' | 'developer' | 'faucet' | 'explorer' ;
 };
+
