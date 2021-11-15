@@ -46,15 +46,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 /* Real time results */
-app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/v1/representatives/large`, (req, res) => getLargeReps(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
+app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
+app.post(`/${PATH_ROOT}/representatives/large`, (req, res) => getLargeReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => getOnlineReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
+app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
-app.get(`/${PATH_ROOT}/v1/accounts/known`, (req, res) => getKnownAccounts(req, res));
-app.get(`/${PATH_ROOT}/v1/accounts/aliases`, (req, res) => getAccountAliases(req, res));
+app.get(`/${PATH_ROOT}/accounts/known`, (req, res) => getKnownAccounts(req, res));
+app.get(`/${PATH_ROOT}/accounts/aliases`, (req, res) => getAccountAliases(req, res));
 
 app.get(`/${PATH_ROOT}/online-reps`, (req, res) => getOnlineReps(req, res));
 
