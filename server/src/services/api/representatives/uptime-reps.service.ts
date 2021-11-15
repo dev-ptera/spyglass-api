@@ -4,6 +4,12 @@ import { LOG_ERR } from '@app/services';
 
 type RequestBody = {
     representatives: string[];
+    includePings: boolean;
+};
+
+const DEFAULT_BODY: RequestBody = {
+    representatives: [],
+    includePings: false,
 };
 
 const fs = require('fs');
@@ -32,14 +38,14 @@ const formatDocName = (repAddress: string): string =>
     `src/database/${IS_PRODUCTION ? 'rep-uptime' : 'rep-uptime-dev'}/${repAddress}.json`;
 
 /** Returns data for how long a rep has been online. Either reads from file, or uses internal map if populated. */
-const getRepDoc = async (repAddress: string): Promise< { pings: string }> => {
+const getRepDoc = async (repAddress: string): Promise<{ pings: string }> => {
     //    if (AppCache.dbRepPings.has(repAddress)) {
     //        return AppCache.dbRepPings.get(repAddress);
     //    }
 
     return new Promise(async (resolve) => {
         await fs.readFile(formatDocName(repAddress), 'utf8', (err, data) => {
-            err ? resolve({ pings: ''}) : resolve(JSON.parse(data));
+            err ? resolve({ pings: '' }) : resolve(JSON.parse(data));
         });
     });
 };
@@ -66,7 +72,7 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
         pings = pings.substring(1, pings.length);
     }
     // 1 === ONLINE | 0 === OFFLINE
-    pings = `${pings}${(isOnline ? 1 : 0)}`;
+    pings = `${pings}${isOnline ? 1 : 0}`;
     await writeRepDoc({ pings }, repAddress);
     //  AppCache.dbRepPings.set(repAddress, data);
     return Promise.resolve();
@@ -75,7 +81,11 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
 const minutesToMs = (mins: number): number => mins * 60 * 1000;
 
 /** Given an address and a string that of repPings (only 1s or 0s), calculates uptime statistics. */
-export const calculateUptimeStatistics = (repAddress: string, repPings: string): RepresentativeUptimeDto => {
+export const calculateUptimeStatistics = (
+    repAddress: string,
+    repPings: string,
+    includePings: boolean
+): RepresentativeUptimeDto => {
     const allPings = repPings.split('').reverse() as Ping[];
     const online = allPings[0] === '1';
     let outageDurationMinutes = 0;
@@ -108,14 +118,16 @@ export const calculateUptimeStatistics = (repAddress: string, repPings: string):
     const creationDate = new Date(creationUnixTimestamp).toLocaleDateString();
     const uptimeDto: RepresentativeUptimeDto = {
         address: repAddress,
+        trackingStartDate: creationDate,
+        trackingStartUnixTimestamp: creationUnixTimestamp,
         online,
-        uptimePercentDay: calculateUptimePercentage(dayPings),
-        uptimePercentWeek: calculateUptimePercentage(weekPings),
-        uptimePercentMonth: calculateUptimePercentage(monthPings),
-        uptimePercentSemiAnnual: calculateUptimePercentage(semiAnnualPings),
-        uptimePercentYear: calculateUptimePercentage(allPings),
-        creationUnixTimestamp,
-        creationDate,
+        uptimePercentages: {
+            day: calculateUptimePercentage(dayPings),
+            week: calculateUptimePercentage(weekPings),
+            month: calculateUptimePercentage(monthPings),
+            semiAnnual: calculateUptimePercentage(semiAnnualPings),
+            year: calculateUptimePercentage(allPings),
+        },
     };
 
     if (hasFoundOffline) {
@@ -129,14 +141,21 @@ export const calculateUptimeStatistics = (repAddress: string, repPings: string):
             durationMinutes: outageDurationMinutes,
         };
     }
+
+    if (includePings) {
+        uptimeDto.pings = repPings;
+    }
     return uptimeDto;
 };
 
-export const getRepresentativesUptimePromise = async (addresses: string[]): Promise<RepresentativeUptimeDto[]> => {
+export const getRepresentativesUptimePromise = async (body: RequestBody): Promise<RepresentativeUptimeDto[]> => {
     const uptimeStats: RepresentativeUptimeDto[] = [];
-    for (const address of addresses) {
+    for (const address of body.representatives) {
         const data = await getRepDoc(address);
-        const repUptime = calculateUptimeStatistics(address, data.pings);
+        if (!data.pings) {
+            continue;
+        }
+        const repUptime = calculateUptimeStatistics(address, data.pings, body.includePings);
         uptimeStats.push(repUptime);
     }
     return uptimeStats;
@@ -145,17 +164,13 @@ export const getRepresentativesUptimePromise = async (addresses: string[]): Prom
 /** Returns uptime metrics for a list of representatives. */
 export const getRepresentativesUptime = async (req, res): Promise<RepresentativeUptimeDto[]> => {
     const body = req.body as RequestBody;
-    const uptimeStats = await getRepresentativesUptimePromise(body.representatives);
+    if (body.representatives === undefined) {
+        body.representatives = DEFAULT_BODY.representatives;
+    }
+    if (body.includePings === undefined) {
+        body.includePings = DEFAULT_BODY.includePings;
+    }
+    const uptimeStats = await getRepresentativesUptimePromise(body);
     res.send(uptimeStats);
     return uptimeStats;
-};
-
-/** Returns uptime metrics for a single representative. */
-export const getRepresentativeUptime = async (req, res): Promise<RepresentativeUptimeDto> => {
-    const parts = req.url.split('/');
-    const repAddress = parts[parts.length - 1];
-    const uptimeStats = await getRepresentativesUptimePromise([repAddress]);
-    const uptime = uptimeStats[0];
-    res.send(uptime);
-    return uptime;
 };

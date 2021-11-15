@@ -5,6 +5,7 @@ import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
 // @ts-ignore
 import ApiSchema from '../../doc-config/schema.json';
+import {Knob} from "../../doc-config/knobs/Knob";
 
 @Component({
     selector: 'app-request',
@@ -14,7 +15,7 @@ import ApiSchema from '../../doc-config/schema.json';
 export class RequestComponent {
     routeListener: Subscription;
     requestPath: string;
-    requestKnobs: Array<any>;
+    requestKnobs: Array<Knob>;
     requestResponse: any;
     requestResponseType: any;
     isLoading = false;
@@ -111,11 +112,16 @@ export class RequestComponent {
         for (const param of this.requestKnobs) {
             if (
                 param.value === undefined ||
-                (param.value === false && (param.defaultValue === undefined || param.defaultValue === false))
+                (param.value === false && (param.defaultValue === undefined || param.defaultValue === false)) ||
+                (param.value === "" && (param.defaultValue === undefined || param.defaultValue === ""))
             ) {
                 continue;
             }
-            body[param.propertyName] = param.value;
+            if (param.propertyType === 'array') {
+                body[param.propertyName] = param.value.split(',');
+            } else {
+                body[param.propertyName] = param.value;
+            }
         }
         return body;
     }

@@ -1,16 +1,21 @@
+
+
 export type RepresentativeUptimeDto = {
     address: string;
     online: boolean;
-    uptimePercentDay: number;
-    uptimePercentWeek: number;
-    uptimePercentMonth: number;
-    uptimePercentSemiAnnual: number;
-    uptimePercentYear: number;
-    creationUnixTimestamp: number;
-    creationDate: string;
+    uptimePercentages: {
+        day: number;
+        week: number;
+        month: number;
+        semiAnnual: number;
+        year: number;
+    };
 
     /* Not provided if representative has never been offline. */
     lastOutage?: LastOutage;
+    trackingStartUnixTimestamp: number;
+    trackingStartDate: string;
+    pings?: string;
 };
 
 export type LastOutage = {

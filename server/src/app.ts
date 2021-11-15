@@ -31,7 +31,6 @@ import {
     LOG_INFO,
     sleep,
     getRepresentativesUptime,
-    getRepresentativeUptime,
 } from '@app/services';
 
 const corsOptions = {
@@ -53,7 +52,6 @@ app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => getOnlineReps(r
 app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => getMonitoredReps(req, res));
 app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
-app.get(`/${PATH_ROOT}/v1/representatives/uptime/*`, (req, res) => getRepresentativeUptime(req, res));
 
 app.get(`/${PATH_ROOT}/v1/accounts/known`, (req, res) => getKnownAccounts(req, res));
 app.get(`/${PATH_ROOT}/v1/accounts/aliases`, (req, res) => getAccountAliases(req, res));

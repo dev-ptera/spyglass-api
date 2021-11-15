@@ -1,5 +1,5 @@
 import { NANO_CLIENT } from '@app/config';
-import {LOG_INFO, writeRepStatistics} from '@app/services';
+import { LOG_INFO, writeRepStatistics } from '@app/services';
 
 export const getOnlineRepsPromise = async (): Promise<string[]> => {
     const rpcData = await NANO_CLIENT.representatives_online(false);

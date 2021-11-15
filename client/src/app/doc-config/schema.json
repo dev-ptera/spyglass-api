@@ -73,33 +73,6 @@
             ],
             "type": "object"
         },
-        "LastOutage": {
-            "properties": {
-                "durationMinutes": {
-                    "type": "number"
-                },
-                "offlineDate": {
-                    "type": "string"
-                },
-                "offlineUnixTimestamp": {
-                    "type": "number"
-                },
-                "onlineDate": {
-                    "type": "string"
-                },
-                "onlineUnixTimestamp": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "durationMinutes",
-                "offlineDate",
-                "offlineUnixTimestamp",
-                "onlineDate",
-                "onlineUnixTimestamp"
-            ],
-            "type": "object"
-        },
         "MonitoredRepresentativeDto": {
             "properties": {
                 "address": {
@@ -292,6 +265,84 @@
                     ],
                     "type": "object"
                 },
+                "uptimeStats": {
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "lastOutage": {
+                            "properties": {
+                                "durationMinutes": {
+                                    "type": "number"
+                                },
+                                "offlineDate": {
+                                    "type": "string"
+                                },
+                                "offlineUnixTimestamp": {
+                                    "type": "number"
+                                },
+                                "onlineDate": {
+                                    "type": "string"
+                                },
+                                "onlineUnixTimestamp": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "durationMinutes",
+                                "offlineDate",
+                                "offlineUnixTimestamp",
+                                "onlineDate",
+                                "onlineUnixTimestamp"
+                            ],
+                            "type": "object"
+                        },
+                        "online": {
+                            "type": "boolean"
+                        },
+                        "trackingStartDate": {
+                            "type": "string"
+                        },
+                        "trackingStartUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "uptimePercentages": {
+                            "properties": {
+                                "day": {
+                                    "type": "number"
+                                },
+                                "month": {
+                                    "type": "number"
+                                },
+                                "semiAnnual": {
+                                    "type": "number"
+                                },
+                                "week": {
+                                    "type": "number"
+                                },
+                                "year": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "day",
+                                "month",
+                                "semiAnnual",
+                                "week",
+                                "year"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "address",
+                        "online",
+                        "trackingStartDate",
+                        "trackingStartUnixTimestamp",
+                        "uptimePercentages"
+                    ],
+                    "type": "object"
+                },
                 "weight": {
                     "type": "number"
                 }
@@ -299,76 +350,6 @@
             "required": [
                 "address",
                 "weight"
-            ],
-            "type": "object"
-        },
-        "RepresentativeUptimeDto": {
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "creationDate": {
-                    "type": "string"
-                },
-                "creationUnixTimestamp": {
-                    "type": "number"
-                },
-                "lastOutage": {
-                    "properties": {
-                        "durationMinutes": {
-                            "type": "number"
-                        },
-                        "offlineDate": {
-                            "type": "string"
-                        },
-                        "offlineUnixTimestamp": {
-                            "type": "number"
-                        },
-                        "onlineDate": {
-                            "type": "string"
-                        },
-                        "onlineUnixTimestamp": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "durationMinutes",
-                        "offlineDate",
-                        "offlineUnixTimestamp",
-                        "onlineDate",
-                        "onlineUnixTimestamp"
-                    ],
-                    "type": "object"
-                },
-                "online": {
-                    "type": "boolean"
-                },
-                "uptimePercentDay": {
-                    "type": "number"
-                },
-                "uptimePercentMonth": {
-                    "type": "number"
-                },
-                "uptimePercentSemiAnnual": {
-                    "type": "number"
-                },
-                "uptimePercentWeek": {
-                    "type": "number"
-                },
-                "uptimePercentYear": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "address",
-                "creationDate",
-                "creationUnixTimestamp",
-                "online",
-                "uptimePercentDay",
-                "uptimePercentMonth",
-                "uptimePercentSemiAnnual",
-                "uptimePercentWeek",
-                "uptimePercentYear"
             ],
             "type": "object"
         }

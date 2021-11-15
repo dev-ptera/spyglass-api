@@ -1,13 +1,13 @@
 import { NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
-    getAliasedRepresentatives,
     getAliasedRepsPromise,
     getMonitoredRepsPromise,
     getOnlineRepsPromise,
     getPrincipalRequirementPromise,
     populateDelegatorsCount,
     LOG_INFO,
+    getRepresentativesUptimePromise,
 } from '@app/services';
 import { RepresentativeDto } from '@app/types';
 
@@ -18,6 +18,7 @@ type RequestBody = {
     includeDelegatorCount: boolean;
     includeNodeMonitorStats: boolean;
     includeUptimeStats: boolean;
+    includeUptimePings: boolean;
     minimumWeight: number;
     maximumWeight: number;
 };
@@ -29,8 +30,9 @@ const DEFAULT_BODY: RequestBody = {
     includeDelegatorCount: false,
     includeNodeMonitorStats: false,
     includeUptimeStats: false,
+    includeUptimePings: false,
     minimumWeight: 10_000,
-    maximumWeight: undefined,
+    maximumWeight: Number.MAX_SAFE_INTEGER,
 };
 
 /**
@@ -40,15 +42,14 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
     const start = LOG_INFO('Refreshing Root Reps');
 
     const body = req.body as RequestBody;
-    if (body.maximumWeight === undefined) {
-        body.maximumWeight = DEFAULT_BODY.maximumWeight;
-    }
-    if (body.minimumWeight === undefined) {
-        body.minimumWeight = DEFAULT_BODY.minimumWeight;
-    }
-    body.minimumWeight = Math.max(body.minimumWeight, 1000);
     if (body.includeDelegatorCount === undefined) {
         body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
+    }
+    if (body.includeNodeMonitorStats === undefined) {
+        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
+    }
+    if (body.includeUptimeStats === undefined) {
+        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
     }
     if (body.isPrincipal === undefined) {
         body.isPrincipal = DEFAULT_BODY.isPrincipal;
@@ -56,28 +57,28 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
     if (body.isOnline === undefined) {
         body.isOnline = DEFAULT_BODY.isOnline;
     }
-    if (body.includeUptimeStats === undefined) {
-        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
+    if (body.maximumWeight === undefined) {
+        body.maximumWeight = DEFAULT_BODY.maximumWeight;
     }
-    if (body.includeNodeMonitorStats === undefined) {
-        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
+    if (body.minimumWeight === undefined) {
+        body.minimumWeight = DEFAULT_BODY.minimumWeight;
     }
+    body.minimumWeight = Math.max(body.minimumWeight, 1000);
 
     const rpcData = await NANO_CLIENT.representatives(5000, true);
-    const repMap = new Map<string, Partial<RepresentativeDto>>();
+    const repMap = new Map<string, RepresentativeDto>();
 
-    console.log(body);
-
-    // Add all reps with high-enough weight to a map.
+    // Filters reps by weight restrictions.
+    const maxWeight = Number(body.maximumWeight);
+    const minWeight = Number(body.minimumWeight);
     for (const address in rpcData.representatives) {
         const raw = rpcData.representatives[address];
         const weight = Math.round(Number(rawToBan(raw)));
-        if (body.maximumWeight > 0 && weight <= body.maximumWeight) {
-            repMap.set(address, { weight });
+        if (weight >= minWeight && weight <= maxWeight) {
+            repMap.set(address, { address, weight });
         }
-        if (weight >= body.minimumWeight) {
-            repMap.set(address, { weight });
-        } else {
+        // Terminates loop early; results have to be sorted by weight descending for this to work.
+        if (weight <= minWeight) {
             break;
         }
     }
@@ -129,27 +130,32 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
         const monitoredReps = await getMonitoredRepsPromise();
         for (const stats of monitoredReps) {
             const rep = repMap.get(stats.address);
+            stats.address = undefined;
+            stats.online = undefined;
             if (rep) {
                 rep.nodeMonitorStats = stats;
             }
         }
     }
 
-    // Construct large rep response-types dto
-    const reps: RepresentativeDto[] = [];
-    for (const address of repMap.keys()) {
-        const rep = repMap.get(address);
-        reps.push({
-            address,
-            weight: rep.weight,
-            alias: rep.alias,
-            delegatorsCount: rep.delegatorsCount,
-            nodeMonitorStats: rep.nodeMonitorStats,
-            isOnline: rep.isOnline,
-            isPrincipal: rep.isPrincipal,
+    // Append uptime stats to each rep.
+    if (body.includeUptimeStats) {
+        const uptimeStats = await getRepresentativesUptimePromise({
+            representatives: Array.from(repMap.keys()),
+            includePings: body.includeUptimePings,
         });
+        for (const stats of uptimeStats) {
+            const rep = repMap.get(stats.address);
+            stats.address = undefined;
+            stats.online = undefined;
+            if (rep) {
+                rep.uptimeStats = stats;
+            }
+        }
     }
 
+    // Construct large rep response-types dto
+    const reps: RepresentativeDto[] = Array.from(repMap.values());
     res.send(reps);
     LOG_INFO('Root Reps Updated', start);
     return reps;

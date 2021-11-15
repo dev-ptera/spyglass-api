@@ -14,7 +14,7 @@ $splitScreenCutoff: 1850px;
     display: flex;
     box-sizing: border-box;
     justify-content: space-between;
-    max-width: 1800px;
+    max-width: 1850px;
     width: 100%;
     padding: 64px 32px;
     padding-top: 0px;
@@ -59,7 +59,8 @@ $splitScreenCutoff: 1850px;
 }
 
 .input-option {
-    width: 150px;
+    display: flex;
+    width: 50%;
     box-sizing: border-box;
     margin-right: 48px;
     margin-bottom: 16px;
@@ -73,11 +74,15 @@ $splitScreenCutoff: 1850px;
 .property-line {
     display: flex;
     justify-content: space-between;
+    div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .prop-name {
     display: inline-flex;
-    margin-left: 16px;
 }
 .section-body.sm .prop-name {
     font-size: 12px;

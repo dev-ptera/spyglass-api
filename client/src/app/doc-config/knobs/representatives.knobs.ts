@@ -19,7 +19,12 @@ export const LARGE_REPRESENTATIVES_KNOBS: Array<Knob> = [
 export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
     {
         propertyName: 'representatives',
-        propertyType: 'string',
+        propertyType: 'array',
+    },
+    {
+        propertyName: 'includeUptimePings',
+        propertyType: 'boolean',
+        notes: 'Only applicable if `includeUptimeStats` is `true`',
     },
 ];
 
@@ -32,6 +37,7 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'includeNodeMonitorStats',
         propertyType: 'boolean',
+        notes: 'Only applicable if a rep is running the Nano Node Monitor software',
     },
     {
         propertyName: 'includeAlias',
@@ -40,6 +46,12 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'includeUptimeStats',
         propertyType: 'boolean',
+        notes: 'Only reps with >100K BAN weight will have uptime stats',
+    },
+    {
+        propertyName: 'includeUptimePings',
+        propertyType: 'boolean',
+        notes: 'Only applicable when `includeUptimeStats` is enabled',
     },
     {
         propertyName: 'isOnline',
@@ -48,11 +60,12 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'isPrincipal',
         propertyType: 'boolean',
+        notes: 'Only include representatives with >0.1% of the total online voting weight',
     },
     {
         propertyName: 'minimumWeight',
         propertyType: 'number',
-        notes: 'Default of 100,000 & Minimum of 1000',
+        notes: 'Default of 10,000 & Minimum of 1,000',
     },
     {
         propertyName: 'maximumWeight',

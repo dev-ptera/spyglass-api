@@ -1,14 +1,17 @@
 <ng-template #paramName let-requestParam="requestParam">
-    <span style="padding: 0 16px" [matTooltip]="requestParam.notes">
-        <span
-            class="prop-name"
-            [matBadgeSize]="'small'"
-            [matBadge]="requestParam.notes ? 'i' : ''"
-            [matBadgeOverlap]="false"
-        >
-            {{ requestParam.propertyName }}
+    <span style="padding: 8px 16px; cursor: help;" [matTooltip]="requestParam.notes" matTooltipPosition="after">
+        <span style="padding: 8px 16px">
+            <span
+                class="prop-name"
+                [matBadgeSize]="'small'"
+                [matBadge]="requestParam.notes ? 'i' : ''"
+                [matBadgeOverlap]="false"
+            >
+                {{ requestParam.propertyName }}
+            </span>
         </span>
     </span>
+
 </ng-template>
 
 <ng-template #sendButton>
@@ -50,10 +53,22 @@
                                 [ngTemplateOutletContext]="{ requestParam: requestParam }"
                             ></ng-container>
                         </div>
-                        <div *ngIf="requestParam.propertyType === 'string' || requestParam.propertyType === 'number'">
+                        <div *ngIf="requestParam.propertyType === 'string'
+                                || requestParam.propertyType === 'number'">
                             <input
                                 class="input-option"
                                 [type]="requestParam.propertyType"
+                                [(ngModel)]="requestParam.value"
+                            />
+                            <ng-container
+                                [ngTemplateOutlet]="paramName"
+                                [ngTemplateOutletContext]="{ requestParam: requestParam }"
+                            ></ng-container>
+                        </div>
+                        <div *ngIf="requestParam.propertyType === 'array'">
+                            <input
+                                class="input-option"
+                                type="text"
                                 [(ngModel)]="requestParam.value"
                             />
                             <ng-container
