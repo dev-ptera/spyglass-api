@@ -1,8 +1,7 @@
-import { NANO_CLIENT } from '@app/config';
+import {AppCache, NANO_CLIENT} from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
     getAliasedRepsPromise,
-    getMonitoredRepsPromise,
     getOnlineRepsPromise,
     getPrincipalRequirementPromise,
     populateDelegatorsCount,
@@ -89,9 +88,7 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
         const onlineAddresses = new Set<string>();
         onlineReps.map((rep) => onlineAddresses.add(rep));
         for (const address of repMap.keys()) {
-            if (onlineAddresses.has(address)) {
-                repMap.get(address).isOnline = true;
-            } else {
+            if (!onlineAddresses.has(address)) {
                 repMap.delete(address);
             }
         }
@@ -101,9 +98,7 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
     if (body.isPrincipal) {
         const principalWeightRequirement = await getPrincipalRequirementPromise();
         for (const address of repMap.keys()) {
-            if (repMap.get(address).weight >= principalWeightRequirement) {
-                repMap.get(address).isPrincipal = true;
-            } else {
+            if (repMap.get(address).weight < principalWeightRequirement) {
                 repMap.delete(address);
             }
         }
@@ -127,7 +122,7 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
 
     // Append node monitor stats to each rep.
     if (body.includeNodeMonitorStats) {
-        const monitoredReps = await getMonitoredRepsPromise();
+        const monitoredReps = AppCache.monitoredReps;
         for (const stats of monitoredReps) {
             const rep = repMap.get(stats.address);
             stats.address = undefined;
