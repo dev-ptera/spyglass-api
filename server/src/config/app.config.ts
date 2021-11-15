@@ -7,15 +7,9 @@ export const PATH_ROOT = 'banano';
 
 /** Domains allowed to use this API */
 export const URL_WHITE_LIST = [
-    'https://yellow-spyglass.web.app',
-    'https://www.yellow-spyglass.web.app',
-    'https://yellowspyglass.com',
-    'https://www.yellowspyglass.com',
     'http://localhost:4200',
-    'https://banano-whales.web.app',
-    'https://www.banano-whales.web.app',
-    'https://yellow-spyglass-dev.web.app',
-    'https://www.yellow-spyglass-dev.web.app',
+    'https://spyglass-api.web.app',
+    'https://www.spyglass-api.web.app',
 ];
 
 /** Used to read data from the BANANO node */
