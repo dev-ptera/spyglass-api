@@ -5,11 +5,6 @@ export type NavItem = {
     children?: NavItem[];
 };
 
-export const repLargeNavItem: NavItem = {
-    title: 'Large',
-    route: 'large',
-};
-
 export const repOnlineNavItem: NavItem = {
     title: 'Online',
     route: 'online',
@@ -26,12 +21,12 @@ export const repUptimeNavItem: NavItem = {
 };
 
 export const repRootNavItem: NavItem = {
-    title: 'Root',
-    route: 'root',
+    title: 'Representatives',
+    route: 'representatives',
 };
 
 export const repAliasNavItem: NavItem = {
-    title: 'Alias',
+    title: 'Aliases',
     route: 'aliased',
 };
 
@@ -40,11 +35,10 @@ export const repNavItem: NavItem = {
     route: 'representatives',
     icon: 'how_to_vote',
     children: [
-        repRootNavItem,
         repAliasNavItem,
-        repLargeNavItem,
         repMonitoredNavItem,
         repOnlineNavItem,
+        repRootNavItem,
         repUptimeNavItem,
     ],
 };

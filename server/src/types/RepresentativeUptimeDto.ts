@@ -1,5 +1,3 @@
-
-
 export type RepresentativeUptimeDto = {
     address: string;
     online: boolean;

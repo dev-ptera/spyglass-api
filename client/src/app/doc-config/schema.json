@@ -300,6 +300,9 @@
                         "online": {
                             "type": "boolean"
                         },
+                        "pings": {
+                            "type": "string"
+                        },
                         "trackingStartDate": {
                             "type": "string"
                         },
