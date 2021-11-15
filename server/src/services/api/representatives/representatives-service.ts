@@ -11,15 +11,15 @@ import {
 import { RepresentativeDto } from '@app/types';
 
 type RequestBody = {
-    isOnline: boolean;
-    isPrincipal: boolean;
-    includeAlias: boolean;
-    includeDelegatorCount: boolean;
-    includeNodeMonitorStats: boolean;
-    includeUptimeStats: boolean;
-    includeUptimePings: boolean;
-    minimumWeight: number;
-    maximumWeight: number;
+    isOnline?: boolean;
+    isPrincipal?: boolean;
+    includeAlias?: boolean;
+    includeDelegatorCount?: boolean;
+    includeNodeMonitorStats?: boolean;
+    includeUptimeStats?: boolean;
+    includeUptimePings?: boolean;
+    minimumWeight?: number;
+    maximumWeight?: number;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -34,36 +34,8 @@ const DEFAULT_BODY: RequestBody = {
     maximumWeight: Number.MAX_SAFE_INTEGER,
 };
 
-/**
- * Gets the top 5000 representatives & filters out smaller ones.
- */
-export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]> => {
-    const start = LOG_INFO('Refreshing Root Reps');
 
-    const body = req.body as RequestBody;
-    if (body.includeDelegatorCount === undefined) {
-        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
-    }
-    if (body.includeNodeMonitorStats === undefined) {
-        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
-    }
-    if (body.includeUptimeStats === undefined) {
-        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
-    }
-    if (body.isPrincipal === undefined) {
-        body.isPrincipal = DEFAULT_BODY.isPrincipal;
-    }
-    if (body.isOnline === undefined) {
-        body.isOnline = DEFAULT_BODY.isOnline;
-    }
-    if (body.maximumWeight === undefined) {
-        body.maximumWeight = DEFAULT_BODY.maximumWeight;
-    }
-    if (body.minimumWeight === undefined) {
-        body.minimumWeight = DEFAULT_BODY.minimumWeight;
-    }
-    body.minimumWeight = Math.max(body.minimumWeight, 1000);
-
+export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
     const rpcData = await NANO_CLIENT.representatives(5000, true);
     const repMap = new Map<string, RepresentativeDto>();
 
@@ -151,6 +123,41 @@ export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]>
 
     // Construct large rep response-types dto
     const reps: RepresentativeDto[] = Array.from(repMap.values());
+    return reps;
+}
+
+
+/**
+ * Gets the top 5000 representatives & filters out smaller ones.
+ */
+export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]> => {
+    const start = LOG_INFO('Refreshing Root Reps');
+
+    const body = req.body as RequestBody;
+    if (body.includeDelegatorCount === undefined) {
+        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
+    }
+    if (body.includeNodeMonitorStats === undefined) {
+        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
+    }
+    if (body.includeUptimeStats === undefined) {
+        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
+    }
+    if (body.isPrincipal === undefined) {
+        body.isPrincipal = DEFAULT_BODY.isPrincipal;
+    }
+    if (body.isOnline === undefined) {
+        body.isOnline = DEFAULT_BODY.isOnline;
+    }
+    if (body.maximumWeight === undefined) {
+        body.maximumWeight = DEFAULT_BODY.maximumWeight;
+    }
+    if (body.minimumWeight === undefined) {
+        body.minimumWeight = DEFAULT_BODY.minimumWeight;
+    }
+    body.minimumWeight = Math.max(body.minimumWeight, 1000);
+
+    const reps = await getRepresentativesPromise(body);
     res.send(reps);
     LOG_INFO('Root Reps Updated', start);
     return reps;

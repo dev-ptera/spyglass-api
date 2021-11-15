@@ -6,7 +6,7 @@ export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
         propertyType: 'array',
     },
     {
-        propertyName: 'includeUptimePings',
+        propertyName: 'includePings',
         propertyType: 'boolean',
     },
 ];

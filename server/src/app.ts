@@ -19,7 +19,14 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json()); //utilizes the body-parser package
 
-import {AppCache, IS_PRODUCTION, PATH_ROOT, REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS, URL_WHITE_LIST} from '@app/config';
+import {
+    AppCache,
+    IS_PRODUCTION, KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
+    PATH_ROOT,
+    REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
+    REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
+    URL_WHITE_LIST
+} from '@app/config';
 import {
     getOnlineReps,
     getRepresentatives,
@@ -28,7 +35,7 @@ import {
     getAccountAliases,
     LOG_INFO,
     sleep,
-    getRepresentativesUptime, cacheMonitoredReps,
+    getRepresentativesUptime, cacheMonitoredReps, writeNewRepresentativeUptimePings, cacheKnownAccounts,
 } from '@app/services';
 
 const corsOptions = {
@@ -41,13 +48,7 @@ const corsOptions = {
     },
 };
 
-const sendCached = (res, noCacheMethod: () => Promise<void>, cacheKey: keyof AppCache): void => {
-    AppCache[cacheKey]
-        ? res.send(JSON.stringify(AppCache[cacheKey]))
-        : noCacheMethod()
-            .then(() => res.send(JSON.stringify(AppCache[cacheKey])))
-            .catch((err) => res.status(500).send(JSON.stringify(err)));
-};
+const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
 
 app.use(cors(corsOptions));
 
@@ -62,8 +63,7 @@ app.get(`/${PATH_ROOT}/accounts/aliases`, (req, res) => getAccountAliases(req, r
 
 
 /* Cached Results */
-app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, cacheMonitoredReps, 'monitoredReps'));
-app.get(`/${PATH_ROOT}/online-reps`, (req, res) => getOnlineReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
 
 
 const port: number = Number(process.env.PORT || 3000);
@@ -82,11 +82,21 @@ server.listen(port, () => {
     LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
     // importHistoricHashTimestamps(); // TODO: Prune timestamps after March 18, 2021
 
-    const representatives = {
+    const monitoredRepresentatives = {
         method: cacheMonitoredReps,
         interval: REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     };
 
+    const writeUptimePings = {
+        method: writeNewRepresentativeUptimePings,
+        interval: REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS
+    }
+
+    const knownAccounts = {
+        method: cacheKnownAccounts,
+        interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS
+    }
+
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([representatives]);
+    void staggerServerUpdates([knownAccounts, writeUptimePings, monitoredRepresentatives]);
 });

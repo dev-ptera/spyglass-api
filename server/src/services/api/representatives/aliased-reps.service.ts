@@ -1,9 +1,10 @@
-import { NANO_CLIENT } from '@app/config';
+import {AppCache, NANO_CLIENT} from '@app/config';
 import { AliasedRepresentativeDto } from '@app/types';
-import { getKnownAccountsPromise, LOG_INFO } from '@app/services';
+import { LOG_INFO } from '@app/services';
 
+/** Using the knownAccounts AppCache, looks for account aliases among the 5,000 largest representatives. */
 export const getAliasedRepsPromise = async (): Promise<AliasedRepresentativeDto[]> => {
-    const knownAccounts = await getKnownAccountsPromise();
+    const knownAccounts = AppCache.knownAccounts;
     const rpcData = await NANO_CLIENT.representatives(5000, true);
     const repSet = new Set<string>();
     for (const rep in rpcData.representatives) {
@@ -21,7 +22,7 @@ export const getAliasedRepsPromise = async (): Promise<AliasedRepresentativeDto[
     return aliasedReps;
 };
 
-/** Returns a string array of online-reps.3 representative addresses. */
+/** Returns an array of aliased representative addresses. */
 export const getAliasedRepresentatives = async (req, res): Promise<AliasedRepresentativeDto[]> => {
     const start = LOG_INFO('Updating Aliased Reps');
     const aliases = await getAliasedRepsPromise();
