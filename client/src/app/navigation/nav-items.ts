@@ -43,31 +43,39 @@ export const repNavItem: NavItem = {
     ],
 };
 
-const supplyNavItem: NavItem = {
+
+export const supplyNavItem: NavItem = {
     title: 'Supply',
     route: 'supply',
+};
+
+export const wealthPercentiles: NavItem = {
+    title: 'Percentiles',
+    route: 'percentiles',
+};
+
+const distributionNavItem: NavItem = {
+    title: 'Distribution',
+    route: 'distribution',
     icon: 'looks_one',
-};
-
-const networkNavItem: NavItem = {
-    title: 'Network',
-    route: 'network',
-    icon: 'looks_two',
-};
-
-export const knownAccountsRootNavItem: NavItem = {
-    title: 'Root',
-    route: 'root',
-};
-export const knownAccountsAliasNavItem: NavItem = {
-    title: 'Alias',
-    route: 'alias',
+    children: [
+        supplyNavItem,
+        wealthPercentiles,
+    ],
 };
 export const knownAccountsNavItem: NavItem = {
     title: 'Known Accounts',
     route: 'known-accounts',
+};
+export const richListNavItem: NavItem = {
+    title: 'Rich List',
+    route: 'rich-list',
+};
+export const accountsNavItem: NavItem = {
+    title: 'Accounts',
+    route: 'accounts',
     icon: 'person',
-    children: [knownAccountsRootNavItem, knownAccountsAliasNavItem],
+    children: [knownAccountsNavItem, richListNavItem],
 };
 
-export const APP_NAV_ITEMS = [repNavItem, supplyNavItem, networkNavItem, knownAccountsNavItem];
+export const APP_NAV_ITEMS = [repNavItem, distributionNavItem, accountsNavItem];
