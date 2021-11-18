@@ -8,7 +8,7 @@
 @import '~@pxblue/colors/palette';
 
 .light-theme {
-    $material-theme-primary: mat-palette($pxb-green, 700);
+    $material-theme-primary: mat-palette($pxb-green);
     $material-theme-accent: mat-palette($pxb-yellow);
     $material-theme-warn: mat-palette($pxb-red);
     $light-theme: map-merge(

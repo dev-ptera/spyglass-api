@@ -38,7 +38,7 @@ export const apiDocumentationPages: Array<{
     {
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
         apiPath: 'representatives/online',
-        responseSchema: 'OnlineRepresentativeDto[]', // TODO: Fix type!
+        responseSchema: 'string[]',
         knobs: [],
         requestType: 'GET',
     },
@@ -66,7 +66,7 @@ export const apiDocumentationPages: Array<{
     {
         route: `${knownNavItem.route}/${knownVanitiesNavItem.route}`,
         apiPath: 'known/vanities',
-        responseSchema: 'KnownVanityDto[]',
+        responseSchema: 'string[]',
         knobs: [],
         requestType: 'GET',
     },

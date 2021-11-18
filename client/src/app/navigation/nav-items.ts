@@ -79,6 +79,7 @@ export const knownNavItem: NavItem = {
 };
 
 export const APP_NAV_ITEMS = [
+//    accountNavItem,
     distributionNavItem,
     knownNavItem,
     repNavItem

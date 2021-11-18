@@ -51,8 +51,10 @@ const getPeerMonitorStats = (url: string): Promise<PeerMonitorStats> =>
         })
         .then((response: AxiosResponse<PeerMonitorStats>) => {
             response.data.ip = url;
+
+            // TODO: Support multiple monitor node s
             /* Remove non-banano representatives from the peers list. */
-            if (!response.data.repAccount.includes('ban_')) {
+            if (!response.data.nanoNodeAccount.includes('ban_')) {
                 return Promise.resolve(undefined);
             }
             return Promise.resolve(response.data);

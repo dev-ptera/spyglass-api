@@ -31,6 +31,4 @@ rep-uptime-dev
 
 .env
 serviceAccountKey.ts
-known-accounts.ts
 balances.json
-megaphone-accounts.ts

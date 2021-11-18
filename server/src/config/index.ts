@@ -1,2 +1,2 @@
-export * from './app.config';
 export * from './app.cache';
+export * from './app.config';

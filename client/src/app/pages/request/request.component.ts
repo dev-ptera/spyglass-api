@@ -56,6 +56,11 @@ export class RequestComponent {
 
     /** Reading from the JSON schema found in the doc-service-config folder, creates a displayable response object. */
     createResponseType(dtoType: string): void {
+        if (dtoType === 'string[]') {
+            this.requestResponseType = { array: 'string' };
+            return;
+        }
+
         let isArray = false;
         if (dtoType && dtoType.includes('[]')) {
             isArray = true;
@@ -66,17 +71,20 @@ export class RequestComponent {
         }
         const responseType = {};
         const properties = ApiSchema.definitions[dtoType].properties;
-        const requiredProps = ApiSchema.definitions[dtoType].required;
+        const requiredPropsL1 = ApiSchema.definitions[dtoType].required;
 
-        for (const prop in properties) {
-            const isRequired = requiredProps.includes(prop);
-            const topLevelAttribute = `${prop}${isRequired ? '' : '?'}`;
-            responseType[topLevelAttribute] = properties[prop].type;
-            if (properties[prop].properties) {
-                responseType[topLevelAttribute] = {};
-            } // This can be refactored to be slick, maybe recursive.
-            for (const nestedProp in properties[prop].properties) {
-                responseType[topLevelAttribute][nestedProp] = properties[prop].properties[nestedProp].type;
+        // TODO: this needs to support multiple levels of props, maybe 4 deep.  Think recursive.
+        for (const propL1 in properties) {
+            const attributeL1 = `${propL1}${requiredPropsL1.includes(propL1) ? '' : '?'}`;
+            responseType[attributeL1] = properties[propL1].type;
+            if (properties[propL1].properties) {
+                responseType[attributeL1] = {};
+            }
+            const requiredPropsL2 = properties[propL1].required;
+            for (const propL2 in properties[propL1].properties) {
+                console.log(propL2);
+                const attributeL2 = `${propL2}${(requiredPropsL2 || []).includes(propL1) ? '' : '?'}`;
+                responseType[attributeL1][attributeL2] = properties[propL1].properties[propL2].type;
             }
         }
         this.requestResponseType = isArray ? { array: responseType } : responseType;

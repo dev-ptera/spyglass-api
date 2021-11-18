@@ -39,13 +39,18 @@
                 "alias": {
                     "type": "string"
                 },
-                "illicit": {
-                    "type": "number"
-                },
                 "owner": {
                     "type": "string"
                 },
                 "type": {
+                    "enum": [
+                        "citizen",
+                        "developer",
+                        "exchange",
+                        "explorer",
+                        "faucet",
+                        "representative"
+                    ],
                     "type": "string"
                 }
             },

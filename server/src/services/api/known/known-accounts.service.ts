@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { MANUAL_ACCOUNTS } from './manual-accounts';
 import { KnownAccountDto } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
-import { AppCache } from '@app/config';
+import {AppCache, KNOWN_ACCOUNTS} from '@app/config';
 
 type RequestBody = {
     includeOwner?: boolean;
@@ -35,11 +34,15 @@ const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
 
                 /* Add API accounts to the map. */
                 for (const account of remoteAccounts) {
+                    if (account.type) {
+                        // @ts-ignore // Make sure the received 'type' is in lowercase.
+                        account.type = account.type.toLowerCase();
+                    }
                     knownAccountMap.set(account.address, account);
                 }
 
                 /* Use the manual list to override any API account aliases or add new entries */
-                for (const account of MANUAL_ACCOUNTS) {
+                for (const account of KNOWN_ACCOUNTS) {
                     if (knownAccountMap.has(account.address)) {
                         knownAccountMap.get(account.address).alias = account.alias;
                     } else {
