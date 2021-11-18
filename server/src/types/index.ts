@@ -3,7 +3,6 @@ export * from './AccountAliasDto';
 export * from './AliasedRepresentativeDto';
 export * from './KnownAccountDto';
 export * from './MonitoredRepresentativeDto';
-export * from './OnlineRepresentativeDto';
 export * from './RepresentativeDto';
 export * from './RepresentativeUptimeDto';
 export * from './RequestBody';

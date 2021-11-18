@@ -1,4 +1,4 @@
-import {KnownAccountDto, MonitoredRepresentativeDto} from "@app/types";
+import { KnownAccountDto, MonitoredRepresentativeDto } from '@app/types';
 
 export type AppCache = {
     /** Representatives that run the Nano Node Monitor software. */
@@ -11,4 +11,4 @@ export type AppCache = {
 export const AppCache: AppCache = {
     knownAccounts: [],
     monitoredReps: [],
-}
+};

@@ -119,32 +119,7 @@
             },
             "required": [
                 "address",
-                "cementedBlocks",
-                "currentBlock",
-                "ip",
-                "location",
-                "name",
-                "nodeUptimeStartup",
-                "online",
-                "peers",
-                "representative",
-                "systemLoad",
-                "totalMem",
-                "uncheckedBlocks",
-                "usedMem",
-                "version",
-                "weight"
-            ],
-            "type": "object"
-        },
-        "OnlineRepresentativeDto": {
-            "properties": {
-                "address": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "address"
+                "systemLoad"
             ],
             "type": "object"
         },
@@ -218,23 +193,6 @@
                             "type": "number"
                         }
                     },
-                    "required": [
-                        "cementedBlocks",
-                        "currentBlock",
-                        "ip",
-                        "location",
-                        "name",
-                        "nodeUptimeStartup",
-                        "online",
-                        "peers",
-                        "representative",
-                        "systemLoad",
-                        "totalMem",
-                        "uncheckedBlocks",
-                        "usedMem",
-                        "version",
-                        "weight"
-                    ],
                     "type": "object"
                 },
                 "uptimeStats": {

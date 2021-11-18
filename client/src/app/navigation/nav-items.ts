@@ -57,25 +57,29 @@ export const wealthPercentiles: NavItem = {
 const distributionNavItem: NavItem = {
     title: 'Distribution',
     route: 'distribution',
-    icon: 'looks_one',
+    icon: 'precision_manufacturing',
     children: [
         supplyNavItem,
         wealthPercentiles,
     ],
 };
 export const knownAccountsNavItem: NavItem = {
-    title: 'Known Accounts',
-    route: 'known-accounts',
-};
-export const richListNavItem: NavItem = {
-    title: 'Rich List',
-    route: 'rich-list',
-};
-export const accountsNavItem: NavItem = {
     title: 'Accounts',
-    route: 'accounts',
-    icon: 'person',
-    children: [knownAccountsNavItem, richListNavItem],
+    route: 'known',
+};
+export const knownVanitiesNavItem: NavItem = {
+    title: 'Vanities',
+    route: 'vanities',
+};
+export const knownNavItem: NavItem = {
+    title: 'Known',
+    route: 'known',
+    icon: 'verified',
+    children: [knownAccountsNavItem, knownVanitiesNavItem],
 };
 
-export const APP_NAV_ITEMS = [repNavItem, distributionNavItem, accountsNavItem];
+export const APP_NAV_ITEMS = [
+    distributionNavItem,
+    knownNavItem,
+    repNavItem
+];

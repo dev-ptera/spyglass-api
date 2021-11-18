@@ -1,6 +1,6 @@
-import {IS_PRODUCTION, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS} from '@app/config';
-import {RepresentativeUptimeDto} from '@app/types';
-import {getOnlineRepsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO} from '@app/services';
+import { IS_PRODUCTION, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS } from '@app/config';
+import { RepresentativeUptimeDto } from '@app/types';
+import { getOnlineRepsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
 
 type RequestBody = {
     representatives: string[];
@@ -148,7 +148,7 @@ export const calculateUptimeStatistics = (
     return uptimeDto;
 };
 
-/** Responsible for increasing the `pings` data for each representative with an uptime file. */
+/** Responsible for writing to each representatives' uptime database file. */
 export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
     const start = LOG_INFO('Refreshing Uptime Pings');
     const onlineReps = await getOnlineRepsPromise();
@@ -158,7 +158,7 @@ export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
     });
     largeReps.map((rep) => writeRepStatistics(rep.address, onlineRepsSet.has(rep.address)));
     LOG_INFO('Uptime Pings Updated', start);
-}
+};
 
 export const getRepresentativesUptimePromise = async (body: RequestBody): Promise<RepresentativeUptimeDto[]> => {
     const uptimeStats: RepresentativeUptimeDto[] = [];

@@ -1,4 +1,4 @@
-import {AppCache, NANO_CLIENT} from '@app/config';
+import { AppCache, NANO_CLIENT } from '@app/config';
 import { AliasedRepresentativeDto } from '@app/types';
 import { LOG_INFO } from '@app/services';
 

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
-import {AppCache, MANUAL_PEER_MONITOR_URLS} from '@app/config';
+import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import { MonitoredRepresentativeDto } from '@app/types';
 import { LOG_INFO, LOG_ERR } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
@@ -153,4 +153,4 @@ export const cacheMonitoredReps = async (): Promise<void> => {
     const monitoredReps = await getMonitoredRepsPromise();
     AppCache.monitoredReps = monitoredReps;
     LOG_INFO('Monitored Reps Updated', start);
-}
+};

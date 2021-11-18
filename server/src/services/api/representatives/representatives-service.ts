@@ -1,4 +1,4 @@
-import {AppCache, NANO_CLIENT} from '@app/config';
+import { AppCache, NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
     getAliasedRepsPromise,
@@ -33,7 +33,6 @@ const DEFAULT_BODY: RequestBody = {
     minimumWeight: 10_000,
     maximumWeight: Number.MAX_SAFE_INTEGER,
 };
-
 
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
     const rpcData = await NANO_CLIENT.representatives(5000, true);
@@ -124,8 +123,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
     // Construct large rep response-types dto
     const reps: RepresentativeDto[] = Array.from(repMap.values());
     return reps;
-}
-
+};
 
 /**
  * Gets the top 5000 representatives & filters out smaller ones.

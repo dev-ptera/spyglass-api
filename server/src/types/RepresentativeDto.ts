@@ -3,25 +3,25 @@ export type RepresentativeDto = {
     weight: number;
     delegatorsCount?: number;
     nodeMonitorStats?: {
-        cementedBlocks: number;
+        cementedBlocks?: number;
         confirmationInfo?: {
             average: number;
         };
-        currentBlock: number;
-        location: string;
-        ip: string;
-        name: string;
-        nodeUptimeStartup: number;
-        online: boolean;
-        representative: string;
-        peers: number;
-        totalMem: number;
-        systemLoad: number;
-        uncheckedBlocks: number;
-        usedMem: number;
-        version: string;
-        weight: number;
-    }
+        currentBlock?: number;
+        location?: string;
+        ip?: string;
+        name?: string;
+        nodeUptimeStartup?: number;
+        online?: boolean;
+        representative?: string;
+        peers?: number;
+        totalMem?: number;
+        systemLoad?: number;
+        uncheckedBlocks?: number;
+        usedMem?: number;
+        version?: string;
+        weight?: number;
+    };
     alias?: string;
     uptimeStats?: {
         /* Not provided if representative has never been offline. */

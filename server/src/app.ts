@@ -21,21 +21,25 @@ app.use(bodyParser.json()); //utilizes the body-parser package
 
 import {
     AppCache,
-    IS_PRODUCTION, KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
+    IS_PRODUCTION,
+    KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
-    URL_WHITE_LIST
+    URL_WHITE_LIST,
 } from '@app/config';
 import {
     getOnlineReps,
     getRepresentatives,
     getAliasedRepresentatives,
-    getKnownAccounts,
-    getAccountAliases,
     LOG_INFO,
     sleep,
-    getRepresentativesUptime, cacheMonitoredReps, writeNewRepresentativeUptimePings, cacheKnownAccounts,
+    getRepresentativesUptime,
+    cacheMonitoredReps,
+    writeNewRepresentativeUptimePings,
+    cacheKnownAccounts,
+    getKnownVanities,
+    getKnownAccounts,
 } from '@app/services';
 
 const corsOptions = {
@@ -53,18 +57,17 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 app.use(cors(corsOptions));
 
 /* Real time results */
+
+/* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
 app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
-
-app.get(`/${PATH_ROOT}/accounts/known`, (req, res) => getKnownAccounts(req, res));
-app.get(`/${PATH_ROOT}/accounts/aliases`, (req, res) => getAccountAliases(req, res));
-
-
-/* Cached Results */
 app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
 
+/* Known */
+app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));
+app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
@@ -89,13 +92,13 @@ server.listen(port, () => {
 
     const writeUptimePings = {
         method: writeNewRepresentativeUptimePings,
-        interval: REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS
-    }
+        interval: REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
+    };
 
     const knownAccounts = {
         method: cacheKnownAccounts,
-        interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS
-    }
+        interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
+    };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
     void staggerServerUpdates([knownAccounts, writeUptimePings, monitoredRepresentatives]);

@@ -1,7 +1,6 @@
 import {
-    richListNavItem,
-    accountsNavItem,
-    knownAccountsNavItem,
+    knownNavItem,
+    knownAccountsNavItem, knownVanitiesNavItem,
     repAliasNavItem,
     repMonitoredNavItem,
     repNavItem,
@@ -13,6 +12,7 @@ import {
     REPRESENTATIVES_UPTIME_KNOBS,
     ROOT_REPRESENTATIVES_KNOBS
 } from './knobs/representatives.knobs';
+import {KNOWN_ACCOUNTS_KNOBS} from "./knobs/known.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -38,7 +38,7 @@ export const apiDocumentationPages: Array<{
     {
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
         apiPath: 'representatives/online',
-        responseSchema: 'OnlineRepresentativeDto[]',
+        responseSchema: 'OnlineRepresentativeDto[]', // TODO: Fix type!
         knobs: [],
         requestType: 'GET',
     },
@@ -57,16 +57,16 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${accountsNavItem.route}/${knownAccountsNavItem.route}`,
-        apiPath: 'accounts/known-accounts',
-        responseSchema: 'KnownAccountDto[]',
-        knobs: [],
-        requestType: 'GET',
+        route: `${knownNavItem.route}/${knownAccountsNavItem.route}`,
+        apiPath: 'known/accounts',
+        responseSchema: 'KnownAccountDto[]', // TODO: Fix type!
+        knobs: KNOWN_ACCOUNTS_KNOBS,
+        requestType: 'POST',
     },
     {
-        route: `${accountsNavItem.route}/${richListNavItem.route}`,
-        apiPath: 'accounts/rich-list',
-        responseSchema: 'AccountAliasDto[]',
+        route: `${knownNavItem.route}/${knownVanitiesNavItem.route}`,
+        apiPath: 'known/vanities',
+        responseSchema: 'KnownVanityDto[]',
         knobs: [],
         requestType: 'GET',
     },
