@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    api: 'https://api.dev-ptera.com/banano',
+    api: 'https://api.spyglass.pw/banano',
 };
