@@ -41,5 +41,10 @@ export const BACKUP_NODES = useBananoConfig() ? BAN.BACKUP_NODES : NANO.BACKUP_N
 export const KNOWN_VANITIES = useBananoConfig() ? BAN.KNOWN_VANITIES : NANO.KNOWN_VANITIES;;
 
 /** A list of known accounts within the ecosystem (e.g. exchanges, developer funds, burn account) */
-export const KNOWN_ACCOUNTS = useBananoConfig() ? BAN.KNOWN_ACCOUNTS : NANO.KNOWN_ACCOUNTS;;
+export const KNOWN_ACCOUNTS = useBananoConfig() ? BAN.KNOWN_ACCOUNTS : NANO.KNOWN_ACCOUNTS;
 
+/** A list of addresses that no one owns; funds sent to these addresses are consisdered inaccessible. */
+export const BURN_ADDRESSES = useBananoConfig() ? BAN.BURN_ADDRESSES : NANO.BURN_ADDRESSES;
+
+/** A list of addresses owned by the core team (banano team, or nano foundation) used to fuel ecosystem ambitions. */
+export const DEVELOPER_FUNDS = useBananoConfig() ? BAN.DEVELOPER_FUNDS : NANO.DEVELOPER_FUNDS;

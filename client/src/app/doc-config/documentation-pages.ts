@@ -5,7 +5,7 @@ import {
     repMonitoredNavItem,
     repNavItem,
     repOnlineNavItem,
-    repRootNavItem, repUptimeNavItem,
+    repRootNavItem, repUptimeNavItem, distributionNavItem, supplyNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import {
@@ -67,6 +67,13 @@ export const apiDocumentationPages: Array<{
         route: `${knownNavItem.route}/${knownVanitiesNavItem.route}`,
         apiPath: 'known/vanities',
         responseSchema: 'string[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${distributionNavItem.route}/${supplyNavItem.route}`,
+        apiPath: 'distribution/supply',
+        responseSchema: 'SupplyDto',
         knobs: [],
         requestType: 'GET',
     },

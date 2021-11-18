@@ -44,6 +44,7 @@
                 },
                 "type": {
                     "enum": [
+                        "burn",
                         "citizen",
                         "developer",
                         "exchange",
@@ -361,6 +362,37 @@
                 "trackingStartDate",
                 "trackingStartUnixTimestamp",
                 "uptimePercentages"
+            ],
+            "type": "object"
+        },
+        "SupplyDto": {
+            "properties": {
+                "burnedAmount": {
+                    "type": "number"
+                },
+                "circulatingAmount": {
+                    "type": "number"
+                },
+                "circulatingPercent": {
+                    "type": "number"
+                },
+                "devFundAmount": {
+                    "type": "number"
+                },
+                "devFundPercent": {
+                    "type": "number"
+                },
+                "totalAmount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "burnedAmount",
+                "circulatingAmount",
+                "circulatingPercent",
+                "devFundAmount",
+                "devFundPercent",
+                "totalAmount"
             ],
             "type": "object"
         }

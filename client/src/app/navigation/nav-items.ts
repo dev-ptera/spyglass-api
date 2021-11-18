@@ -54,7 +54,7 @@ export const wealthPercentiles: NavItem = {
     route: 'percentiles',
 };
 
-const distributionNavItem: NavItem = {
+export const distributionNavItem: NavItem = {
     title: 'Distribution',
     route: 'distribution',
     icon: 'precision_manufacturing',
