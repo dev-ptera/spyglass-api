@@ -1,7 +1,7 @@
 import { NanoClient } from '@dev-ptera/nano-node-rpc';
-import {BAN_KNOWN_VANITIES} from "./known-vanities";
-import {BAN_KNOWN_ACCOUNTS} from "./known-accounts";
-import {BAN_NODE_MONITORS} from "./node-monitors";
+import { BAN_KNOWN_VANITIES } from './known-vanities';
+import { BAN_KNOWN_ACCOUNTS } from './known-accounts';
+import { BAN_NODE_MONITORS } from './node-monitors';
 
 export const PATH_ROOT = 'banano';
 export const URL_WHITE_LIST = [
@@ -30,9 +30,9 @@ export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
 export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;
 export const BURN_ADDRESSES = [
     'ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w',
-    'ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw'
+    'ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw',
 ];
 export const DEVELOPER_FUNDS = [
     'ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf',
-    'ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj'
+    'ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj',
 ];

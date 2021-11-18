@@ -49,6 +49,11 @@ export const supplyNavItem: NavItem = {
     route: 'supply',
 };
 
+export const developerFundsNavItem: NavItem = {
+    title: 'Developer Funds',
+    route: 'developer-funds',
+};
+
 export const wealthPercentiles: NavItem = {
     title: 'Percentiles',
     route: 'percentiles',
@@ -59,6 +64,7 @@ export const distributionNavItem: NavItem = {
     route: 'distribution',
     icon: 'precision_manufacturing',
     children: [
+        developerFundsNavItem,
         supplyNavItem,
         wealthPercentiles,
     ],

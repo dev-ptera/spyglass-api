@@ -1,4 +1,4 @@
-import { IS_PRODUCTION, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS } from '@app/config';
+import {IS_PRODUCTION, PROFILE, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS} from '@app/config';
 import { RepresentativeUptimeDto } from '@app/types';
 import { getOnlineRepsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
 
@@ -35,7 +35,7 @@ export const calculateUptimePercentage = (pings: Ping[]): number => {
 
 /** Given a rep address, returns the location o the file to write to store rep uptime. */
 const formatDocName = (repAddress: string): string =>
-    `src/database/${IS_PRODUCTION ? 'rep-uptime' : 'rep-uptime-dev'}/${repAddress}.json`;
+    `database/${PROFILE}/${IS_PRODUCTION ? 'rep-uptime' : 'rep-uptime-dev'}/${repAddress}.json`;
 
 /** Returns data for how long a rep has been online. Either reads from file, or uses internal map if populated. */
 const getRepDoc = async (repAddress: string): Promise<{ pings: string }> => {

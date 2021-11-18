@@ -1,4 +1,3 @@
-
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
@@ -41,7 +40,7 @@ import {
     cacheKnownAccounts,
     getKnownVanities,
     getKnownAccounts,
-    getSupply,
+    getSupply, getDeveloperFunds,
 } from '@app/services';
 
 const corsOptions = {
@@ -69,6 +68,7 @@ app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res,
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(req, res));
+app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(req, res));
 
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));

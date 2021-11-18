@@ -24,12 +24,12 @@ export const getSupplyPromise = async (): Promise<SupplyDto> => {
     const circulating = supply - burnedTotal - devFundTotal;
     const nonBurned = supply - burnedTotal;
     return {
-        totalAmount: supply,
-        circulatingAmount: circulating,
-        devFundAmount: devFundTotal,
         burnedAmount: burnedTotal,
+        circulatingAmount: circulating,
         circulatingPercent: circulating / nonBurned,
+        devFundAmount: devFundTotal,
         devFundPercent: devFundTotal / nonBurned,
+        totalAmount: supply,
     };
 };
 

@@ -28,6 +28,10 @@
         justify-content: center;
         margin: 0 !important;
     }
+    .sm .pxb-three-liner {
+        justify-content: start;
+        margin-left: 16px!important;
+    }
     .pxb-three-liner-subtitle {
         text-align: center;
         margin-top: 8px;
@@ -87,8 +91,9 @@
             }
         }
         .banano-logo {
+            margin-top: 12px;
             height: 42px;
-            margin-right: 24px;
+            margin-right: 16px;
         }
     }
 }

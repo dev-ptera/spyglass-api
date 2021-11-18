@@ -22,5 +22,5 @@ export const BAN_NODE_MONITORS = [
     'https://palm.just-dmitry.ru/api.php', // Dmitry
     'https://baaanodeee.com/api.php', // manhlicious,
     'https://banano.gray.network/api.php', // gray,
-    'https://node.eulentier.de/api' // eulen
+    'https://node.eulentier.de/api', // eulen
 ];

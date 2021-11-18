@@ -31,6 +31,36 @@
             ],
             "type": "object"
         },
+        "DeveloperFundsDto": {
+            "properties": {
+                "totalBalance": {
+                    "type": "number"
+                },
+                "wallets": {
+                    "items": {
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "balance": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "balance"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "totalBalance",
+                "wallets"
+            ],
+            "type": "object"
+        },
         "KnownAccountDto": {
             "properties": {
                 "address": {
