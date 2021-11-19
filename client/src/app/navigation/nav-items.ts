@@ -98,11 +98,16 @@ export const accountDelegatorsNavItem: NavItem = {
     title: 'Delegators',
     route: 'delegators',
 };
+export const accountConfirmedTxNavItem: NavItem = {
+    title: 'Confirmed Tx',
+    route: 'confirmed-transactions',
+};
 export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'insights',
     children: [
+        accountConfirmedTxNavItem,
         accountDelegatorsNavItem
     ],
 };

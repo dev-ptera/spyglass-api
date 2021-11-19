@@ -31,6 +31,58 @@
             ],
             "type": "object"
         },
+        "ConfirmedTransactionDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "balanceRaw": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "newRepresentative": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "number"
+                },
+                "type": {
+                    "enum": [
+                        "change",
+                        "receive",
+                        "send"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "hash",
+                "height",
+                "timestamp",
+                "type"
+            ],
+            "type": "object"
+        },
+        "DelegatorDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "weight"
+            ],
+            "type": "object"
+        },
         "DelegatorsOverviewDto": {
             "properties": {
                 "count": {

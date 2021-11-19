@@ -63,7 +63,6 @@ $splitScreenCutoff: 1850px;
     width: 50%;
     box-sizing: border-box;
     margin-right: 48px;
-    margin-bottom: 16px;
 }
 .section-body.sm .input-option {
     width: 80px;
@@ -72,6 +71,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .property-line {
+    margin: 8px 0px;
     display: flex;
     justify-content: space-between;
     div {

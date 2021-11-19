@@ -43,7 +43,7 @@ export const confirmedTransactionsPromise = (
 export const getConfirmedTransactions = (req, res): void => {
 
     const parts = req.url.split('/');
-    const address = parts[parts.length - 2];
+    const address = parts[parts.length - 3];
     const offset = req.query.offset;
 
     confirmedTransactionsPromise(address, 0, 50)

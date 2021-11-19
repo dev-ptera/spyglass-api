@@ -12,7 +12,7 @@ import {
     supplyNavItem,
     developerFundsNavItem,
     networkNavItem,
-    prWeightRequirementNavItem, accountNavItem, accountDelegatorsNavItem,
+    prWeightRequirementNavItem, accountNavItem, accountDelegatorsNavItem, accountConfirmedTxNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import {
@@ -20,7 +20,7 @@ import {
     ROOT_REPRESENTATIVES_KNOBS
 } from './knobs/representatives.knobs';
 import {KNOWN_ACCOUNTS_KNOBS} from "./knobs/known.knobs";
-import {ACCOUNT_DELEGATORS_KNOB} from "./knobs/account.knobs";
+import {ACCOUNT_CONFIRMED_TX_KNOB, ACCOUNT_DELEGATORS_KNOB} from "./knobs/account.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -104,6 +104,13 @@ export const apiDocumentationPages: Array<{
         apiPath: 'account/[address]/delegators',
         responseSchema: 'DelegatorsOverviewDto',
         knobs: ACCOUNT_DELEGATORS_KNOB,
+        requestType: 'GET',
+    },
+    {
+        route: `${accountNavItem.route}/${accountConfirmedTxNavItem.route}`,
+        apiPath: 'account/[address]/transactions/confirmed',
+        responseSchema: 'ConfirmedTransactionDto[]',
+        knobs: ACCOUNT_CONFIRMED_TX_KNOB,
         requestType: 'GET',
     },
 ];

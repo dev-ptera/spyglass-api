@@ -7,3 +7,5 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
         restPathAlias: '[address]',
     },
 ];
+
+export const ACCOUNT_CONFIRMED_TX_KNOB = ACCOUNT_DELEGATORS_KNOB;
