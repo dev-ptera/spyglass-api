@@ -11,4 +11,6 @@ export type Knob<> = {
     notes?: string;
     /** This is populated by the user. */
     value?: any;
+    /** Replaces the placeholder in the rest url endpoint. */
+    restPathAlias?: string;
 };

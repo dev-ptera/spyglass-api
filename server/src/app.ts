@@ -1,3 +1,4 @@
+
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
@@ -44,6 +45,7 @@ import {
     getDeveloperFunds,
     getPRWeight,
     getDelegators,
+    getConfirmedTransactions
 } from '@app/services';
 
 const corsOptions = {
@@ -61,7 +63,8 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 app.use(cors(corsOptions));
 
 /* Account */
-app.post(`/${PATH_ROOT}/account/delegators/*`, (req, res) => getDelegators(req, res));
+app.get(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
+app.get(`/${PATH_ROOT}/account/:address/transactions/confirmed`, (req, res) => getConfirmedTransactions(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));

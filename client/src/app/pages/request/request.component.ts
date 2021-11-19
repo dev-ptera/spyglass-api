@@ -97,7 +97,7 @@ export class RequestComponent {
         this.isLoading = true;
         this.requestResponse = undefined;
         this._apiService
-            .send(this.requestPath, this.requestType, this.createRequestBody())
+            .send(this.getDynamicPath(), this.requestType, this.createRequestBody())
             .then((data) => {
                 this.requestResponse = data;
                 this.isLoading = false;
@@ -133,7 +133,20 @@ export class RequestComponent {
         return body;
     }
 
+    getDynamicPath(): string {
+        if (this.requestType === 'GET' && this.requestKnobs.length > 0) {
+            let dynamicPath = this.requestPath;
+            this.requestKnobs.map((knob) => {
+                if (knob.value) {
+                    dynamicPath = dynamicPath.replace(knob.restPathAlias, knob.value);
+                }
+            })
+            return dynamicPath;
+        }
+        return this.requestPath;
+    }
+
     isEmptyBody(): boolean {
-        return JSON.stringify(this.createRequestBody()) === '{}';
+        return this.requestType === 'GET' || JSON.stringify(this.createRequestBody()) === '{}';
     }
 }

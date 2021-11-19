@@ -20,6 +20,7 @@ import {
     ROOT_REPRESENTATIVES_KNOBS
 } from './knobs/representatives.knobs';
 import {KNOWN_ACCOUNTS_KNOBS} from "./knobs/known.knobs";
+import {ACCOUNT_DELEGATORS_KNOB} from "./knobs/account.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -100,9 +101,9 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
-        apiPath: 'account/delegators',
-        responseSchema: 'DelegatorDto[]',
-        knobs: [],
+        apiPath: 'account/[address]/delegators',
+        responseSchema: 'DelegatorsOverviewDto',
+        knobs: ACCOUNT_DELEGATORS_KNOB,
         requestType: 'GET',
     },
 ];

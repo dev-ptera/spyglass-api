@@ -30,15 +30,14 @@
             <ng-template [ngTemplateOutlet]="sendButton"></ng-template>
         </div>
         <div class="section-body" style="display: flex">
-            {{ requestPath }}
+            {{ getDynamicPath() }}
             <pxb-spacer></pxb-spacer>
             {{ requestType }}
         </div>
 
-        <ng-container *ngIf="requestType === 'POST'">
+        <ng-container *ngIf="requestKnobs && requestKnobs.length > 0">
             <div class="section-title">Request Knobs</div>
             <div class="section-body" responsive>
-                <div *ngIf="!requestKnobs || requestKnobs.length === 0">N/A</div>
                 <div *ngFor="let requestParam of requestKnobs">
                     <div class="property-line">
                         <div *ngIf="requestParam.propertyType === 'boolean'">
@@ -81,7 +80,7 @@
             </div>
         </ng-container>
 
-        <ng-container *ngIf="!isEmptyBody()">
+        <ng-container *ngIf="!isEmptyBody()" >
             <div class="section-title">Request Body</div>
             <div class="section-body">
                 &#x007B;

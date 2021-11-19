@@ -1,6 +1,7 @@
 /* Types sent to the client. */
 export * from './AccountAliasDto';
 export * from './AliasedRepresentativeDto';
+export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
 export * from './KnownAccountDto';

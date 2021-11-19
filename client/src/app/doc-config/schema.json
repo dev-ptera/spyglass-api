@@ -31,6 +31,40 @@
             ],
             "type": "object"
         },
+        "DelegatorsOverviewDto": {
+            "properties": {
+                "count": {
+                    "type": "number"
+                },
+                "delegators": {
+                    "items": {
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "weight": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "weight"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "weightSum": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "count",
+                "delegators",
+                "weightSum"
+            ],
+            "type": "object"
+        },
         "DeveloperFundsDto": {
             "properties": {
                 "totalBalance": {
