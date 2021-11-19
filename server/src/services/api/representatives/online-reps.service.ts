@@ -1,12 +1,11 @@
 import { NANO_CLIENT } from '@app/config';
-import { LOG_INFO, writeRepStatistics } from '@app/services';
+import { LOG_INFO } from '@app/services';
 
 export const getOnlineRepsPromise = async (): Promise<string[]> => {
     const rpcData = await NANO_CLIENT.representatives_online(false);
     const response: string[] = [];
     for (const rep of rpcData.representatives as string[]) {
         response.push(rep);
-        await writeRepStatistics(rep, true);
     }
     return response;
 };

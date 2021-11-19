@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { KnownAccountDto } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
-import {AppCache, KNOWN_ACCOUNTS} from '@app/config';
+import { AppCache, KNOWN_ACCOUNTS } from '@app/config';
 
 type RequestBody = {
     includeOwner?: boolean;

@@ -12,4 +12,4 @@ export const convertFromRaw = (raw: string): number => {
         return 0;
     }
     return Math.round(Number(rawToBan(raw)));
-}
+};

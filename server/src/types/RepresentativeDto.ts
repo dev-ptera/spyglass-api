@@ -24,6 +24,8 @@ export type RepresentativeDto = {
     };
     alias?: string;
     uptimeStats?: {
+        address: string;
+        online: boolean;
         /* Not provided if representative has never been offline. */
         lastOutage?: {
             offlineUnixTimestamp: number;
@@ -32,7 +34,7 @@ export type RepresentativeDto = {
             offlineDate: string;
             durationMinutes: number;
         };
-        pings?: string;
+        pingStats?: PingStats[];
         trackingStartUnixTimestamp: number;
         trackingStartDate: string;
         uptimePercentages: {
@@ -42,5 +44,11 @@ export type RepresentativeDto = {
             semiAnnual: number;
             year: number;
         };
-    };
+    }
+};
+
+
+type PingStats = {
+    "0"?: number;
+    "1"?: number;
 };

@@ -34,9 +34,36 @@ const DEFAULT_BODY: RequestBody = {
     maximumWeight: Number.MAX_SAFE_INTEGER,
 };
 
+const setBodyDefaults = (body: RequestBody): void => {
+    // Set defaults
+    if (body.includeDelegatorCount === undefined) {
+        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
+    }
+    if (body.includeNodeMonitorStats === undefined) {
+        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
+    }
+    if (body.includeUptimeStats === undefined) {
+        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
+    }
+    if (body.isPrincipal === undefined) {
+        body.isPrincipal = DEFAULT_BODY.isPrincipal;
+    }
+    if (body.isOnline === undefined) {
+        body.isOnline = DEFAULT_BODY.isOnline;
+    }
+    if (body.maximumWeight === undefined) {
+        body.maximumWeight = DEFAULT_BODY.maximumWeight;
+    }
+    if (body.minimumWeight === undefined) {
+        body.minimumWeight = DEFAULT_BODY.minimumWeight;
+    }
+    body.minimumWeight = Math.max(body.minimumWeight, 1000);
+};
+
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
     const rpcData = await NANO_CLIENT.representatives(5000, true);
     const repMap = new Map<string, RepresentativeDto>();
+    setBodyDefaults(body);
 
     // Filters reps by weight restrictions.
     const maxWeight = Number(body.maximumWeight);
@@ -44,6 +71,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
     for (const address in rpcData.representatives) {
         const raw = rpcData.representatives[address];
         const weight = Math.round(Number(rawToBan(raw)));
+
         if (weight >= minWeight && weight <= maxWeight) {
             repMap.set(address, { address, weight });
         }
@@ -130,31 +158,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
  */
 export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]> => {
     const start = LOG_INFO('Refreshing Root Reps');
-
     const body = req.body as RequestBody;
-    if (body.includeDelegatorCount === undefined) {
-        body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
-    }
-    if (body.includeNodeMonitorStats === undefined) {
-        body.includeNodeMonitorStats = DEFAULT_BODY.includeNodeMonitorStats;
-    }
-    if (body.includeUptimeStats === undefined) {
-        body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
-    }
-    if (body.isPrincipal === undefined) {
-        body.isPrincipal = DEFAULT_BODY.isPrincipal;
-    }
-    if (body.isOnline === undefined) {
-        body.isOnline = DEFAULT_BODY.isOnline;
-    }
-    if (body.maximumWeight === undefined) {
-        body.maximumWeight = DEFAULT_BODY.maximumWeight;
-    }
-    if (body.minimumWeight === undefined) {
-        body.minimumWeight = DEFAULT_BODY.minimumWeight;
-    }
-    body.minimumWeight = Math.max(body.minimumWeight, 1000);
-
     const reps = await getRepresentativesPromise(body);
     res.send(reps);
     LOG_INFO('Root Reps Updated', start);

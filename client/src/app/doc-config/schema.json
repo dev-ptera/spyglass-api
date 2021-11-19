@@ -91,6 +91,33 @@
             ],
             "type": "object"
         },
+        "LastOutage": {
+            "properties": {
+                "durationMinutes": {
+                    "type": "number"
+                },
+                "offlineDate": {
+                    "type": "string"
+                },
+                "offlineUnixTimestamp": {
+                    "type": "number"
+                },
+                "onlineDate": {
+                    "type": "string"
+                },
+                "onlineUnixTimestamp": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "durationMinutes",
+                "offlineDate",
+                "offlineUnixTimestamp",
+                "onlineDate",
+                "onlineUnixTimestamp"
+            ],
+            "type": "object"
+        },
         "MonitoredRepresentativeDto": {
             "properties": {
                 "address": {
@@ -157,6 +184,17 @@
                 "address",
                 "systemLoad"
             ],
+            "type": "object"
+        },
+        "PingStats": {
+            "properties": {
+                "0": {
+                    "type": "number"
+                },
+                "1": {
+                    "type": "number"
+                }
+            },
             "type": "object"
         },
         "RepresentativeDto": {
@@ -233,6 +271,9 @@
                 },
                 "uptimeStats": {
                     "properties": {
+                        "address": {
+                            "type": "string"
+                        },
                         "lastOutage": {
                             "properties": {
                                 "durationMinutes": {
@@ -260,8 +301,22 @@
                             ],
                             "type": "object"
                         },
-                        "pings": {
-                            "type": "string"
+                        "online": {
+                            "type": "boolean"
+                        },
+                        "pingStats": {
+                            "items": {
+                                "properties": {
+                                    "0": {
+                                        "type": "number"
+                                    },
+                                    "1": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
                         },
                         "trackingStartDate": {
                             "type": "string"
@@ -298,6 +353,8 @@
                         }
                     },
                     "required": [
+                        "address",
+                        "online",
                         "trackingStartDate",
                         "trackingStartUnixTimestamp",
                         "uptimePercentages"
@@ -349,8 +406,19 @@
                 "online": {
                     "type": "boolean"
                 },
-                "pings": {
-                    "type": "string"
+                "pingStats": {
+                    "items": {
+                        "properties": {
+                            "0": {
+                                "type": "number"
+                            },
+                            "1": {
+                                "type": "number"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
                 },
                 "trackingStartDate": {
                     "type": "string"

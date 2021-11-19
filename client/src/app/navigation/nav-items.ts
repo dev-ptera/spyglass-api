@@ -66,7 +66,7 @@ export const distributionNavItem: NavItem = {
     children: [
         developerFundsNavItem,
         supplyNavItem,
-        wealthPercentiles,
+    //    wealthPercentiles,
     ],
 };
 export const knownAccountsNavItem: NavItem = {

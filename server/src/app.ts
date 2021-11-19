@@ -40,7 +40,8 @@ import {
     cacheKnownAccounts,
     getKnownVanities,
     getKnownAccounts,
-    getSupply, getDeveloperFunds,
+    getSupply,
+    getDeveloperFunds,
 } from '@app/services';
 
 const corsOptions = {
@@ -106,5 +107,5 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([knownAccounts, writeUptimePings, monitoredRepresentatives]);
+    void staggerServerUpdates([writeUptimePings]);
 });

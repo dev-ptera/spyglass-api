@@ -1,20 +1,21 @@
-import {BURN_ADDRESSES, DEVELOPER_FUNDS, NANO_CLIENT} from '@app/config';
-import {convertFromRaw, } from '@app/services';
-import {SupplyDto} from "@app/types";
+import { BURN_ADDRESSES, DEVELOPER_FUNDS, NANO_CLIENT } from '@app/config';
+import { convertFromRaw } from '@app/services';
+import { SupplyDto } from '@app/types';
 
 export const getSupplyPromise = async (): Promise<SupplyDto> => {
-
     /* Burn */
     const burnAddressPromises = [];
-    BURN_ADDRESSES.map((burn) => burnAddressPromises.push(
-        NANO_CLIENT.account_balance(burn).then((data) => convertFromRaw(data.pending))));
+    BURN_ADDRESSES.map((burn) =>
+        burnAddressPromises.push(NANO_CLIENT.account_balance(burn).then((data) => convertFromRaw(data.pending)))
+    );
     const burnArr = await Promise.all(burnAddressPromises);
     const burnedTotal = burnArr.reduce((a, b) => a + b);
 
     /* Developers | Core Team Funds */
     const devFundAddressPromises = [];
-    DEVELOPER_FUNDS.map((dev) => devFundAddressPromises.push(
-        NANO_CLIENT.account_balance(dev).then((data) => convertFromRaw(data.balance))));
+    DEVELOPER_FUNDS.map((dev) =>
+        devFundAddressPromises.push(NANO_CLIENT.account_balance(dev).then((data) => convertFromRaw(data.balance)))
+    );
     const devFundArr = await Promise.all(devFundAddressPromises);
     const devFundTotal = devFundArr.reduce((a, b) => a + b);
 

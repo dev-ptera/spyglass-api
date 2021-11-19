@@ -112,7 +112,7 @@
         <div class="section-body">
             <div *ngIf="requestResponse" class="response-container">
                 <!--  {{ requestResponse }} -->
-                <ngx-json-viewer *ngIf="!showRawResponse" [json]="requestResponse"></ngx-json-viewer>
+                <ngx-json-viewer *ngIf="!showRawResponse" [json]="requestResponse" [depth]="2"></ngx-json-viewer>
                 <pre *ngIf="showRawResponse">{{ requestResponse | json }}</pre>
             </div>
             <div *ngIf="!requestResponse" (click)="sendRequest()" style="cursor: pointer">
