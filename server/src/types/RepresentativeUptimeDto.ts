@@ -16,8 +16,8 @@ export type RepresentativeUptimeDto = {
 };
 
 export type PingStats = {
-    "0"?: number;
-    "1"?: number;
+    '0'?: number;
+    '1'?: number;
 };
 
 export type LastOutage = {
@@ -26,4 +26,4 @@ export type LastOutage = {
     onlineDate: string;
     offlineDate: string;
     durationMinutes: number;
-}
+};

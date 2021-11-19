@@ -44,11 +44,10 @@ export type RepresentativeDto = {
             semiAnnual: number;
             year: number;
         };
-    }
+    };
 };
 
-
 type PingStats = {
-    "0"?: number;
-    "1"?: number;
+    '0'?: number;
+    '1'?: number;
 };

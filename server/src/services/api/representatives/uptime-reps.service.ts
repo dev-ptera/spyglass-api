@@ -1,5 +1,5 @@
 import { IS_PRODUCTION, PROFILE, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS } from '@app/config';
-import {LastOutage, PingStats, RepresentativeUptimeDto} from '@app/types';
+import { LastOutage, PingStats, RepresentativeUptimeDto } from '@app/types';
 import { getOnlineRepsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
 
 type RequestBody = {
@@ -100,7 +100,6 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
 
 const minutesToMs = (mins: number): number => mins * 60 * 1000;
 
-
 /** Given a PingStats array, calculates when (if) a last outage has occurred. */
 const calculateLastOutageStatistics = (pingStats: PingStats[]): LastOutage => {
     let outageDurationMinutes = 0;
@@ -130,7 +129,7 @@ const calculateLastOutageStatistics = (pingStats: PingStats[]): LastOutage => {
         }
     }
     return lastOutage;
-}
+};
 
 /** Given a PingStats array, calculates daily, weekly, etc uptime statistics. */
 const calculateUptimePercentages = (pingStats: PingStats[]) => {
@@ -164,7 +163,7 @@ const calculateUptimePercentages = (pingStats: PingStats[]) => {
         semiAnnual: calculateUptimePercentage(semiAnnualPings.online, semiAnnualMaxPings),
         year: calculateUptimePercentage(yearPings.online, yearMaxPings),
     };
-}
+};
 
 /** Calculates uptime statistics and last-outage statistics. */
 export const calculateUptimeStatistics = (data: PingDoc, includePings: boolean): RepresentativeUptimeDto => {
@@ -180,7 +179,7 @@ export const calculateUptimeStatistics = (data: PingDoc, includePings: boolean):
         online: isRepCurrentlyOnline,
         pingStats: includePings ? pingStats : undefined,
         uptimePercentages,
-        lastOutage
+        lastOutage,
     };
     return uptimeDto;
 };
