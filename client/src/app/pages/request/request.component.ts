@@ -82,10 +82,7 @@ export class RequestComponent {
             }
             const requiredPropsL2 = properties[propL1].required;
             for (const propL2 in properties[propL1].properties) {
-                console.log(propL2);
-                console.log(requiredPropsL2);
                 const attributeL2 = `${propL2}${(requiredPropsL2 || []).includes(propL2) ? '' : '?'}`;
-                console.log(attributeL2);
                 responseType[attributeL1][attributeL2] = properties[propL1].properties[propL2].type;
             }
         }

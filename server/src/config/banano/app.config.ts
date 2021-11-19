@@ -21,10 +21,8 @@ export const MANUAL_PEER_MONITOR_URLS = BAN_NODE_MONITORS;
 export const LEDGER_LOCATION = '/representatives/batman/BananoData/data.ldb';
 export const HOST_NODE_NAME = 'batman';
 export const BACKUP_NODES = [
-    /*
-    'https://banano-api.mynano.ninja/rpc',
-    'https://api-beta.banano.cc/'
-     */
+    //   'https://banano-api.mynano.ninja/rpc',
+    //   'https://api-beta.banano.cc/'
 ];
 export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
 export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;

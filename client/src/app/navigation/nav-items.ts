@@ -5,31 +5,31 @@ export type NavItem = {
     children?: NavItem[];
 };
 
-export const repOnlineNavItem: NavItem = {
-    title: 'Online',
-    route: 'online',
-};
-
-export const repMonitoredNavItem: NavItem = {
-    title: 'Monitored',
-    route: 'monitored',
-};
-
-export const repUptimeNavItem: NavItem = {
-    title: 'Uptime',
-    route: 'uptime',
-};
-
-export const repRootNavItem: NavItem = {
-    title: 'Representatives',
-    route: 'representatives',
-};
 
 export const repAliasNavItem: NavItem = {
     title: 'Aliases',
     route: 'aliased',
 };
-
+export const repMonitoredNavItem: NavItem = {
+    title: 'Monitored',
+    route: 'monitored',
+};
+export const repOnlineNavItem: NavItem = {
+    title: 'Online',
+    route: 'online',
+};
+export const repRootNavItem: NavItem = {
+    title: 'Representatives',
+    route: 'representatives',
+};
+export const repUptimeNavItem: NavItem = {
+    title: 'Uptime',
+    route: 'uptime',
+};
+export const prWeightRequirementNavItem: NavItem = {
+    title: 'PR Weight',
+    route: 'pr-weight',
+};
 export const repNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
@@ -38,6 +38,7 @@ export const repNavItem: NavItem = {
         repAliasNavItem,
         repMonitoredNavItem,
         repOnlineNavItem,
+        prWeightRequirementNavItem,
         repRootNavItem,
         repUptimeNavItem,
     ],
@@ -62,7 +63,7 @@ export const wealthPercentiles: NavItem = {
 export const distributionNavItem: NavItem = {
     title: 'Distribution',
     route: 'distribution',
-    icon: 'precision_manufacturing',
+    icon: 'logo_dev',
     children: [
         developerFundsNavItem,
         supplyNavItem,
@@ -71,7 +72,7 @@ export const distributionNavItem: NavItem = {
 };
 export const knownAccountsNavItem: NavItem = {
     title: 'Accounts',
-    route: 'known',
+    route: 'accounts',
 };
 export const knownVanitiesNavItem: NavItem = {
     title: 'Vanities',
@@ -84,9 +85,33 @@ export const knownNavItem: NavItem = {
     children: [knownAccountsNavItem, knownVanitiesNavItem],
 };
 
+
+export const networkNavItem: NavItem = {
+    title: 'Network',
+    route: 'network',
+    icon: 'share',
+    children: [],
+};
+
+
+export const accountDelegatorsNavItem: NavItem = {
+    title: 'Delegators',
+    route: 'delegators',
+};
+export const accountNavItem: NavItem = {
+    title: 'Account',
+    route: 'account',
+    icon: 'insights',
+    children: [
+        accountDelegatorsNavItem
+    ],
+};
+
+
 export const APP_NAV_ITEMS = [
-//    accountNavItem,
+    accountNavItem,
     distributionNavItem,
     knownNavItem,
+  //  networkNavItem,
     repNavItem
 ];

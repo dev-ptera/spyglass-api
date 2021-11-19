@@ -186,6 +186,17 @@
             ],
             "type": "object"
         },
+        "PRWeightRequirementDto": {
+            "properties": {
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "weight"
+            ],
+            "type": "object"
+        },
         "PingStats": {
             "properties": {
                 "0": {

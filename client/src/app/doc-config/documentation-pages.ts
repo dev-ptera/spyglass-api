@@ -1,11 +1,18 @@
 import {
     knownNavItem,
-    knownAccountsNavItem, knownVanitiesNavItem,
+    knownAccountsNavItem,
+    knownVanitiesNavItem,
     repAliasNavItem,
     repMonitoredNavItem,
     repNavItem,
     repOnlineNavItem,
-    repRootNavItem, repUptimeNavItem, distributionNavItem, supplyNavItem, developerFundsNavItem,
+    repRootNavItem,
+    repUptimeNavItem,
+    distributionNavItem,
+    supplyNavItem,
+    developerFundsNavItem,
+    networkNavItem,
+    prWeightRequirementNavItem, accountNavItem, accountDelegatorsNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import {
@@ -57,6 +64,13 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
+        route: `${repNavItem.route}/${prWeightRequirementNavItem.route}`,
+        apiPath: 'representatives/pr-weight',
+        responseSchema: 'PRWeightRequirementDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
         route: `${knownNavItem.route}/${knownAccountsNavItem.route}`,
         apiPath: 'known/accounts',
         responseSchema: 'KnownAccountDto[]', // TODO: Fix type!
@@ -81,6 +95,13 @@ export const apiDocumentationPages: Array<{
         route: `${distributionNavItem.route}/${developerFundsNavItem.route}`,
         apiPath: 'distribution/developer-funds',
         responseSchema: 'DeveloperFundsDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
+        apiPath: 'account/delegators',
+        responseSchema: 'DelegatorDto[]',
         knobs: [],
         requestType: 'GET',
     },

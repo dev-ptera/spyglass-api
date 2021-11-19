@@ -3,10 +3,10 @@ import { rawToBan } from 'banano-unit-converter';
 import {
     getAliasedRepsPromise,
     getOnlineRepsPromise,
-    getPrincipalRequirementPromise,
     populateDelegatorsCount,
     LOG_INFO,
     getRepresentativesUptimePromise,
+    getPRWeightPromise,
 } from '@app/services';
 import { RepresentativeDto } from '@app/types';
 
@@ -95,7 +95,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Filter map to only include Principal Representatives
     if (body.isPrincipal) {
-        const principalWeightRequirement = await getPrincipalRequirementPromise();
+        const principalWeightRequirement = await getPRWeightPromise();
         for (const address of repMap.keys()) {
             if (repMap.get(address).weight < principalWeightRequirement) {
                 repMap.delete(address);

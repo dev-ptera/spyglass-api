@@ -42,6 +42,8 @@ import {
     getKnownAccounts,
     getSupply,
     getDeveloperFunds,
+    getPRWeight,
+    getDelegators,
 } from '@app/services';
 
 const corsOptions = {
@@ -58,14 +60,16 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 
 app.use(cors(corsOptions));
 
-/* Real time results */
+/* Account */
+app.post(`/${PATH_ROOT}/account/delegators/*`, (req, res) => getDelegators(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
-app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => getOnlineReps(req, res));
 app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
+app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => getOnlineReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(req, res));
+app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(req, res));
@@ -74,6 +78,9 @@ app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloper
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
+
+/* Network */
+//app.get(`/${PATH_ROOT}/network/pr-requirement`, (req, res) => getPrincipalRepWeightRequirement(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
