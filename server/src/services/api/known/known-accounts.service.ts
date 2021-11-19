@@ -32,6 +32,10 @@ const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
             .then((remoteAccounts: KnownAccountDto[]) => {
                 const knownAccountMap = new Map<string, KnownAccountDto>();
 
+                /* Add existing known accounts to the map so we don't lose any past data. */
+                AppCache.knownAccounts.map((account) => knownAccountMap.set(account.address, account));
+
+
                 /* Add API accounts to the map. */
                 for (const account of remoteAccounts) {
                     if (account.type) {
