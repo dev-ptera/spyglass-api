@@ -5,7 +5,7 @@ import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
 // @ts-ignore
 import ApiSchema from '../../doc-config/schema.json';
-import {Knob} from "../../doc-config/knobs/Knob";
+import { Knob } from '../../doc-config/knobs/Knob';
 
 @Component({
     selector: 'app-request',
@@ -120,7 +120,7 @@ export class RequestComponent {
             if (
                 param.value === undefined ||
                 (param.value === false && (param.defaultValue === undefined || param.defaultValue === false)) ||
-                (param.value === "" && (param.defaultValue === undefined || param.defaultValue === ""))
+                (param.value === '' && (param.defaultValue === undefined || param.defaultValue === ''))
             ) {
                 continue;
             }
@@ -140,7 +140,7 @@ export class RequestComponent {
                 if (knob.value) {
                     dynamicPath = dynamicPath.replace(knob.restPathAlias, knob.value);
                 }
-            })
+            });
             return dynamicPath;
         }
         return this.requestPath;

@@ -12,15 +12,15 @@ import {
     supplyNavItem,
     developerFundsNavItem,
     networkNavItem,
-    prWeightRequirementNavItem, accountNavItem, accountDelegatorsNavItem, accountConfirmedTxNavItem,
+    prWeightRequirementNavItem,
+    accountNavItem,
+    accountDelegatorsNavItem,
+    accountConfirmedTxNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
-import {
-    REPRESENTATIVES_UPTIME_KNOBS,
-    ROOT_REPRESENTATIVES_KNOBS
-} from './knobs/representatives.knobs';
-import {KNOWN_ACCOUNTS_KNOBS} from "./knobs/known.knobs";
-import {ACCOUNT_CONFIRMED_TX_KNOB, ACCOUNT_DELEGATORS_KNOB} from "./knobs/account.knobs";
+import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
+import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
+import { ACCOUNT_CONFIRMED_TX_KNOB, ACCOUNT_DELEGATORS_KNOB } from './knobs/account.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;

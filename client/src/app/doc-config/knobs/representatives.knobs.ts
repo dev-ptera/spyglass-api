@@ -11,7 +11,6 @@ export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
     },
 ];
 
-
 export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'includeDelegatorCount',

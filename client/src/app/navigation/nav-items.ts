@@ -5,7 +5,6 @@ export type NavItem = {
     children?: NavItem[];
 };
 
-
 export const repAliasNavItem: NavItem = {
     title: 'Aliases',
     route: 'aliased',
@@ -44,7 +43,6 @@ export const repNavItem: NavItem = {
     ],
 };
 
-
 export const supplyNavItem: NavItem = {
     title: 'Supply',
     route: 'supply',
@@ -67,7 +65,7 @@ export const distributionNavItem: NavItem = {
     children: [
         developerFundsNavItem,
         supplyNavItem,
-    //    wealthPercentiles,
+        //    wealthPercentiles,
     ],
 };
 export const knownAccountsNavItem: NavItem = {
@@ -85,14 +83,12 @@ export const knownNavItem: NavItem = {
     children: [knownAccountsNavItem, knownVanitiesNavItem],
 };
 
-
 export const networkNavItem: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
     children: [],
 };
-
 
 export const accountDelegatorsNavItem: NavItem = {
     title: 'Delegators',
@@ -106,17 +102,13 @@ export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'insights',
-    children: [
-        accountConfirmedTxNavItem,
-        accountDelegatorsNavItem
-    ],
+    children: [accountConfirmedTxNavItem, accountDelegatorsNavItem],
 };
-
 
 export const APP_NAV_ITEMS = [
     accountNavItem,
     distributionNavItem,
     knownNavItem,
-  //  networkNavItem,
-    repNavItem
+    //  networkNavItem,
+    repNavItem,
 ];

@@ -1,5 +1,5 @@
 <ng-template #paramName let-requestParam="requestParam">
-    <span style="padding: 0px 16px; cursor: help;" [matTooltip]="requestParam.notes" matTooltipPosition="after">
+    <span style="padding: 0px 16px; cursor: help" [matTooltip]="requestParam.notes" matTooltipPosition="after">
         <span style="padding: 0px 16px">
             <span
                 class="prop-name"
@@ -11,7 +11,6 @@
             </span>
         </span>
     </span>
-
 </ng-template>
 
 <ng-template #sendButton>
@@ -52,8 +51,7 @@
                                 [ngTemplateOutletContext]="{ requestParam: requestParam }"
                             ></ng-container>
                         </div>
-                        <div *ngIf="requestParam.propertyType === 'string'
-                                || requestParam.propertyType === 'number'">
+                        <div *ngIf="requestParam.propertyType === 'string' || requestParam.propertyType === 'number'">
                             <input
                                 class="input-option"
                                 [type]="requestParam.propertyType"
@@ -65,11 +63,7 @@
                             ></ng-container>
                         </div>
                         <div *ngIf="requestParam.propertyType === 'array'">
-                            <input
-                                class="input-option"
-                                type="text"
-                                [(ngModel)]="requestParam.value"
-                            />
+                            <input class="input-option" type="text" [(ngModel)]="requestParam.value" />
                             <ng-container
                                 [ngTemplateOutlet]="paramName"
                                 [ngTemplateOutletContext]="{ requestParam: requestParam }"
@@ -80,7 +74,7 @@
             </div>
         </ng-container>
 
-        <ng-container *ngIf="!isEmptyBody()" >
+        <ng-container *ngIf="!isEmptyBody()">
             <div class="section-title">Request Body</div>
             <div class="section-body">
                 &#x007B;
