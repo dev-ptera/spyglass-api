@@ -16,26 +16,26 @@ export const ACCOUNT_CONFIRMED_TX_KNOB: Array<Knob> = [
     {
         propertyName: 'includeChange',
         propertyType: 'boolean',
-        defaultValue: true
+        defaultValue: true,
     },
     {
         propertyName: 'includeReceive',
         propertyType: 'boolean',
-        defaultValue: true
+        defaultValue: true,
     },
     {
         propertyName: 'includeSend',
         propertyType: 'boolean',
-        defaultValue: true
+        defaultValue: true,
     },
     {
         propertyName: 'resultSize',
         propertyType: 'number',
-        notes: 'Defaults to include 25 transactions, with a max of 100'
+        notes: 'Defaults to include 25 transactions, with a max of 100',
     },
     {
         propertyName: 'offset',
         propertyType: 'number',
-        notes: 'Results will be returned starting from this block height'
+        notes: 'Results will be returned starting from this block height',
     },
 ];

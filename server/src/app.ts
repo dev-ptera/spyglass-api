@@ -1,4 +1,3 @@
-
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
@@ -45,7 +44,7 @@ import {
     getDeveloperFunds,
     getPRWeight,
     getDelegators,
-    getConfirmedTransactions
+    getConfirmedTransactions,
 } from '@app/services';
 
 const corsOptions = {

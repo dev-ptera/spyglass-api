@@ -1,13 +1,12 @@
-import {accountHistoryRpc} from '@app/rpc';
-import {LOG_ERR, sleep} from '@app/services';
-import {ConfirmedTransactionDto} from '@app/types';
+import { accountHistoryRpc } from '@app/rpc';
+import { LOG_ERR, sleep } from '@app/services';
+import { ConfirmedTransactionDto } from '@app/types';
 
 const SUBTYPE = {
     change: 'change',
     receive: 'received',
     send: 'send',
 };
-
 
 type RequestBody = {
     address: string;
@@ -48,7 +47,6 @@ const setBodyDefaults = (body: RequestBody): void => {
 };
 
 export const confirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
-
     setBodyDefaults(body);
 
     const confirmedTransactions: ConfirmedTransactionDto[] = [];
@@ -101,8 +99,7 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
         }
     }
     return confirmedTransactions;
-}
-
+};
 
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactions = (req, res): void => {
