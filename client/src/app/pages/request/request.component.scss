@@ -71,7 +71,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .property-line {
-    margin: 8px 0px;
+    margin: 12px 0px;
     display: flex;
     justify-content: space-between;
     div {
@@ -92,7 +92,7 @@ $splitScreenCutoff: 1850px;
     overflow-y: auto;
     max-height: 60vh;
     @media screen and (max-width: $splitScreenCutoff) {
-        max-height: 40vh;
+        max-height: 50vh;
     }
 }
 

@@ -1,9 +1,6 @@
-import { accountHistoryRpc } from '@app/rpc';
-import { LOG_ERR } from '@app/services';
-import { ConfirmedTransactionDto } from '@app/types';
-import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc';
-
-const MAX_PAGE_SIZE = 50;
+import {accountHistoryRpc} from '@app/rpc';
+import {LOG_ERR, sleep} from '@app/services';
+import {ConfirmedTransactionDto} from '@app/types';
 
 const SUBTYPE = {
     change: 'change',
@@ -11,42 +8,105 @@ const SUBTYPE = {
     send: 'send',
 };
 
-export const confirmedTransactionsPromise = (
-    address: string,
-    offset: number,
-    size: number
-): Promise<ConfirmedTransactionDto[]> =>
-    accountHistoryRpc(address, offset, size)
-        .then((accountHistory: AccountHistoryResponse) => {
-            const dtoTransactions: ConfirmedTransactionDto[] = [];
-            for (const transaction of accountHistory.history) {
-                const newRepresentative =
-                    transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
 
-                dtoTransactions.push({
-                    hash: transaction.hash,
-                    address: transaction.account,
-                    type: transaction['subtype'],
-                    balanceRaw: transaction.amount,
-                    height: Number(transaction.height),
-                    timestamp: Number(transaction.local_timestamp),
-                    newRepresentative,
-                });
-            }
-            return Promise.resolve(dtoTransactions);
-        })
-        .catch((err) => {
-            return Promise.reject(LOG_ERR('getConfirmedTransactions', err, { address }));
+type RequestBody = {
+    address: string;
+    includeSend?: boolean;
+    includeReceive?: boolean;
+    includeChange?: boolean;
+    offset?: number;
+    resultSize?: number;
+};
+
+const DEFAULT_BODY: RequestBody = {
+    address: '',
+    includeSend: true,
+    includeReceive: true,
+    includeChange: true,
+    offset: 0,
+    resultSize: 25,
+};
+
+const setBodyDefaults = (body: RequestBody): void => {
+    // Set defaults
+    if (body.includeSend === undefined) {
+        body.includeSend = DEFAULT_BODY.includeSend;
+    }
+    if (body.includeReceive === undefined) {
+        body.includeReceive = DEFAULT_BODY.includeReceive;
+    }
+    if (body.includeChange === undefined) {
+        body.includeChange = DEFAULT_BODY.includeChange;
+    }
+    if (body.offset === undefined) {
+        body.offset = DEFAULT_BODY.offset;
+    }
+    if (body.resultSize === undefined) {
+        body.resultSize = DEFAULT_BODY.resultSize;
+    }
+    body.resultSize = Math.min(body.resultSize, 100);
+};
+
+export const confirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
+
+    setBodyDefaults(body);
+
+    const confirmedTransactions: ConfirmedTransactionDto[] = [];
+    const rpcSearchSize = 500;
+    let searchPage = 0;
+
+    console.log(body);
+
+    let completedSearch = false;
+    while (!completedSearch) {
+        const offset = body.offset + rpcSearchSize * searchPage;
+        const accountTx = await accountHistoryRpc(body.address, offset, rpcSearchSize).catch((err) => {
+            return Promise.reject(LOG_ERR('getConfirmedTransactions', err, { body }));
         });
+
+        searchPage++;
+        // If we have ran out of search results, it's time to exit.
+        if (!accountTx.history || accountTx.history.length === 0) {
+            break;
+        }
+
+        // Iterate through each transaction history, filtering out types we dont need.
+        for (const transaction of accountTx.history) {
+            const type = transaction['subtype'];
+            if (!body.includeSend && type === 'send') {
+                continue;
+            }
+            if (!body.includeChange && type === 'change') {
+                continue;
+            }
+            if (!body.includeReceive && type === 'receive') {
+                continue;
+            }
+            const rep = transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
+            const unix = Number(transaction.local_timestamp);
+            confirmedTransactions.push({
+                hash: transaction.hash,
+                address: transaction.account,
+                type: transaction['subtype'],
+                balanceRaw: transaction.amount,
+                height: Number(transaction.height),
+                timestamp: unix,
+                date: new Date(unix * 1000).toLocaleDateString() + ' ' + new Date(unix * 1000).toLocaleTimeString(),
+                newRepresentative: rep,
+            });
+            if (confirmedTransactions.length === body.resultSize) {
+                completedSearch = true;
+                break;
+            }
+        }
+    }
+    return confirmedTransactions;
+}
+
 
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactions = (req, res): void => {
-
-    const parts = req.url.split('/');
-    const address = parts[parts.length - 3];
-    const offset = req.query.offset;
-
-    confirmedTransactionsPromise(address, 0, 50)
+    confirmedTransactionsPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {
             res.send(JSON.stringify(confirmedTx));
         })

@@ -64,7 +64,7 @@ app.use(cors(corsOptions));
 
 /* Account */
 app.get(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
-app.get(`/${PATH_ROOT}/account/:address/transactions/confirmed`, (req, res) => getConfirmedTransactions(req, res));
+app.post(`/${PATH_ROOT}/account/transactions/confirmed`, (req, res) => getConfirmedTransactions(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));

@@ -119,6 +119,7 @@ export class RequestComponent {
         for (const param of this.requestKnobs) {
             if (
                 param.value === undefined ||
+                param.value === true && param.defaultValue === true ||
                 (param.value === false && (param.defaultValue === undefined || param.defaultValue === false)) ||
                 (param.value === '' && (param.defaultValue === undefined || param.defaultValue === ''))
             ) {

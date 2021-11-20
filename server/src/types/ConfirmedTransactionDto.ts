@@ -5,5 +5,6 @@ export type ConfirmedTransactionDto = {
     height: number;
     address?: string;
     timestamp: number;
+    date: string;
     newRepresentative?: string;
 };
