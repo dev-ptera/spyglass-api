@@ -57,7 +57,7 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
 
     let completedSearch = false;
     while (!completedSearch) {
-        const offset = body.offset + rpcSearchSize * searchPage;
+        const offset = Number(body.offset) + (rpcSearchSize * searchPage);
         const accountTx = await accountHistoryRpc(body.address, offset, rpcSearchSize).catch((err) => {
             return Promise.reject(LOG_ERR('getConfirmedTransactions', err, { body }));
         });
