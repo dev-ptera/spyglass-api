@@ -1,5 +1,5 @@
 import { accountHistoryRpc } from '@app/rpc';
-import { LOG_ERR, sleep } from '@app/services';
+import {getAccurateHashTimestamp, LOG_ERR, sleep} from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 
 const SUBTYPE = {
@@ -53,8 +53,6 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
     const rpcSearchSize = 500;
     let searchPage = 0;
 
-    console.log(body);
-
     let completedSearch = false;
     while (!completedSearch) {
         const offset = Number(body.offset) + (rpcSearchSize * searchPage);
@@ -81,7 +79,7 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
                 continue;
             }
             const rep = transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
-            const unix = Number(transaction.local_timestamp);
+            const unix = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
             confirmedTransactions.push({
                 hash: transaction.hash,
                 address: transaction.account,
@@ -102,7 +100,7 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
 };
 
 /** For a given address, return a list of confirmed transactions. */
-export const getConfirmedTransactions = (req, res): void => {
+export const getConfirmedTransactions = (req, res): void => { // TODO: Rename this to 'history' aka account history
     confirmedTransactionsPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {
             res.send(JSON.stringify(confirmedTx));

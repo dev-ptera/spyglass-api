@@ -83,7 +83,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Filter map to only include Online Representatives
     if (body.isOnline) {
-        const onlineReps = await getOnlineRepsPromise();
+        const onlineReps = AppCache.onlineRepresentatives;
         const onlineAddresses = new Set<string>();
         onlineReps.map((rep) => onlineAddresses.add(rep));
         for (const address of repMap.keys()) {

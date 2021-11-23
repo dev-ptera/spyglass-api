@@ -402,8 +402,8 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
     },
     {
         address: 'ban_3h7xtjwkm65ufoedjei6z7xfmuyfgehq3t7zm5et4osdyha1qn9ewrisyncz',
-        alias: 'Futerman-Bananode',
-        owner: 'placebo398',
+        alias: 'FutureNanners',
+        owner: 'futuremanhank#3843',
         type: 'representative',
     },
 ];

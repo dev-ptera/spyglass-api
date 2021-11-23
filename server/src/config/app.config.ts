@@ -18,6 +18,7 @@ export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_
 export const NANO_CLIENT = useBananoConfig() ? BAN.NANO_CLIENT : NANO.NANO_CLIENT;
 
 const calcMinutes = (mins: number) => 60000 * mins;
+export const REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const WALLETS_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);

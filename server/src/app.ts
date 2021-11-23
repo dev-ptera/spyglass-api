@@ -24,12 +24,11 @@ import {
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
-    REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
+    REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS, REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     URL_WHITE_LIST,
 } from '@app/config';
 import {
-    getOnlineReps,
     getRepresentatives,
     getAliasedRepresentatives,
     LOG_INFO,
@@ -44,7 +43,8 @@ import {
     getDeveloperFunds,
     getPRWeight,
     getDelegators,
-    getConfirmedTransactions,
+    getConfirmedTransactions, importHistoricHashTimestamps,
+    findMissingBlocks, findMissingBlocks2, cacheOnlineRepresentatives,
 } from '@app/services';
 
 const corsOptions = {
@@ -69,7 +69,7 @@ app.post(`/${PATH_ROOT}/account/transactions/confirmed`, (req, res) => getConfir
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
 app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
 app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
-app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => getOnlineReps(req, res));
+app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
 app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(req, res));
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
@@ -98,7 +98,13 @@ export const staggerServerUpdates = async (cacheFns: Array<{ method: Function; i
 server.listen(port, () => {
     LOG_INFO(`Running yellow-spyglass server on port ${port}.`);
     LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
-    // importHistoricHashTimestamps(); // TODO: Prune timestamps after March 18, 2021
+    importHistoricHashTimestamps();
+
+
+    const onlineRepresentatives = {
+        method: cacheOnlineRepresentatives,
+        interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
+    };
 
     const monitoredRepresentatives = {
         method: cacheMonitoredReps,
@@ -116,5 +122,6 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([knownAccounts, monitoredRepresentatives, writeUptimePings]);
+    void staggerServerUpdates([onlineRepresentatives, knownAccounts, monitoredRepresentatives, writeUptimePings]);
+
 });

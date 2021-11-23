@@ -1,4 +1,4 @@
-import { BACKUP_NODES, NANO_CLIENT } from '@app/config';
+import {AppCache, BACKUP_NODES, NANO_CLIENT} from '@app/config';
 import { LOG_ERR, LOG_INFO } from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
 import axios, { AxiosResponse } from 'axios';
@@ -47,11 +47,10 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
     return Array.from(onlineReps.values());
 };
 
-/** Returns a string array of online-reps.3 representative addresses. */
-export const getOnlineReps = async (req, res): Promise<string[]> => {
+/** Returns a string array of online-reps representative addresses. */
+export const cacheOnlineRepresentatives = async (): Promise<void> => {
     const start = LOG_INFO('Updating Online Reps');
-    const response = await getOnlineRepsPromise();
-    res.send(response);
+    const onlineReps = await getOnlineRepsPromise();
     LOG_INFO('Online Reps Updated', start);
-    return response;
+    AppCache.onlineRepresentatives = onlineReps;
 };
