@@ -3,6 +3,12 @@ import { LOG_ERR, LOG_INFO } from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
 import axios, { AxiosResponse } from 'axios';
 
+/** Number of a pings a representative has be omitted from the `representatives_online` rpc command list to be considered offline. */
+const OFFLINE_AFTER_PINGS = 5;
+
+/** Keeps track of how many pings a representative has been offline for. */
+const offlinePingsMap = new Map<string, number>();
+
 /** Uses BACKUP_NODES to make additional rpc calls. */
 const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesOnlineResponse> =>
     axios
@@ -34,7 +40,10 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
         (rpcResponses: Array<RPC.RepresentativesOnlineResponse>) => {
             for (const response of rpcResponses) {
                 if (response && response.representatives) {
-                    response.representatives.map((rep) => onlineReps.add(rep));
+                    response.representatives.map((rep) => {
+                        onlineReps.add(rep)
+                        offlinePingsMap.set(rep, 0);
+                    });
                 } else {
                     LOG_ERR('getOnlineRepsPromise', {
                         error: `Malformed response for representatives_online RPC: ${JSON.stringify(response || '')}`,
@@ -44,6 +53,21 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
         }
     );
 
+
+    // Increment offline pings for representatives not found in the last series of RPC calls.
+    for (const addr of offlinePingsMap.keys()) {
+        if (!onlineReps.has(addr)) {
+            const newPingCount = offlinePingsMap.get(addr) + 1;
+            offlinePingsMap.set(addr, newPingCount);
+        }
+    }
+
+    // Add any reps from the offlinePingsMap that do not exceed OFFLINE_AFTER_PINGS.
+    for (const addr of offlinePingsMap.keys()) {
+        if (offlinePingsMap.get(addr) < OFFLINE_AFTER_PINGS) {
+            onlineReps.add(addr);
+        }
+    }
     return Array.from(onlineReps.values());
 };
 
