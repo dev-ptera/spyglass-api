@@ -6,6 +6,7 @@ export * from './AliasedRepresentativeDto';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
+export * from './EulenMonitoredRepresentativeDto';
 export * from './KnownAccountDto';
 export * from './MonitoredRepresentativeDto';
 export * from './PRWeightRequirementDto';

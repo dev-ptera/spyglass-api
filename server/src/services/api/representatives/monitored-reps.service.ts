@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import { MonitoredRepresentativeDto } from '@app/types';
+import {EulenMonitoredRepresentativeDto, MonitoredRepresentativeDto} from '@app/types';
 import { LOG_INFO, LOG_ERR, getPRWeightPromise } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
-type PeerMonitorStats = {
+type NanoNodeMonitorStats = {
     nanoNodeAccount: string;
     nanoNodeName: string;
     version: string;
@@ -29,35 +29,53 @@ type PeerMonitorStats = {
     ip: string;
 };
 
+
+
 /** Given either an IP or HTTP address of a node monitor, returns the address used to lookup node stats. */
 export const getMonitoredUrl = (url: string): string => {
-    const stats = `api.php`;
-    if (url.includes('https')) {
-        return `${url}/${stats}`;
+    if (url.includes('https') || url.includes('http')) {
+        return url;
     }
-    if (url.includes('http')) {
-        return `${url}/${stats}`;
-    }
-    return `http://${url}/${stats}`;
+    return `http://${url}/api.php`;
 };
 
+
 /** Given a peer IP or HTTP address, queries node monitor stats. */
-const getPeerMonitorStats = (url: string): Promise<PeerMonitorStats> =>
+const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> =>
     axios
-        .request<PeerMonitorStats>({
+        .request<NanoNodeMonitorStats>({
             method: 'get',
             timeout: 15000,
             url: getMonitoredUrl(url),
         })
-        .then((response: AxiosResponse<PeerMonitorStats>) => {
-            response.data.ip = url;
+        .then((response: AxiosResponse<NanoNodeMonitorStats | EulenMonitoredRepresentativeDto>) => {
+            // Convert alternative monitor schemas to match the default NanoNodeMonitor response type.
+            if ((response.data as EulenMonitoredRepresentativeDto).node_account) {
+                const eulenNm = response.data as EulenMonitoredRepresentativeDto;
+                const translatedStats = {} as NanoNodeMonitorStats;
+                translatedStats.nanoNodeAccount = eulenNm.node_account;
+                translatedStats.nanoNodeName = eulenNm.node_name;
+                translatedStats.numPeers = eulenNm.num_peers;
+                translatedStats.currentBlock = eulenNm.current_block;
+                translatedStats.uncheckedBlocks = eulenNm.unchecked_blocks;
+                translatedStats.cementedBlocks = eulenNm.cemented_blocks;
+                translatedStats.systemLoad = eulenNm.system_load;
+                translatedStats.totalMem = eulenNm.total_mem;
+                translatedStats.usedMem = eulenNm.used_mem;
+                translatedStats.nodeUptimeStartup = eulenNm.node_uptime;
+                translatedStats.repAccount = eulenNm.rep_account;
+                translatedStats.votingWeight = eulenNm.voting_weight;
+                translatedStats.nodeLocation = eulenNm.node_location;
+                translatedStats.version = eulenNm.version;
+                response.data = translatedStats;
+            }
 
-            // TODO: Support multiple monitor node s
-            /* Remove non-banano representatives from the peers list. */
-            if (!response.data.nanoNodeAccount.includes('ban_')) {
+            const nanoNodeMonitorStats = response.data as NanoNodeMonitorStats;
+            nanoNodeMonitorStats.ip = url;
+            if (!nanoNodeMonitorStats.nanoNodeAccount.includes('ban_')) {
                 return Promise.resolve(undefined);
             }
-            return Promise.resolve(response.data);
+            return Promise.resolve(nanoNodeMonitorStats);
         })
         .catch(() => Promise.resolve(undefined));
 
@@ -65,12 +83,13 @@ const getPeerMonitorStats = (url: string): Promise<PeerMonitorStats> =>
  *  Only monitors with an online-reps.3 representative will be returned to the client.
  *  This is because some peers may be online-reps.3 but with a misconfigured node. (e.g. a monitor with an incorrect address displayed.)
  * */
-const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepresentativeDto[]> => {
+const groomDto = async (allPeerStats: NanoNodeMonitorStats[]): Promise<MonitoredRepresentativeDto[]> => {
     const groomedDetails: MonitoredRepresentativeDto[] = [];
 
     // Prune duplicate monitors by address
-    const uniqueMonitors = new Set<PeerMonitorStats>();
+    const uniqueMonitors = new Set<NanoNodeMonitorStats>();
     const addresses = new Set<string>();
+
     for (const rep of allPeerStats) {
         if (rep && !addresses.has(rep.nanoNodeAccount)) {
             addresses.add(rep.nanoNodeAccount);
@@ -118,7 +137,7 @@ const extractIpAddress = (dirtyIp: string): string => dirtyIp.replace('::ffff:',
 
 /** Fetches monitored peer details and returns MonitoredRepresentativeDto[]. */
 const getRepDetails = (rpcData: Peers): Promise<MonitoredRepresentativeDto[]> => {
-    const peerMonitorStatsPromises: Array<Promise<PeerMonitorStats>> = [];
+    const peerMonitorStatsPromises: Array<Promise<NanoNodeMonitorStats>> = [];
     const peerIpAddresses = new Set<string>();
 
     // This service includes the ability to manually hard-code peer monitor ips or host names.
