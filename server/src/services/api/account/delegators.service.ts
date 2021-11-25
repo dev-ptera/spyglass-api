@@ -90,4 +90,5 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
 export const getDelegators = async (req, res): Promise<void> => {
     const supply = await getDelegatorsPromise(req.body);
     res.send(supply);
+    return Promise.resolve();
 };
