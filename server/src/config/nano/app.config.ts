@@ -27,3 +27,5 @@ export const KNOWN_VANITIES = [];
 export const KNOWN_ACCOUNTS = [];
 export const BURN_ADDRESSES = [];
 export const DEVELOPER_FUNDS = [];
+
+export const UPTIME_TRACKING_MIN_WEIGHT = 100;

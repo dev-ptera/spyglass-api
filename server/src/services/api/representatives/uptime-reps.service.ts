@@ -1,6 +1,13 @@
-import { IS_PRODUCTION, PROFILE, REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS } from '@app/config';
+import {
+    AppCache,
+    IS_PRODUCTION,
+    PROFILE,
+    REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
+    UPTIME_TRACKING_MIN_WEIGHT
+} from '@app/config';
 import { LastOutage, PingStats, RepresentativeUptimeDto } from '@app/types';
-import { getOnlineRepsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
+import { getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
+
 
 type RequestBody = {
     representatives: string[];
@@ -14,6 +21,7 @@ const DEFAULT_BODY: RequestBody = {
 
 const fs = require('fs');
 
+const MINIMUM_WEIGHT_TO_MEASURE_UPTIME = UPTIME_TRACKING_MIN_WEIGHT;
 const dayMaxPings = 86_400_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
 const weekMaxPings = 604_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
 const monthMaxPings = 2_629_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
@@ -187,10 +195,10 @@ export const calculateUptimeStatistics = (data: PingDoc, includePings: boolean):
 /** Responsible for writing to each representatives' uptime database file. */
 export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
     const start = LOG_INFO('Refreshing Uptime Pings');
-    const onlineReps = await getOnlineRepsPromise();
+    const onlineReps = AppCache.onlineRepresentatives;
     const onlineRepsSet = new Set(onlineReps);
     const largeReps = await getRepresentativesPromise({
-        minimumWeight: 100000,
+        minimumWeight: MINIMUM_WEIGHT_TO_MEASURE_UPTIME,
     });
     largeReps.map((rep) => writeRepStatistics(rep.address, onlineRepsSet.has(rep.address)));
     LOG_INFO('Uptime Pings Updated', start);

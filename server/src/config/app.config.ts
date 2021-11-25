@@ -51,3 +51,6 @@ export const BURN_ADDRESSES = useBananoConfig() ? BAN.BURN_ADDRESSES : NANO.BURN
 
 /** A list of addresses owned by the core team (banano team, or nano foundation) used to fuel ecosystem ambitions. */
 export const DEVELOPER_FUNDS = useBananoConfig() ? BAN.DEVELOPER_FUNDS : NANO.DEVELOPER_FUNDS;
+
+/** Minimum amount of weight a representative needs before we start tracking their uptime percentages. */
+export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig() ? BAN.UPTIME_TRACKING_MIN_WEIGHT : NANO.UPTIME_TRACKING_MIN_WEIGHT;

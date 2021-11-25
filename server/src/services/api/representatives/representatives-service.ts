@@ -11,6 +11,7 @@ import {
 import { RepresentativeDto } from '@app/types';
 
 type RequestBody = {
+    addresses?: string[];
     isOnline?: boolean;
     isPrincipal?: boolean;
     includeAlias?: boolean;
@@ -22,7 +23,9 @@ type RequestBody = {
     maximumWeight?: number;
 };
 
-const DEFAULT_BODY: RequestBody = {
+const DEFAULT_BODY
+    : RequestBody = {
+    addresses: [],
     isOnline: false,
     isPrincipal: false,
     includeAlias: false,
@@ -36,6 +39,9 @@ const DEFAULT_BODY: RequestBody = {
 
 const setBodyDefaults = (body: RequestBody): void => {
     // Set defaults
+    if (body.addresses === undefined) {
+        body.addresses = DEFAULT_BODY.addresses;
+    }
     if (body.includeDelegatorCount === undefined) {
         body.includeDelegatorCount = DEFAULT_BODY.includeDelegatorCount;
     }
@@ -65,9 +71,10 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
     const repMap = new Map<string, RepresentativeDto>();
     setBodyDefaults(body);
 
-    // Filters reps by weight restrictions.
+    // Filters reps by weight & address restrictions.
     const maxWeight = Number(body.maximumWeight);
     const minWeight = Number(body.minimumWeight);
+    console.log(body.addresses);
     for (const address in rpcData.representatives) {
         const raw = rpcData.representatives[address];
         const weight = Math.round(Number(rawToBan(raw)));

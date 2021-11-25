@@ -1,10 +1,17 @@
-import { AppCache, BACKUP_NODES, NANO_CLIENT } from '@app/config';
-import { getPRWeight, getPRWeightPromise, LOG_ERR, LOG_INFO } from '@app/services';
+import {AppCache, BACKUP_NODES, NANO_CLIENT} from '@app/config';
+import {LOG_ERR, LOG_INFO} from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 
 /** Number of a pings a representative has be omitted from the `representatives_online` rpc command list to be considered offline. */
 const OFFLINE_AFTER_PINGS = 5;
+
+const logResponseError = (url: string, err: any): Promise<RPC.RepresentativesOnlineResponse> => {
+    LOG_ERR('getOnlineRepsFromExternalApi', err, { url });
+    return Promise.resolve({
+        representatives: [],
+    });
+}
 
 /** Uses BACKUP_NODES to make additional rpc calls. */
 const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesOnlineResponse> =>
@@ -18,14 +25,15 @@ const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesO
             },
         })
         .then((response: AxiosResponse<RPC.RepresentativesOnlineResponse>) => {
+            if (response && response.data && !response.data.representatives) {
+                return logResponseError(url, response.data);
+            }
+            if (!response || !response.data || !response.data.representatives) {
+                return logResponseError(url, response);
+            }
             return Promise.resolve(response.data);
         })
-        .catch((err) => {
-            LOG_ERR('getOnlineRepsFromExternalApi', err);
-            return Promise.resolve({
-                representatives: [],
-            });
-        });
+        .catch((err) => logResponseError(url, err));
 
 export const getOnlineRepsPromise = async (): Promise<string[]> => {
     const offlinePingsMap = AppCache.offlinePingsMap;
@@ -37,16 +45,10 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
     await Promise.all([NANO_CLIENT.representatives_online(false), ...externalCalls]).then(
         (rpcResponses: Array<RPC.RepresentativesOnlineResponse>) => {
             for (const response of rpcResponses) {
-                if (response && response.representatives) {
-                    response.representatives.map((rep) => {
-                        onlineReps.add(rep);
-                        offlinePingsMap.set(rep, 0);
-                    });
-                } else {
-                    LOG_ERR('getOnlineRepsPromise', {
-                        error: `Malformed response for representatives_online RPC: ${JSON.stringify(response || '')}`,
-                    });
-                }
+                response.representatives.map((rep) => {
+                    onlineReps.add(rep);
+                    offlinePingsMap.set(rep, 0);
+                });
             }
         }
     );

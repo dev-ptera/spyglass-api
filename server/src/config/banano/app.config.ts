@@ -23,8 +23,6 @@ export const HOST_NODE_NAME = 'batman';
 export const BACKUP_NODES = [
     'http://159.69.198.59:7070',
     'https://api-beta.banano.cc/',
-    //   'https://banano-api.mynano.ninja/rpc',
-    //   'https://api-beta.banano.cc/'
 ];
 export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
 export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;
@@ -36,3 +34,5 @@ export const DEVELOPER_FUNDS = [
     'ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf',
     'ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj',
 ];
+
+export const UPTIME_TRACKING_MIN_WEIGHT = 10_000;
