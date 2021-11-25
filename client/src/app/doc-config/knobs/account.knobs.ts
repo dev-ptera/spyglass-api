@@ -8,7 +8,7 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
     },
 ];
 
-export const ACCOUNT_CONFIRMED_TX_KNOB: Array<Knob> = [
+export const ACCOUNT_HISTORY_KNOB: Array<Knob> = [
     {
         propertyName: 'address',
         propertyType: 'string',

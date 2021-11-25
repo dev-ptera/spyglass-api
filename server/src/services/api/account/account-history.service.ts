@@ -1,4 +1,4 @@
-import { accountHistoryRpc } from '@app/rpc';
+import {accountBlockCountRpc, accountHistoryRpc} from '@app/rpc';
 import {getAccurateHashTimestamp, LOG_ERR, sleep} from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 
@@ -46,18 +46,26 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.resultSize = Math.min(body.resultSize, 100);
 };
 
-export const confirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
+export const accountHistoryPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
     setBodyDefaults(body);
 
     const confirmedTransactions: ConfirmedTransactionDto[] = [];
     const rpcSearchSize = 500;
     let searchPage = 0;
 
+    const accountBlockCount =
+        await accountBlockCountRpc(body.address)
+            .catch((err) => {
+                return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
+            });
+    console.log(accountBlockCount.block_count);
+
+
     let completedSearch = false;
     while (!completedSearch) {
         const offset = Number(body.offset) + (rpcSearchSize * searchPage);
         const accountTx = await accountHistoryRpc(body.address, offset, rpcSearchSize).catch((err) => {
-            return Promise.reject(LOG_ERR('getConfirmedTransactions', err, { body }));
+            return Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }));
         });
 
         searchPage++;
@@ -100,10 +108,10 @@ export const confirmedTransactionsPromise = async (body: RequestBody): Promise<C
 };
 
 /** For a given address, return a list of confirmed transactions. */
-export const getConfirmedTransactions = (req, res): void => { // TODO: Rename this to 'history' aka account history
-    confirmedTransactionsPromise(req.body)
+export const getAccountHistory = (req, res): void => {
+    accountHistoryPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {
-            res.send(JSON.stringify(confirmedTx));
+            res.send(confirmedTx);
         })
         .catch((err) => {
             res.status(500).send(err);

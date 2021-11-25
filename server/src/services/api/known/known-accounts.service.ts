@@ -6,11 +6,13 @@ import { AppCache, KNOWN_ACCOUNTS } from '@app/config';
 type RequestBody = {
     includeOwner?: boolean;
     includeType?: boolean;
+    typeFilter?: string;
 };
 
 const DEFAULT_BODY: RequestBody = {
     includeOwner: false,
     includeType: false,
+    typeFilter: '',
 };
 
 /** Makes API call to Kirby's API to fetch known accounts list. */
@@ -67,13 +69,17 @@ const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
+    const filter = body.typeFilter.toLowerCase().trim();
+    console.log(filter);
     AppCache.knownAccounts.map((account) => {
-        accounts.push({
-            address: account.address,
-            alias: account.alias,
-            owner: body.includeOwner ? account.owner : undefined,
-            type: body.includeType ? account.type : undefined,
-        });
+        if (!filter || (filter && account.type === filter)) {
+            accounts.push({
+                address: account.address,
+                alias: account.alias,
+                owner: body.includeOwner ? account.owner : undefined,
+                type: body.includeType ? account.type : undefined,
+            });
+        }
     });
     return accounts;
 };
@@ -85,6 +91,9 @@ export const getKnownAccounts = (req, res): void => {
     }
     if (body.includeType === undefined) {
         body.includeType = DEFAULT_BODY.includeType;
+    }
+    if (body.typeFilter === undefined) {
+        body.typeFilter = DEFAULT_BODY.typeFilter;
     }
     const accounts = filterKnownAccounts(body);
     res.send(accounts);

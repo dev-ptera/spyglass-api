@@ -43,7 +43,7 @@ import {
     getDeveloperFunds,
     getPRWeight,
     getDelegators,
-    getConfirmedTransactions, importHistoricHashTimestamps,
+    getAccountHistory, importHistoricHashTimestamps,
     findMissingBlocks, findMissingBlocks2, cacheOnlineRepresentatives,
 } from '@app/services';
 
@@ -63,7 +63,7 @@ app.use(cors(corsOptions));
 
 /* Account */
 app.get(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
-app.post(`/${PATH_ROOT}/account/transactions/confirmed`, (req, res) => getConfirmedTransactions(req, res));
+app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
@@ -122,6 +122,6 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([onlineRepresentatives, knownAccounts, monitoredRepresentatives, writeUptimePings]);
+    void staggerServerUpdates([onlineRepresentatives, writeUptimePings, knownAccounts, monitoredRepresentatives, ]);
 
 });

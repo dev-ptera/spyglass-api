@@ -15,12 +15,12 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountConfirmedTxNavItem,
+    accountHistoryNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
-import { ACCOUNT_CONFIRMED_TX_KNOB, ACCOUNT_DELEGATORS_KNOB } from './knobs/account.knobs';
+import { ACCOUNT_HISTORY_KNOB, ACCOUNT_DELEGATORS_KNOB } from './knobs/account.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -107,10 +107,10 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${accountNavItem.route}/${accountConfirmedTxNavItem.route}`,
-        apiPath: 'account/transactions/confirmed',
+        route: `${accountNavItem.route}/${accountHistoryNavItem.route}`,
+        apiPath: 'account/history',
         responseSchema: 'ConfirmedTransactionDto[]',
-        knobs: ACCOUNT_CONFIRMED_TX_KNOB,
+        knobs: ACCOUNT_HISTORY_KNOB,
         requestType: 'POST',
     },
 ];

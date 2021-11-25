@@ -27,9 +27,8 @@ export const importHistoricHashTimestamps = (): Promise<void> => {
 
 export const getAccurateHashTimestamp = (hash: string, localTimestamp: string | number): number => {
     if (AppCache.historicHashes.has(hash)) {
-        console.log(localTimestamp + ' is mine');
-        console.log(AppCache.historicHashes.get(hash) + ' is theirs');
         return Math.min(AppCache.historicHashes.get(hash), Number(localTimestamp));
     }
     return Number(localTimestamp);
 }
+

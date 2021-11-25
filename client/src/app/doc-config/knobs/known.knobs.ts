@@ -9,4 +9,8 @@ export const KNOWN_ACCOUNTS_KNOBS: Array<Knob> = [
         propertyName: 'includeType',
         propertyType: 'boolean',
     },
+    {
+        propertyName: 'typeFilter',
+        propertyType: 'string',
+    },
 ];
