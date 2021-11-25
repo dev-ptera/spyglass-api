@@ -101,10 +101,10 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
-        apiPath: 'account/[address]/delegators',
+        apiPath: 'account/delegators',
         responseSchema: 'DelegatorsOverviewDto',
         knobs: ACCOUNT_DELEGATORS_KNOB,
-        requestType: 'GET',
+        requestType: 'POST',
     },
     {
         route: `${accountNavItem.route}/${accountHistoryNavItem.route}`,

@@ -1,13 +1,10 @@
 import {AppCache, BACKUP_NODES, NANO_CLIENT} from '@app/config';
-import { LOG_ERR, LOG_INFO } from '@app/services';
+import {getPRWeight, getPRWeightPromise, LOG_ERR, LOG_INFO} from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
 import axios, { AxiosResponse } from 'axios';
 
 /** Number of a pings a representative has be omitted from the `representatives_online` rpc command list to be considered offline. */
 const OFFLINE_AFTER_PINGS = 5;
-
-/** Keeps track of how many pings a representative has been offline for. */
-const offlinePingsMap = new Map<string, number>();
 
 /** Uses BACKUP_NODES to make additional rpc calls. */
 const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesOnlineResponse> =>
@@ -30,7 +27,9 @@ const getOnlineRepsFromExternalApi = (url: string): Promise<RPC.RepresentativesO
             });
         });
 
+
 export const getOnlineRepsPromise = async (): Promise<string[]> => {
+    const offlinePingsMap = AppCache.offlinePingsMap;
     const onlineReps: Set<string> = new Set();
     const externalCalls: Promise<RPC.RepresentativesOnlineResponse>[] = [];
     BACKUP_NODES.map((external) => externalCalls.push(getOnlineRepsFromExternalApi(external)));

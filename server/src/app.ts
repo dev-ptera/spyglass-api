@@ -24,7 +24,8 @@ import {
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
-    REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS, REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
+    REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
+    REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     URL_WHITE_LIST,
 } from '@app/config';
@@ -43,8 +44,11 @@ import {
     getDeveloperFunds,
     getPRWeight,
     getDelegators,
-    getAccountHistory, importHistoricHashTimestamps,
-    findMissingBlocks, findMissingBlocks2, cacheOnlineRepresentatives,
+    getAccountHistory,
+    importHistoricHashTimestamps,
+    findMissingBlocks,
+    findMissingBlocks2,
+    cacheOnlineRepresentatives,
 } from '@app/services';
 
 const corsOptions = {
@@ -62,7 +66,8 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 app.use(cors(corsOptions));
 
 /* Account */
-app.get(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
+//app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
+app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
 
 /* Representatives */
@@ -100,7 +105,6 @@ server.listen(port, () => {
     LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
     importHistoricHashTimestamps();
 
-
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,
         interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
@@ -122,6 +126,5 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([onlineRepresentatives, writeUptimePings, knownAccounts, monitoredRepresentatives, ]);
-
+    void staggerServerUpdates([onlineRepresentatives, writeUptimePings, knownAccounts, monitoredRepresentatives]);
 });

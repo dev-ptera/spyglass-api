@@ -1,7 +1,11 @@
-import {AccountBalanceDto, AccountDistributionStatsDto, KnownAccountDto, MonitoredRepresentativeDto} from '@app/types';
+import {
+    AccountBalanceDto,
+    AccountDistributionStatsDto,
+    KnownAccountDto,
+    MonitoredRepresentativeDto,
+} from '@app/types';
 
 export type AppCache = {
-
     /** Graph data for distribution. */
     accountDistributionStats: AccountDistributionStatsDto;
 
@@ -13,6 +17,9 @@ export type AppCache = {
 
     /** Representatives that run the Nano Node Monitor software (or some variant). */
     monitoredReps: Array<MonitoredRepresentativeDto>;
+
+    /** Keeps track of how many pings a representative has been offline for. */
+    offlinePingsMap: Map<string, number>;
 
     /** Online representatives. */
     onlineRepresentatives: string[];
@@ -26,6 +33,7 @@ export const AppCache: AppCache = {
     historicHashes: new Map<string, number>(),
     knownAccounts: [],
     monitoredReps: [],
+    offlinePingsMap: new Map<string, number>(),
     onlineRepresentatives: [],
     richList: [],
 };

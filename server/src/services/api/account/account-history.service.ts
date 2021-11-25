@@ -43,7 +43,7 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.resultSize === undefined) {
         body.resultSize = DEFAULT_BODY.resultSize;
     }
-    body.resultSize = Math.min(body.resultSize, 100);
+    body.resultSize = Math.min(body.resultSize, 500);
 };
 
 export const accountHistoryPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
