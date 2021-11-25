@@ -53,4 +53,6 @@ export const BURN_ADDRESSES = useBananoConfig() ? BAN.BURN_ADDRESSES : NANO.BURN
 export const DEVELOPER_FUNDS = useBananoConfig() ? BAN.DEVELOPER_FUNDS : NANO.DEVELOPER_FUNDS;
 
 /** Minimum amount of weight a representative needs before we start tracking their uptime percentages. */
-export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig() ? BAN.UPTIME_TRACKING_MIN_WEIGHT : NANO.UPTIME_TRACKING_MIN_WEIGHT;
+export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig()
+    ? BAN.UPTIME_TRACKING_MIN_WEIGHT
+    : NANO.UPTIME_TRACKING_MIN_WEIGHT;

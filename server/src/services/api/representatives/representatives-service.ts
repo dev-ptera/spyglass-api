@@ -23,8 +23,7 @@ type RequestBody = {
     maximumWeight?: number;
 };
 
-const DEFAULT_BODY
-    : RequestBody = {
+const DEFAULT_BODY: RequestBody = {
     addresses: [],
     isOnline: false,
     isPrincipal: false,
@@ -63,7 +62,12 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.minimumWeight === undefined) {
         body.minimumWeight = DEFAULT_BODY.minimumWeight;
     }
+
+    // Minimum weight to be counted in the list.
     body.minimumWeight = Math.max(body.minimumWeight, 1000);
+
+    // Trim spaces off of each filter address.
+    body.addresses.map(addr => addr.trim());
 };
 
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
@@ -74,10 +78,14 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
     // Filters reps by weight & address restrictions.
     const maxWeight = Number(body.maximumWeight);
     const minWeight = Number(body.minimumWeight);
-    console.log(body.addresses);
+    const filterAddress = new Set(body.addresses);
     for (const address in rpcData.representatives) {
         const raw = rpcData.representatives[address];
         const weight = Math.round(Number(rawToBan(raw)));
+
+        if (filterAddress.size > 0 && !filterAddress.has(address)) {
+            continue;
+        }
 
         if (weight >= minWeight && weight <= maxWeight) {
             repMap.set(address, { address, weight });

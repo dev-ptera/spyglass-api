@@ -13,6 +13,10 @@ export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
 
 export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
+        propertyName: 'addresses',
+        propertyType: 'array',
+    },
+    {
         propertyName: 'includeDelegatorCount',
         propertyType: 'boolean',
     },

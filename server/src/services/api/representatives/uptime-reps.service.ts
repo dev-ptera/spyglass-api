@@ -3,11 +3,10 @@ import {
     IS_PRODUCTION,
     PROFILE,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
-    UPTIME_TRACKING_MIN_WEIGHT
+    UPTIME_TRACKING_MIN_WEIGHT,
 } from '@app/config';
 import { LastOutage, PingStats, RepresentativeUptimeDto } from '@app/types';
 import { getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
-
 
 type RequestBody = {
     representatives: string[];
@@ -71,13 +70,17 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
     const data = await getRepDoc(repAddress);
     const emptyDoc = !data || !data.pingStats || !data.pingStats[data.pingStats.length - 1];
 
+    const formatTrackState = (timestamp: number) =>
+        new Date(timestamp).toLocaleDateString() + ' ' + new Date(timestamp).toLocaleTimeString();
+
     // 1 === ONLINE | 0 === OFFLINE
     if (emptyDoc) {
         const initialPing = isOnline ? { 1: 1 } : { 0: 1 };
+        const timestamp = new Date().getTime();
         await writeRepDoc({
             address: repAddress,
-            trackStartDate: new Date().toLocaleDateString(),
-            trackStartUnixTimestamp: new Date().getTime(),
+            trackStartDate: formatTrackState(timestamp),
+            trackStartUnixTimestamp: timestamp,
             pingStats: [initialPing],
         });
     } else {
@@ -96,9 +99,10 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
                 pingStats.push({ 0: 1 }); // Rep has just come offline.
             }
         }
+        const timestamp =  data.trackStartUnixTimestamp;
         await writeRepDoc({
             address: data.address,
-            trackStartDate: data.trackStartDate,
+            trackStartDate: formatTrackState(timestamp),
             trackStartUnixTimestamp: data.trackStartUnixTimestamp,
             pingStats,
         });
