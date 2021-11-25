@@ -196,6 +196,7 @@ export const calculateUptimeStatistics = (data: PingDoc, includePings: boolean):
     return uptimeDto;
 };
 
+let count = 0;
 /** Responsible for writing to each representatives' uptime database file. */
 export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
     const start = LOG_INFO('Refreshing Uptime Pings');
@@ -205,7 +206,7 @@ export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
         minimumWeight: MINIMUM_WEIGHT_TO_MEASURE_UPTIME,
     });
     largeReps.map((rep) => writeRepStatistics(rep.address, onlineRepsSet.has(rep.address)));
-    LOG_INFO('Uptime Pings Updated', start);
+    LOG_INFO(`Uptime Pings Updated [${++count}]`, start);
 };
 
 export const getRepresentativesUptimePromise = async (body: RequestBody): Promise<RepresentativeUptimeDto[]> => {
