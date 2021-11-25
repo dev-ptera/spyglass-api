@@ -22,7 +22,7 @@ export const LEDGER_LOCATION = '/representatives/batman/BananoData/data.ldb';
 export const HOST_NODE_NAME = 'batman';
 export const BACKUP_NODES = [
     'http://159.69.198.59:7070',
-    'https://api-beta.banano.cc/'
+    'https://api-beta.banano.cc/',
     //   'https://banano-api.mynano.ninja/rpc',
     //   'https://api-beta.banano.cc/'
 ];

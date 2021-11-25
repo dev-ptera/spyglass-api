@@ -1,5 +1,5 @@
-import {accountBlockCountRpc, accountHistoryRpc} from '@app/rpc';
-import {getAccurateHashTimestamp, LOG_ERR, sleep} from '@app/services';
+import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
+import { getAccurateHashTimestamp, LOG_ERR, sleep } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 
 const SUBTYPE = {
@@ -53,17 +53,14 @@ export const accountHistoryPromise = async (body: RequestBody): Promise<Confirme
     const rpcSearchSize = 500;
     let searchPage = 0;
 
-    const accountBlockCount =
-        await accountBlockCountRpc(body.address)
-            .catch((err) => {
-                return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
-            });
+    const accountBlockCount = await accountBlockCountRpc(body.address).catch((err) => {
+        return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err));
+    });
     console.log(accountBlockCount.block_count);
-
 
     let completedSearch = false;
     while (!completedSearch) {
-        const offset = Number(body.offset) + (rpcSearchSize * searchPage);
+        const offset = Number(body.offset) + rpcSearchSize * searchPage;
         const accountTx = await accountHistoryRpc(body.address, offset, rpcSearchSize).catch((err) => {
             return Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }));
         });

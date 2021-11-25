@@ -1,7 +1,6 @@
 import { convertFromRaw, LOG_ERR } from '@app/services';
 import { DelegatorDto, DelegatorsOverviewDto } from '@app/types';
-import {delegatorsCountRpc, delegatorsRpc} from '@app/rpc';
-
+import { delegatorsCountRpc, delegatorsRpc } from '@app/rpc';
 
 type RequestBody = {
     address: string;
@@ -15,7 +14,7 @@ const DEFAULT_BODY: RequestBody = {
     address: '',
     offset: 0,
     count: 100,
-    threshold: .0001
+    threshold: 0.0001,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
@@ -83,7 +82,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     return {
         count,
         weightSum,
-        delegators
+        delegators,
     };
 };
 

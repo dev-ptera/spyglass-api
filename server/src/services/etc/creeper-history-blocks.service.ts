@@ -1,8 +1,8 @@
-import {accountHistoryRpc, frontierCountRpc, frontiersRpc} from '@app/rpc';
-import {LOG_ERR, LOG_INFO, sleep} from '@app/services';
-import {FrontierCountResponse} from '@dev-ptera/nano-node-rpc';
-import {AppCache} from "@app/config";
-import axios, {AxiosResponse} from "axios";
+import { accountHistoryRpc, frontierCountRpc, frontiersRpc } from '@app/rpc';
+import { LOG_ERR, LOG_INFO, sleep } from '@app/services';
+import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
+import { AppCache } from '@app/config';
+import axios, { AxiosResponse } from 'axios';
 
 const fs = require('fs');
 
@@ -24,8 +24,10 @@ export const getFrontiersData = async (): Promise<string[]> => {
     let i = 0;
     for (const address in frontiersResponse.frontiers) {
         try {
-
-            if (address === 'ban_1jung1eb3uomk1gsx7w6w7toqrikxm5pgn5wbsg5fpy96ckpdf6wmiuuzpca' || address === 'ban_1faucetjuiyuwnz94j4c7s393r95sk5ac7p5usthmxct816osgqh3qd1caet') {
+            if (
+                address === 'ban_1jung1eb3uomk1gsx7w6w7toqrikxm5pgn5wbsg5fpy96ckpdf6wmiuuzpca' ||
+                address === 'ban_1faucetjuiyuwnz94j4c7s393r95sk5ac7p5usthmxct816osgqh3qd1caet'
+            ) {
                 continue;
             }
 
@@ -38,10 +40,9 @@ export const getFrontiersData = async (): Promise<string[]> => {
                 break;
             }
 
-
             for (const tx of accountTx.history) {
-                if (!AppCache.historicHashes.has(tx.hash)
-                    && Number(tx.local_timestamp) < 1616158800) { // This hash SHOULD have been added...
+                if (!AppCache.historicHashes.has(tx.hash) && Number(tx.local_timestamp) < 1616158800) {
+                    // This hash SHOULD have been added...
                     missing.push(tx.hash);
                     i++;
 
@@ -60,40 +61,38 @@ export const getFrontiersData = async (): Promise<string[]> => {
     return Promise.resolve(missing);
 };
 
-
 const fetchCreeperTimestamp = (blocks: string[]): Promise<any> => {
     const body = {
-        "action": "blocks_info",
-        "hashes": blocks,
-        "json_block": "true"
-    }
+        action: 'blocks_info',
+        hashes: blocks,
+        json_block: 'true',
+    };
     return new Promise<any>((resolve, reject) => {
         axios
             .request({
                 method: 'POST',
                 url: `http://159.69.198.59:7070`,
-                data: body
+                data: body,
             })
             .then((response: AxiosResponse<any>) => resolve(response.data))
             .catch(reject);
     });
-}
+};
 
-export const populateBlockTimestamps = async(missingBlocks: string[]): Promise<void> => {
+export const populateBlockTimestamps = async (missingBlocks: string[]): Promise<void> => {
     const start = LOG_INFO('Searching for Missing Block Timestamps');
 
     const entries = [];
     let reqBody = [];
     const reqBodySize = 200;
     for (const block of missingBlocks) {
-
         reqBody.push(block);
 
         // Send a request for every 200 blocks
         if (reqBody.length === reqBodySize) {
             const blocksInfo = await fetchCreeperTimestamp(reqBody).catch((err) => {
                 console.error(err);
-            })
+            });
             reqBody = [];
 
             if (!blocksInfo || !blocksInfo.blocks) {
@@ -107,8 +106,12 @@ export const populateBlockTimestamps = async(missingBlocks: string[]): Promise<v
                 // Save progress every 100000 items.
                 if (entries.length % 100000 === 0) {
                     var file = fs.createWriteStream(CREEPER_TIMESTAMPS);
-                    file.on('error', function(err) { /* error handling */ });
-                    entries.forEach(function(v) { file.write(v + '\n'); });
+                    file.on('error', function (err) {
+                        /* error handling */
+                    });
+                    entries.forEach(function (v) {
+                        file.write(v + '\n');
+                    });
                     file.end();
                 }
             }
@@ -120,13 +123,16 @@ export const populateBlockTimestamps = async(missingBlocks: string[]): Promise<v
     }
 
     var file = fs.createWriteStream(CREEPER_TIMESTAMPS);
-    file.on('error', function(err) { /* error handling */ });
-    entries.forEach(function(v) { file.write(v + '\n'); });
+    file.on('error', function (err) {
+        /* error handling */
+    });
+    entries.forEach(function (v) {
+        file.write(v + '\n');
+    });
     file.end();
 
     LOG_INFO('Searching for missing block timestamps Blocks Updated', start);
-}
-
+};
 
 /** Given a Block Snapshot from Creeper, find any missing blocks. */
 //4891316 missing originally

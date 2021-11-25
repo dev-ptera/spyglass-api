@@ -1,4 +1,4 @@
-import {AppCache, PROFILE} from '@app/config';
+import { AppCache, PROFILE } from '@app/config';
 
 const { performance } = require('perf_hooks');
 const csv = require('csv-parser');
@@ -12,7 +12,8 @@ export const importHistoricHashTimestamps = (): Promise<void> => {
             .pipe(csv())
             .on('data', (row) => {
                 // Anything before March 19, 2021 let's use creepers data
-                if (row.timestamp < 1616158800) { // TODO: Make me a config variable
+                if (row.timestamp < 1616158800) {
+                    // TODO: Make me a config variable
                     AppCache.historicHashes.set(row.hash, row.timestamp);
                 }
             })
@@ -22,7 +23,7 @@ export const importHistoricHashTimestamps = (): Promise<void> => {
                 console.log(AppCache.historicHashes.size + ' timestamps imported');
                 resolve();
             });
-    })
+    });
 };
 
 export const getAccurateHashTimestamp = (hash: string, localTimestamp: string | number): number => {
@@ -30,5 +31,4 @@ export const getAccurateHashTimestamp = (hash: string, localTimestamp: string | 
         return Math.min(AppCache.historicHashes.get(hash), Number(localTimestamp));
     }
     return Number(localTimestamp);
-}
-
+};

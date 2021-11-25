@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import { MonitoredRepresentativeDto } from '@app/types';
-import {LOG_INFO, LOG_ERR, getPRWeightPromise} from '@app/services';
+import { LOG_INFO, LOG_ERR, getPRWeightPromise } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
 type PeerMonitorStats = {
@@ -102,18 +102,16 @@ const groomDto = async (allPeerStats: PeerMonitorStats[]): Promise<MonitoredRepr
     return Promise.resolve(groomedDetails);
 };
 
-
-
 /** This is required as a part of v22; smaller representatives no longer appear as online,
  * so I use their node-monitors as an indicator of whether they are online or not. */
 const markNonPRsOnline = async (reps: MonitoredRepresentativeDto[]): Promise<void> => {
     const prWeight = await getPRWeightPromise();
     for (const rep of reps) {
         if (rep.weight < prWeight) {
-           AppCache.offlinePingsMap.set(rep.address, 0)
+            AppCache.offlinePingsMap.set(rep.address, 0);
         }
     }
-}
+};
 
 /** Sample: [::ffff:178.128.46.252]:7071 */
 const extractIpAddress = (dirtyIp: string): string => dirtyIp.replace('::ffff:', '').match(/(?<=\[).+?(?=\])/)[0];

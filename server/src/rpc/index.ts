@@ -12,4 +12,3 @@ export * from './calls/frontier-count.rpc';
 export * from './calls/peers.rpc';
 export * from './calls/representatives-online.rpc';
 export * from './calls/send.rpc';
-
