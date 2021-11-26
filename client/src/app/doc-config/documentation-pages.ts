@@ -15,12 +15,12 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountHistoryNavItem,
+    accountHistoryNavItem, accountRepresentativeNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
-import { ACCOUNT_HISTORY_KNOB, ACCOUNT_DELEGATORS_KNOB } from './knobs/account.knobs';
+import {ACCOUNT_HISTORY_KNOB, ACCOUNT_DELEGATORS_KNOB, ACCOUNT_REPRESENTATIVE_KNOB} from './knobs/account.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -112,5 +112,12 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'ConfirmedTransactionDto[]',
         knobs: ACCOUNT_HISTORY_KNOB,
         requestType: 'POST',
+    },
+    {
+        route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
+        apiPath: 'account/[address]/representative',
+        responseSchema: 'AccountRepresentativeDto',
+        knobs: ACCOUNT_REPRESENTATIVE_KNOB,
+        requestType: 'GET',
     },
 ];

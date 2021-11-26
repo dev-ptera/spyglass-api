@@ -97,12 +97,15 @@ export const accountDelegatorsNavItem: NavItem = {
 export const accountHistoryNavItem: NavItem = {
     title: 'History',
     route: 'history',
+};export const accountRepresentativeNavItem: NavItem = {
+    title: 'Representative',
+    route: 'representative',
 };
 export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'insights',
-    children: [accountHistoryNavItem, accountDelegatorsNavItem],
+    children: [accountHistoryNavItem, accountDelegatorsNavItem, accountRepresentativeNavItem],
 };
 
 export const APP_NAV_ITEMS = [

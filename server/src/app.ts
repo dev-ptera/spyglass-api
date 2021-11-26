@@ -48,7 +48,7 @@ import {
     importHistoricHashTimestamps,
     findMissingBlocks,
     findMissingBlocks2,
-    cacheOnlineRepresentatives,
+    cacheOnlineRepresentatives, getAccountRepresentative,
 } from '@app/services';
 
 const corsOptions = {
@@ -69,6 +69,7 @@ app.use(cors(corsOptions));
 //app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
+app.get(`/${PATH_ROOT}/account/:address/representative`, (req, res) => getAccountRepresentative(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));

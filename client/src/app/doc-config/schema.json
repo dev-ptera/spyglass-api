@@ -94,6 +94,17 @@
             ],
             "type": "object"
         },
+        "AccountRepresentativeDto": {
+            "properties": {
+                "representative": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "representative"
+            ],
+            "type": "object"
+        },
         "AliasedRepresentativeDto": {
             "properties": {
                 "address": {
