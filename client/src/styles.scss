@@ -67,3 +67,7 @@ body {
     font-size: 14px !important;
     max-width: 150px !important;
 }
+
+.link {
+    color: map-get($pxb-green, 500);
+}
