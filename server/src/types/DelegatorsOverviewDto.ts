@@ -1,6 +1,7 @@
 export type DelegatorsOverviewDto = {
     delegators: DelegatorDto[];
     count: number;
+    withBalanceCount: number;
     weightSum: number;
 };
 

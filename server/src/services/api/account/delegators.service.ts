@@ -50,10 +50,12 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     // Loop through rpc results, filter out zero weight delegators
     const delegators: DelegatorDto[] = [];
     let weightSum = 0;
+    let withBalanceCount = 0;
     for (const address in rpcResponse.delegators) {
         if (rpcResponse.delegators[address] === '0') {
             continue;
         } else {
+            withBalanceCount++;
             const weight = Number(convertFromRaw(rpcResponse.delegators[address]));
             weightSum += weight;
             if (weight >= body.threshold) {
@@ -68,15 +70,14 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     return {
         count,
         weightSum,
+        withBalanceCount,
         delegators: delegators.slice(0, body.count)
     };
 };
 
 /** Returns circulating, burned, and core-team controlled supply statistics. */
 export const getDelegators = async (req, res): Promise<void> => {
-    console.log('got delegators req');
-    const supply = await getDelegatorsPromise(req.body);
-    console.log('got supply');
-    res.send(supply);
+    const delegators = await getDelegatorsPromise(req.body);
+    res.send(delegators);
     return Promise.resolve();
 };
