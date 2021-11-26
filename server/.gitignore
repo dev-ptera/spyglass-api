@@ -25,6 +25,7 @@ pnpm-debug.log*
 *.sw?
 
 cmc-api-key.ts
+timestamps.csv
 
 rep-uptime-dev
 
