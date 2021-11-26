@@ -75,3 +75,8 @@ Contributors are welcome! There's a contributing file for more info on how to he
 ## Issues?
 
 Please either contact me via dev.ptera@gmail.com or put a bug on the issues tab.  
+
+## Timestamps
+
+Hash data can be accessed here: 
+https://drive.google.com/file/d/1FKdLjKOvV2QB_7FEWnfOagE6wHN8ORVL/view?usp=sharing
