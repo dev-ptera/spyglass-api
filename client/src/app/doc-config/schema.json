@@ -199,18 +199,18 @@
                     },
                     "type": "array"
                 },
-                "weightSum": {
+                "emptyCount": {
                     "type": "number"
                 },
-                "withBalanceCount": {
+                "weightSum": {
                     "type": "number"
                 }
             },
             "required": [
                 "count",
                 "delegators",
-                "weightSum",
-                "withBalanceCount"
+                "emptyCount",
+                "weightSum"
             ],
             "type": "object"
         },

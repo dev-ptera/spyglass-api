@@ -18,11 +18,11 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
         propertyType: 'number',
         notes: 'Number of delegators to return. Defaults to show 100 delegators.',
     },
-   /* {
+   {
         propertyName: 'offset',
         propertyType: 'number',
         notes: 'Skips the specified number of records in the result set. Used for pagination.',
-    }, */
+    },
     {
         propertyName: 'threshold',
         propertyType: 'number',
