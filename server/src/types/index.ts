@@ -2,6 +2,7 @@
 export * from './AccountAliasDto';
 export * from './AccountBalanceDto';
 export * from './AccountDistributionStatsDto';
+export * from './AccountRepresentativeDto';
 export * from './AliasedRepresentativeDto';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';

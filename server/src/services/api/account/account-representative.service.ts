@@ -1,7 +1,6 @@
-import {accountRepresentativeRpc} from "@app/rpc";
-import {LOG_ERR} from "@app/services";
-import {AccountRepresentativeDto} from "../../../types/AccountRepresentativeDto";
-
+import { accountRepresentativeRpc } from '@app/rpc';
+import { LOG_ERR } from '@app/services';
+import { AccountRepresentativeDto } from '@app/types';
 
 export const getAccountRepresentativePromise = async (address: string): Promise<AccountRepresentativeDto> => {
     const accountRepRpcResponse = await accountRepresentativeRpc(address).catch((err) => {
@@ -9,8 +8,8 @@ export const getAccountRepresentativePromise = async (address: string): Promise<
         return Promise.reject();
     });
     return {
-        representative: accountRepRpcResponse.representative
-    }
+        representative: accountRepRpcResponse.representative,
+    };
 };
 
 /** For a given address, return a list of confirmed transactions. */

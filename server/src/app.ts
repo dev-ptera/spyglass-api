@@ -48,7 +48,8 @@ import {
     importHistoricHashTimestamps,
     findMissingBlocks,
     findMissingBlocks2,
-    cacheOnlineRepresentatives, getAccountRepresentative,
+    cacheOnlineRepresentatives,
+    getAccountRepresentative,
 } from '@app/services';
 
 const corsOptions = {

@@ -99,7 +99,7 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
                 pingStats.push({ 0: 1 }); // Rep has just come offline.
             }
         }
-        const timestamp =  data.trackStartUnixTimestamp;
+        const timestamp = data.trackStartUnixTimestamp;
         await writeRepDoc({
             address: data.address,
             trackStartDate: formatTrackState(timestamp),

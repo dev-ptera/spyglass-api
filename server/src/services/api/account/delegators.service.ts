@@ -4,7 +4,7 @@ import { delegatorsCountRpc, delegatorsRpc } from '@app/rpc';
 
 type RequestBody = {
     address: string;
- //   offset?: number;
+    //   offset?: number;
     count?: number;
     showZeroBalance?: boolean;
     threshold?: number;
@@ -12,16 +12,16 @@ type RequestBody = {
 
 const DEFAULT_BODY: RequestBody = {
     address: '',
- //   offset: 0,
+    //   offset: 0,
     count: 100,
     threshold: 0.001,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
     // Set defaults
-  //  if (body.offset === undefined) {
- //       body.offset = DEFAULT_BODY.offset;
-  //  }
+    //  if (body.offset === undefined) {
+    //       body.offset = DEFAULT_BODY.offset;
+    //  }
     if (body.count === undefined) {
         body.count = DEFAULT_BODY.count;
     }
@@ -71,7 +71,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
         count,
         weightSum,
         withBalanceCount,
-        delegators: delegators.slice(0, body.count)
+        delegators: delegators.slice(0, body.count),
     };
 };
 

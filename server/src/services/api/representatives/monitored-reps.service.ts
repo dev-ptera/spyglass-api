@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import {EulenMonitoredRepresentativeDto, MonitoredRepresentativeDto} from '@app/types';
+import { EulenMonitoredRepresentativeDto, MonitoredRepresentativeDto } from '@app/types';
 import { LOG_INFO, LOG_ERR, getPRWeightPromise } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
@@ -29,8 +29,6 @@ type NanoNodeMonitorStats = {
     ip: string;
 };
 
-
-
 /** Given either an IP or HTTP address of a node monitor, returns the address used to lookup node stats. */
 export const getMonitoredUrl = (url: string): string => {
     if (url.includes('https') || url.includes('http')) {
@@ -38,7 +36,6 @@ export const getMonitoredUrl = (url: string): string => {
     }
     return `http://${url}/api.php`;
 };
-
 
 /** Given a peer IP or HTTP address, queries node monitor stats. */
 const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> =>

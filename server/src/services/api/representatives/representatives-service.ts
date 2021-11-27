@@ -67,7 +67,7 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.minimumWeight = Math.max(body.minimumWeight, 1000);
 
     // Trim spaces off of each filter address.
-    body.addresses.map(addr => addr.trim());
+    body.addresses.map((addr) => addr.trim());
 };
 
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {

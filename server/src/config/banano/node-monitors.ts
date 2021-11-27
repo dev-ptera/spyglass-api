@@ -1,5 +1,4 @@
 export const BAN_NODE_MONITORS = [
-
     /** DOMAIN | IP */
     '108.39.249.5', //batman
     '45.77.190.142', // Cabbit
@@ -25,8 +24,6 @@ export const BAN_NODE_MONITORS = [
     'https://banano.gray.network/api.php', // gray,
     'https://node.eulentier.de/api', // eulen,
     'https://banano.kga.earth/api.php', // kga earth
-
-
 
     //   'banano.nifni.net',
 ];
