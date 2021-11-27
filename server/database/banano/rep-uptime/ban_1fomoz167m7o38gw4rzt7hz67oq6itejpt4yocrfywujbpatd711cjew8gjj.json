@@ -1,0 +1,16 @@
+{
+    "address": "ban_1fomoz167m7o38gw4rzt7hz67oq6itejpt4yocrfywujbpatd711cjew8gjj",
+    "trackStartDate": "11/19/2021 12:34:29 PM",
+    "trackStartUnixTimestamp": 1637343269588,
+    "pingStats": [
+        {
+            "1": 3379
+        },
+        {
+            "0": 1216
+        },
+        {
+            "1": 6708
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "address": "ban_3px37c9f6w361j65yoasrcs6wh3hmmyb6eacpis7dwzp8th4hbb9izgba51j",
+    "trackStartDate": "11/19/2021 12:34:29 PM",
+    "trackStartUnixTimestamp": 1637343269589,
+    "pingStats": [
+        {
+            "1": 3379
+        },
+        {
+            "0": 1
+        },
+        {
+            "1": 7923
+        }
+    ]
+}

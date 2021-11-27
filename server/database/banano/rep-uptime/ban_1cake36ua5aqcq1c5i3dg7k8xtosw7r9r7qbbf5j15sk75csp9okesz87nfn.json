@@ -1,0 +1,22 @@
+{
+    "address": "ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn",
+    "trackStartDate": "11/19/2021 12:34:29 PM",
+    "trackStartUnixTimestamp": 1637343269588,
+    "pingStats": [
+        {
+            "0": 2820
+        },
+        {
+            "1": 1244
+        },
+        {
+            "0": 532
+        },
+        {
+            "1": 3127
+        },
+        {
+            "0": 3580
+        }
+    ]
+}
