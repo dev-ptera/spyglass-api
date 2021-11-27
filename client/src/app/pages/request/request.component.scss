@@ -92,7 +92,7 @@ $splitScreenCutoff: 1850px;
     overflow-y: auto;
     max-height: 60vh;
     @media screen and (max-width: $splitScreenCutoff) {
-        max-height: 50vh;
+        max-height: unset;
     }
 }
 
