@@ -1,0 +1,34 @@
+{
+    "address": "ban_1gt4ti4gnzjre341pqakzme8z94atcyuuawoso8gqwdx5m4a77wu1mxxighh",
+    "trackStartDate": "11/19/2021 12:34:29 PM",
+    "trackStartUnixTimestamp": 1637343269588,
+    "pingStats": [
+        {
+            "1": 1348
+        },
+        {
+            "0": 4
+        },
+        {
+            "1": 623
+        },
+        {
+            "0": 4
+        },
+        {
+            "1": 8
+        },
+        {
+            "0": 4
+        },
+        {
+            "1": 865
+        },
+        {
+            "0": 1
+        },
+        {
+            "1": 8446
+        }
+    ]
+}
