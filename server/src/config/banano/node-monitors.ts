@@ -24,7 +24,7 @@ export const BAN_NODE_MONITORS = [
     'https://banano.gray.network/api.php', // gray,
     'https://node.eulentier.de/api', // eulen,
     'https://banano.kga.earth/api.php', // kga earth,
-    'https://node.getbanano.cc/' // getbanano.cc
+    'https://node.getbanano.cc/api.php' // getbanano.cc
 
 
     //   'banano.nifni.net',

@@ -1,5 +1,6 @@
 import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
+import {NanoClient} from "@dev-ptera/nano-node-rpc";
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -15,7 +16,12 @@ export const PATH_ROOT = useBananoConfig() ? BAN.PATH_ROOT : NANO.PATH_ROOT;
 export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
 
 /** Used to read data from the BANANO node */
-export const NANO_CLIENT = useBananoConfig() ? BAN.NANO_CLIENT : NANO.NANO_CLIENT;
+export const NANO_CLIENT = new NanoClient({
+    url: process.env.RPC_URL,
+    requestHeaders: {
+        Authorization: process.env.RPC_AUTH || '',
+    },
+});
 
 const calcMinutes = (mins: number) => 60000 * mins;
 export const REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS = calcMinutes(1);
@@ -46,7 +52,7 @@ export const KNOWN_VANITIES = useBananoConfig() ? BAN.KNOWN_VANITIES : NANO.KNOW
 /** A list of known accounts within the ecosystem (e.g. exchanges, developer funds, burn account) */
 export const KNOWN_ACCOUNTS = useBananoConfig() ? BAN.KNOWN_ACCOUNTS : NANO.KNOWN_ACCOUNTS;
 
-/** A list of addresses that no one owns; funds sent to these addresses are consisdered inaccessible. */
+/** A list of addresses that no one owns; funds sent to these addresses are considered inaccessible. */
 export const BURN_ADDRESSES = useBananoConfig() ? BAN.BURN_ADDRESSES : NANO.BURN_ADDRESSES;
 
 /** A list of addresses owned by the core team (banano team, or nano foundation) used to fuel ecosystem ambitions. */

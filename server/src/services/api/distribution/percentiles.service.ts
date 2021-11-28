@@ -136,7 +136,9 @@ export const cacheAccountDistribution = async (): Promise<void> => {
                 resolve(LOG_INFO('Rich List Updated', start));
             })
             .catch((err) => {
-                resolve(LOG_ERR('cacheAccountDistribution', err));
+                LOG_ERR('cacheAccountDistribution', err)
+
+                resolve();
             });
     });
 };

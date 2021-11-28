@@ -33,19 +33,19 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     setBodyDefaults(body);
     const address = body.address;
 
-    console.log(body);
+    if (!address) {
+        return Promise.reject(LOG_ERR('getDelegatorsPromise', {error: 'Address is required.' }));
+    }
 
     // Fetch delegators count.
     const delegatorsCount = await delegatorsCountRpc(address).catch((err) => {
-        LOG_ERR('getDelegatorsPromise.delegatorsCountRpc', err, { address });
-        return Promise.reject();
+        return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsCount', err, { address }));
     });
     const count = Number(delegatorsCount.count);
 
     // Fetch delegators: TODO: V23 this rpc command changes; adds new optional params to make life easier.
     const rpcResponse = await delegatorsRpc(address).catch((err) => {
-        LOG_ERR('getDelegatorsPromise', err, { address });
-        return Promise.resolve({ delegators: [] });
+        return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsRpc', err, { address }));
     });
 
     // Loop through rpc results, filter out zero weight delegators
@@ -76,8 +76,10 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
 };
 
 /** Given an address, returns a list of delegators. */
-export const getDelegators = async (req, res): Promise<void> => {
-    const delegators = await getDelegatorsPromise(req.body);
-    res.send(delegators);
-    return Promise.resolve();
+export const getDelegators = (req, res): void => {
+    getDelegatorsPromise(req.body).then((delegators) => {
+        res.send(delegators);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
 };
