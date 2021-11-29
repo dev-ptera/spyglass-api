@@ -270,11 +270,6 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         type: 'representative',
     },
     {
-        address: 'ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe',
-        alias: 'VOID',
-        type: 'representative',
-    },
-    {
         address: 'ban_339yi5dqeo38rnfo8p6f4q5amxifje7r1mam1ye33f9xr3fy3s1mxyy3pwc3',
         alias: 'NeutralGood',
         type: 'representative',
@@ -417,5 +412,10 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         alias: 'Bananorlando',
         owner: 'u/homelab-express',
         type: 'representative'
-    }
+    },
+    {
+        address: 'ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe',
+        alias: 'nanners.cc',
+        type: 'representative',
+    },
 ];
