@@ -34,7 +34,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     const address = body.address;
 
     if (!isValidAddress(address)) {
-        return Promise.reject(LOG_ERR('getDelegatorsPromise', { error: 'Address is required.' }));
+        return Promise.reject(LOG_ERR('getDelegatorsPromise', { error: 'Address is required' }));
     }
 
     // Fetch delegators count.

@@ -1,5 +1,5 @@
 import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativeRpc } from '@app/rpc';
-import { LOG_ERR, LOG_INFO } from '@app/services';
+import {convertFromRaw, LOG_ERR, LOG_INFO} from '@app/services';
 import { AppCache } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
 import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
@@ -43,39 +43,39 @@ export const getFrontiersData = async (): Promise<{
             const balanceResponse = await accountBalanceRpc(address);
             const accountRep = await accountRepresentativeRpc(address);
             if (balanceResponse.balance !== '0') {
-                const ban = Number(Number(rawToBan(balanceResponse.balance)).toFixed(3));
+                const amount = Number(Number(convertFromRaw(balanceResponse.balance)).toFixed(3));
                 // Add to address list
-                if (ban >= 0.001) {
-                    richList.push({ addr: address, ban, representative: accountRep.representative });
+                if (amount >= 0.001) {
+                    richList.push({ address, amount, representative: accountRep.representative });
                 } else {
                     continue;
                 }
 
                 // Bucket balances
                 distributionStats.totalAccounts++;
-                if (ban > 100_000_000) {
+                if (amount > 100_000_000) {
                     distributionStats.number100_000_000++;
-                } else if (ban > 10_000_000) {
+                } else if (amount > 10_000_000) {
                     distributionStats.number10_000_000++;
-                } else if (ban > 1_000_000) {
+                } else if (amount > 1_000_000) {
                     distributionStats.number1_000_000++;
-                } else if (ban > 100_000) {
+                } else if (amount > 100_000) {
                     distributionStats.number100_000++;
-                } else if (ban > 10_000) {
+                } else if (amount > 10_000) {
                     distributionStats.number10_000++;
-                } else if (ban > 1_000) {
+                } else if (amount > 1_000) {
                     distributionStats.number1_000++;
-                } else if (ban > 100) {
+                } else if (amount > 100) {
                     distributionStats.number100++;
-                } else if (ban > 10) {
+                } else if (amount > 10) {
                     distributionStats.number10++;
-                } else if (ban > 1) {
+                } else if (amount > 1) {
                     distributionStats.number1++;
-                } else if (ban > 0.1) {
+                } else if (amount > 0.1) {
                     distributionStats.number0_1++;
-                } else if (ban > 0.01) {
+                } else if (amount > 0.01) {
                     distributionStats.number0_01++;
-                } else if (ban >= 0.001) {
+                } else if (amount >= 0.001) {
                     distributionStats.number0_001++;
                 }
             }
@@ -87,8 +87,8 @@ export const getFrontiersData = async (): Promise<{
 
     // Sort by balance descending.
     const sortedAccounts = richList.sort((a: AccountBalanceDto, b: AccountBalanceDto) => {
-        if (a.ban > b.ban) return -1;
-        if (a.ban < b.ban) return 1;
+        if (a.amount > b.amount) return -1;
+        if (a.amount < b.amount) return 1;
         return 0;
     });
     return Promise.resolve({
@@ -100,6 +100,7 @@ export const getFrontiersData = async (): Promise<{
 /** Whenever the rich list is still loading due to a server restart, read from a stored file.  Prevents unnecessary downtime of Wallets page. */
 export const parseRichListFromFile = async (): Promise<void> =>
     new Promise((resolve) => {
+        const start = LOG_INFO('Refreshing Accounts Distribution File');
         fs.readFile(ALL_BALANCES_FILE_NAME, 'utf8', (err, data) => {
             if (err) {
                 LOG_ERR('parseRichListFromFile.readFile', err);
@@ -108,6 +109,7 @@ export const parseRichListFromFile = async (): Promise<void> =>
                     const parsed = JSON.parse(data);
                     AppCache.accountDistributionStats = parsed.distributionStats;
                     AppCache.richList = parsed.richList;
+                    LOG_INFO('Accounts Distribution File Updated', start);
                 } catch (err) {
                     LOG_ERR('parseRichListFromFile.parseFile', err);
                 }
@@ -137,8 +139,11 @@ export const cacheAccountDistribution = async (): Promise<void> => {
             })
             .catch((err) => {
                 LOG_ERR('cacheAccountDistribution', err);
-
                 resolve();
             });
     });
 };
+
+export const getDistributionBuckets = (res): void => {
+    res.send(AppCache.accountDistributionStats);
+}

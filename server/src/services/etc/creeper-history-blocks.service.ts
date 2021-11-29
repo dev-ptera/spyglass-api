@@ -7,12 +7,12 @@ import axios, { AxiosResponse } from 'axios';
 const fs = require('fs');
 
 /** File which is used to store the list of top holders. */
-export const ALL_BALANCES_FILE_NAME = './database/banano/blocks-with-missing-timestamp.json';
+export const BLOCKS_WITH_MISSING_TIMESTAMPS = './database/banano/blocks-with-missing-timestamp.json';
 export const CREEPER_TIMESTAMPS = './database/banano/creeper-timestamps-round-2.csv';
 
 /** Uses the frontiers RPC call to iterate through all accounts.
  * Filters out small balance accounts & proceeds to lookup remaining accounts' representative. */
-export const getFrontiersData = async (): Promise<string[]> => {
+export const getFrontiersDataToFindMissingTimestampBlocks = async (): Promise<string[]> => {
     const frontiersCountResponse: FrontierCountResponse = await frontierCountRpc().catch((err) => {
         return Promise.reject(LOG_ERR('getFrontiersData.getFrontiersCount', err));
     });
@@ -139,9 +139,9 @@ export const populateBlockTimestamps = async (missingBlocks: string[]): Promise<
 export const findMissingBlocks = async (): Promise<void> => {
     return new Promise((resolve) => {
         const start = LOG_INFO('Searching for Missing Blocks');
-        getFrontiersData()
+        getFrontiersDataToFindMissingTimestampBlocks()
             .then((data) => {
-                fs.writeFile(ALL_BALANCES_FILE_NAME, JSON.stringify(data), { flag: 'w' }, (err) => {
+                fs.writeFile(BLOCKS_WITH_MISSING_TIMESTAMPS, JSON.stringify(data), { flag: 'w' }, (err) => {
                     if (err) {
                         LOG_ERR('findMissingBlocks.writeFile', err);
                     }
