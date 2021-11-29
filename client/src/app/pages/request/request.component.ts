@@ -3,9 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
-// @ts-ignore
-import ApiSchema from '../../doc-config/schema.json';
 import { Knob } from '../../doc-config/knobs/Knob';
+import {RequestService} from "./request.service";
 
 @Component({
     selector: 'app-request',
@@ -23,6 +22,7 @@ export class RequestComponent {
     requestType: 'POST' | 'GET';
 
     constructor(
+        private readonly _requestService: RequestService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _router: Router,
         private readonly _apiService: ApiService
@@ -55,38 +55,23 @@ export class RequestComponent {
     }
 
     /** Reading from the JSON schema found in the doc-service-config folder, creates a displayable response object. */
-    createResponseType(dtoType: string): void {
-        if (dtoType === 'string[]') {
-            this.requestResponseType = { array: 'string' };
-            return;
-        }
+    createResponseType(schema: string): void {
+        this.requestResponseType = this._requestService.parseDtoSchema(schema);
+    }
 
-        let isArray = false;
-        if (dtoType && dtoType.includes('[]')) {
-            isArray = true;
-            dtoType = dtoType.split('[]')[0];
-        }
-        if (!ApiSchema || !ApiSchema.definitions || !ApiSchema.definitions[dtoType]) {
-            return;
-        }
-        const responseType = {};
-        const properties = ApiSchema.definitions[dtoType].properties;
-        const requiredPropsL1 = ApiSchema.definitions[dtoType].required;
+    createRequestBody(): Object {
+        return this._requestService.createRequestBody(this.requestKnobs);
+    }
 
-        // TODO: this needs to support multiple levels of props, maybe 4 deep.  Think recursive.
-        for (const propL1 in properties) {
-            const attributeL1 = `${propL1}${requiredPropsL1.includes(propL1) ? '' : '?'}`;
-            responseType[attributeL1] = properties[propL1].type;
-            if (properties[propL1].properties) {
-                responseType[attributeL1] = {};
-            }
-            const requiredPropsL2 = properties[propL1].required;
-            for (const propL2 in properties[propL1].properties) {
-                const attributeL2 = `${propL2}${(requiredPropsL2 || []).includes(propL2) ? '' : '?'}`;
-                responseType[attributeL1][attributeL2] = properties[propL1].properties[propL2].type;
-            }
+    getDynamicPath(): string {
+        if (this.requestType === 'GET' && this.requestKnobs.length > 0) {
+            return this._requestService.getDynamicPath(this.requestKnobs, this.requestPath);
         }
-        this.requestResponseType = isArray ? { array: responseType } : responseType;
+        return this.requestPath;
+    }
+
+    isEmptyBody(): boolean {
+        return this.requestType === 'GET' || JSON.stringify(this.createRequestBody()) === '{}';
     }
 
     sendRequest(): void {
@@ -106,6 +91,7 @@ export class RequestComponent {
                 const contentEl = document.getElementById('response-content');
                 const width = scrollEl.clientWidth;
                 if (width < 1833) {
+                    // TODO: Fix ios no-scroll
                     scrollEl.scrollTo({ top: contentEl.offsetTop + 32, behavior: 'smooth' });
                 }
             })
@@ -113,42 +99,5 @@ export class RequestComponent {
                 this.requestResponse = err.error;
                 this.isLoading = false;
             });
-    }
-
-    createRequestBody(): Object {
-        const body = {};
-        for (const param of this.requestKnobs) {
-            if (
-                param.value === undefined ||
-                (param.value === true && param.defaultValue === true) ||
-                (param.value === false && (param.defaultValue === undefined || param.defaultValue === false)) ||
-                (param.value === '' && (param.defaultValue === undefined || param.defaultValue === ''))
-            ) {
-                continue;
-            }
-            if (param.propertyType === 'array') {
-                body[param.propertyName] = param.value.split(',');
-            } else {
-                body[param.propertyName] = param.value;
-            }
-        }
-        return body;
-    }
-
-    getDynamicPath(): string {
-        if (this.requestType === 'GET' && this.requestKnobs.length > 0) {
-            let dynamicPath = this.requestPath;
-            this.requestKnobs.map((knob) => {
-                if (knob.value) {
-                    dynamicPath = dynamicPath.replace(knob.restPathAlias, knob.value);
-                }
-            });
-            return dynamicPath;
-        }
-        return this.requestPath;
-    }
-
-    isEmptyBody(): boolean {
-        return this.requestType === 'GET' || JSON.stringify(this.createRequestBody()) === '{}';
     }
 }
