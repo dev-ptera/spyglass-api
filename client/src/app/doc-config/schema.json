@@ -18,10 +18,10 @@
         },
         "AccountBalanceDto": {
             "properties": {
-                "addr": {
+                "address": {
                     "type": "string"
                 },
-                "ban": {
+                "amount": {
                     "type": "number"
                 },
                 "representative": {
@@ -29,9 +29,8 @@
                 }
             },
             "required": [
-                "addr",
-                "ban",
-                "representative"
+                "address",
+                "amount"
             ],
             "type": "object"
         },

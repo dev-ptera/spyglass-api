@@ -49,7 +49,9 @@ import {
     cacheOnlineRepresentatives,
     getAccountRepresentative,
     cacheAccountDistribution, parseRichListFromFile,
-    getDistributionBuckets
+    getDistributionBuckets,
+    getRichList,
+
 } from '@app/services';
 
 const corsOptions = {
@@ -84,6 +86,7 @@ app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentative
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
 app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
 app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
+app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
 
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));

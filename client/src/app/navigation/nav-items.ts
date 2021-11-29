@@ -57,6 +57,10 @@ export const distributionBuckets: NavItem = {
     title: 'Buckets',
     route: 'buckets',
 };
+export const richListNavItem: NavItem = {
+    title: 'Rich List',
+    route: 'rich-list',
+};
 
 export const distributionNavItem: NavItem = {
     title: 'Distribution',
@@ -65,6 +69,7 @@ export const distributionNavItem: NavItem = {
     children: [
         distributionBuckets,
         developerFundsNavItem,
+        richListNavItem,
         supplyNavItem,
     ],
 };

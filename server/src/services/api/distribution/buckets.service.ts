@@ -3,7 +3,6 @@ import {convertFromRaw, LOG_ERR, LOG_INFO} from '@app/services';
 import { AppCache } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
 import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
-import { rawToBan } from 'banano-unit-converter';
 const fs = require('fs');
 
 /** File which is used to store the list of top holders. */

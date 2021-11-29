@@ -55,7 +55,7 @@ const getRepDoc = async (repAddress: string): Promise<PingDoc> => {
 /** Stores updated ping data in local collection of JSON files. */
 const writeRepDoc = async (data: PingDoc): Promise<void> => {
     return new Promise(async (resolve) => {
-        await fs.writeFile(formatDocName(data.address), JSON.stringify(data, null, 4), { flag: 'w' }, (err) => {
+        await fs.writeFile(formatDocName(data.address), JSON.stringify(data, null, 2), { flag: 'w' }, (err) => {
             if (err) {
                 console.log('[ERROR]: Writing rep-uptime file', err);
                 LOG_ERR('representativeUptimeService.writeRepDoc', err, { data });

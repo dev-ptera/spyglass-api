@@ -15,12 +15,13 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountHistoryNavItem, accountRepresentativeNavItem, distributionBuckets,
+    accountHistoryNavItem, accountRepresentativeNavItem, distributionBuckets, richListNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
 import {ACCOUNT_HISTORY_KNOB, ACCOUNT_DELEGATORS_KNOB, ACCOUNT_REPRESENTATIVE_KNOB} from './knobs/account.knobs';
+import {DISTRIBUTION_RICH_LIST_KNOBS} from "./knobs/distribution.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -105,6 +106,13 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'AccountDistributionStatsDto',
         knobs: [],
         requestType: 'GET',
+    },
+    {
+        route: `${distributionNavItem.route}/${richListNavItem.route}`,
+        apiPath: 'distribution/rich-list',
+        responseSchema: 'AccountBalanceDto[]',
+        knobs: DISTRIBUTION_RICH_LIST_KNOBS,
+        requestType: 'POST',
     },
     {
         route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
