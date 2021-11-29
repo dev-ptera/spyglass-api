@@ -27,7 +27,8 @@ import {
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
-    URL_WHITE_LIST, WALLETS_REFRESH_INTERVAL_MS,
+    URL_WHITE_LIST,
+    WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
     getRepresentatives,
@@ -48,10 +49,12 @@ import {
     importHistoricHashTimestamps,
     cacheOnlineRepresentatives,
     getAccountRepresentative,
-    cacheAccountDistribution, parseRichListFromFile,
+    cacheAccountDistribution,
+    parseRichListFromFile,
     getDistributionBuckets,
     getRichList,
-
+    getPeerVersions,
+    getQuorum,
 } from '@app/services';
 
 const corsOptions = {
@@ -93,7 +96,8 @@ app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res)
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 /* Network */
-//app.get(`/${PATH_ROOT}/network/pr-requirement`, (req, res) => getPrincipalRepWeightRequirement(req, res));
+app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(req, res));
+app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
@@ -116,7 +120,6 @@ server.listen(port, () => {
         method: cacheOnlineRepresentatives,
         interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     };
-
 
     const accountsDistribution = {
         method: cacheAccountDistribution,

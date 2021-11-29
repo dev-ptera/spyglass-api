@@ -88,11 +88,19 @@ export const knownNavItem: NavItem = {
     children: [knownAccountsNavItem, knownVanitiesNavItem],
 };
 
+export const peerVersionsNavItem: NavItem = {
+    title: 'Peer Versions',
+    route: 'peer-versions',
+};
+export const quorumNavItem: NavItem = {
+    title: 'Quorum',
+    route: 'quorum',
+};
 export const networkNavItem: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
-    children: [],
+    children: [peerVersionsNavItem, quorumNavItem],
 };
 
 export const accountDelegatorsNavItem: NavItem = {
@@ -117,6 +125,6 @@ export const APP_NAV_ITEMS = [
     accountNavItem,
     distributionNavItem,
     knownNavItem,
-    //  networkNavItem,
+    networkNavItem,
     repNavItem,
 ];

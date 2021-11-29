@@ -15,7 +15,12 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountHistoryNavItem, accountRepresentativeNavItem, distributionBuckets, richListNavItem,
+    accountHistoryNavItem,
+    accountRepresentativeNavItem,
+    distributionBuckets,
+    richListNavItem,
+    peerVersionsNavItem,
+    quorumNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -133,6 +138,20 @@ export const apiDocumentationPages: Array<{
         apiPath: 'account/[address]/representative',
         responseSchema: 'AccountRepresentativeDto',
         knobs: ACCOUNT_REPRESENTATIVE_KNOB,
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItem.route}/${peerVersionsNavItem.route}`,
+        apiPath: 'network/peers',
+        responseSchema: 'PeerVersionsDto[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItem.route}/${quorumNavItem.route}`,
+        apiPath: 'network/quorum',
+        responseSchema: 'QuorumDto',
+        knobs: [],
         requestType: 'GET',
     },
 ];
