@@ -53,9 +53,9 @@ export const developerFundsNavItem: NavItem = {
     route: 'developer-funds',
 };
 
-export const wealthPercentiles: NavItem = {
-    title: 'Percentiles',
-    route: 'percentiles',
+export const distributionBuckets: NavItem = {
+    title: 'Buckets',
+    route: 'buckets',
 };
 
 export const distributionNavItem: NavItem = {
@@ -63,9 +63,9 @@ export const distributionNavItem: NavItem = {
     route: 'distribution',
     icon: 'logo_dev',
     children: [
+        distributionBuckets,
         developerFundsNavItem,
         supplyNavItem,
-        //    wealthPercentiles,
     ],
 };
 export const knownAccountsNavItem: NavItem = {

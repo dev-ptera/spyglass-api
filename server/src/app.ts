@@ -27,7 +27,7 @@ import {
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
-    URL_WHITE_LIST,
+    URL_WHITE_LIST, WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
     getRepresentatives,
@@ -46,10 +46,10 @@ import {
     getDelegators,
     getAccountHistory,
     importHistoricHashTimestamps,
-    findMissingBlocks,
-    findMissingBlocks2,
     cacheOnlineRepresentatives,
     getAccountRepresentative,
+    cacheAccountDistribution, parseRichListFromFile,
+    getDistributionBuckets
 } from '@app/services';
 
 const corsOptions = {
@@ -81,8 +81,9 @@ app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(req
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
 /* Distribution */
-app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(req, res));
-app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(req, res));
+app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
+app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
+app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
 
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));
@@ -105,11 +106,18 @@ export const staggerServerUpdates = async (cacheFns: Array<{ method: Function; i
 server.listen(port, () => {
     LOG_INFO(`Running yellow-spyglass server on port ${port}.`);
     LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
+    parseRichListFromFile();
     importHistoricHashTimestamps();
 
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,
         interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
+    };
+
+
+    const accountsDistribution = {
+        method: cacheAccountDistribution,
+        interval: WALLETS_REFRESH_INTERVAL_MS,
     };
 
     const monitoredRepresentatives = {

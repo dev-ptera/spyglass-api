@@ -15,7 +15,7 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountHistoryNavItem, accountRepresentativeNavItem,
+    accountHistoryNavItem, accountRepresentativeNavItem, distributionBuckets,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -96,6 +96,13 @@ export const apiDocumentationPages: Array<{
         route: `${distributionNavItem.route}/${developerFundsNavItem.route}`,
         apiPath: 'distribution/developer-funds',
         responseSchema: 'DeveloperFundsDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${distributionNavItem.route}/${distributionBuckets.route}`,
+        apiPath: 'distribution/buckets',
+        responseSchema: 'AccountDistributionStatsDto',
         knobs: [],
         requestType: 'GET',
     },

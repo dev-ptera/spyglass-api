@@ -1,13 +1,13 @@
 import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
-import {NanoClient} from "@dev-ptera/nano-node-rpc";
+import { NanoClient } from '@dev-ptera/nano-node-rpc';
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 /** Used to toggle between banano and nano profiles; 'banano' | 'nano' */
 export const PROFILE = process.env.PROFILE;
 
-const useBananoConfig = (): boolean => PROFILE === 'banano';
+export const useBananoConfig = (): boolean => PROFILE === 'banano';
 
 /** API served from this root, example: https://api.yellowspyglass.com/banano/representatives */
 export const PATH_ROOT = useBananoConfig() ? BAN.PATH_ROOT : NANO.PATH_ROOT;

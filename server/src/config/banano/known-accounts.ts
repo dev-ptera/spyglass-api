@@ -270,11 +270,6 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         type: 'representative',
     },
     {
-        address: 'ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe',
-        alias: 'VOID',
-        type: 'representative',
-    },
-    {
         address: 'ban_339yi5dqeo38rnfo8p6f4q5amxifje7r1mam1ye33f9xr3fy3s1mxyy3pwc3',
         alias: 'NeutralGood',
         type: 'representative',
@@ -410,12 +405,17 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         address: 'ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt',
         alias: 'getbanano.cc',
         owner: 'u/iMalFect',
-        type: 'representative'
+        type: 'representative',
     },
     {
         address: 'ban_1ort4j8gh5pcst7i4mbgtsjsihiwpdrd5fj8mwxdc7hw18n67nanwxzoz45t',
         alias: 'Bananorlando',
         owner: 'u/homelab-express',
-        type: 'representative'
-    }
+        type: 'representative',
+    },
+    {
+        address: 'ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe',
+        alias: 'nanners.cc',
+        type: 'representative',
+    },
 ];
