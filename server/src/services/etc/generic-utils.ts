@@ -1,4 +1,5 @@
 import { rawToBan } from 'banano-unit-converter';
+import { useBananoConfig } from '@app/config';
 
 /** Wait interval in milliseconds. */
 export const sleep = (ms) =>
@@ -13,3 +14,6 @@ export const convertFromRaw = (raw: string): number => {
     }
     return Math.round(Number(rawToBan(raw)));
 };
+
+export const isValidAddress = (address: string): boolean =>
+    address && address.length === 64 && (useBananoConfig() ? address.startsWith('ban_') : address.startsWith('nano_'));

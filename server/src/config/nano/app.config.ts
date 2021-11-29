@@ -1,4 +1,3 @@
-
 export const PATH_ROOT = 'nano';
 export const URL_WHITE_LIST = [
     'http://localhost:4200',

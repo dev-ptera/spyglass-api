@@ -1,5 +1,5 @@
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
-import { getAccurateHashTimestamp, LOG_ERR, sleep } from '@app/services';
+import { getAccurateHashTimestamp, isValidAddress, LOG_ERR, sleep } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 
 const SUBTYPE = {
@@ -50,10 +50,15 @@ export const accountHistoryPromise = async (body: RequestBody): Promise<Confirme
     setBodyDefaults(body);
 
     const confirmedTransactions: ConfirmedTransactionDto[] = [];
-    const rpcSearchSize = 500;
+    const rpcSearchSize = 200;
+    const address = body.address;
     let searchPage = 0;
 
-    const accountBlockCount = await accountBlockCountRpc(body.address).catch((err) => {
+    if (!isValidAddress(address)) {
+        return Promise.reject({ error: 'Address is required' });
+    }
+
+    const accountBlockCount = await accountBlockCountRpc(address).catch((err) => {
         return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err));
     });
     console.log(accountBlockCount.block_count);
@@ -61,7 +66,7 @@ export const accountHistoryPromise = async (body: RequestBody): Promise<Confirme
     let completedSearch = false;
     while (!completedSearch) {
         const offset = Number(body.offset) + rpcSearchSize * searchPage;
-        const accountTx = await accountHistoryRpc(body.address, offset, rpcSearchSize).catch((err) => {
+        const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize).catch((err) => {
             return Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }));
         });
 

@@ -62,7 +62,7 @@ const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
             })
             .catch((err) => {
                 LOG_ERR('getKnownAccountsPromise', err);
-                resolve([]);
+                resolve(AppCache.knownAccounts);
             });
     });
 };
@@ -70,7 +70,6 @@ const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
     const filter = body.typeFilter.toLowerCase().trim();
-    console.log(filter);
     AppCache.knownAccounts.map((account) => {
         if (!filter || (filter && account.type === filter)) {
             accounts.push({

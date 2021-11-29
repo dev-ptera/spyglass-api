@@ -153,7 +153,7 @@ export const findMissingBlocks = async (): Promise<void> => {
                 resolve(LOG_INFO('Missing Blocks Updated', start));
             })
             .catch((err) => {
-                LOG_ERR('findMissingBlocks', err)
+                LOG_ERR('findMissingBlocks', err);
                 resolve();
             });
     });

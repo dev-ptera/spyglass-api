@@ -29,7 +29,12 @@ export const getDeveloperFundsPromise = async (): Promise<DeveloperFundsDto> => 
 };
 
 /** Returns all accounts and balances of core-team owned funds.  (e.g. developer funds, foundation funds, etc). */
-export const getDeveloperFunds = async (req, res): Promise<void> => {
-    const funds = await getDeveloperFundsPromise();
-    res.send(funds);
+export const getDeveloperFunds = (req, res): void => {
+    getDeveloperFundsPromise()
+        .then((accounts) => {
+            res.send(accounts);
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
 };

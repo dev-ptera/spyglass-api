@@ -9,10 +9,12 @@
         "build": "tsc",
         "start": "yarn build && node --max-old-space-size=8192 dist/app.js",
         "prettier": "prettier \"src/**/**.{ts,js}\" --write",
-        "schema": "typescript-json-schema \"src/types/*Dto.ts\" * -o ../client/src/app/doc-config/schema.json --required=true"
+        "schema": "typescript-json-schema \"src/types/*Dto.ts\" * -o ../client/src/app/doc-config/schema.json --required=true",
+        "prisma": "npx prisma studio"
     },
     "dependencies": {
         "@dev-ptera/nano-node-rpc": "^2.0.2",
+        "@prisma/client": "^3.5.0",
         "banano-unit-converter": "^0.1.0",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
@@ -29,6 +31,7 @@
         "@types/node": "^12.0.7",
         "module-alias": "^2.2.2",
         "prettier": "^2.1.2",
+        "prisma": "^3.5.0",
         "tslib": "^2.1.0",
         "typescript": "~4.0.2",
         "typescript-json-schema": "^0.51.0"

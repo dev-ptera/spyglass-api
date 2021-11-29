@@ -110,7 +110,7 @@ export class RequestComponent {
                 }
             })
             .catch((err: any) => {
-                this.requestResponse = err;
+                this.requestResponse = err.error;
                 this.isLoading = false;
             });
     }
