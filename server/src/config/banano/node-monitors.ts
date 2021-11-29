@@ -25,5 +25,5 @@ export const BAN_NODE_MONITORS = [
     'https://node.eulentier.de/api', // eulen,
     'https://banano.kga.earth/api.php', // kga earth,
     'https://node.getbanano.cc/api.php', // getbanano.cc,
-    'https://node-va.banano.cc/api.php' // cake
+    'https://node-va.banano.cc/api.php', // cake
 ];
