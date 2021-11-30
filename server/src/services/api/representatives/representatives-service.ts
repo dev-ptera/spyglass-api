@@ -13,7 +13,7 @@ type RequestBody = {
     addresses?: string[];
     isOnline?: boolean;
     isPrincipal?: boolean;
-    isMonitored?: boolean,
+    isMonitored?: boolean;
     includeAlias?: boolean;
     includeDelegatorCount?: boolean;
     includeNodeMonitorStats?: boolean;

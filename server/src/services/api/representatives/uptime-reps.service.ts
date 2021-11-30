@@ -65,13 +65,13 @@ const writeRepDoc = async (data: PingDoc): Promise<void> => {
     });
 };
 
+const formatStingDate = (timestamp: number) =>
+    new Date(timestamp).toLocaleDateString() + ' ' + new Date(timestamp).toLocaleTimeString();
+
 /** Stores representative ping data in a local JSON file. */
 export const writeRepStatistics = async (repAddress: string, isOnline: boolean) => {
     const data = await getRepDoc(repAddress);
     const emptyDoc = !data || !data.pingStats || !data.pingStats[data.pingStats.length - 1];
-
-    const formatTrackState = (timestamp: number) =>
-        new Date(timestamp).toLocaleDateString() + ' ' + new Date(timestamp).toLocaleTimeString();
 
     // 1 === ONLINE | 0 === OFFLINE
     if (emptyDoc) {
@@ -79,7 +79,7 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
         const timestamp = new Date().getTime();
         await writeRepDoc({
             address: repAddress,
-            trackStartDate: formatTrackState(timestamp),
+            trackStartDate: formatStingDate(timestamp),
             trackStartUnixTimestamp: timestamp,
             pingStats: [initialPing],
         });
@@ -102,7 +102,7 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
         const timestamp = data.trackStartUnixTimestamp;
         await writeRepDoc({
             address: data.address,
-            trackStartDate: formatTrackState(timestamp),
+            trackStartDate: formatStingDate(timestamp),
             trackStartUnixTimestamp: data.trackStartUnixTimestamp,
             pingStats,
         });
@@ -126,9 +126,9 @@ const calculateLastOutageStatistics = (pingStats: PingStats[]): LastOutage => {
             const offlineUnixTimestamp = onlineUnixTimestamp - minutesToMs(outageDurationMinutes);
             lastOutage = {
                 offlineUnixTimestamp: offlineUnixTimestamp,
-                offlineDate: new Date(offlineUnixTimestamp).toLocaleDateString(),
+                offlineDate: formatStingDate(offlineUnixTimestamp),
                 onlineUnixTimestamp: onlineUnixTimestamp,
-                onlineDate: new Date(onlineUnixTimestamp).toLocaleDateString(),
+                onlineDate: formatStingDate(onlineUnixTimestamp),
                 durationMinutes: outageDurationMinutes,
             };
             break;
@@ -169,11 +169,11 @@ const calculateUptimePercentages = (pingStats: PingStats[]) => {
         }
     }
     return {
-        day: calculateUptimePercentage(dayPings.online, dayMaxPings),
-        week: calculateUptimePercentage(weekPings.online, weekMaxPings),
-        month: calculateUptimePercentage(monthPings.online, monthMaxPings),
-        semiAnnual: calculateUptimePercentage(semiAnnualPings.online, semiAnnualMaxPings),
-        year: calculateUptimePercentage(yearPings.online, yearMaxPings),
+        day: calculateUptimePercentage(dayPings.online, Math.min(dayMaxPings, pingTotal)),
+        week: calculateUptimePercentage(weekPings.online, Math.min(weekMaxPings, pingTotal)),
+        month: calculateUptimePercentage(monthPings.online, Math.min(monthMaxPings, pingTotal)),
+        semiAnnual: calculateUptimePercentage(semiAnnualPings.online, Math.min(semiAnnualMaxPings, pingTotal)),
+        year: calculateUptimePercentage(yearPings.online, Math.min(yearMaxPings, pingTotal)),
     };
 };
 

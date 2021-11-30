@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { KnownAccountDto } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
-import { AppCache, KNOWN_ACCOUNTS } from '@app/config';
+import {AppCache, KNOWN_ACCOUNTS, PROFILE} from '@app/config';
+const fs = require('fs');
 
 type RequestBody = {
     includeOwner?: boolean;
@@ -14,6 +15,19 @@ const DEFAULT_BODY: RequestBody = {
     includeType: false,
     typeFilter: '',
 };
+
+/** Converts the KNOWN_ACCOUNTS object to a json file.
+ * This file isThis is used to update KNOWN_ACCOUNTS without restarting the server. */
+export const convertManualKnownAccountsToJson = (): void => {
+    const file = `database/${PROFILE}/known-accounts.json`;
+    fs.writeFile(`${file}`, JSON.stringify(KNOWN_ACCOUNTS, null, 2), (err) => {
+        // throws an error, you could also catch it here
+        if (err) {
+            LOG_ERR('convertManualKnownAccountsToJson', err);
+            throw err;
+        }
+        });
+}
 
 /** Makes API call to Kirby's API to fetch known accounts list. */
 const fetchRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>

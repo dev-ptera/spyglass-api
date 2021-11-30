@@ -1,12 +1,12 @@
 import { AppCache, PROFILE } from '@app/config';
+import { LOG_INFO } from '../log/info.service';
 
 const { performance } = require('perf_hooks');
 const csv = require('csv-parser');
 const fs = require('fs');
 
 export const importHistoricHashTimestamps = (): Promise<void> => {
-    console.log('[INFO]: Importing Historic Hash Timestamps');
-    const t0 = performance.now();
+    const start = LOG_INFO('Importing Historic Hash Timestamps');
     return new Promise((resolve) => {
         fs.createReadStream(`./database/${PROFILE}/timestamps.csv`)
             .pipe(csv())
@@ -18,8 +18,7 @@ export const importHistoricHashTimestamps = (): Promise<void> => {
                 }
             })
             .on('end', () => {
-                const t1 = performance.now();
-                console.log(`[INFO]: Historic Hash Timestamps Imported, took ${Math.round(t1 - t0)}ms`);
+                LOG_INFO('Historic Hash Timestamps Updated', start);
                 console.log(AppCache.historicHashes.size + ' timestamps imported');
                 resolve();
             });

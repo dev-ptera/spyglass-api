@@ -55,6 +55,7 @@ import {
     getRichList,
     getPeerVersions,
     getQuorum,
+    convertManualKnownAccountsToJson
 } from '@app/services';
 
 const corsOptions = {
@@ -115,6 +116,7 @@ server.listen(port, () => {
     LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
     parseRichListFromFile();
     importHistoricHashTimestamps();
+    convertManualKnownAccountsToJson();
 
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,
@@ -142,5 +144,12 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([onlineRepresentatives, monitoredRepresentatives, writeUptimePings, knownAccounts, accountsDistribution]);
+    void staggerServerUpdates([
+        onlineRepresentatives,
+        monitoredRepresentatives,
+        writeUptimePings,
+        knownAccounts,
+        accountsDistribution,
+    ]);
 });
+

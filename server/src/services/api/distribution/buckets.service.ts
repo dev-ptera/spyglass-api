@@ -77,7 +77,7 @@ export const getFrontiersData = async (): Promise<{
                     distributionStats.number0_01++;
                 } else if (amount >= 0.001) {
                     distributionStats.number0_001++;
-                }  else if (amount >= 0.0001) {
+                } else if (amount >= 0.0001) {
                     distributionStats.number0_0001++;
                 }
             }
