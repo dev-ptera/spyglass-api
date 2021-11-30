@@ -21,64 +21,83 @@ const DEFAULT_BODY: RequestBody = {
 export const convertManualKnownAccountsToJson = (): void => {
     const file = `database/${PROFILE}/known-accounts.json`;
     fs.writeFile(`${file}`, JSON.stringify(KNOWN_ACCOUNTS, null, 2), (err) => {
-        // throws an error, you could also catch it here
         if (err) {
             LOG_ERR('convertManualKnownAccountsToJson', err);
             throw err;
         }
-        });
+    });
 }
 
+/** Makes API call to Remote spyglass json file to fetch known accounts. */
+const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
+    new Promise<KnownAccountDto[]>((resolve) => {
+        axios
+            .request({
+                method: 'GET',
+                url: `https://raw.githubusercontent.com/dev-ptera/spyglass-api/master/server/database/${PROFILE}/known-accounts.json`
+            })
+            .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
+            .catch((err) => {
+                LOG_ERR('fetchSpyglassRemoteKnownAccounts', err);
+                resolve([]);
+            });
+    });
+
 /** Makes API call to Kirby's API to fetch known accounts list. */
-const fetchRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
-    new Promise<KnownAccountDto[]>((resolve, reject) => {
+const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
+    new Promise<KnownAccountDto[]>((resolve) => {
         axios
             .request({
                 method: 'GET',
                 url: 'https://kirby.eu.pythonanywhere.com/api/v1/resources/addresses/all',
             })
             .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
-            .catch(reject);
-    });
-
-const getKnownAccountsPromise = (): Promise<KnownAccountDto[]> => {
-    return new Promise((resolve) => {
-        const start = LOG_INFO('Refreshing Known Accounts');
-        fetchRemoteKnownAccounts()
-            .then((remoteAccounts: KnownAccountDto[]) => {
-                const knownAccountMap = new Map<string, KnownAccountDto>();
-
-                /* Add existing known accounts to the map so we don't lose any past data. */
-                AppCache.knownAccounts.map((account) => knownAccountMap.set(account.address, account));
-
-                /* Add API accounts to the map. */
-                for (const account of remoteAccounts) {
-                    if (account.type) {
-                        // @ts-ignore // Make sure the received 'type' is in lowercase.
-                        account.type = account.type.toLowerCase();
-                    }
-                    knownAccountMap.set(account.address, account);
-                }
-
-                /* Use the manual list to override any API account aliases or add new entries */
-                for (const account of KNOWN_ACCOUNTS) {
-                    if (knownAccountMap.has(account.address)) {
-                        knownAccountMap.get(account.address).alias = account.alias;
-                    } else {
-                        knownAccountMap.set(account.address, account);
-                    }
-                }
-
-                const accounts = Array.from(knownAccountMap.values());
-                accounts.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
-                LOG_INFO('Known Accounts Updated', start);
-                resolve(accounts);
-            })
             .catch((err) => {
-                LOG_ERR('getKnownAccountsPromise', err);
-                resolve(AppCache.knownAccounts);
+                LOG_ERR('fetchKirbyKnownAccounts', err);
+                resolve([]);
             });
     });
+
+const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
+    const start = LOG_INFO('Refreshing Known Accounts');
+    const kirbyKnownAccounts = await fetchKirbyKnownAccounts();
+    const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
+    const knownAccountMap = new Map<string, KnownAccountDto>();
+
+    // On initial load, use the KNOWN_ACCOUNTS var.
+    if (AppCache.knownAccounts.length === 0) {
+        KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
+    }
+
+    // Clear the list if we pulled down the new list successfully.
+    if (spyglassKnownAccountsRemote.length > 0) {
+        AppCache.knownAccounts = [];
+    } else {
+        /* Add existing known accounts to the map so we don't lose any past data. */
+        AppCache.knownAccounts.map((account) => knownAccountMap.set(account.address, account));
+    }
+
+    /* Kirby entries are entered first. */
+    for (const kirbyKnownAccount of kirbyKnownAccounts) {
+        if (kirbyKnownAccount.type) {
+            kirbyKnownAccount.type = kirbyKnownAccount.type.toLowerCase() as any;
+        }
+        knownAccountMap.set(kirbyKnownAccount.address, kirbyKnownAccount);
+    }
+
+    /* Spyglass entries are entered next & override any duplicates. */
+    for (const spyglassKnownAccount of spyglassKnownAccountsRemote) {
+        if (knownAccountMap.has(spyglassKnownAccount.address)) {
+            knownAccountMap.get(spyglassKnownAccount.address).alias = spyglassKnownAccount.alias;
+        } else {
+            knownAccountMap.set(spyglassKnownAccount.address, spyglassKnownAccount);
+        }
+    }
+
+    const accounts = Array.from(knownAccountMap.values());
+    accounts.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
+    LOG_INFO('Known Accounts Updated', start);
+    return accounts;
 };
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {

@@ -145,10 +145,10 @@ server.listen(port, () => {
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
     void staggerServerUpdates([
+        knownAccounts,
         onlineRepresentatives,
         monitoredRepresentatives,
         writeUptimePings,
-        knownAccounts,
         accountsDistribution,
     ]);
 });
