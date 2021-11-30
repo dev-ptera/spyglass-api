@@ -15,10 +15,11 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'addresses',
         propertyType: 'array',
+        notes: 'Limit search results to this list of addresses',
     },
     {
         propertyName: 'includeAlias',
-        propertyType: 'boolean',
+        propertyType: 'boolean'
     },
     {
         propertyName: 'includeDelegatorCount',
@@ -27,31 +28,32 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     {
         propertyName: 'includeNodeMonitorStats',
         propertyType: 'boolean',
-        notes: 'Only applicable if a rep is running the Nano Node Monitor software',
+        notes: 'Only applicable to monitored representatives',
     },
     {
         propertyName: 'includeUptimePings',
         propertyType: 'boolean',
-        notes: 'Only applicable when `includeUptimeStats` is enabled',
+        notes: 'Append raw data used to calculate ping stats; only applicable when `includeUptimeStats` is enabled',
     },
     {
         propertyName: 'includeUptimeStats',
         propertyType: 'boolean',
-        notes: 'Only reps with >100K BAN weight will have uptime stats',
+        notes: 'Only reps with >10K BAN weight will have uptime stats available',
     },
     {
         propertyName: 'isMonitored',
         propertyType: 'boolean',
-        notes: 'Only include representatives that provide some form of monitored stats',
+        notes: 'Filter to only show monitored representatives',
     },
     {
         propertyName: 'isOnline',
         propertyType: 'boolean',
+        notes: 'Filter to only show online representatives',
     },
     {
         propertyName: 'isPrincipal',
         propertyType: 'boolean',
-        notes: 'Only include representatives with >0.1% of the total online voting weight',
+        notes: 'Filter to only show representatives with >0.1% of the total online voting weight',
     },
     {
         propertyName: 'minimumWeight',
