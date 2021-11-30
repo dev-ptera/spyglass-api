@@ -122,7 +122,7 @@ server.listen(port, () => {
     };
 
     const accountsDistribution = {
-        method: cacheAccountDistribution,
+        method: IS_PRODUCTION ? cacheAccountDistribution : () => {},
         interval: WALLETS_REFRESH_INTERVAL_MS,
     };
 
@@ -142,5 +142,5 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
-    void staggerServerUpdates([onlineRepresentatives, monitoredRepresentatives, writeUptimePings, knownAccounts]);
+    void staggerServerUpdates([onlineRepresentatives, monitoredRepresentatives, writeUptimePings, knownAccounts, accountsDistribution]);
 });

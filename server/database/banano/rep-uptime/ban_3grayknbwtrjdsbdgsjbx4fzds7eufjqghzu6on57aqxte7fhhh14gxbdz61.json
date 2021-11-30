@@ -1,22 +1,22 @@
 {
-    "address": "ban_3grayknbwtrjdsbdgsjbx4fzds7eufjqghzu6on57aqxte7fhhh14gxbdz61",
-    "trackStartDate": "11/19/2021 12:34:29 PM",
-    "trackStartUnixTimestamp": 1637343269589,
-    "pingStats": [
-        {
-            "1": 2197
-        },
-        {
-            "0": 3
-        },
-        {
-            "1": 2990
-        },
-        {
-            "0": 126
-        },
-        {
-            "1": 8238
-        }
-    ]
+  "address": "ban_3grayknbwtrjdsbdgsjbx4fzds7eufjqghzu6on57aqxte7fhhh14gxbdz61",
+  "trackStartDate": "11/19/2021 12:34:29 PM",
+  "trackStartUnixTimestamp": 1637343269589,
+  "pingStats": [
+    {
+      "1": 2197
+    },
+    {
+      "0": 3
+    },
+    {
+      "1": 2990
+    },
+    {
+      "0": 126
+    },
+    {
+      "1": 9480
+    }
+  ]
 }

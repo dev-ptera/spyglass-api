@@ -1,10 +1,10 @@
 {
-    "address": "ban_1sebrep1mbkdtdb39nsouw5wkkk6o497wyrxtdp71sm878fxzo1kwbf9k79b",
-    "trackStartDate": "11/19/2021 12:34:29 PM",
-    "trackStartUnixTimestamp": 1637343269557,
-    "pingStats": [
-        {
-            "0": 13554
-        }
-    ]
+  "address": "ban_1sebrep1mbkdtdb39nsouw5wkkk6o497wyrxtdp71sm878fxzo1kwbf9k79b",
+  "trackStartDate": "11/19/2021 12:34:29 PM",
+  "trackStartUnixTimestamp": 1637343269557,
+  "pingStats": [
+    {
+      "0": 14796
+    }
+  ]
 }

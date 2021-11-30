@@ -1,16 +1,22 @@
 {
-    "address": "ban_1tipbotgges3ss8pso6xf76gsyqnb69uwcxcyhouym67z7ofefy1jz7kepoy",
-    "trackStartDate": "11/19/2021 12:34:29 PM",
-    "trackStartUnixTimestamp": 1637343269557,
-    "pingStats": [
-        {
-            "0": 13291
-        },
-        {
-            "1": 246
-        },
-        {
-            "0": 17
-        }
-    ]
+  "address": "ban_1tipbotgges3ss8pso6xf76gsyqnb69uwcxcyhouym67z7ofefy1jz7kepoy",
+  "trackStartDate": "11/19/2021 12:34:29 PM",
+  "trackStartUnixTimestamp": 1637343269557,
+  "pingStats": [
+    {
+      "0": 13291
+    },
+    {
+      "1": 246
+    },
+    {
+      "0": 278
+    },
+    {
+      "1": 319
+    },
+    {
+      "0": 662
+    }
+  ]
 }
