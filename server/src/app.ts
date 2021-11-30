@@ -55,7 +55,7 @@ import {
     getRichList,
     getPeerVersions,
     getQuorum,
-    convertManualKnownAccountsToJson
+    convertManualKnownAccountsToJson,
 } from '@app/services';
 
 const corsOptions = {
@@ -152,4 +152,3 @@ server.listen(port, () => {
         accountsDistribution,
     ]);
 });
-

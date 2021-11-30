@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { KnownAccountDto } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
-import {AppCache, KNOWN_ACCOUNTS, PROFILE} from '@app/config';
+import { AppCache, KNOWN_ACCOUNTS, PROFILE } from '@app/config';
 const fs = require('fs');
 
 type RequestBody = {
@@ -26,7 +26,7 @@ export const convertManualKnownAccountsToJson = (): void => {
             throw err;
         }
     });
-}
+};
 
 /** Makes API call to Remote spyglass json file to fetch known accounts. */
 const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
@@ -34,7 +34,7 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
         axios
             .request({
                 method: 'GET',
-                url: `https://raw.githubusercontent.com/dev-ptera/spyglass-api/master/server/database/${PROFILE}/known-accounts.json`
+                url: `https://raw.githubusercontent.com/dev-ptera/spyglass-api/master/server/database/${PROFILE}/known-accounts.json`,
             })
             .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
             .catch((err) => {

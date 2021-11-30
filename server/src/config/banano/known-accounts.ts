@@ -23,72 +23,72 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
     {
         address: 'ban_3runnerrxm74165sfmystpktzsyp7eurixwpk59tejnn8xamn8zog18abrda',
         alias: 'Banano Runner',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj',
         alias: 'Giveaway Fund: 1',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf',
         alias: 'Giveaway Fund: 3',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1pearw95xajkzq1nmo6cixo1ugijk6gpm1ifwyegz6un4mt71qb1iw3fhmj4',
         alias: 'Giveaway Fund: Pear',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1acaih1rhhczkfayd3iadpjroyfbbrzm1jrkx77qfep7fnuzky7mmwzx4544',
         alias: 'Giveaway Fund: Acai',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1ycheefobbddbde1p7874ky4ifiwebfuabkyqptunwwk84z3rgzktbqeo9fk',
         alias: 'Giveaway Fund: Lychee',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_3gojim9wh3t9w5aa8nhjbmkue8mes9frmrhy6wpqb34ikajw8h39hnbbap31',
         alias: 'Giveaway Fund: Goji',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1mangozo4tnfq97hdtu8z9rdjsqnyo33i7o9aohoxsfbpx8kgwhrfu1rggj8',
         alias: 'Giveaway Fund: Mango',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1me1onk3a11nw3kou14776fuyxtnmoatuqmpeioybffqx6okd53mo1iqmrym',
         alias: 'Giveaway Fund: Melon',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_3carobzdy3ah8pq1xzn38jkc46ozuu8qfx7eqzr8nyiy5yefwbaua6rkh3of',
         alias: 'Giveaway Fund: Carob',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1grapemjtr5n684bu1x38th57x3te8qt6xpsyusjyi4s3u1zdoh8s1czfjz4',
         alias: 'Giveaway Fund: Grape',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_3kiwizqifxokn47pp6fh5jmytoaiaeynjhx4u5r6ug13apx3345enf4mr1ep',
         alias: 'Giveaway Fund: Kiwi',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1app1es6zce5943ydasp5r5ma77cdcqt6be8qz7f88woayuqstzrjjmob4eb',
         alias: 'Giveaway Fund: Apple',
-        type: 'developer'
+        type: 'developer',
     },
     {
         address: 'ban_1emusk6m8hypb46dbp6eaiu3j6xjwwwaqw98y6hqyje53ncjciyqzj3skt9n',
         alias: 'Papa Musk',
-        type: 'citizen'
+        type: 'citizen',
     },
     {
         address: 'ban_3fo1d1ng6mfqumfoojqby13nahaugqbe5n6n3trof4q8kg5amo9mribg4muo',
