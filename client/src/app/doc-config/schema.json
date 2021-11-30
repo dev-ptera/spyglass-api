@@ -518,6 +518,21 @@
             ],
             "type": "object"
         },
+        "PeerVersionsDto": {
+            "properties": {
+                "count": {
+                    "type": "number"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "count",
+                "version"
+            ],
+            "type": "object"
+        },
         "PingStats": {
             "properties": {
                 "0": {
@@ -527,6 +542,33 @@
                     "type": "number"
                 }
             },
+            "type": "object"
+        },
+        "QuorumDto": {
+            "properties": {
+                "onlineStakeTotal": {
+                    "type": "number"
+                },
+                "onlineWeightMinimum": {
+                    "type": "number"
+                },
+                "onlineWeightQuorumPercent": {
+                    "type": "number"
+                },
+                "peersStakeTotal": {
+                    "type": "number"
+                },
+                "quorumDelta": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "onlineStakeTotal",
+                "onlineWeightMinimum",
+                "onlineWeightQuorumPercent",
+                "peersStakeTotal",
+                "quorumDelta"
+            ],
             "type": "object"
         },
         "RepresentativeDto": {
@@ -542,6 +584,9 @@
                 },
                 "nodeMonitorStats": {
                     "properties": {
+                        "address": {
+                            "type": "string"
+                        },
                         "cementedBlocks": {
                             "type": "number"
                         },
