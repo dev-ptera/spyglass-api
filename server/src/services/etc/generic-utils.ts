@@ -8,11 +8,11 @@ export const sleep = (ms) =>
     });
 
 /** Given RAW, converts to ban or nano. */
-export const convertFromRaw = (raw: string): number => {
+export const convertFromRaw = (raw: string, precision = 0): number => {
     if (raw === '0') {
         return 0;
     }
-    return Math.round(Number(rawToBan(raw)));
+    return Number(Number(rawToBan(raw)).toFixed(precision));
 };
 
 export const isValidAddress = (address: string): boolean =>

@@ -23,6 +23,7 @@ export const getFrontiersData = async (): Promise<{
 
     const richList: AccountBalanceDto[] = [];
     const distributionStats: AccountDistributionStatsDto = {
+        number0_0001: 0,
         number0_001: 0,
         number0_01: 0,
         number0_1: 0,
@@ -42,9 +43,9 @@ export const getFrontiersData = async (): Promise<{
             const balanceResponse = await accountBalanceRpc(address);
             const accountRep = await accountRepresentativeRpc(address);
             if (balanceResponse.balance !== '0') {
-                const amount = Number(Number(convertFromRaw(balanceResponse.balance)).toFixed(3));
+                const amount = convertFromRaw(balanceResponse.balance, 4);
                 // Add to address list
-                if (amount >= 0.001) {
+                if (amount >= 0.0001) {
                     richList.push({ address, amount, representative: accountRep.representative });
                 } else {
                     continue;
@@ -76,6 +77,8 @@ export const getFrontiersData = async (): Promise<{
                     distributionStats.number0_01++;
                 } else if (amount >= 0.001) {
                     distributionStats.number0_001++;
+                }  else if (amount >= 0.0001) {
+                    distributionStats.number0_0001++;
                 }
             }
         } catch (err) {

@@ -13,15 +13,15 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
         propertyType: 'string',
         required: true,
     },
-    {
-        propertyName: 'size',
-        propertyType: 'number',
-        notes: 'Number of delegators to return. Defaults to show 100 delegators.',
-    },
    {
         propertyName: 'offset',
         propertyType: 'number',
         notes: 'Skips the specified number of records in the result set. Used for pagination.',
+    },
+    {
+        propertyName: 'size',
+        propertyType: 'number',
+        notes: 'Number of delegators to return. Defaults to show 100 delegators.',
     },
     {
         propertyName: 'threshold',
