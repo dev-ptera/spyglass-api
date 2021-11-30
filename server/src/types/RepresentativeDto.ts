@@ -3,6 +3,7 @@ export type RepresentativeDto = {
     weight: number;
     delegatorsCount?: number;
     nodeMonitorStats?: {
+        address?: string;
         cementedBlocks?: number;
         confirmationInfo?: {
             average: number;

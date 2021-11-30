@@ -14,7 +14,7 @@ type RequestBody = {
     includeReceive?: boolean;
     includeChange?: boolean;
     offset?: number;
-    resultSize?: number;
+    size?: number;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -23,7 +23,7 @@ const DEFAULT_BODY: RequestBody = {
     includeReceive: true,
     includeChange: true,
     offset: 0,
-    resultSize: 25,
+    size: 25,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
@@ -40,10 +40,10 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.offset === undefined) {
         body.offset = DEFAULT_BODY.offset;
     }
-    if (body.resultSize === undefined) {
-        body.resultSize = DEFAULT_BODY.resultSize;
+    if (body.size === undefined) {
+        body.size = DEFAULT_BODY.size;
     }
-    body.resultSize = Math.min(body.resultSize, 500);
+    body.size = Math.min(body.size, 500);
 };
 
 export const accountHistoryPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
@@ -100,7 +100,7 @@ export const accountHistoryPromise = async (body: RequestBody): Promise<Confirme
                 date: new Date(unix * 1000).toLocaleDateString() + ' ' + new Date(unix * 1000).toLocaleTimeString(),
                 newRepresentative: rep,
             });
-            if (confirmedTransactions.length === body.resultSize) {
+            if (confirmedTransactions.length === body.size) {
                 completedSearch = true;
                 break;
             }

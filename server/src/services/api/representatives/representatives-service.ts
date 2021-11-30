@@ -2,7 +2,6 @@ import { AppCache, NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
     getAliasedRepsPromise,
-    getOnlineRepsPromise,
     populateDelegatorsCount,
     LOG_INFO,
     getRepresentativesUptimePromise,
@@ -14,6 +13,7 @@ type RequestBody = {
     addresses?: string[];
     isOnline?: boolean;
     isPrincipal?: boolean;
+    isMonitored?: boolean,
     includeAlias?: boolean;
     includeDelegatorCount?: boolean;
     includeNodeMonitorStats?: boolean;
@@ -25,13 +25,14 @@ type RequestBody = {
 
 const DEFAULT_BODY: RequestBody = {
     addresses: [],
+    isMonitored: false,
     isOnline: false,
     isPrincipal: false,
     includeAlias: false,
     includeDelegatorCount: false,
     includeNodeMonitorStats: false,
-    includeUptimeStats: false,
     includeUptimePings: false,
+    includeUptimeStats: false,
     minimumWeight: 10_000,
     maximumWeight: Number.MAX_SAFE_INTEGER,
 };
@@ -50,11 +51,14 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.includeUptimeStats === undefined) {
         body.includeUptimeStats = DEFAULT_BODY.includeUptimeStats;
     }
-    if (body.isPrincipal === undefined) {
-        body.isPrincipal = DEFAULT_BODY.isPrincipal;
+    if (body.isMonitored === undefined) {
+        body.isMonitored = DEFAULT_BODY.isMonitored;
     }
     if (body.isOnline === undefined) {
         body.isOnline = DEFAULT_BODY.isOnline;
+    }
+    if (body.isPrincipal === undefined) {
+        body.isPrincipal = DEFAULT_BODY.isPrincipal;
     }
     if (body.maximumWeight === undefined) {
         body.maximumWeight = DEFAULT_BODY.maximumWeight;
@@ -139,10 +143,24 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         const monitoredReps = AppCache.monitoredReps;
         for (const stats of monitoredReps) {
             const rep = repMap.get(stats.address);
-            stats.address = undefined;
-            stats.online = undefined;
             if (rep) {
-                rep.nodeMonitorStats = stats;
+                rep.nodeMonitorStats = { ...stats };
+                rep.nodeMonitorStats.address = undefined;
+                rep.nodeMonitorStats.online = undefined;
+            }
+        }
+    }
+
+    // Filter to only include monitored representatives.
+    if (body.isMonitored) {
+        const monitoredReps = AppCache.monitoredReps;
+        const monitoredRepSet = new Set<string>();
+        for (const stats of monitoredReps) {
+            monitoredRepSet.add(stats.address);
+        }
+        for (const address of repMap.keys()) {
+            if (!monitoredRepSet.has(address)) {
+                repMap.delete(address);
             }
         }
     }

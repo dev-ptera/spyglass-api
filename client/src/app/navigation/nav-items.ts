@@ -117,7 +117,7 @@ export const accountHistoryNavItem: NavItem = {
 export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
-    icon: 'insights',
+    icon: 'account_balance_wallet',
     children: [accountHistoryNavItem, accountDelegatorsNavItem, accountRepresentativeNavItem],
 };
 

@@ -17,6 +17,10 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
         propertyType: 'array',
     },
     {
+        propertyName: 'includeAlias',
+        propertyType: 'boolean',
+    },
+    {
         propertyName: 'includeDelegatorCount',
         propertyType: 'boolean',
     },
@@ -26,8 +30,9 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
         notes: 'Only applicable if a rep is running the Nano Node Monitor software',
     },
     {
-        propertyName: 'includeAlias',
+        propertyName: 'includeUptimePings',
         propertyType: 'boolean',
+        notes: 'Only applicable when `includeUptimeStats` is enabled',
     },
     {
         propertyName: 'includeUptimeStats',
@@ -35,9 +40,9 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
         notes: 'Only reps with >100K BAN weight will have uptime stats',
     },
     {
-        propertyName: 'includeUptimePings',
+        propertyName: 'isMonitored',
         propertyType: 'boolean',
-        notes: 'Only applicable when `includeUptimeStats` is enabled',
+        notes: 'Only include representatives that provide some form of monitored stats',
     },
     {
         propertyName: 'isOnline',

@@ -14,7 +14,7 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
         required: true,
     },
     {
-        propertyName: 'count',
+        propertyName: 'size',
         propertyType: 'number',
         notes: 'Number of delegators to return. Defaults to show 100 delegators.',
     },
@@ -51,13 +51,13 @@ export const ACCOUNT_HISTORY_KNOB: Array<Knob> = [
         defaultValue: true,
     },
     {
-        propertyName: 'resultSize',
-        propertyType: 'number',
-        notes: 'Defaults to include 25 transactions, with a max of 500',
-    },
-    {
         propertyName: 'offset',
         propertyType: 'number',
         notes: 'Results will be returned starting from this block height',
+    },
+    {
+        propertyName: 'size',
+        propertyType: 'number',
+        notes: 'Max number of blocks to return; defaults to include 25 with a max of 500',
     },
 ];

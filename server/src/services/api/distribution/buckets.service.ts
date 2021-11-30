@@ -1,5 +1,5 @@
 import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativeRpc } from '@app/rpc';
-import {convertFromRaw, LOG_ERR, LOG_INFO} from '@app/services';
+import { convertFromRaw, LOG_ERR, LOG_INFO } from '@app/services';
 import { AppCache } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
 import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
@@ -145,4 +145,4 @@ export const cacheAccountDistribution = async (): Promise<void> => {
 
 export const getDistributionBuckets = (res): void => {
     res.send(AppCache.accountDistributionStats);
-}
+};
