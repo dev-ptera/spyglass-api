@@ -1,7 +1,7 @@
 import { AppCache, BACKUP_NODES, NANO_CLIENT } from '@app/config';
 import { LOG_ERR, LOG_INFO } from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 /** Number of a pings a representative has be omitted from the `representatives_online` rpc command list to be considered offline. */
 const OFFLINE_AFTER_PINGS = 5;

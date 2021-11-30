@@ -5,3 +5,4 @@ export * from './pr-weight.service';
 export * from './representatives-service';
 export * from './rep-utils';
 export * from './uptime-reps.service';
+export * from './offline-reps.service';

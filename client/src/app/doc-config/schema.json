@@ -36,6 +36,9 @@
         },
         "AccountDistributionStatsDto": {
             "properties": {
+                "number0_0001": {
+                    "type": "number"
+                },
                 "number0_001": {
                     "type": "number"
                 },
@@ -77,6 +80,7 @@
                 }
             },
             "required": [
+                "number0_0001",
                 "number0_001",
                 "number0_01",
                 "number0_1",
@@ -546,7 +550,25 @@
         },
         "QuorumDto": {
             "properties": {
-                "onlineStakeTotal": {
+                "noRepPercent": {
+                    "type": "number"
+                },
+                "noRepWeight": {
+                    "type": "number"
+                },
+                "nonBurnedWeight": {
+                    "type": "number"
+                },
+                "offlinePercent": {
+                    "type": "number"
+                },
+                "offlineWeight": {
+                    "type": "number"
+                },
+                "onlinePercent": {
+                    "type": "number"
+                },
+                "onlineWeight": {
                     "type": "number"
                 },
                 "onlineWeightMinimum": {
@@ -555,7 +577,7 @@
                 "onlineWeightQuorumPercent": {
                     "type": "number"
                 },
-                "peersStakeTotal": {
+                "peersStakeWeight": {
                     "type": "number"
                 },
                 "quorumDelta": {
@@ -563,10 +585,16 @@
                 }
             },
             "required": [
-                "onlineStakeTotal",
+                "noRepPercent",
+                "noRepWeight",
+                "nonBurnedWeight",
+                "offlinePercent",
+                "offlineWeight",
+                "onlinePercent",
+                "onlineWeight",
                 "onlineWeightMinimum",
                 "onlineWeightQuorumPercent",
-                "peersStakeTotal",
+                "peersStakeWeight",
                 "quorumDelta"
             ],
             "type": "object"

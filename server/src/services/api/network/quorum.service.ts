@@ -1,26 +1,41 @@
 import { QuorumDto } from '@app/types';
 import { NANO_CLIENT } from '@app/config';
-import { convertFromRaw, LOG_ERR } from '@app/services';
+import {convertFromRaw, getOfflineRepresentativesPromise, getSupplyPromise, LOG_ERR} from '@app/services';
+
+const calcOnlineOfflineRepWeights = async (nonBurned: number, onlineWeight: number): Promise<Partial<QuorumDto>> => {
+    const offlineReps = await getOfflineRepresentativesPromise();
+    let offlineWeight = 0;
+    offlineReps.map((rep) => (offlineWeight += rep.weight));
+    const noRepWeight = nonBurned - onlineWeight - offlineWeight;
+    return {
+        noRepWeight,
+        noRepPercent: noRepWeight / nonBurned,
+        offlineWeight,
+        offlinePercent: offlineWeight / nonBurned,
+        onlineWeight,
+        onlinePercent: onlineWeight / nonBurned,
+    };
+};
 
 export const getQuorumPromise = async (): Promise<QuorumDto> => {
     const rawQuorum = await NANO_CLIENT.confirmation_quorum().catch((err) => Promise.reject(err));
+    const supply = await getSupplyPromise();
+    const onlineWeightQuorumPercent = Number(rawQuorum.online_weight_quorum_percent);
+    const quorumDelta = convertFromRaw(rawQuorum.quorum_delta);
+    const onlineWeightMinimum = convertFromRaw(rawQuorum.online_weight_minimum);
+    const onlineWeight = convertFromRaw(rawQuorum.online_stake_total);
+    const peersStakeWeight = convertFromRaw(rawQuorum.peers_stake_total);
+    const nonBurnedWeight = supply.totalAmount - supply.burnedAmount;
+    const onlineOfflineRepWeights = await calcOnlineOfflineRepWeights(nonBurnedWeight , onlineWeight);
 
-    return Promise.all([
-        convertFromRaw(rawQuorum.quorum_delta),
-        convertFromRaw(rawQuorum.online_weight_minimum),
-        convertFromRaw(rawQuorum.online_stake_total),
-        convertFromRaw(rawQuorum.peers_stake_total),
-    ])
-        .then((conversions: number[]) => {
-            return Promise.resolve({
-                onlineWeightQuorumPercent: Number(rawQuorum.online_weight_quorum_percent),
-                quorumDelta: Number(conversions[0]),
-                onlineWeightMinimum: Number(conversions[1]),
-                onlineStakeTotal: Number(conversions[2]),
-                peersStakeTotal: Number(conversions[3]),
-            });
-        })
-        .catch((err) => Promise.reject(err));
+    return {
+        nonBurnedWeight,
+        ...onlineOfflineRepWeights,
+        onlineWeightQuorumPercent,
+        onlineWeightMinimum,
+        peersStakeWeight,
+        quorumDelta,
+    } as QuorumDto;
 };
 
 /** Returns statistics about weight required to confirm transactions, online staking weight, etc. */
