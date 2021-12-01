@@ -20,7 +20,7 @@ import {
     distributionBuckets,
     richListNavItem,
     peerVersionsNavItem,
-    quorumNavItem,
+    quorumNavItem, ncNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -151,6 +151,13 @@ export const apiDocumentationPages: Array<{
         route: `${networkNavItem.route}/${quorumNavItem.route}`,
         apiPath: 'network/quorum',
         responseSchema: 'QuorumDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItem.route}/${ncNavItem.route}`,
+        apiPath: 'network/nakamoto-coefficient',
+        responseSchema: 'NakamotoCoefficientDto',
         knobs: [],
         requestType: 'GET',
     },

@@ -1,29 +1,31 @@
-import { QuorumDto } from '@app/types';
+import {convertFromRaw, getRepresentativesPromise, LOG_ERR} from "@app/services";
+import {NANO_CLIENT} from "@app/config";
+import {NakamotoCoefficientDto} from "@app/types";
 
-export type BasicRepDetails = {
-    address: string;
-    weight: number;
-    online: boolean;
-};
-
-export const calcNakamotoCoefficient = (reps: BasicRepDetails[], quorum: QuorumDto): number => {
-    const weights = [];
-    reps.map((rep) => weights.push(rep.weight));
-    weights.sort((a, b) => (a > b ? -1 : b > a ? 1 : 0));
-
-    let total = 0;
-    let coefficient = 1;
-    const MAX_BREAKPOINTS = 15;
-    let i = 0;
-    for (const weight of weights) {
-        i++;
-        total += weight;
-        if (i > MAX_BREAKPOINTS) {
+export const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
+    const onlineReps = await getRepresentativesPromise({ isOnline: true }).catch((err) => Promise.reject(err));
+    const rawQuorum = await NANO_CLIENT.confirmation_quorum().catch((err) => Promise.reject(err));
+    const delta = convertFromRaw(rawQuorum.quorum_delta);
+    const ncRepresentatives = [];
+    let ncRepsWeight = 0;
+    let nakamotoCoefficient = 0;
+    for (const rep of onlineReps) {
+        ncRepsWeight += rep.weight;
+        ncRepresentatives.push(rep);
+        nakamotoCoefficient++;
+        if (ncRepsWeight > delta) {
             break;
         }
-        if (total < quorum.quorumDelta) {
-            coefficient++;
-        }
     }
-    return coefficient;
+    return {
+        delta,
+        nakamotoCoefficient,
+        ncRepresentatives,
+        ncRepsWeight,
+    }
 };
+
+export const getNakamotoCoefficient = async (req, res): Promise<void> => {
+    calcNakamotoCoefficientPromise().then((nc) => res.send(nc))
+        .catch((err) => res.status(500).send(LOG_ERR('getNakamotoCoefficient', err)));
+}

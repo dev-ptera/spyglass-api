@@ -123,6 +123,21 @@
             ],
             "type": "object"
         },
+        "BasicRep": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "weight"
+            ],
+            "type": "object"
+        },
         "ConfirmedTransactionDto": {
             "properties": {
                 "address": {
@@ -508,6 +523,44 @@
             "required": [
                 "address",
                 "systemLoad"
+            ],
+            "type": "object"
+        },
+        "NakamotoCoefficientDto": {
+            "properties": {
+                "delta": {
+                    "type": "number"
+                },
+                "nakamotoCoefficient": {
+                    "type": "number"
+                },
+                "ncRepresentatives": {
+                    "items": {
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "weight": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "weight"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "ncRepsWeight": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "delta",
+                "nakamotoCoefficient",
+                "ncRepresentatives",
+                "ncRepsWeight"
             ],
             "type": "object"
         },

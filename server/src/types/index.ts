@@ -10,6 +10,7 @@ export * from './DeveloperFundsDto';
 export * from './EulenMonitoredRepresentativeDto';
 export * from './KnownAccountDto';
 export * from './MonitoredRepresentativeDto';
+export * from './NakamotoCoefficientDto';
 export * from './PeerVersionsDto';
 export * from './PRWeightRequirementDto';
 export * from './QuorumDto';

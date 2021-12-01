@@ -96,11 +96,15 @@ export const quorumNavItem: NavItem = {
     title: 'Quorum',
     route: 'quorum',
 };
+export const ncNavItem: NavItem = {
+    title: 'Nakamoto Coefficient',
+    route: 'nakamoto-coefficient',
+};
 export const networkNavItem: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
-    children: [peerVersionsNavItem, quorumNavItem],
+    children: [ncNavItem, peerVersionsNavItem, quorumNavItem],
 };
 
 export const accountDelegatorsNavItem: NavItem = {

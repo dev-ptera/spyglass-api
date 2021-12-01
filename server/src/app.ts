@@ -31,6 +31,7 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
+    getNakamotoCoefficient,
     getRepresentatives,
     getAliasedRepresentatives,
     LOG_INFO,
@@ -99,6 +100,7 @@ app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res
 /* Network */
 app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(req, res));
 app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(req, res));
+app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
