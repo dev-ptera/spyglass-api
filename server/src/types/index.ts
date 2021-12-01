@@ -8,6 +8,7 @@ export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
 export * from './EulenMonitoredRepresentativeDto';
+export * from './InsightsDto';
 export * from './KnownAccountDto';
 export * from './MonitoredRepresentativeDto';
 export * from './NakamotoCoefficientDto';

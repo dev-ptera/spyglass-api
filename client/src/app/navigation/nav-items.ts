@@ -107,6 +107,10 @@ export const networkNavItem: NavItem = {
     children: [ncNavItem, peerVersionsNavItem, quorumNavItem],
 };
 
+export const accountInsightsNavItem: NavItem = {
+    title: 'Insights',
+    route: 'insights',
+};
 export const accountDelegatorsNavItem: NavItem = {
     title: 'Delegators',
     route: 'delegators',
@@ -122,7 +126,7 @@ export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'account_balance_wallet',
-    children: [accountHistoryNavItem, accountDelegatorsNavItem, accountRepresentativeNavItem],
+    children: [accountDelegatorsNavItem, accountHistoryNavItem, accountInsightsNavItem, accountRepresentativeNavItem],
 };
 
 export const APP_NAV_ITEMS = [

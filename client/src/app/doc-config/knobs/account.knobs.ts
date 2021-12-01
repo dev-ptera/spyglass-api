@@ -1,5 +1,12 @@
 import { Knob } from './Knob';
 
+export const ACCOUNT_INSIGHTS_KNOB: Array<Knob> = [
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+        restPathAlias: '[address]',
+    }];
+
 export const ACCOUNT_REPRESENTATIVE_KNOB: Array<Knob> = [
 {
     propertyName: 'address',

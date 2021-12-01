@@ -401,6 +401,120 @@
             ],
             "type": "object"
         },
+        "InsightsDto": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "balance": {
+                                "type": "number"
+                            },
+                            "height": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "balance",
+                            "height"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "firstInTxHash": {
+                    "type": "string"
+                },
+                "firstInTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "firstOutTxHash": {
+                    "type": "string"
+                },
+                "firstOutTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "lastInTxHash": {
+                    "type": "string"
+                },
+                "lastInTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "lastOutTxHash": {
+                    "type": "string"
+                },
+                "lastOutTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "maxAmountReceivedBan": {
+                    "type": "number"
+                },
+                "maxAmountReceivedHash": {
+                    "type": "string"
+                },
+                "maxAmountSentBan": {
+                    "type": "number"
+                },
+                "maxAmountSentHash": {
+                    "type": "string"
+                },
+                "maxBalanceBan": {
+                    "type": "number"
+                },
+                "maxBalanceHash": {
+                    "type": "string"
+                },
+                "mostCommonRecipientAddress": {
+                    "type": "string"
+                },
+                "mostCommonRecipientTxCount": {
+                    "type": "number"
+                },
+                "mostCommonSenderAddress": {
+                    "type": "string"
+                },
+                "mostCommonSenderTxCount": {
+                    "type": "number"
+                },
+                "totalAmountReceivedBan": {
+                    "type": "number"
+                },
+                "totalAmountSentBan": {
+                    "type": "number"
+                },
+                "totalTxReceived": {
+                    "type": "number"
+                },
+                "totalTxSent": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "data",
+                "firstInTxHash",
+                "firstInTxUnixTimestamp",
+                "firstOutTxHash",
+                "firstOutTxUnixTimestamp",
+                "lastInTxHash",
+                "lastInTxUnixTimestamp",
+                "lastOutTxHash",
+                "lastOutTxUnixTimestamp",
+                "maxAmountReceivedBan",
+                "maxAmountReceivedHash",
+                "maxAmountSentBan",
+                "maxAmountSentHash",
+                "maxBalanceBan",
+                "maxBalanceHash",
+                "mostCommonRecipientAddress",
+                "mostCommonRecipientTxCount",
+                "mostCommonSenderAddress",
+                "mostCommonSenderTxCount",
+                "totalAmountReceivedBan",
+                "totalAmountSentBan",
+                "totalTxReceived",
+                "totalTxSent"
+            ],
+            "type": "object"
+        },
         "KnownAccountDto": {
             "properties": {
                 "address": {

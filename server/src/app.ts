@@ -45,6 +45,7 @@ import {
     getSupply,
     getDeveloperFunds,
     getPRWeight,
+    getAccountInsights,
     getDelegators,
     getAccountHistory,
     importHistoricHashTimestamps,
@@ -78,6 +79,7 @@ app.use(cors(corsOptions));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
 app.get(`/${PATH_ROOT}/account/:address/representative`, (req, res) => getAccountRepresentative(req, res));
+app.get(`/${PATH_ROOT}/account/insights/*`, (req, res) => getAccountInsights(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
@@ -114,10 +116,10 @@ export const staggerServerUpdates = async (cacheFns: Array<{ method: Function; i
 };
 
 server.listen(port, () => {
-    LOG_INFO(`Running yellow-spyglass server on port ${port}.`);
-    LOG_INFO(`Production mode enabled? : ${IS_PRODUCTION}`);
-    parseRichListFromFile();
-    importHistoricHashTimestamps();
+    console.log(`Running yellow-spyglass server on port ${port}.`);
+    console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
+    void parseRichListFromFile();
+    void importHistoricHashTimestamps();
     convertManualKnownAccountsToJson();
 
     const onlineRepresentatives = {

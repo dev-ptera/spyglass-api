@@ -20,12 +20,17 @@ import {
     distributionBuckets,
     richListNavItem,
     peerVersionsNavItem,
-    quorumNavItem, ncNavItem,
+    quorumNavItem, ncNavItem, accountInsightsNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
-import {ACCOUNT_HISTORY_KNOB, ACCOUNT_DELEGATORS_KNOB, ACCOUNT_REPRESENTATIVE_KNOB} from './knobs/account.knobs';
+import {
+    ACCOUNT_HISTORY_KNOB,
+    ACCOUNT_DELEGATORS_KNOB,
+    ACCOUNT_REPRESENTATIVE_KNOB,
+    ACCOUNT_INSIGHTS_KNOB
+} from './knobs/account.knobs';
 import {DISTRIBUTION_RICH_LIST_KNOBS} from "./knobs/distribution.knobs";
 
 export const apiDocumentationPages: Array<{
@@ -35,6 +40,41 @@ export const apiDocumentationPages: Array<{
     knobs: Array<Knob>;
     requestType: 'GET' | 'POST';
 }> = [
+    {
+        route: `${accountNavItem.route}/${accountInsightsNavItem.route}`,
+        apiPath: 'account/insights/[address]',
+        responseSchema: 'InsightsDto',
+        knobs: ACCOUNT_INSIGHTS_KNOB,
+        requestType: 'GET',
+    },
+    {
+        route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
+        apiPath: 'account/delegators',
+        responseSchema: 'DelegatorsOverviewDto',
+        knobs: ACCOUNT_DELEGATORS_KNOB,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItem.route}/${accountHistoryNavItem.route}`,
+        apiPath: 'account/history',
+        responseSchema: 'ConfirmedTransactionDto[]',
+        knobs: ACCOUNT_HISTORY_KNOB,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
+        apiPath: 'account/[address]/representative',
+        responseSchema: 'AccountRepresentativeDto',
+        knobs: ACCOUNT_REPRESENTATIVE_KNOB,
+        requestType: 'GET',
+    },
+    {
+        route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
+        apiPath: 'account/[address]/representative',
+        responseSchema: 'AccountRepresentativeDto',
+        knobs: ACCOUNT_REPRESENTATIVE_KNOB,
+        requestType: 'GET',
+    },
     {
         route: `${repNavItem.route}/${repRootNavItem.route}`,
         apiPath: 'representatives',
@@ -118,27 +158,6 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'AccountBalanceDto[]',
         knobs: DISTRIBUTION_RICH_LIST_KNOBS,
         requestType: 'POST',
-    },
-    {
-        route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
-        apiPath: 'account/delegators',
-        responseSchema: 'DelegatorsOverviewDto',
-        knobs: ACCOUNT_DELEGATORS_KNOB,
-        requestType: 'POST',
-    },
-    {
-        route: `${accountNavItem.route}/${accountHistoryNavItem.route}`,
-        apiPath: 'account/history',
-        responseSchema: 'ConfirmedTransactionDto[]',
-        knobs: ACCOUNT_HISTORY_KNOB,
-        requestType: 'POST',
-    },
-    {
-        route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
-        apiPath: 'account/[address]/representative',
-        responseSchema: 'AccountRepresentativeDto',
-        knobs: ACCOUNT_REPRESENTATIVE_KNOB,
-        requestType: 'GET',
     },
     {
         route: `${networkNavItem.route}/${peerVersionsNavItem.route}`,
