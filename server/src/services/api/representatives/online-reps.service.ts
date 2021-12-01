@@ -1,5 +1,5 @@
 import { AppCache, BACKUP_NODES, NANO_CLIENT } from '@app/config';
-import { LOG_ERR, LOG_INFO } from '@app/services';
+import {getRepresentativesPromise, LOG_ERR, LOG_INFO} from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
 import axios, { AxiosResponse } from 'axios';
 
@@ -70,10 +70,20 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
     return Array.from(onlineReps.values());
 };
 
-/** Returns a string array of online-reps representative addresses. */
+/** Use this method to update the list of `onlineRepresentatives` in the AppCache. */
 export const cacheOnlineRepresentatives = async (): Promise<void> => {
     const start = LOG_INFO('Updating Online Reps');
     const onlineReps = await getOnlineRepsPromise();
     LOG_INFO('Online Reps Updated', start);
     AppCache.onlineRepresentatives = onlineReps;
+};
+
+/** Use this method to update the list of `onlineRepresentativesWithWeights` in the AppCache. */
+export const cacheOnlineRepresentativesWithWeights = async (): Promise<void> => {
+    const start = LOG_INFO('Updating Online Reps With Weights');
+    const onlineRepsWithWeights = await getRepresentativesPromise({
+        addresses: AppCache.onlineRepresentatives
+    });
+    LOG_INFO('Online Reps With Weight Updated', start);
+    AppCache.onlineRepresentativesWithWeights = onlineRepsWithWeights;
 };

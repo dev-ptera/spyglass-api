@@ -3,7 +3,7 @@ import { NANO_CLIENT } from '@app/config';
 import { convertFromRaw, getOfflineRepresentativesPromise, getSupplyPromise, LOG_ERR } from '@app/services';
 
 const calcOnlineOfflineRepWeights = async (nonBurned: number, onlineWeight: number): Promise<Partial<QuorumDto>> => {
-    const offlineReps = await getOfflineRepresentativesPromise();
+    const offlineReps = await getOfflineRepresentativesPromise().catch((err) => Promise.reject(err));
     let offlineWeight = 0;
     offlineReps.map((rep) => (offlineWeight += rep.weight));
     const noRepWeight = nonBurned - onlineWeight - offlineWeight;
@@ -29,13 +29,18 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
     const onlineOfflineRepWeights = await calcOnlineOfflineRepWeights(nonBurnedWeight, onlineWeight);
 
     return {
+        noRepPercent: onlineOfflineRepWeights.noRepPercent,
+        noRepWeight: onlineOfflineRepWeights.noRepWeight,
         nonBurnedWeight,
-        ...onlineOfflineRepWeights,
-        onlineWeightQuorumPercent,
+        offlinePercent: onlineOfflineRepWeights.offlinePercent,
+        offlineWeight: onlineOfflineRepWeights.offlineWeight,
+        onlinePercent: onlineOfflineRepWeights.onlinePercent,
+        onlineWeight: onlineOfflineRepWeights.onlineWeight,
         onlineWeightMinimum,
+        onlineWeightQuorumPercent,
         peersStakeWeight,
         quorumDelta,
-    } as QuorumDto;
+    };
 };
 
 /** Returns statistics about weight required to confirm transactions, online staking weight, etc. */

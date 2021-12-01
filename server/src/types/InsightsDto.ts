@@ -1,8 +1,5 @@
 export type InsightsDto = {
-    data: Array<{
-        balance: number;
-        height: number;
-    }>;
+    heightBalances?: Datapoint[];
     maxAmountReceivedHash: string;
     maxAmountReceivedBan: number;
     maxAmountSentHash: string;
@@ -25,4 +22,9 @@ export type InsightsDto = {
     lastInTxHash: string;
     lastOutTxUnixTimestamp: number;
     lastOutTxHash: string;
+};
+
+type Datapoint = {
+    balance: number;
+    height: number;
 };

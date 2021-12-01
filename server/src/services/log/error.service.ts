@@ -4,10 +4,13 @@ import { ErrorResponse } from '@dev-ptera/nano-node-rpc';
 /** An AxiosError<ErrorResponse> implies there was an issue fetching the data from the nano RPC node.
  *  An ErrorResponse implies there was a response-types from the nano RPC node, but it contained an error.
  */
-export const logError = (err: ErrorResponse | AxiosError<ErrorResponse>) => {
+export const logError = (err: ErrorResponse | AxiosError<ErrorResponse> | string) => {
     const nodeRpcError = err as ErrorResponse;
     const axiosError = err as AxiosError<ErrorResponse>;
-    if (nodeRpcError.error) {
+    const isStringError = typeof err === 'string';
+    if (isStringError) {
+        console.error(`[ERROR]: ${err}`);
+    } else if (nodeRpcError.error) {
         // Nano Node RPC error ('bad address', etc);
         console.error(`[ERROR]: ${nodeRpcError.error}`);
     } else if (axiosError.isAxiosError) {
@@ -25,7 +28,7 @@ export const logError = (err: ErrorResponse | AxiosError<ErrorResponse>) => {
 
 export const LOG_ERR = (
     reqType: string,
-    err: ErrorResponse | AxiosError<ErrorResponse>,
+    err: ErrorResponse | AxiosError<ErrorResponse> | string,
     params?
 ): { error: string } => {
     console.error(`[ERROR]: Request type [${reqType}] failed.`);
@@ -40,7 +43,11 @@ export const LOG_ERR = (
 
     const nodeRpcError = err as ErrorResponse;
     const axiosError = err as AxiosError<ErrorResponse>;
-    if (nodeRpcError.error) {
+    const isStringError = typeof err === 'string';
+
+    if (isStringError) {
+        return { error: String(err) };
+    } else if (nodeRpcError.error) {
         return { error: nodeRpcError.error };
     } else if (axiosError.response && axiosError.response.data) {
         return { error: axiosError.response.data.error };

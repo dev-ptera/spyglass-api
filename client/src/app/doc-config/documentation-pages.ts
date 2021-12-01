@@ -41,13 +41,6 @@ export const apiDocumentationPages: Array<{
     requestType: 'GET' | 'POST';
 }> = [
     {
-        route: `${accountNavItem.route}/${accountInsightsNavItem.route}`,
-        apiPath: 'account/insights/[address]',
-        responseSchema: 'InsightsDto',
-        knobs: ACCOUNT_INSIGHTS_KNOB,
-        requestType: 'GET',
-    },
-    {
         route: `${accountNavItem.route}/${accountDelegatorsNavItem.route}`,
         apiPath: 'account/delegators',
         responseSchema: 'DelegatorsOverviewDto',
@@ -62,11 +55,11 @@ export const apiDocumentationPages: Array<{
         requestType: 'POST',
     },
     {
-        route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
-        apiPath: 'account/[address]/representative',
-        responseSchema: 'AccountRepresentativeDto',
-        knobs: ACCOUNT_REPRESENTATIVE_KNOB,
-        requestType: 'GET',
+        route: `${accountNavItem.route}/${accountInsightsNavItem.route}`,
+        apiPath: 'account/insights',
+        responseSchema: 'InsightsDto',
+        knobs: ACCOUNT_INSIGHTS_KNOB,
+        requestType: 'POST',
     },
     {
         route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,

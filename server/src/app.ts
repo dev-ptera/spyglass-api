@@ -16,7 +16,6 @@ const morgan = require('morgan');
 process.env.UV_THREADPOOL_SIZE = String(16);
 
 app.use(morgan('dev'));
-
 app.use(bodyParser.json()); //utilizes the body-parser package
 
 import {
@@ -34,7 +33,6 @@ import {
     getNakamotoCoefficient,
     getRepresentatives,
     getAliasedRepresentatives,
-    LOG_INFO,
     sleep,
     getRepresentativesUptime,
     cacheMonitoredReps,
@@ -57,7 +55,7 @@ import {
     getRichList,
     getPeerVersions,
     getQuorum,
-    convertManualKnownAccountsToJson,
+    convertManualKnownAccountsToJson, cacheOnlineRepresentativesWithWeights,
 } from '@app/services';
 
 const corsOptions = {
@@ -79,7 +77,7 @@ app.use(cors(corsOptions));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
 app.get(`/${PATH_ROOT}/account/:address/representative`, (req, res) => getAccountRepresentative(req, res));
-app.get(`/${PATH_ROOT}/account/insights/*`, (req, res) => getAccountInsights(req, res));
+app.post(`/${PATH_ROOT}/account/insights`, (req, res) => getAccountInsights(req, res));
 
 /* Representatives */
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
@@ -102,7 +100,7 @@ app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res
 /* Network */
 app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(req, res));
 app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(req, res));
-app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(req, res));
+app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
@@ -127,6 +125,11 @@ server.listen(port, () => {
         interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     };
 
+    const onlineRepresentativesWithWeights = {
+        method: cacheOnlineRepresentativesWithWeights,
+        interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
+    };
+
     const accountsDistribution = {
         method: IS_PRODUCTION ? cacheAccountDistribution : () => {},
         interval: WALLETS_REFRESH_INTERVAL_MS,
@@ -147,11 +150,15 @@ server.listen(port, () => {
         interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     };
 
-    /* Updating the network metrics are now staggered so that each reset interval not all calls are fired at once. */
+    /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
+    *  This will put a little less strain on the node running the API.  */
     void staggerServerUpdates([
         knownAccounts,
         onlineRepresentatives,
+        onlineRepresentativesWithWeights,
         monitoredRepresentatives,
+        // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
+        // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
         accountsDistribution,
     ]);

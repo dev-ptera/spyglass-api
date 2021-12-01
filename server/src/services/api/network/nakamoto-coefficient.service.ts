@@ -1,19 +1,25 @@
-import { convertFromRaw, getRepresentativesPromise, LOG_ERR } from '@app/services';
-import { NANO_CLIENT } from '@app/config';
-import { NakamotoCoefficientDto } from '@app/types';
+import {convertFromRaw, LOG_ERR} from '@app/services';
+import {AppCache, NANO_CLIENT} from '@app/config';
+import {NakamotoCoefficientDto} from '@app/types';
 
+/** Calculates nakamoto coefficient. */
 export const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
-    const onlineReps = await getRepresentativesPromise({ isOnline: true }).catch((err) => Promise.reject(err));
-    const rawQuorum = await NANO_CLIENT.confirmation_quorum().catch((err) => Promise.reject(err));
-    const delta = convertFromRaw(rawQuorum.quorum_delta);
-    const ncRepresentatives = [];
+
+    const delta = await NANO_CLIENT.confirmation_quorum()
+        .then((data) => convertFromRaw(data.quorum_delta))
+        .catch((err) => Promise.reject(LOG_ERR('calcNakamotoCoefficientPromise.confirmation_quorum', err)));
+
     let ncRepsWeight = 0;
     let nakamotoCoefficient = 0;
-    for (const rep of onlineReps) {
+    const ncRepresentatives = [];
+
+    // Iterate through the list of online reps & aggregate their weights until it exceeds the delta.
+    // The number of representatives required to match or surpass the delta is the nakamoto coefficient.
+    for (const rep of AppCache.onlineRepresentativesWithWeights) {
+        nakamotoCoefficient++;
         ncRepsWeight += rep.weight;
         ncRepresentatives.push(rep);
-        nakamotoCoefficient++;
-        if (ncRepsWeight > delta) {
+        if (ncRepsWeight >= delta) {
             break;
         }
     }
@@ -25,8 +31,8 @@ export const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoeffici
     };
 };
 
-export const getNakamotoCoefficient = async (req, res): Promise<void> => {
-    calcNakamotoCoefficientPromise()
-        .then((nc) => res.send(nc))
-        .catch((err) => res.status(500).send(LOG_ERR('getNakamotoCoefficient', err)));
-};
+/** The Nakamoto coefficient represents the minimum number of entities to compromise a given subsystem.
+ *  In this context, it represents the number of representatives that must collude together to achieve consensus. */
+export const getNakamotoCoefficient = (res): void => {
+    calcNakamotoCoefficientPromise().then((nc) => res.send(nc)).catch((err) => res.status(500).send(err));
+}

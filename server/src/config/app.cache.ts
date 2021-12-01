@@ -24,6 +24,9 @@ export type AppCache = {
     /** Online representatives. */
     onlineRepresentatives: string[];
 
+    /** Online representatives, sorted by weight. */
+    onlineRepresentativesWithWeights: { address: string, weight: number}[];
+
     /** Top holders, sorted by balance. */
     richList: AccountBalanceDto[];
 };
@@ -35,5 +38,6 @@ export const AppCache: AppCache = {
     monitoredReps: [],
     offlinePingsMap: new Map<string, number>(),
     onlineRepresentatives: [],
+    onlineRepresentativesWithWeights: [],
     richList: [],
 };
