@@ -1,6 +1,6 @@
-import {convertFromRaw, getRepresentativesPromise, LOG_ERR} from "@app/services";
-import {NANO_CLIENT} from "@app/config";
-import {NakamotoCoefficientDto} from "@app/types";
+import { convertFromRaw, getRepresentativesPromise, LOG_ERR } from '@app/services';
+import { NANO_CLIENT } from '@app/config';
+import { NakamotoCoefficientDto } from '@app/types';
 
 export const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
     const onlineReps = await getRepresentativesPromise({ isOnline: true }).catch((err) => Promise.reject(err));
@@ -22,10 +22,11 @@ export const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoeffici
         nakamotoCoefficient,
         ncRepresentatives,
         ncRepsWeight,
-    }
+    };
 };
 
 export const getNakamotoCoefficient = async (req, res): Promise<void> => {
-    calcNakamotoCoefficientPromise().then((nc) => res.send(nc))
+    calcNakamotoCoefficientPromise()
+        .then((nc) => res.send(nc))
         .catch((err) => res.status(500).send(LOG_ERR('getNakamotoCoefficient', err)));
-}
+};

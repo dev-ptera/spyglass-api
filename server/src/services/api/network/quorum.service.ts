@@ -1,6 +1,6 @@
 import { QuorumDto } from '@app/types';
 import { NANO_CLIENT } from '@app/config';
-import {convertFromRaw, getOfflineRepresentativesPromise, getSupplyPromise, LOG_ERR} from '@app/services';
+import { convertFromRaw, getOfflineRepresentativesPromise, getSupplyPromise, LOG_ERR } from '@app/services';
 
 const calcOnlineOfflineRepWeights = async (nonBurned: number, onlineWeight: number): Promise<Partial<QuorumDto>> => {
     const offlineReps = await getOfflineRepresentativesPromise();
@@ -26,7 +26,7 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
     const onlineWeight = convertFromRaw(rawQuorum.online_stake_total);
     const peersStakeWeight = convertFromRaw(rawQuorum.peers_stake_total);
     const nonBurnedWeight = supply.totalAmount - supply.burnedAmount;
-    const onlineOfflineRepWeights = await calcOnlineOfflineRepWeights(nonBurnedWeight , onlineWeight);
+    const onlineOfflineRepWeights = await calcOnlineOfflineRepWeights(nonBurnedWeight, onlineWeight);
 
     return {
         nonBurnedWeight,

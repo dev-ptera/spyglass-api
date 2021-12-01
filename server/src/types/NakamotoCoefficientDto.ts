@@ -1,11 +1,11 @@
 export type NakamotoCoefficientDto = {
     delta: number;
     nakamotoCoefficient: number;
-    ncRepresentatives: BasicRep[],
+    ncRepresentatives: BasicRep[];
     ncRepsWeight: number;
 };
 
 type BasicRep = {
-    address: string,
+    address: string;
     weight: number;
-}
+};
