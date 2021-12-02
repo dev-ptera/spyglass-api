@@ -55,7 +55,8 @@ import {
     getRichList,
     getPeerVersions,
     getQuorum,
-    convertManualKnownAccountsToJson, cacheOnlineRepresentativesWithWeights,
+    convertManualKnownAccountsToJson,
+    cacheOnlineRepresentativesWithWeights,
 } from '@app/services';
 
 const corsOptions = {
@@ -151,7 +152,7 @@ server.listen(port, () => {
     };
 
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
-    *  This will put a little less strain on the node running the API.  */
+     *  This will put a little less strain on the node running the API.  */
     void staggerServerUpdates([
         knownAccounts,
         onlineRepresentatives,

@@ -1,15 +1,15 @@
-import {convertFromRaw, LOG_ERR} from '@app/services';
+import { convertFromRaw, LOG_ERR } from '@app/services';
 import { AppCache, NANO_CLIENT } from '@app/config';
 
 type SimpleRep = { address: string; weight: number };
 
 /** Returns a very large list of representatives that are offline (with weight). */
 export const getOfflineRepresentativesPromise = async (): Promise<SimpleRep[]> => {
-
     const allReps: SimpleRep[] = [];
     const offlineReps: SimpleRep[] = [];
-    const rpcData = await NANO_CLIENT.representatives(15000, true)
-        .catch((err) => Promise.reject(LOG_ERR('getOfflineRepresentativesPromise', err)));
+    const rpcData = await NANO_CLIENT.representatives(15000, true).catch((err) =>
+        Promise.reject(LOG_ERR('getOfflineRepresentativesPromise', err))
+    );
 
     // Fetches a large amount of representatives & adds results to a list.
     // Do not include representatives with a 0 weight balance.

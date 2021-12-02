@@ -25,7 +25,7 @@ export type AppCache = {
     onlineRepresentatives: string[];
 
     /** Online representatives, sorted by weight. */
-    onlineRepresentativesWithWeights: { address: string, weight: number}[];
+    onlineRepresentativesWithWeights: { address: string; weight: number }[];
 
     /** Top holders, sorted by balance. */
     richList: AccountBalanceDto[];

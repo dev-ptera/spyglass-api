@@ -1,29 +1,33 @@
 import { LOG_ERR } from '@app/services';
-import { Peers, peersRpc } from '@app/rpc';
+import { peersRpc } from '@app/rpc';
 import { PeerVersionsDto } from '@app/types';
 
-export const getPeerVersionsPromise = (): Promise<PeerVersionsDto[]> =>
-    new Promise((resolve, reject) => {
-        peersRpc()
-            .then((peerRpcData: Peers) => {
-                const versionMap = new Map<string, number>();
-                for (const ip in peerRpcData.peers) {
-                    const version = peerRpcData.peers[ip].protocol_version;
-                    versionMap.has(version)
-                        ? versionMap.set(version, versionMap.get(version) + 1)
-                        : versionMap.set(version, 1);
-                }
-                const versionArr: PeerVersionsDto[] = [];
-                for (const key of versionMap.keys()) {
-                    versionArr.push({
-                        count: versionMap.get(key),
-                        version: key,
-                    });
-                }
-                resolve(versionArr);
-            })
-            .catch(reject);
-    });
+/** Returns protocol versions of all connected peers. */
+export const getPeerVersionsPromise = async (): Promise<PeerVersionsDto[]> => {
+    const rpcPeerData = await peersRpc().catch((err) =>
+        Promise.reject(LOG_ERR('getPeerVersionsPromise.peersRpc', err))
+    );
+
+    const versionMap = new Map<string, number>();
+    const versionArr: PeerVersionsDto[] = [];
+
+    // Iterate through each peer & count the number of the times each version appears.
+    for (const ip in rpcPeerData.peers) {
+        const version = rpcPeerData.peers[ip].protocol_version;
+        const count = versionMap.get(version) || 0;
+        versionMap.set(version, count + 1);
+    }
+
+    // Create the response.
+    for (const version of versionMap.keys()) {
+        versionArr.push({
+            count: versionMap.get(version),
+            version,
+        });
+    }
+
+    return versionArr;
+};
 
 /** Returns protocol versions of all connected peers. */
 export const getPeerVersions = (req, res): void => {
@@ -32,6 +36,6 @@ export const getPeerVersions = (req, res): void => {
             res.send(data);
         })
         .catch((err) => {
-            res.status(500).send(LOG_ERR('getPeerVersions', err));
+            res.status(500).send(err);
         });
 };
