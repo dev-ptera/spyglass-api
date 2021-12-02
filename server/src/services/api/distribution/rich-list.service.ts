@@ -1,14 +1,14 @@
 import { AppCache } from '@app/config';
-import { ALL_BALANCES_FILE_NAME, LOG_ERR } from '@app/services';
+import { LOG_ERR } from '@app/services';
 import { AccountBalanceDto } from '@app/types';
-const fs = require('fs');
 
+/** Max number of records to return. */
 const MAX_SIZE = 500;
 
 type RequestBody = {
     includeRepresentative?: boolean;
-    offset: number;
-    size: number;
+    offset?: number;
+    size?: number;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -18,7 +18,6 @@ const DEFAULT_BODY: RequestBody = {
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
-    // Set defaults
     if (body.includeRepresentative === undefined) {
         body.includeRepresentative = DEFAULT_BODY.includeRepresentative;
     }
@@ -31,18 +30,18 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.size = Math.min(Math.max(0, body.size), MAX_SIZE);
 };
 
+/** Returns a list of accounts with, or without, their respective representatives.  */
 export const pruneRepresentatives = (balances: AccountBalanceDto[], includeRep: boolean): AccountBalanceDto[] => {
     if (includeRep) {
         return balances;
-    } else {
-        const withoutRep = [];
-        balances.map((entry) => withoutRep.push({ amount: entry.amount, address: entry.address }));
-        return withoutRep;
     }
+    const withoutRep = [];
+    balances.map((entry) => withoutRep.push({ amount: entry.amount, address: entry.address }));
+    return withoutRep;
 };
 
-/** Uses the AppCache to return a section of accounts, sorted by balance descending. */
-export const getRichList = async (req, res) => {
+/** Uses the AppCache to return a list of accounts & their respective balance, sorted by balance descending. */
+export const getRichList = (req, res) => {
     setBodyDefaults(req.body);
 
     const offset = Number(req.body.offset);
@@ -55,16 +54,6 @@ export const getRichList = async (req, res) => {
         res.send(pruneRepresentatives(balances, includeRep));
     } else {
         const clientErr = { error: 'Account list not loaded yet' };
-        fs.readFile(ALL_BALANCES_FILE_NAME, 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send(LOG_ERR('getRichList.readFile', clientErr));
-            } else {
-                try {
-                    res.send(includeRep(JSON.parse(data).richList.slice(offset, end), includeRep));
-                } catch (err) {
-                    res.status(500).send(LOG_ERR('getRichList.parseFile', clientErr));
-                }
-            }
-        });
+        res.status(500).send(LOG_ERR('getRichList', clientErr));
     }
 };
