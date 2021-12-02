@@ -1,5 +1,5 @@
 import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativeRpc } from '@app/rpc';
-import { convertFromRaw, LOG_ERR, LOG_INFO } from '@app/services';
+import { convertFromRaw, LOG_ERR, LOG_INFO, printResourceUsage } from '@app/services';
 import { AppCache, PROFILE } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
 const fs = require('fs');
@@ -33,14 +33,14 @@ const createEmptyStats = (): AccountDistributionStatsDto => ({
  * Filters out small balance accounts & proceeds to lookup remaining accounts' representative. */
 const getFrontiersData = async (): Promise<FrontiersData> => {
     const frontiersCountResponse = await frontierCountRpc().catch((err) =>
-        Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiersCount', err))
+        Promise.reject(LOG_ERR('getFrontiersData.getFrontiersCount', err))
     );
 
     const frontiersResponse = await frontiersRpc(Number(frontiersCountResponse.count)).catch((err) =>
-        Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiers', err))
+        Promise.reject(LOG_ERR('getFrontiersData.getFrontiers', err))
     );
 
-    // Iterate through each account in the frontiers account & add them to a list if they have a large enough balance.
+    // Iterate through each account & add them to a list if they have a large enough balance.
     const accountsList: AccountBalanceDto[] = [];
     const distributionStats: AccountDistributionStatsDto = createEmptyStats();
     for (const address in frontiersResponse.frontiers) {
@@ -107,7 +107,7 @@ const getFrontiersData = async (): Promise<FrontiersData> => {
     });
 };
 
-/** Whenever the rich list is still loading due to a server restart, read from a stored file.  Prevents unnecessary downtime of Wallets page. */
+/** Whenever the rich list is still loading due to a server restart, read from a stored file. */
 export const parseRichListFromFile = async (): Promise<void> =>
     new Promise((resolve) => {
         const start = LOG_INFO('Refreshing Accounts Distribution File');
@@ -128,32 +128,36 @@ export const parseRichListFromFile = async (): Promise<void> =>
         });
     });
 
-/** Call this to repopulate the rich list in the AppCache. */
-export const cacheAccountDistribution = async (): Promise<void> => {
-    return new Promise((resolve) => {
-        const start = LOG_INFO('Refreshing Rich List');
-        getFrontiersData()
-            .then((data) => {
-                fs.writeFile(ALL_BALANCES_FILE_NAME, JSON.stringify(data), { flag: 'w' }, (err) => {
-                    if (err) {
-                        LOG_ERR('cacheAccountDistribution.writeFile', err);
-                    }
-                });
-                AppCache.accountDistributionStats = data.distributionStats;
-                AppCache.richList = data.richList;
-                const used = process.memoryUsage();
-                for (let key in used) {
-                    console.log(`${key} ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB`);
-                }
-                resolve(LOG_INFO('Rich List Updated', start));
-            })
-            .catch((err) => {
-                LOG_ERR('cacheAccountDistribution', err);
-                resolve();
-            });
+/** Writes the rich list to a local json file.
+ * Whenever the server is restarted, this file is parsed & stored into the AppCache to quickly deliver a snapshot of data. */
+const writeLocalRichListJson = (data: AccountBalanceDto[]): void => {
+    fs.writeFile(ALL_BALANCES_FILE_NAME, JSON.stringify(data), { flag: 'w' }, (err) => {
+        if (err) {
+            LOG_ERR('cacheAccountDistribution.writeFile', err);
+        }
     });
 };
 
+/** Call this to repopulate the rich list in the AppCache. */
+export const cacheAccountDistribution = async (): Promise<void> => {
+    const start = LOG_INFO('Refreshing Rich List');
+    const data = await getFrontiersData().catch((err) => {
+        // If there's any issues retrieving new accounts' balances, use the AppCache data.
+        LOG_ERR('cacheAccountDistribution', err);
+        return Promise.resolve({
+            distributionStats: AppCache.accountDistributionStats,
+            richList: AppCache.richList,
+        });
+    });
+
+    writeLocalRichListJson(data.richList);
+    AppCache.accountDistributionStats = data.distributionStats;
+    AppCache.richList = data.richList;
+    printResourceUsage();
+    return LOG_INFO('Rich List Updated', start);
+};
+
+/** Returns number of accounts that hold each wealth bucket (eg. [1-10], [10_000-100_000]) */
 export const getDistributionBuckets = (res): void => {
     res.send(AppCache.accountDistributionStats);
 };

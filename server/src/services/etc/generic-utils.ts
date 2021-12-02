@@ -17,3 +17,10 @@ export const convertFromRaw = (raw: string, precision = 0): number => {
 
 export const isValidAddress = (address: string): boolean =>
     address && address.length === 64 && (useBananoConfig() ? address.startsWith('ban_') : address.startsWith('nano_'));
+
+export const printResourceUsage = (): void => {
+    const used = process.memoryUsage();
+    for (let key in used) {
+        console.log(`${key} ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB`);
+    }
+};
