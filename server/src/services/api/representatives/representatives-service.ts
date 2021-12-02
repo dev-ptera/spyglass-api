@@ -189,11 +189,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 /**
  * Gets the top 5000 representatives & filters out smaller ones.
  */
-export const getRepresentatives = async (req, res): Promise<RepresentativeDto[]> => {
-    const start = LOG_INFO('Refreshing Root Reps');
+export const getRepresentatives = (req, res): void => {
     const body = req.body as RequestBody;
-    const reps = await getRepresentativesPromise(body);
-    res.send(reps);
-    LOG_INFO('Root Reps Updated', start);
-    return reps;
+    getRepresentativesPromise(body).then((reps) => res.send(reps)).catch((err) => res.status(500).send(err));
 };
