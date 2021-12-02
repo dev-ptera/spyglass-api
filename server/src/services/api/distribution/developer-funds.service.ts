@@ -1,5 +1,5 @@
 import { DEVELOPER_FUNDS, NANO_CLIENT } from '@app/config';
-import { convertFromRaw } from '@app/services';
+import { convertFromRaw, LOG_ERR } from '@app/services';
 import { DeveloperFundsDto } from '@app/types';
 
 export const getDeveloperFundsPromise = async (): Promise<DeveloperFundsDto> => {
@@ -16,10 +16,16 @@ export const getDeveloperFundsPromise = async (): Promise<DeveloperFundsDto> => 
             })
         )
     );
-    const devFundArr = await Promise.all(devFundAddressPromises);
+
+    /* Perform RPC requests for all accounts. */
+    const devFundArr: number[] = await Promise.all(devFundAddressPromises).catch((err) =>
+        Promise.reject(LOG_ERR('devFundAddressPromises', err))
+    );
+
+    /* Aggregate developer fund balance. */
     const devFundTotal = devFundArr.reduce((a, b) => a + b);
 
-    /* Sort devWallets by balance */
+    /* Sort devWallets by balance. */
     devWallets.sort((a, b) => (a.balance > b.balance ? 1 : -1));
 
     return {
