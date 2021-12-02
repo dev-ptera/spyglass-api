@@ -26,7 +26,7 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.typeFilter === undefined) {
         body.typeFilter = DEFAULT_BODY.typeFilter;
     }
-}
+};
 
 /** Fetches remote spyglass known accounts. */
 const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
@@ -132,7 +132,6 @@ export const getKnownAccounts = (req, res): void => {
 export const cacheKnownAccounts = async (): Promise<void> => {
     AppCache.knownAccounts = await getKnownAccountsPromise();
 };
-
 
 /** Converts the KNOWN_ACCOUNTS object to a json file;
  * The JSON file is then fetched remotely from the master branch to allow updates without restarting the server. */

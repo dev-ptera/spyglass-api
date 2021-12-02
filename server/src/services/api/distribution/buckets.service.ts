@@ -1,85 +1,92 @@
 import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativeRpc } from '@app/rpc';
 import { convertFromRaw, LOG_ERR, LOG_INFO } from '@app/services';
-import { AppCache } from '@app/config';
+import { AppCache, PROFILE } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
-import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
 const fs = require('fs');
 
+type FrontiersData = {
+    distributionStats: AccountDistributionStatsDto;
+    richList: AccountBalanceDto[];
+};
+
 /** File which is used to store the list of top holders. */
-export const ALL_BALANCES_FILE_NAME = './database/banano/balances.json';
+export const ALL_BALANCES_FILE_NAME = `./database/${PROFILE}/balances.json`;
+
+const createEmptyStats = (): AccountDistributionStatsDto => ({
+    number0_0001: 0,
+    number0_001: 0,
+    number0_01: 0,
+    number0_1: 0,
+    number1: 0,
+    number10: 0,
+    number100: 0,
+    number1_000: 0,
+    number10_000: 0,
+    number100_000: 0,
+    number1_000_000: 0,
+    number10_000_000: 0,
+    number100_000_000: 0,
+    totalAccounts: 0,
+});
 
 /** Uses the frontiers RPC call to iterate through all accounts.
  * Filters out small balance accounts & proceeds to lookup remaining accounts' representative. */
-export const getFrontiersData = async (): Promise<{
-    distributionStats: AccountDistributionStatsDto;
-    richList: AccountBalanceDto[];
-}> => {
-    const frontiersCountResponse: FrontierCountResponse = await frontierCountRpc().catch((err) => {
-        return Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiersCount', err));
-    });
-    const frontiersResponse = await frontiersRpc(Number(frontiersCountResponse.count)).catch((err) => {
-        return Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiers', err));
-    });
+const getFrontiersData = async (): Promise<FrontiersData> => {
+    const frontiersCountResponse = await frontierCountRpc().catch((err) =>
+        Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiersCount', err))
+    );
 
-    const richList: AccountBalanceDto[] = [];
-    const distributionStats: AccountDistributionStatsDto = {
-        number0_0001: 0,
-        number0_001: 0,
-        number0_01: 0,
-        number0_1: 0,
-        number1: 0,
-        number10: 0,
-        number100: 0,
-        number1_000: 0,
-        number10_000: 0,
-        number100_000: 0,
-        number1_000_000: 0,
-        number10_000_000: 0,
-        number100_000_000: 0,
-        totalAccounts: 0,
-    };
+    const frontiersResponse = await frontiersRpc(Number(frontiersCountResponse.count)).catch((err) =>
+        Promise.reject(LOG_ERR('cacheAccountDistribution.getFrontiers', err))
+    );
+
+    // Iterate through each account in the frontiers account & add them to a list if they have a large enough balance.
+    const accountsList: AccountBalanceDto[] = [];
+    const distributionStats: AccountDistributionStatsDto = createEmptyStats();
     for (const address in frontiersResponse.frontiers) {
         try {
             const balanceResponse = await accountBalanceRpc(address);
-            const accountRep = await accountRepresentativeRpc(address);
-            if (balanceResponse.balance !== '0') {
-                const amount = convertFromRaw(balanceResponse.balance, 4);
-                // Add to address list
-                if (amount >= 0.0001) {
-                    richList.push({ address, amount, representative: accountRep.representative });
-                } else {
-                    continue;
-                }
 
-                // Bucket balances
-                distributionStats.totalAccounts++;
-                if (amount > 100_000_000) {
-                    distributionStats.number100_000_000++;
-                } else if (amount > 10_000_000) {
-                    distributionStats.number10_000_000++;
-                } else if (amount > 1_000_000) {
-                    distributionStats.number1_000_000++;
-                } else if (amount > 100_000) {
-                    distributionStats.number100_000++;
-                } else if (amount > 10_000) {
-                    distributionStats.number10_000++;
-                } else if (amount > 1_000) {
-                    distributionStats.number1_000++;
-                } else if (amount > 100) {
-                    distributionStats.number100++;
-                } else if (amount > 10) {
-                    distributionStats.number10++;
-                } else if (amount > 1) {
-                    distributionStats.number1++;
-                } else if (amount > 0.1) {
-                    distributionStats.number0_1++;
-                } else if (amount > 0.01) {
-                    distributionStats.number0_01++;
-                } else if (amount >= 0.001) {
-                    distributionStats.number0_001++;
-                } else if (amount >= 0.0001) {
-                    distributionStats.number0_0001++;
-                }
+            // Filter out smaller accounts.
+            if (balanceResponse.balance === '0') {
+                continue;
+            }
+            const amount = convertFromRaw(balanceResponse.balance, 4);
+            if (amount < 0.0001) {
+                continue;
+            }
+
+            const accountRep = await accountRepresentativeRpc(address);
+            accountsList.push({ address, amount, representative: accountRep.representative });
+
+            // Bucket balances
+            distributionStats.totalAccounts++;
+            if (amount > 100_000_000) {
+                distributionStats.number100_000_000++;
+            } else if (amount > 10_000_000) {
+                distributionStats.number10_000_000++;
+            } else if (amount > 1_000_000) {
+                distributionStats.number1_000_000++;
+            } else if (amount > 100_000) {
+                distributionStats.number100_000++;
+            } else if (amount > 10_000) {
+                distributionStats.number10_000++;
+            } else if (amount > 1_000) {
+                distributionStats.number1_000++;
+            } else if (amount > 100) {
+                distributionStats.number100++;
+            } else if (amount > 10) {
+                distributionStats.number10++;
+            } else if (amount > 1) {
+                distributionStats.number1++;
+            } else if (amount > 0.1) {
+                distributionStats.number0_1++;
+            } else if (amount > 0.01) {
+                distributionStats.number0_01++;
+            } else if (amount >= 0.001) {
+                distributionStats.number0_001++;
+            } else if (amount >= 0.0001) {
+                distributionStats.number0_0001++;
             }
         } catch (err) {
             console.error(err);
@@ -88,13 +95,14 @@ export const getFrontiersData = async (): Promise<{
     }
 
     // Sort by balance descending.
-    const sortedAccounts = richList.sort((a: AccountBalanceDto, b: AccountBalanceDto) => {
+    const richList = accountsList.sort((a: AccountBalanceDto, b: AccountBalanceDto) => {
         if (a.amount > b.amount) return -1;
         if (a.amount < b.amount) return 1;
         return 0;
     });
+
     return Promise.resolve({
-        richList: sortedAccounts,
+        richList,
         distributionStats,
     });
 };
