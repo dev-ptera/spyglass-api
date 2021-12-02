@@ -75,23 +75,23 @@ app.use(cors(corsOptions));
 
 /* Account */
 //app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
+app.get(`/${PATH_ROOT}/account/:address/representative`, (req, res) => getAccountRepresentative(req, res));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
-app.get(`/${PATH_ROOT}/account/:address/representative`, (req, res) => getAccountRepresentative(req, res));
 app.post(`/${PATH_ROOT}/account/insights`, (req, res) => getAccountInsights(req, res));
 
 /* Representatives */
-app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
-app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(req, res));
+app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(res));
+app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(res));
 app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
 app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
-app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(req, res));
+app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
-app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
 app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
+app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
 app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
 
 /* Known */
@@ -99,8 +99,8 @@ app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 /* Network */
-app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(res));
 app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(res));
+app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(res));
 app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(res));
 
 const port: number = Number(process.env.PORT || 3000);

@@ -1,11 +1,11 @@
 import { AppCache, NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
-    getAliasedRepsPromise,
     populateDelegatorsCount,
     LOG_INFO,
     getRepresentativesUptimePromise,
     getPRWeightPromise,
+    getAliasedReps,
 } from '@app/services';
 import { RepresentativeDto } from '@app/types';
 
@@ -129,7 +129,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Append alias to each rep.
     if (body.includeAlias) {
-        const aliasedReps = await getAliasedRepsPromise();
+        const aliasedReps = getAliasedReps();
         for (const aliasedRep of aliasedReps) {
             const rep = repMap.get(aliasedRep.address);
             if (rep) {
