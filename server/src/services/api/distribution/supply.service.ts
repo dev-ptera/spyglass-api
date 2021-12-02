@@ -8,7 +8,7 @@ export const getSupplyPromise = async (): Promise<SupplyDto> => {
     BURN_ADDRESSES.map((burn) =>
         burnAddressPromises.push(NANO_CLIENT.account_balance(burn).then((data) => convertFromRaw(data.pending)))
     );
-    const burnArr = await Promise.all(burnAddressPromises);
+    const burnArr: number[] = await Promise.all(burnAddressPromises);
     const burnedTotal = burnArr.reduce((a, b) => a + b);
 
     /* Developers | Core Team Funds */
@@ -16,7 +16,7 @@ export const getSupplyPromise = async (): Promise<SupplyDto> => {
     DEVELOPER_FUNDS.map((dev) =>
         devFundAddressPromises.push(NANO_CLIENT.account_balance(dev).then((data) => convertFromRaw(data.balance)))
     );
-    const devFundArr = await Promise.all(devFundAddressPromises);
+    const devFundArr: number[] = await Promise.all(devFundAddressPromises);
     const devFundTotal = devFundArr.reduce((a, b) => a + b);
 
     /* Total Supply */
