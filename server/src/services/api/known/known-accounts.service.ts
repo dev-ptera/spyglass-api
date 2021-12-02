@@ -16,19 +16,19 @@ const DEFAULT_BODY: RequestBody = {
     typeFilter: '',
 };
 
-/** Converts the KNOWN_ACCOUNTS object to a json file.
- * This file isThis is used to update KNOWN_ACCOUNTS without restarting the server. */
-export const convertManualKnownAccountsToJson = (): void => {
-    const file = `database/${PROFILE}/known-accounts.json`;
-    fs.writeFile(`${file}`, JSON.stringify(KNOWN_ACCOUNTS, null, 2), (err) => {
-        if (err) {
-            LOG_ERR('convertManualKnownAccountsToJson', err);
-            throw err;
-        }
-    });
-};
+const setBodyDefaults = (body: RequestBody): void => {
+    if (body.includeOwner === undefined) {
+        body.includeOwner = DEFAULT_BODY.includeOwner;
+    }
+    if (body.includeType === undefined) {
+        body.includeType = DEFAULT_BODY.includeType;
+    }
+    if (body.typeFilter === undefined) {
+        body.typeFilter = DEFAULT_BODY.typeFilter;
+    }
+}
 
-/** Makes API call to Remote spyglass json file to fetch known accounts. */
+/** Fetches remote spyglass known accounts. */
 const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
     new Promise<KnownAccountDto[]>((resolve) => {
         axios
@@ -43,7 +43,7 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
-/** Makes API call to Kirby's API to fetch known accounts list. */
+/** Fetches known accounts from Kirby's API.  */
 const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
     new Promise<KnownAccountDto[]>((resolve) => {
         axios
@@ -58,13 +58,14 @@ const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
+/** Responsible for fetching known accounts from local/remote sources. */
 const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const start = LOG_INFO('Refreshing Known Accounts');
     const kirbyKnownAccounts = await fetchKirbyKnownAccounts();
     const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
 
-    // On initial load, use the KNOWN_ACCOUNTS var.
+    // On initial load, use the local KNOWN_ACCOUNTS data.
     if (AppCache.knownAccounts.length === 0) {
         KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
     }
@@ -73,7 +74,7 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     if (spyglassKnownAccountsRemote.length > 0) {
         AppCache.knownAccounts = [];
     } else {
-        /* Add existing known accounts to the map so we don't lose any past data. */
+        // Add existing known accounts to the map so we don't lose any past data.
         AppCache.knownAccounts.map((account) => knownAccountMap.set(account.address, account));
     }
 
@@ -85,10 +86,13 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
         knownAccountMap.set(kirbyKnownAccount.address, kirbyKnownAccount);
     }
 
-    /* Spyglass entries are entered next & override any duplicates. */
+    /* Spyglass entries are entered next & override any duplicate aliases. */
     for (const spyglassKnownAccount of spyglassKnownAccountsRemote) {
-        if (knownAccountMap.has(spyglassKnownAccount.address)) {
-            knownAccountMap.get(spyglassKnownAccount.address).alias = spyglassKnownAccount.alias;
+        const prevEntry = knownAccountMap.get(spyglassKnownAccount.address);
+        if (prevEntry) {
+            prevEntry.owner = spyglassKnownAccount.owner || prevEntry.owner;
+            prevEntry.type = spyglassKnownAccount.type || prevEntry.type;
+            prevEntry.alias = spyglassKnownAccount.alias || prevEntry.alias;
         } else {
             knownAccountMap.set(spyglassKnownAccount.address, spyglassKnownAccount);
         }
@@ -100,7 +104,7 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     return accounts;
 };
 
-export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
+const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
     const filter = body.typeFilter.toLowerCase().trim();
     AppCache.knownAccounts.map((account) => {
@@ -116,22 +120,28 @@ export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     return accounts;
 };
 
+/** Returns a list of accounts that are known on the network (exchanges, representatives, funds, etc). */
 export const getKnownAccounts = (req, res): void => {
     const body = req.body as RequestBody;
-    if (body.includeOwner === undefined) {
-        body.includeOwner = DEFAULT_BODY.includeOwner;
-    }
-    if (body.includeType === undefined) {
-        body.includeType = DEFAULT_BODY.includeType;
-    }
-    if (body.typeFilter === undefined) {
-        body.typeFilter = DEFAULT_BODY.typeFilter;
-    }
+    setBodyDefaults(req.body);
     const accounts = filterKnownAccounts(body);
     res.send(accounts);
 };
 
-/** This is called every X minutes to update the KnownAccounts app cache. */
+/** Call this method to update the known accounts in the AppCache. */
 export const cacheKnownAccounts = async (): Promise<void> => {
     AppCache.knownAccounts = await getKnownAccountsPromise();
+};
+
+
+/** Converts the KNOWN_ACCOUNTS object to a json file;
+ * The JSON file is then fetched remotely from the master branch to allow updates without restarting the server. */
+export const convertManualKnownAccountsToJson = (): void => {
+    const file = `database/${PROFILE}/known-accounts.json`;
+    fs.writeFile(`${file}`, JSON.stringify(KNOWN_ACCOUNTS, null, 2), (err) => {
+        if (err) {
+            LOG_ERR('convertManualKnownAccountsToJson', err);
+            throw err;
+        }
+    });
 };
