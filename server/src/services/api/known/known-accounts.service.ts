@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { KnownAccountDto } from '@app/types';
+import { KnownAccountDto, KnownAccountType } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
 import { AppCache, KNOWN_ACCOUNTS, PROFILE } from '@app/config';
 const fs = require('fs');
@@ -7,7 +7,7 @@ const fs = require('fs');
 type RequestBody = {
     includeOwner?: boolean;
     includeType?: boolean;
-    typeFilter?: string;
+    typeFilter?: KnownAccountType;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -104,7 +104,7 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     return accounts;
 };
 
-const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
+export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
     const filter = body.typeFilter.toLowerCase().trim();
     AppCache.knownAccounts.map((account) => {
