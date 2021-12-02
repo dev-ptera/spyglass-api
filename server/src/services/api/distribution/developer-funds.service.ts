@@ -25,8 +25,8 @@ export const getDeveloperFundsPromise = async (): Promise<DeveloperFundsDto> => 
     /* Aggregate developer fund balance. */
     const devFundTotal = devFundArr.reduce((a, b) => a + b);
 
-    /* Sort devWallets by balance. */
-    devWallets.sort((a, b) => (a.balance > b.balance ? 1 : -1));
+    /* Sort devWallets by balance, descending. */
+    devWallets.sort((a, b) => (a.balance > b.balance ? -1 : 1));
 
     return {
         totalBalance: devFundTotal,
