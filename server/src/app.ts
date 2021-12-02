@@ -99,7 +99,7 @@ app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res)
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 /* Network */
-app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(req, res));
+app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(res));
 app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(req, res));
 app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(res));
 
