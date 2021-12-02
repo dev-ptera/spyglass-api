@@ -95,7 +95,7 @@ app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBucke
 app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
 
 /* Known */
-app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(req, res));
+app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 /* Network */
