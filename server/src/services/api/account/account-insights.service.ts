@@ -1,4 +1,4 @@
-import {convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR} from '@app/services';
+import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { rawToBan } from 'banano-unit-converter';
@@ -48,7 +48,12 @@ const createBlankDto = (): InsightsDto => ({
     totalTxReceived: 0,
 });
 
-const receiveTransaction = (insightsDto: InsightsDto, transaction, amount: number, accountReceivedMap: Map<string, number>): void => {
+const receiveTransaction = (
+    insightsDto: InsightsDto,
+    transaction,
+    amount: number,
+    accountReceivedMap: Map<string, number>
+): void => {
     const sender = transaction.account;
     insightsDto.totalTxReceived += 1;
     insightsDto.totalAmountReceived += amount;
@@ -67,9 +72,14 @@ const receiveTransaction = (insightsDto: InsightsDto, transaction, amount: numbe
         insightsDto.maxAmountReceived = amount;
         insightsDto.maxAmountReceivedHash = transaction.hash;
     }
-}
+};
 
-const sendTransaction = (insightsDto: InsightsDto, transaction, amount: number, accountSentMap: Map<string, number>): void => {
+const sendTransaction = (
+    insightsDto: InsightsDto,
+    transaction,
+    amount: number,
+    accountSentMap: Map<string, number>
+): void => {
     const recipient = transaction.account;
     insightsDto.totalTxSent += 1;
     console.log(amount);
@@ -88,7 +98,7 @@ const sendTransaction = (insightsDto: InsightsDto, transaction, amount: number, 
         insightsDto.maxAmountSent = amount;
         insightsDto.maxAmountSentHash = transaction.hash;
     }
-}
+};
 
 const confirmedTransactionsPromise = async (body: RequestBody): Promise<InsightsDto> => {
     setBodyDefaults(body);
@@ -119,11 +129,9 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
         insightsDto.heightBalances = undefined;
     }
 
-
     /* Iterate through the list of transactions, perform insight calculations. */
     let balance = 0;
     for (const transaction of accountHistory.history) {
-
         // Count Change Blocks
         if (!transaction.amount) {
             if (transaction['subtype'] === 'change') {
