@@ -64,13 +64,15 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const kirbyKnownAccounts = await fetchKirbyKnownAccounts();
     const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
+    const aliasSet = new Set<string>();
+    const addressSet = new Set<string>();
 
     // On initial load, use the local KNOWN_ACCOUNTS data.
     if (AppCache.knownAccounts.length === 0) {
         KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
     }
 
-    // Clear the list if we pulled down the new list successfully.
+    // Clear the current list if we pulled down the new list successfully.
     if (spyglassKnownAccountsRemote.length > 0) {
         AppCache.knownAccounts = [];
     } else {
@@ -86,16 +88,20 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
         knownAccountMap.set(kirbyKnownAccount.address, kirbyKnownAccount);
     }
 
+    /* Loop through the map of known accounts & populate the alias & address sets;
+       These sets are used to identify & remove duplicate entries between data sources. */
+    for (const key of knownAccountMap.keys()) {
+        const account = knownAccountMap.get(key);
+        aliasSet.add(account.alias);
+        addressSet.add(account.address);
+    }
+
     /* Spyglass entries are entered next & override any duplicate aliases. */
     for (const spyglassKnownAccount of spyglassKnownAccountsRemote) {
-        const prevEntry = knownAccountMap.get(spyglassKnownAccount.address);
-        if (prevEntry) {
-            prevEntry.owner = spyglassKnownAccount.owner || prevEntry.owner;
-            prevEntry.type = spyglassKnownAccount.type || prevEntry.type;
-            prevEntry.alias = spyglassKnownAccount.alias || prevEntry.alias;
-        } else {
-            knownAccountMap.set(spyglassKnownAccount.address, spyglassKnownAccount);
+        if (aliasSet.has(spyglassKnownAccount.alias) || addressSet.has(spyglassKnownAccount.address)) {
+            knownAccountMap.delete(spyglassKnownAccount.address);
         }
+        knownAccountMap.set(spyglassKnownAccount.address, spyglassKnownAccount);
     }
 
     const accounts = Array.from(knownAccountMap.values());
