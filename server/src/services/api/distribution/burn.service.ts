@@ -2,6 +2,7 @@ import { BURN_ADDRESSES, NANO_CLIENT } from '@app/config';
 import { convertFromRaw, LOG_ERR } from '@app/services';
 import { BasicAccount, BurnAccountsDto } from '@app/types';
 
+/** Returns burn-account statistics. */
 export const getBurnPromise = async (): Promise<BurnAccountsDto> => {
     const burnAddressPromises = [];
     BURN_ADDRESSES.map((address) =>

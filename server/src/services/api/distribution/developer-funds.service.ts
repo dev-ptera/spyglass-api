@@ -2,6 +2,7 @@ import { DEVELOPER_FUNDS, NANO_CLIENT } from '@app/config';
 import { convertFromRaw, LOG_ERR } from '@app/services';
 import { DeveloperFundsDto } from '@app/types';
 
+/** Returns all accounts and balances of core-team owned funds.  (e.g. developer funds, foundation funds, etc). */
 export const getDeveloperFundsPromise = async (): Promise<DeveloperFundsDto> => {
     const devFundAddressPromises = [];
     const devWallets: { address: string; balance: number }[] = [];
