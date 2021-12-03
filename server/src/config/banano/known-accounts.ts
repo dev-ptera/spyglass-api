@@ -403,7 +403,7 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         type: 'representative',
     },
     {
-        address: 'ban_3airtunegymgr6b8t9b8muh7upg39bcheahxqwkbtu96ux69pzn1idcu34wz',
+        address: 'ban_1airtunes8qctdtjhnfu5tpegk337rgcgnbtktozg6ttz3hordo6chf5c31r',
         alias: 'Airtune',
         type: 'citizen',
     },
