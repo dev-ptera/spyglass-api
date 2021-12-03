@@ -43,6 +43,11 @@ export const repNavItem: NavItem = {
     ],
 };
 
+export const burnNavItem: NavItem = {
+    title: 'Burn',
+    route: 'burn',
+};
+
 export const supplyNavItem: NavItem = {
     title: 'Supply',
     route: 'supply',
@@ -67,6 +72,7 @@ export const distributionNavItem: NavItem = {
     route: 'distribution',
     icon: 'logo_dev',
     children: [
+        burnNavItem,
         distributionBuckets,
         developerFundsNavItem,
         richListNavItem,

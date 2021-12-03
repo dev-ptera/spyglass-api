@@ -57,6 +57,7 @@ import {
     getQuorum,
     convertManualKnownAccountsToJson,
     cacheOnlineRepresentativesWithWeights,
+    getBurn,
 } from '@app/services';
 
 const corsOptions = {
@@ -89,6 +90,7 @@ app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, 
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
 /* Distribution */
+app.get(`/${PATH_ROOT}/distribution/burn`, (req, res) => getBurn(res));
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
 app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
 app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));

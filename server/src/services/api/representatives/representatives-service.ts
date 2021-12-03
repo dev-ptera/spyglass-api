@@ -191,5 +191,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
  */
 export const getRepresentatives = (req, res): void => {
     const body = req.body as RequestBody;
-    getRepresentativesPromise(body).then((reps) => res.send(reps)).catch((err) => res.status(500).send(err));
+    getRepresentativesPromise(body)
+        .then((reps) => res.send(reps))
+        .catch((err) => res.status(500).send(err));
 };

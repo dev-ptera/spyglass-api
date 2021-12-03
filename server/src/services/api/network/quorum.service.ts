@@ -1,6 +1,12 @@
 import { QuorumDto, SupplyDto } from '@app/types';
-import { NANO_CLIENT } from '@app/config';
-import { convertFromRaw, getOfflineRepresentativesPromise, getSupplyPromise, LOG_ERR } from '@app/services';
+import { AppCache, NANO_CLIENT } from '@app/config';
+import {
+    convertFromRaw,
+    getOfflineRepresentativesPromise,
+    getRepresentativesPromise,
+    getSupplyPromise,
+    LOG_ERR,
+} from '@app/services';
 import { ConfirmationQuorumResponse } from '@dev-ptera/nano-node-rpc';
 
 /** Returns online / offline representative weights & percentages. */
@@ -26,6 +32,25 @@ const calculateWeightStatus = async (nonBurnSupply: number, onlineWeight: number
     };
 };
 
+/** Instead of using direct RPC commands to gather the online weight, I calculate the onlineWeight using reps from the AppCache.
+ *  These numbers are not realtime, since representatives are not immediately marked as being offline.
+ *
+ *  Originally I was using the RPC commands here for onlineWeight, but then there would be an inconsistency between data returned by my own services;
+ *  The online reps service would potentially mark reps online, whose weight was not included in the quorum's onlineWeight response.
+ *
+ *  I cannot mix & match data sources for this metric, so I will use my own service's perception of what representatives are online or offline.
+ * */
+const calculateOnlineWeight = async (deltaPercentage: number) => {
+    const onlineReps = await getRepresentativesPromise({ addresses: AppCache.onlineRepresentatives });
+    let onlineWeight = 0;
+    onlineReps.map((rep) => (onlineWeight += rep.weight));
+    const quorumDelta = Number(onlineWeight * deltaPercentage);
+    return {
+        onlineWeight,
+        quorumDelta,
+    };
+};
+
 /** Calculates the non-burned supply amount. */
 const calculateNonBurnedSupply = (supply: SupplyDto) => supply.totalAmount - supply.burnedAmount;
 
@@ -40,10 +65,13 @@ const convertRaw = (rawQuorum: ConfirmationQuorumResponse): Partial<QuorumDto> =
 
 /** Returns quorum statistics; for example online / offline representative stats. */
 export const getQuorumPromise = async (): Promise<QuorumDto> => {
-    const { quorumDelta, peersStakeWeight, onlineWeightQuorumPercent, onlineWeight, onlineWeightMinimum } =
-        await NANO_CLIENT.confirmation_quorum()
-            .then(convertRaw)
-            .catch((err) => Promise.reject(LOG_ERR('getQuorumPromise.confirmation_quorum', err)));
+    const { peersStakeWeight, onlineWeightQuorumPercent, onlineWeightMinimum } = await NANO_CLIENT.confirmation_quorum()
+        .then(convertRaw)
+        .catch((err) => Promise.reject(LOG_ERR('getQuorumPromise.confirmation_quorum', err)));
+
+    const { onlineWeight, quorumDelta } = await calculateOnlineWeight(onlineWeightQuorumPercent).catch((err) =>
+        Promise.reject(LOG_ERR('getQuorumPromise.calculateOnlineWeight', err))
+    );
 
     const nonBurnedSupply = await getSupplyPromise()
         .then(calculateNonBurnedSupply)

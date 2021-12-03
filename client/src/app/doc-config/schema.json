@@ -123,6 +123,21 @@
             ],
             "type": "object"
         },
+        "BasicAccount": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "pending": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "pending"
+            ],
+            "type": "object"
+        },
         "BasicRep": {
             "properties": {
                 "address": {
@@ -135,6 +150,36 @@
             "required": [
                 "address",
                 "weight"
+            ],
+            "type": "object"
+        },
+        "BurnAccountsDto": {
+            "properties": {
+                "burnAccounts": {
+                    "items": {
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "pending": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "pending"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "totalAmount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "burnAccounts",
+                "totalAmount"
             ],
             "type": "object"
         },
@@ -418,6 +463,9 @@
         },
         "InsightsDto": {
             "properties": {
+                "amountChangedRep": {
+                    "type": "number"
+                },
                 "firstInTxHash": {
                     "type": "string"
                 },
@@ -466,7 +514,7 @@
                 "maxAmountReceivedHash": {
                     "type": "string"
                 },
-                "maxAmountSentBan": {
+                "maxAmountSent": {
                     "type": "number"
                 },
                 "maxAmountSentHash": {
@@ -493,7 +541,7 @@
                 "totalAmountReceived": {
                     "type": "number"
                 },
-                "totalAmountSentBan": {
+                "totalAmountSent": {
                     "type": "number"
                 },
                 "totalTxReceived": {
@@ -504,6 +552,7 @@
                 }
             },
             "required": [
+                "amountChangedRep",
                 "firstInTxHash",
                 "firstInTxUnixTimestamp",
                 "firstOutTxHash",
@@ -514,7 +563,7 @@
                 "lastOutTxUnixTimestamp",
                 "maxAmountReceived",
                 "maxAmountReceivedHash",
-                "maxAmountSentBan",
+                "maxAmountSent",
                 "maxAmountSentHash",
                 "maxBalance",
                 "maxBalanceHash",
@@ -523,7 +572,7 @@
                 "mostCommonSenderAddress",
                 "mostCommonSenderTxCount",
                 "totalAmountReceived",
-                "totalAmountSentBan",
+                "totalAmountSent",
                 "totalTxReceived",
                 "totalTxSent"
             ],

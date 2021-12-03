@@ -20,7 +20,7 @@ import {
     distributionBuckets,
     richListNavItem,
     peerVersionsNavItem,
-    quorumNavItem, ncNavItem, accountInsightsNavItem,
+    quorumNavItem, ncNavItem, accountInsightsNavItem, burnNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -121,6 +121,20 @@ export const apiDocumentationPages: Array<{
         route: `${knownNavItem.route}/${knownVanitiesNavItem.route}`,
         apiPath: 'known/vanities',
         responseSchema: 'string[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${distributionNavItem.route}/${developerFundsNavItem.route}`,
+        apiPath: 'distribution/developer-funds',
+        responseSchema: 'DeveloperFundsDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${distributionNavItem.route}/${burnNavItem.route}`,
+        apiPath: 'distribution/burn',
+        responseSchema: 'BurnAccountsDto',
         knobs: [],
         requestType: 'GET',
     },

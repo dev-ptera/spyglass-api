@@ -4,6 +4,7 @@ export * from './AccountBalanceDto';
 export * from './AccountDistributionStatsDto';
 export * from './AccountRepresentativeDto';
 export * from './AliasedRepresentativeDto';
+export * from './BurnAccountsDto';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
