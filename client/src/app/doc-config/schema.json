@@ -179,6 +179,21 @@
             ],
             "type": "object"
         },
+        "Datapoint": {
+            "properties": {
+                "balance": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "balance",
+                "height"
+            ],
+            "type": "object"
+        },
         "DelegatorDto": {
             "properties": {
                 "address": {
@@ -403,7 +418,19 @@
         },
         "InsightsDto": {
             "properties": {
-                "data": {
+                "firstInTxHash": {
+                    "type": "string"
+                },
+                "firstInTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "firstOutTxHash": {
+                    "type": "string"
+                },
+                "firstOutTxUnixTimestamp": {
+                    "type": "number"
+                },
+                "heightBalances": {
                     "items": {
                         "properties": {
                             "balance": {
@@ -421,18 +448,6 @@
                     },
                     "type": "array"
                 },
-                "firstInTxHash": {
-                    "type": "string"
-                },
-                "firstInTxUnixTimestamp": {
-                    "type": "number"
-                },
-                "firstOutTxHash": {
-                    "type": "string"
-                },
-                "firstOutTxUnixTimestamp": {
-                    "type": "number"
-                },
                 "lastInTxHash": {
                     "type": "string"
                 },
@@ -445,7 +460,7 @@
                 "lastOutTxUnixTimestamp": {
                     "type": "number"
                 },
-                "maxAmountReceivedBan": {
+                "maxAmountReceived": {
                     "type": "number"
                 },
                 "maxAmountReceivedHash": {
@@ -457,7 +472,7 @@
                 "maxAmountSentHash": {
                     "type": "string"
                 },
-                "maxBalanceBan": {
+                "maxBalance": {
                     "type": "number"
                 },
                 "maxBalanceHash": {
@@ -475,7 +490,7 @@
                 "mostCommonSenderTxCount": {
                     "type": "number"
                 },
-                "totalAmountReceivedBan": {
+                "totalAmountReceived": {
                     "type": "number"
                 },
                 "totalAmountSentBan": {
@@ -489,7 +504,6 @@
                 }
             },
             "required": [
-                "data",
                 "firstInTxHash",
                 "firstInTxUnixTimestamp",
                 "firstOutTxHash",
@@ -498,17 +512,17 @@
                 "lastInTxUnixTimestamp",
                 "lastOutTxHash",
                 "lastOutTxUnixTimestamp",
-                "maxAmountReceivedBan",
+                "maxAmountReceived",
                 "maxAmountReceivedHash",
                 "maxAmountSentBan",
                 "maxAmountSentHash",
-                "maxBalanceBan",
+                "maxBalance",
                 "maxBalanceHash",
                 "mostCommonRecipientAddress",
                 "mostCommonRecipientTxCount",
                 "mostCommonSenderAddress",
                 "mostCommonSenderTxCount",
-                "totalAmountReceivedBan",
+                "totalAmountReceived",
                 "totalAmountSentBan",
                 "totalTxReceived",
                 "totalTxSent"
@@ -527,16 +541,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "enum": [
-                        "burn",
-                        "citizen",
-                        "developer",
-                        "exchange",
-                        "explorer",
-                        "faucet",
-                        "representative"
-                    ],
-                    "type": "string"
+                    "$ref": "#/definitions/KnownAccountType"
                 }
             },
             "required": [
@@ -544,6 +549,19 @@
                 "alias"
             ],
             "type": "object"
+        },
+        "KnownAccountType": {
+            "enum": [
+                "",
+                "burn",
+                "citizen",
+                "developer",
+                "exchange",
+                "explorer",
+                "faucet",
+                "representative"
+            ],
+            "type": "string"
         },
         "LastOutage": {
             "properties": {

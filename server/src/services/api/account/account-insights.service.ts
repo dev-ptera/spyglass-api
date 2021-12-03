@@ -1,4 +1,4 @@
-import { isValidAddress, LOG_ERR } from '@app/services';
+import {convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR} from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { rawToBan } from 'banano-unit-converter';
@@ -7,45 +7,88 @@ const MAX_TRANSACTION_COUNT = 100_000;
 
 type RequestBody = {
     address: string;
-    includeBalanceHeights: boolean;
+    includeHeightBalances: boolean;
 };
 
 const DEFAULT_BODY: RequestBody = {
     address: '',
-    includeBalanceHeights: false,
+    includeHeightBalances: false,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
-    if (body.includeBalanceHeights === undefined) {
-        body.includeBalanceHeights = DEFAULT_BODY.includeBalanceHeights;
+    if (body.includeHeightBalances === undefined) {
+        body.includeHeightBalances = DEFAULT_BODY.includeHeightBalances;
     }
 };
 
 const createBlankDto = (): InsightsDto => ({
-    heightBalances: [],
-    maxAmountReceivedHash: undefined,
-    maxAmountReceivedBan: 0,
-    maxAmountSentHash: undefined,
-    maxAmountSentBan: 0,
-    maxBalanceHash: undefined,
-    maxBalanceBan: 0,
-    mostCommonRecipientAddress: undefined,
-    mostCommonSenderAddress: undefined,
-    mostCommonRecipientTxCount: 0,
-    mostCommonSenderTxCount: 0,
-    totalAmountReceivedBan: 0,
-    totalAmountSentBan: 0,
-    totalTxSent: 0,
-    totalTxReceived: 0,
+    amountChangedRep: 0,
     firstInTxUnixTimestamp: undefined,
     firstInTxHash: undefined,
     firstOutTxUnixTimestamp: undefined,
     firstOutTxHash: undefined,
+    heightBalances: [],
     lastInTxUnixTimestamp: undefined,
     lastInTxHash: undefined,
     lastOutTxUnixTimestamp: undefined,
     lastOutTxHash: undefined,
+    maxAmountReceivedHash: undefined,
+    maxAmountReceived: 0,
+    maxAmountSentHash: undefined,
+    maxAmountSent: 0,
+    maxBalanceHash: undefined,
+    maxBalance: 0,
+    mostCommonRecipientAddress: undefined,
+    mostCommonSenderAddress: undefined,
+    mostCommonRecipientTxCount: 0,
+    mostCommonSenderTxCount: 0,
+    totalAmountReceived: 0,
+    totalAmountSent: 0,
+    totalTxSent: 0,
+    totalTxReceived: 0,
 });
+
+const receiveTransaction = (insightsDto: InsightsDto, transaction, amount: number, accountReceivedMap: Map<string, number>): void => {
+    const sender = transaction.account;
+    insightsDto.totalTxReceived += 1;
+    insightsDto.totalAmountReceived += amount;
+
+    if (!insightsDto.firstInTxHash) {
+        insightsDto.firstInTxHash = transaction.hash;
+        insightsDto.firstInTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    }
+    insightsDto.lastInTxHash = transaction.hash;
+    insightsDto.lastInTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+
+    const count = accountReceivedMap.get(sender) || 0;
+    accountReceivedMap.set(sender, count + 1);
+
+    if (amount > insightsDto.maxAmountReceived) {
+        insightsDto.maxAmountReceived = amount;
+        insightsDto.maxAmountReceivedHash = transaction.hash;
+    }
+}
+
+const sendTransaction = (insightsDto: InsightsDto, transaction, amount: number, accountSentMap: Map<string, number>): void => {
+    const recipient = transaction.account;
+    insightsDto.totalTxSent += 1;
+    console.log(amount);
+    insightsDto.totalAmountSent += amount;
+    if (!insightsDto.firstOutTxHash) {
+        insightsDto.firstOutTxHash = transaction.hash;
+        insightsDto.firstOutTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    }
+    insightsDto.lastOutTxHash = transaction.hash;
+    insightsDto.lastOutTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+
+    const count = accountSentMap.get(recipient) || 0;
+    accountSentMap.set(recipient, count + 1);
+
+    if (amount > insightsDto.maxAmountSent) {
+        insightsDto.maxAmountSent = amount;
+        insightsDto.maxAmountSentHash = transaction.hash;
+    }
+}
 
 const confirmedTransactionsPromise = async (body: RequestBody): Promise<InsightsDto> => {
     setBodyDefaults(body);
@@ -72,58 +115,41 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
     const accountReceivedMap = new Map<string, number>();
     const insightsDto = createBlankDto();
 
-    let balance = 0;
-    let index = 0;
-    for (const transaction of accountHistory.history) {
-        const isLastDp = index === accountHistory.history.length;
-        let includePoint = false;
-        if (transaction.amount) {
-            const ban = Number(Number(rawToBan(transaction.amount)).toFixed(6));
-            const addr = transaction.account;
-            if (transaction['subtype'] === 'receive') {
-                includePoint = true;
-                balance += ban;
-                if (!insightsDto.firstInTxHash) {
-                    insightsDto.firstInTxHash = transaction.hash;
-                    insightsDto.firstInTxUnixTimestamp = Number(transaction.local_timestamp);
-                }
-                insightsDto.lastInTxHash = transaction.hash;
-                insightsDto.lastInTxUnixTimestamp = Number(transaction.local_timestamp);
+    if (!body.includeHeightBalances) {
+        insightsDto.heightBalances = undefined;
+    }
 
-                insightsDto.totalTxReceived += 1;
-                insightsDto.totalAmountReceivedBan += ban;
-                accountReceivedMap.has(addr)
-                    ? accountReceivedMap.set(addr, accountReceivedMap.get(addr) + 1)
-                    : accountReceivedMap.set(addr, 1);
-                if (ban > insightsDto.maxAmountReceivedBan) {
-                    insightsDto.maxAmountReceivedBan = ban;
-                    insightsDto.maxAmountReceivedHash = transaction.hash;
-                }
-            } else if (transaction['subtype'] === 'send') {
-                includePoint = true;
-                balance -= ban;
-                insightsDto.totalAmountSentBan += ban;
-                if (!insightsDto.firstOutTxHash) {
-                    insightsDto.firstOutTxHash = transaction.hash;
-                    insightsDto.firstOutTxUnixTimestamp = Number(transaction.local_timestamp);
-                }
-                insightsDto.lastOutTxHash = transaction.hash;
-                insightsDto.lastOutTxUnixTimestamp = Number(transaction.local_timestamp);
-                insightsDto.totalTxSent += 1;
-                accountSentMap.has(addr)
-                    ? accountSentMap.set(addr, accountSentMap.get(addr) + 1)
-                    : accountSentMap.set(addr, 1);
-                if (ban > insightsDto.maxAmountSentBan) {
-                    insightsDto.maxAmountSentBan = ban;
-                    insightsDto.maxAmountSentHash = transaction.hash;
-                }
+
+    /* Iterate through the list of transactions, perform insight calculations. */
+    let balance = 0;
+    for (const transaction of accountHistory.history) {
+
+        // Count Change Blocks
+        if (!transaction.amount) {
+            if (transaction['subtype'] === 'change') {
+                insightsDto.amountChangedRep++;
             }
-            if (balance >= insightsDto.maxBalanceBan) {
-                insightsDto.maxBalanceBan = balance;
-                insightsDto.maxBalanceHash = transaction.hash;
-            }
+            continue;
         }
-        if (includePoint || isLastDp) {
+
+        // Count Send / Receive Blocks & aggregate balances.
+        const amount = convertFromRaw(transaction.amount, 6);
+        if (transaction['subtype'] === 'receive') {
+            balance += amount;
+            receiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
+        } else if (transaction['subtype'] === 'send') {
+            balance -= amount;
+            sendTransaction(insightsDto, transaction, amount, accountSentMap);
+        }
+
+        // Audit max balance
+        if (balance >= insightsDto.maxBalance) {
+            insightsDto.maxBalance = balance;
+            insightsDto.maxBalanceHash = transaction.hash;
+        }
+
+        // Append new block to the list (change blocks are omitted.)
+        if (body.includeHeightBalances) {
             const height = Number(transaction.height);
             const roundedBalance = balance > 100 ? Math.round(balance) : balance;
             insightsDto.heightBalances.push({ balance: Number(roundedBalance.toFixed(3)), height });
@@ -155,8 +181,8 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
  */
 export const getAccountInsights = (req, res): void => {
     confirmedTransactionsPromise(req.body)
-        .then((insights: InsightsDto) => {
-            res.send(insights);
+        .then((data) => {
+            res.send(data);
         })
         .catch((err) => {
             res.status(500).send(err);

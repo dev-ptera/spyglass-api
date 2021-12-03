@@ -1,17 +1,18 @@
 export type InsightsDto = {
+    amountChangedRep: number;
     heightBalances?: Datapoint[];
     maxAmountReceivedHash: string;
-    maxAmountReceivedBan: number;
+    maxAmountReceived: number;
     maxAmountSentHash: string;
-    maxAmountSentBan: number;
+    maxAmountSent: number;
     maxBalanceHash: string;
-    maxBalanceBan: number;
+    maxBalance: number;
     mostCommonSenderAddress: string;
     mostCommonSenderTxCount: number;
     mostCommonRecipientAddress: string;
     mostCommonRecipientTxCount: number;
-    totalAmountReceivedBan: number;
-    totalAmountSentBan: number;
+    totalAmountReceived: number;
+    totalAmountSent: number;
     totalTxSent: number;
     totalTxReceived: number;
     firstInTxUnixTimestamp: number;

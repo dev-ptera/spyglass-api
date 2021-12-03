@@ -5,7 +5,12 @@ export const ACCOUNT_INSIGHTS_KNOB: Array<Knob> = [
         propertyName: 'address',
         propertyType: 'string',
         restPathAlias: '[address]',
-    }];
+    },
+    {
+        propertyName: 'includeHeightBalances',
+        propertyType: 'boolean'
+    }
+];
 
 export const ACCOUNT_REPRESENTATIVE_KNOB: Array<Knob> = [
 {
