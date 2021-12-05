@@ -97,7 +97,10 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
     };
 };
 
-/** Returns statistics about weight required to confirm transactions, online staking weight, etc. */
+/** Returns *estimated* statistics around network weight required to confirm transactions.
+ *  Statistics are not real-time nor 100% accurate since `onlineWeight` is calculated
+ *  using online representatives provided via the `online-representatives` service.
+ * */
 export const getQuorum = (res): void => {
     getQuorumPromise()
         .then((data) => res.send(data))

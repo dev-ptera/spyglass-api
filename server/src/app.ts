@@ -57,7 +57,7 @@ import {
     getQuorum,
     convertManualKnownAccountsToJson,
     cacheOnlineRepresentativesWithWeights,
-    getBurn,
+    getBurn, getRichListSnapshot,
 } from '@app/services';
 
 const corsOptions = {
@@ -71,6 +71,12 @@ const corsOptions = {
 };
 
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
+
+/* Set response headers to text-json */
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json');
+    next();
+});
 
 app.use(cors(corsOptions));
 
@@ -95,6 +101,7 @@ app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
 app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
 app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
 app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
+app.get(`/${PATH_ROOT}/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshot(res));
 
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));

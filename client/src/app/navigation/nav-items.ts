@@ -66,6 +66,10 @@ export const richListNavItem: NavItem = {
     title: 'Rich List',
     route: 'rich-list',
 };
+export const richListSnapshotNavItem: NavItem = {
+    title: 'Rich List Snapshot',
+    route: 'rich-list-snapshot',
+};
 
 export const distributionNavItem: NavItem = {
     title: 'Distribution',
@@ -76,6 +80,7 @@ export const distributionNavItem: NavItem = {
         distributionBuckets,
         developerFundsNavItem,
         richListNavItem,
+        richListSnapshotNavItem,
         supplyNavItem,
     ],
 };

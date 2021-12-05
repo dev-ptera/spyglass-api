@@ -57,3 +57,8 @@ export const getRichList = (req, res) => {
         res.status(500).send(LOG_ERR('getRichList', clientErr));
     }
 };
+
+/** Return Rich List Snapshot */
+export const getRichListSnapshot = (res) => {
+    res.send(AppCache.richList);
+};

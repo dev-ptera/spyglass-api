@@ -5,6 +5,7 @@ import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
 import { Knob } from '../../doc-config/knobs/Knob';
 import {RequestService} from "./request.service";
+import {UserAgentService} from "../../services/user-agent.service";
 
 @Component({
     selector: 'app-request',
@@ -22,6 +23,7 @@ export class RequestComponent {
     requestType: 'POST' | 'GET';
 
     constructor(
+        private readonly _userAgentService: UserAgentService,
         private readonly _requestService: RequestService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _router: Router,
@@ -90,7 +92,7 @@ export class RequestComponent {
                 const scrollEl = document.getElementsByClassName('mat-sidenav-content')[0];
                 const contentEl = document.getElementById('response-content');
                 const width = scrollEl.clientWidth;
-                if (width < 1833) {
+                if (width < 1833 && !this._userAgentService.isMobileDevice()) {
                     // TODO: Fix ios no-scroll
                     scrollEl.scrollTo({ top: contentEl.offsetTop + 32, behavior: 'smooth' });
                 }

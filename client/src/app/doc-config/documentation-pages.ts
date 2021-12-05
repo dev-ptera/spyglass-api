@@ -20,7 +20,7 @@ import {
     distributionBuckets,
     richListNavItem,
     peerVersionsNavItem,
-    quorumNavItem, ncNavItem, accountInsightsNavItem, burnNavItem,
+    quorumNavItem, ncNavItem, accountInsightsNavItem, burnNavItem, richListSnapshotNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -165,6 +165,13 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'AccountBalanceDto[]',
         knobs: DISTRIBUTION_RICH_LIST_KNOBS,
         requestType: 'POST',
+    },
+    {
+        route: `${distributionNavItem.route}/${richListSnapshotNavItem.route}`,
+        apiPath: 'distribution/rich-list-snapshot',
+        responseSchema: 'AccountBalanceDto[]',
+        knobs: [],
+        requestType: 'GET',
     },
     {
         route: `${networkNavItem.route}/${peerVersionsNavItem.route}`,
