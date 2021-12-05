@@ -2,7 +2,6 @@ import { AppCache, NANO_CLIENT } from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import {
     populateDelegatorsCount,
-    LOG_INFO,
     getRepresentativesUptimePromise,
     getPRWeightPromise,
     getAliasedReps,

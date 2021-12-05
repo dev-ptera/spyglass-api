@@ -57,7 +57,7 @@ import {
     getQuorum,
     convertManualKnownAccountsToJson,
     cacheOnlineRepresentativesWithWeights,
-    getBurn, getRichListSnapshot,
+    getBurn, getRichListSnapshot, getRichListSnapshotPost,
 } from '@app/services';
 
 const corsOptions = {
@@ -100,8 +100,9 @@ app.get(`/${PATH_ROOT}/distribution/burn`, (req, res) => getBurn(res));
 app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
 app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
 app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
-app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
 app.get(`/${PATH_ROOT}/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshot(res));
+app.post(`/${PATH_ROOT}/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshotPost(req, res));
+app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
 
 /* Known */
 app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));

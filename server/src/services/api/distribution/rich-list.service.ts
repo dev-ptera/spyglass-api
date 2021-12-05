@@ -62,3 +62,15 @@ export const getRichList = (req, res) => {
 export const getRichListSnapshot = (res) => {
     res.send(AppCache.richList);
 };
+
+
+/** Return Rich List Snapshot */
+export const getRichListSnapshotPost = (req, res) => {
+    setBodyDefaults(req.body);
+    const list = [];
+    AppCache.richList.map((entry) => list.push(Object.assign({}, entry)));
+    if (!req.body.includeRepresentative) {
+        list.map((entry) => entry.representative = undefined);
+    }
+    res.send(list);
+};
