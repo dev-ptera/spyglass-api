@@ -71,3 +71,31 @@ body {
 .link {
     color: map-get($pxb-green, 500);
 }
+
+
+::ng-deep .mat-tooltip {
+    /* position:relative; */ /* REMOVED */
+    padding: 0.738rem 1.113rem;
+    margin-bottom: 5px;
+    white-space: pre-line;
+    width: 50px;
+    height: auto;
+    font-size: 0.9rem;
+    border-radius: 7px;
+    overflow: visible !important; /* NEW */
+    /*margin-bottom: 7px;*/ /* duplicate definition! */
+    left: -200px !important;
+    bottom: -10px !important;
+    &:after {
+        content: " ";
+        position:absolute;
+        bottom:-15px; /* previous value: bottom:-10px; */
+        right: 0;
+        z-index:999;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 15px 13px 0 13px;
+        border-color: rgba(37, 36, 36, 0.9) transparent transparent transparent;
+    }
+}

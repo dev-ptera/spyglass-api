@@ -95,7 +95,7 @@ export const knownVanitiesNavItem: NavItem = {
 export const knownNavItem: NavItem = {
     title: 'Known',
     route: 'known',
-    icon: 'verified',
+    icon: 'fingerprint',
     children: [knownAccountsNavItem, knownVanitiesNavItem],
 };
 
@@ -133,15 +133,32 @@ export const accountHistoryNavItem: NavItem = {
     title: 'Representative',
     route: 'representative',
 };
+export const receivableTxNavItem: NavItem = {
+    title: 'Receivable',
+    route: 'receivable',
+};
 export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'account_balance_wallet',
-    children: [accountDelegatorsNavItem, accountHistoryNavItem, accountInsightsNavItem, accountRepresentativeNavItem],
+    children: [accountDelegatorsNavItem, accountHistoryNavItem, accountInsightsNavItem, accountRepresentativeNavItem, receivableTxNavItem],
+};
+
+
+export const blockNavItem: NavItem = {
+    title: 'Block',
+    route: 'block',
+};
+export const blockNavItemParent: NavItem = {
+    title: 'Block',
+    route: 'account',
+    icon: 'receipt_long',
+    children: [blockNavItem],
 };
 
 export const APP_NAV_ITEMS = [
     accountNavItem,
+    blockNavItemParent,
     distributionNavItem,
     knownNavItem,
     networkNavItem,

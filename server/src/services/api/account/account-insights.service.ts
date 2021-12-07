@@ -1,7 +1,6 @@
 import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
-import { rawToBan } from 'banano-unit-converter';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 

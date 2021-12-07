@@ -20,7 +20,13 @@ import {
     distributionBuckets,
     richListNavItem,
     peerVersionsNavItem,
-    quorumNavItem, ncNavItem, accountInsightsNavItem, burnNavItem, richListSnapshotNavItem,
+    quorumNavItem,
+    ncNavItem,
+    accountInsightsNavItem,
+    burnNavItem,
+    richListSnapshotNavItem,
+    blockNavItemParent,
+    blockNavItem, receivableTxNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -29,9 +35,10 @@ import {
     ACCOUNT_HISTORY_KNOB,
     ACCOUNT_DELEGATORS_KNOB,
     ACCOUNT_REPRESENTATIVE_KNOB,
-    ACCOUNT_INSIGHTS_KNOB
+    ACCOUNT_INSIGHTS_KNOB, ACCOUNT_RECEIVABLE_KNOB
 } from './knobs/account.knobs';
 import {DISTRIBUTION_RICH_LIST_KNOBS} from "./knobs/distribution.knobs";
+import {BLOCK_KNOBS} from "./knobs/block.knobs";
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -63,10 +70,17 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${accountNavItem.route}/${accountRepresentativeNavItem.route}`,
-        apiPath: 'account/[address]/representative',
+        apiPath: 'account/representative/[address]',
         responseSchema: 'AccountRepresentativeDto',
         knobs: ACCOUNT_REPRESENTATIVE_KNOB,
         requestType: 'GET',
+    },
+    {
+        route: `${accountNavItem.route}/${receivableTxNavItem.route}`,
+        apiPath: 'account/receivable',
+        responseSchema: 'ReceivableTransactionDto[]',
+        knobs: ACCOUNT_RECEIVABLE_KNOB,
+        requestType: 'POST',
     },
     {
         route: `${repNavItem.route}/${repRootNavItem.route}`,
@@ -192,6 +206,13 @@ export const apiDocumentationPages: Array<{
         apiPath: 'network/nakamoto-coefficient',
         responseSchema: 'NakamotoCoefficientDto',
         knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${blockNavItemParent.route}/${blockNavItem.route}`,
+        apiPath: 'block/[hash]',
+        responseSchema: 'BlockDto',
+        knobs: BLOCK_KNOBS,
         requestType: 'GET',
     },
 ];
