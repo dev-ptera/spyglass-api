@@ -1,5 +1,5 @@
 import { accountBalanceRpc, accountInfoRpc, delegatorsRpc } from '@app/rpc';
-import { confirmedTransactionsPromise, convertFromRaw, LOG_ERR, receivableTransactionsPromise } from '@app/services';
+import {convertFromRaw, getConfirmedTransactionsPromise, LOG_ERR, receivableTransactionsPromise} from '@app/services';
 import {
     AccountBalanceResponse,
     AccountInfoResponse,
@@ -101,7 +101,7 @@ export const getAccountOverview = (req, res): void => {
         accountBalancePromise(address),
         accountInfoPromise(address),
         delegatorsPromise(address),
-        confirmedTransactionsPromise({ address, offset: 0, size: 50 }),
+        getConfirmedTransactionsPromise({ address, offset: 0, size: 50 }),
         receivableTransactionsPromise({ address, offset: 0, size: 50 }),
     ])
         .then(([accountBalance, accountInfo, delegatorsData, confirmedTransactions, pendingTransactions]) => {

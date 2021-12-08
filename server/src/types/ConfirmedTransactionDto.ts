@@ -1,5 +1,6 @@
 export type ConfirmedTransactionDto = {
-    balanceRaw?: string;
+    amount?: number;
+    amountRaw?: string;
     hash: string;
     type: 'receive' | 'send' | 'change';
     height: number;

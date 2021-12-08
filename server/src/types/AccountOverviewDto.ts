@@ -8,31 +8,29 @@ export type AccountOverviewDto = {
     delegatorsCount: number;
     representative: string;
     principal: boolean;
-    confirmedTransactions: ConfirmedTransactionDto[];
-    pendingTransactions: ReceivableTransactionDto[];
-    delegators: DelegatorDto[];
+    confirmedTransactions: Array<{
+        amount?: number;
+        amountRaw?: string;
+        hash: string;
+        type: 'receive' | 'send' | 'change';
+        height: number;
+        address?: string;
+        timestamp: number;
+        date: string;
+        newRepresentative?: string;
+    }>;
+    pendingTransactions: Array<{
+        balanceRaw: string;
+        timestamp: number;
+        hash: string;
+        address: string;
+    }>;
+    delegators: Array<{
+        address: string;
+        weight: number;
+    }>;
     delegatorsWeightSum: number;
 };
 
-type ConfirmedTransactionDto = {
-    balanceRaw?: string;
-    hash: string;
-    type: 'receive' | 'send' | 'change';
-    height: number;
-    address?: string;
-    timestamp: number;
-    date: string;
-    newRepresentative?: string;
-};
 
-type DelegatorDto = {
-    address: string;
-    weight: number;
-};
 
-type ReceivableTransactionDto = {
-    balanceRaw: string;
-    timestamp: number;
-    hash: string;
-    address: string;
-};

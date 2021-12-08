@@ -15,7 +15,6 @@ import {
     prWeightRequirementNavItem,
     accountNavItem,
     accountDelegatorsNavItem,
-    accountHistoryNavItem,
     accountRepresentativeNavItem,
     distributionBuckets,
     richListNavItem,
@@ -34,7 +33,6 @@ import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
 import { KNOWN_ACCOUNTS_KNOBS } from './knobs/known.knobs';
 import {
-    ACCOUNT_HISTORY_KNOB,
     ACCOUNT_DELEGATORS_KNOB,
     ACCOUNT_REPRESENTATIVE_KNOB,
     ACCOUNT_INSIGHTS_KNOB,
@@ -56,13 +54,6 @@ export const apiDocumentationPages: Array<{
         apiPath: 'account/delegators',
         responseSchema: 'DelegatorsOverviewDto',
         knobs: ACCOUNT_DELEGATORS_KNOB,
-        requestType: 'POST',
-    },
-    {
-        route: `${accountNavItem.route}/${accountHistoryNavItem.route}`,
-        apiPath: 'account/history',
-        responseSchema: 'ConfirmedTransactionDto[]',
-        knobs: ACCOUNT_HISTORY_KNOB,
         requestType: 'POST',
     },
     {

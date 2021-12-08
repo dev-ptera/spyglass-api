@@ -20,6 +20,7 @@ export class RequestComponent {
     requestResponseType: any;
     isLoading = false;
     showRawResponse = false;
+    flipAutoShowRaw = false;
     requestType: 'POST' | 'GET';
 
     constructor(
@@ -81,6 +82,13 @@ export class RequestComponent {
             return;
         }
 
+        if (this.flipAutoShowRaw) {
+            this.showRawResponse = false;
+        }
+        this.flipAutoShowRaw = false;
+
+
+
         this.isLoading = true;
         this.requestResponse = undefined;
         this._apiService
@@ -95,6 +103,11 @@ export class RequestComponent {
                 if (width < 1833 && !this._userAgentService.isMobileDevice()) {
                     // TODO: Fix ios no-scroll
                     scrollEl.scrollTo({ top: contentEl.offsetTop + 32, behavior: 'smooth' });
+                }
+
+                if (data && data.length === 0) {
+                    this.showRawResponse = true;
+                    this.flipAutoShowRaw = true;
                 }
             })
             .catch((err: any) => {

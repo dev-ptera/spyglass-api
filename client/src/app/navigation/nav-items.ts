@@ -126,20 +126,16 @@ export const accountDelegatorsNavItem: NavItem = {
     title: 'Delegators',
     route: 'delegators',
 };
-export const accountHistoryNavItem: NavItem = {
-    title: 'History',
-    route: 'history',
-};
 export const accountRepresentativeNavItem: NavItem = {
     title: 'Representative',
     route: 'representative',
 };
 export const confirmedTxNavItem: NavItem = {
-    title: 'Confirmed',
+    title: 'Confirmed Tx',
     route: 'confirmed',
 };
 export const receivableTxNavItem: NavItem = {
-    title: 'Receivable',
+    title: 'Receivable Tx',
     route: 'receivable',
 };
 export const accountNavItem: NavItem = {
@@ -149,7 +145,6 @@ export const accountNavItem: NavItem = {
     children: [
         confirmedTxNavItem,
         accountDelegatorsNavItem,
-        accountHistoryNavItem,
         accountInsightsNavItem,
         accountRepresentativeNavItem,
         receivableTxNavItem,
