@@ -15,7 +15,7 @@ export const getAccountRepresentativePromise = async (address: string): Promise<
 /** Returns an accounts representative. */
 export const getAccountRepresentative = (req, res): void => {
     const parts = req.url.split('/');
-    const address = parts[parts.length - 2];
+    const address = parts[parts.length - 1];
     if (!isValidAddress(address)) {
         return res.status(500).send({ error: 'Address is required' });
     }
