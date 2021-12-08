@@ -101,7 +101,7 @@ export const getAccountOverview = (req, res): void => {
         accountBalancePromise(address),
         accountInfoPromise(address),
         delegatorsPromise(address),
-        confirmedTransactionsPromise(address, 0, size),
+        confirmedTransactionsPromise({ address, offset: 0, size: 50 }),
         receivableTransactionsPromise({ address, offset: 0, size: 50 }),
     ])
         .then(([accountBalance, accountInfo, delegatorsData, confirmedTransactions, pendingTransactions]) => {

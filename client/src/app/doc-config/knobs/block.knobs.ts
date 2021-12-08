@@ -1,4 +1,4 @@
-import {Knob} from "./Knob";
+import { Knob } from './Knob';
 
 export const BLOCK_KNOBS: Array<Knob> = [
     {

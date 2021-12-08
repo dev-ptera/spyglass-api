@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import ApiSchema from "../../doc-config/schema.json";
-import {Knob} from "../../doc-config/knobs/Knob";
+import ApiSchema from '../../doc-config/schema.json';
+import { Knob } from '../../doc-config/knobs/Knob';
 
 @Injectable({
     providedIn: 'root',
@@ -8,7 +8,6 @@ import {Knob} from "../../doc-config/knobs/Knob";
 export class RequestService {
     /** Reading from the JSON schema found in the doc-service-config folder, creates a displayable response object. */
     parseDtoSchema(dtoType: string): object {
-
         if (dtoType === 'string[]') {
             return { array: 'string' };
         }
@@ -75,4 +74,3 @@ export class RequestService {
         return dynamicPath;
     }
 }
-

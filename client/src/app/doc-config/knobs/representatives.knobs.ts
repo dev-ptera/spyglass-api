@@ -19,7 +19,7 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     },
     {
         propertyName: 'includeAlias',
-        propertyType: 'boolean'
+        propertyType: 'boolean',
     },
     {
         propertyName: 'includeDelegatorCount',

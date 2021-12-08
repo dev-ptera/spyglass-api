@@ -62,6 +62,7 @@ import {
     getRichListSnapshot,
     getRichListSnapshotPost,
     getReceivableTransactions,
+    getConfirmedTransactions,
 } from '@app/services';
 
 const corsOptions = {
@@ -87,7 +88,8 @@ app.use(cors(corsOptions));
 /* Account */
 //app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
 app.get(`/${PATH_ROOT}/account/representative/:address`, (req, res) => getAccountRepresentative(req, res));
-app.post(`/${PATH_ROOT}/account/receivable`, (req, res) => getReceivableTransactions(req, res));
+app.post(`/${PATH_ROOT}/account/confirmed-transactions`, (req, res) => getConfirmedTransactions(req, res));
+app.post(`/${PATH_ROOT}/account/receivable-transactions`, (req, res) => getReceivableTransactions(req, res));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
 app.post(`/${PATH_ROOT}/account/history`, (req, res) => getAccountHistory(req, res));
 app.post(`/${PATH_ROOT}/account/insights`, (req, res) => getAccountInsights(req, res));

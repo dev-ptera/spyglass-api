@@ -129,9 +129,14 @@ export const accountDelegatorsNavItem: NavItem = {
 export const accountHistoryNavItem: NavItem = {
     title: 'History',
     route: 'history',
-};export const accountRepresentativeNavItem: NavItem = {
+};
+export const accountRepresentativeNavItem: NavItem = {
     title: 'Representative',
     route: 'representative',
+};
+export const confirmedTxNavItem: NavItem = {
+    title: 'Confirmed',
+    route: 'confirmed',
 };
 export const receivableTxNavItem: NavItem = {
     title: 'Receivable',
@@ -141,9 +146,15 @@ export const accountNavItem: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'account_balance_wallet',
-    children: [accountDelegatorsNavItem, accountHistoryNavItem, accountInsightsNavItem, accountRepresentativeNavItem, receivableTxNavItem],
+    children: [
+        confirmedTxNavItem,
+        accountDelegatorsNavItem,
+        accountHistoryNavItem,
+        accountInsightsNavItem,
+        accountRepresentativeNavItem,
+        receivableTxNavItem,
+    ],
 };
-
 
 export const blockNavItem: NavItem = {
     title: 'Block',

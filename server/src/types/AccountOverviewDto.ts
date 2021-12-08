@@ -1,7 +1,3 @@
-import { ConfirmedTransactionDto } from './ConfirmedTransactionDto';
-import { DelegatorDto } from './DelegatorsOverviewDto';
-import { ReceivableTransactionDto } from './ReceivableTransactionDto';
-
 export type AccountOverviewDto = {
     opened: boolean;
     address: string;
@@ -16,4 +12,27 @@ export type AccountOverviewDto = {
     pendingTransactions: ReceivableTransactionDto[];
     delegators: DelegatorDto[];
     delegatorsWeightSum: number;
+};
+
+type ConfirmedTransactionDto = {
+    balanceRaw?: string;
+    hash: string;
+    type: 'receive' | 'send' | 'change';
+    height: number;
+    address?: string;
+    timestamp: number;
+    date: string;
+    newRepresentative?: string;
+};
+
+type DelegatorDto = {
+    address: string;
+    weight: number;
+};
+
+type ReceivableTransactionDto = {
+    balanceRaw: string;
+    timestamp: number;
+    hash: string;
+    address: string;
 };

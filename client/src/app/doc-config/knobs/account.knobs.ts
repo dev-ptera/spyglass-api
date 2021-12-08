@@ -1,5 +1,22 @@
 import { Knob } from './Knob';
 
+export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+    },
+    {
+        propertyName: 'offset',
+        propertyType: 'number',
+        notes: 'Skips the specified number of records in the result set. Used for pagination.',
+    },
+    {
+        propertyName: 'size',
+        propertyType: 'number',
+        notes: 'Number of delegators to return. Defaults to show 50 receivable transactions with a max of 500.',
+    },
+];
+
 export const ACCOUNT_RECEIVABLE_KNOB: Array<Knob> = [
     {
         propertyName: 'address',
@@ -25,16 +42,17 @@ export const ACCOUNT_INSIGHTS_KNOB: Array<Knob> = [
     },
     {
         propertyName: 'includeHeightBalances',
-        propertyType: 'boolean'
-    }
+        propertyType: 'boolean',
+    },
 ];
 
 export const ACCOUNT_REPRESENTATIVE_KNOB: Array<Knob> = [
-{
-    propertyName: 'address',
-    propertyType: 'string',
-    restPathAlias: '[address]',
-}];
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+        restPathAlias: '[address]',
+    },
+];
 
 export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
     {
@@ -42,7 +60,7 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
         propertyType: 'string',
         required: true,
     },
-   {
+    {
         propertyName: 'offset',
         propertyType: 'number',
         notes: 'Skips the specified number of records in the result set. Used for pagination.',

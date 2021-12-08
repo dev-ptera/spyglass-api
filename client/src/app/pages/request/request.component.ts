@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { apiDocumentationPages } from '../../doc-config';
 import { ApiService } from '../../services/api.service';
 import { Knob } from '../../doc-config/knobs/Knob';
-import {RequestService} from "./request.service";
-import {UserAgentService} from "../../services/user-agent.service";
+import { RequestService } from './request.service';
+import { UserAgentService } from '../../services/user-agent.service';
 
 @Component({
     selector: 'app-request',

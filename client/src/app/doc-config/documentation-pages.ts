@@ -26,7 +26,9 @@ import {
     burnNavItem,
     richListSnapshotNavItem,
     blockNavItemParent,
-    blockNavItem, receivableTxNavItem,
+    blockNavItem,
+    receivableTxNavItem,
+    confirmedTxNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -35,10 +37,12 @@ import {
     ACCOUNT_HISTORY_KNOB,
     ACCOUNT_DELEGATORS_KNOB,
     ACCOUNT_REPRESENTATIVE_KNOB,
-    ACCOUNT_INSIGHTS_KNOB, ACCOUNT_RECEIVABLE_KNOB
+    ACCOUNT_INSIGHTS_KNOB,
+    ACCOUNT_RECEIVABLE_KNOB,
+    ACCOUNT_CONFIRMED_KNOB,
 } from './knobs/account.knobs';
-import {DISTRIBUTION_RICH_LIST_KNOBS} from "./knobs/distribution.knobs";
-import {BLOCK_KNOBS} from "./knobs/block.knobs";
+import { DISTRIBUTION_RICH_LIST_KNOBS } from './knobs/distribution.knobs';
+import { BLOCK_KNOBS } from './knobs/block.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -77,9 +81,16 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${accountNavItem.route}/${receivableTxNavItem.route}`,
-        apiPath: 'account/receivable',
+        apiPath: 'account/receivable-transactions',
         responseSchema: 'ReceivableTransactionDto[]',
         knobs: ACCOUNT_RECEIVABLE_KNOB,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItem.route}/${confirmedTxNavItem.route}`,
+        apiPath: 'account/confirmed-transactions',
+        responseSchema: 'ConfirmedTransactionDto[]',
+        knobs: ACCOUNT_CONFIRMED_KNOB,
         requestType: 'POST',
     },
     {

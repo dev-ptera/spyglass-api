@@ -72,7 +72,6 @@ body {
     color: map-get($pxb-green, 500);
 }
 
-
 ::ng-deep .mat-tooltip {
     /* position:relative; */ /* REMOVED */
     padding: 0.738rem 1.113rem;
@@ -87,11 +86,11 @@ body {
     left: -200px !important;
     bottom: -10px !important;
     &:after {
-        content: " ";
-        position:absolute;
-        bottom:-15px; /* previous value: bottom:-10px; */
+        content: ' ';
+        position: absolute;
+        bottom: -15px; /* previous value: bottom:-10px; */
         right: 0;
-        z-index:999;
+        z-index: 999;
         width: 0;
         height: 0;
         border-style: solid;
