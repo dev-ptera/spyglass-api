@@ -1,5 +1,6 @@
 export type ReceivableTransactionDto = {
-    balanceRaw: string;
+    amount: number;
+    amountRaw: string;
     timestamp: number;
     hash: string;
     address: string;

@@ -1,5 +1,5 @@
 import { accountBalanceRpc, accountInfoRpc, delegatorsRpc } from '@app/rpc';
-import {convertFromRaw, getConfirmedTransactionsPromise, LOG_ERR, receivableTransactionsPromise} from '@app/services';
+import { convertFromRaw, getConfirmedTransactionsPromise, LOG_ERR, receivableTransactionsPromise } from '@app/services';
 import {
     AccountBalanceResponse,
     AccountInfoResponse,

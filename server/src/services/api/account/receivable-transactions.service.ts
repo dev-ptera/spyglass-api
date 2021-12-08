@@ -1,5 +1,5 @@
 import { accountsPendingRpc } from '@app/rpc';
-import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp } from '@app/services';
+import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw } from '@app/services';
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
@@ -60,9 +60,10 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
                 const block = blocksResponse.blocks[hash];
                 dtos.push({
                     address: block.block_account,
-                    timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
-                    balanceRaw: block.amount,
+                    amount: convertFromRaw(block.amount, 10),
+                    amountRaw: block.amount,
                     hash,
+                    timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
                 });
             }
         })

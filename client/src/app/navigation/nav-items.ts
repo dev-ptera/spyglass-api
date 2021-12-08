@@ -130,6 +130,10 @@ export const accountRepresentativeNavItem: NavItem = {
     title: 'Representative',
     route: 'representative',
 };
+export const accountExport: NavItem = {
+    title: 'Export',
+    route: 'export',
+};
 export const confirmedTxNavItem: NavItem = {
     title: 'Confirmed Tx',
     route: 'confirmed',
@@ -145,6 +149,8 @@ export const accountNavItem: NavItem = {
     children: [
         confirmedTxNavItem,
         accountDelegatorsNavItem,
+        accountExport,
+
         accountInsightsNavItem,
         accountRepresentativeNavItem,
         receivableTxNavItem,

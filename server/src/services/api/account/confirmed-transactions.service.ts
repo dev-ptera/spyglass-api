@@ -1,6 +1,7 @@
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
-import {convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR, sleep} from '@app/services';
+import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
+import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 
 const SUBTYPE = {
     change: 'change',
@@ -46,6 +47,31 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.size = Math.min(body.size, 500);
 };
 
+export const convertToConfirmedTransactionDto = (
+    transaction: AccountHistoryResponse['history'][0]
+): ConfirmedTransactionDto => {
+    const rep = transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
+    const unix = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    const amount = transaction.amount;
+
+    const dto: ConfirmedTransactionDto = {
+        hash: transaction.hash,
+        address: transaction.account,
+        type: transaction['subtype'],
+        height: Number(transaction.height),
+        timestamp: unix,
+        date: new Date(unix * 1000).toLocaleDateString() + ' ' + new Date(unix * 1000).toLocaleTimeString(),
+        newRepresentative: rep,
+    };
+
+    if (amount) {
+        dto.amountRaw = transaction.amount;
+        dto.amount = convertFromRaw(transaction.amount, 10);
+    }
+
+    return dto;
+};
+
 /** Uses RPC commands to sift through an accounts list of confirmed transactions.
  *  Returns true when either there are no more search results, or the number of requests records is met.
  * */
@@ -79,19 +105,7 @@ const discoverConfirmedTransactions = async (
         if (!body.includeReceive && type === 'receive') {
             continue;
         }
-        const rep = transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
-        const unix = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
-        confirmedTx.push({
-            hash: transaction.hash,
-            address: transaction.account,
-            type: transaction['subtype'],
-            amountRaw: transaction.amount,
-            amount: convertFromRaw(transaction.amount, 10),
-            height: Number(transaction.height),
-            timestamp: unix,
-            date: new Date(unix * 1000).toLocaleDateString() + ' ' + new Date(unix * 1000).toLocaleTimeString(),
-            newRepresentative: rep,
-        });
+        confirmedTx.push(convertToConfirmedTransactionDto(transaction));
         if (confirmedTx.length === body.size) {
             return true;
         }
@@ -103,9 +117,6 @@ const discoverConfirmedTransactions = async (
 
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
-    setBodyDefaults(body);
-
-    const confirmedTransactions: ConfirmedTransactionDto[] = [];
     const address = body.address;
 
     if (!isValidAddress(address)) {
@@ -120,6 +131,7 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
 
     let searchPage = 0;
     let completedSearch = false;
+    const confirmedTransactions: ConfirmedTransactionDto[] = [];
     while (!completedSearch) {
         completedSearch = await discoverConfirmedTransactions(body, searchPage++, confirmedTransactions).catch((err) =>
             Promise.reject(LOG_ERR('accountHistoryPromise.discoverConfirmedTransactions', err))
@@ -130,6 +142,7 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
 
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactions = (req, res): void => {
+    setBodyDefaults(req.body);
     getConfirmedTransactionsPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {
             res.send(confirmedTx);

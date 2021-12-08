@@ -28,6 +28,7 @@ import {
     blockNavItem,
     receivableTxNavItem,
     confirmedTxNavItem,
+    accountExport,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -38,6 +39,7 @@ import {
     ACCOUNT_INSIGHTS_KNOB,
     ACCOUNT_RECEIVABLE_KNOB,
     ACCOUNT_CONFIRMED_KNOB,
+    ACCOUNT_EXPORT_KNOBS,
 } from './knobs/account.knobs';
 import { DISTRIBUTION_RICH_LIST_KNOBS } from './knobs/distribution.knobs';
 import { BLOCK_KNOBS } from './knobs/block.knobs';
@@ -75,6 +77,13 @@ export const apiDocumentationPages: Array<{
         apiPath: 'account/receivable-transactions',
         responseSchema: 'ReceivableTransactionDto[]',
         knobs: ACCOUNT_RECEIVABLE_KNOB,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItem.route}/${accountExport.route}`,
+        apiPath: 'account/export',
+        responseSchema: 'string',
+        knobs: ACCOUNT_EXPORT_KNOBS,
         requestType: 'POST',
     },
     {

@@ -1,7 +1,7 @@
 import { NANO_CLIENT } from '@app/config';
 import { ConfirmationQuorumResponse } from '@dev-ptera/nano-node-rpc';
 import { convertFromRaw, LOG_ERR } from '@app/services';
-import {PRWeightRequirementDto} from "@app/types";
+import { PRWeightRequirementDto } from '@app/types';
 
 /** Returns weight required to be considered a principal representative. */
 export const getPRWeightPromise = (): Promise<number> =>

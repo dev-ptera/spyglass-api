@@ -20,7 +20,8 @@ export type AccountOverviewDto = {
         newRepresentative?: string;
     }>;
     pendingTransactions: Array<{
-        balanceRaw: string;
+        amount: number;
+        amountRaw: string;
         timestamp: number;
         hash: string;
         address: string;
@@ -31,6 +32,3 @@ export type AccountOverviewDto = {
     }>;
     delegatorsWeightSum: number;
 };
-
-
-

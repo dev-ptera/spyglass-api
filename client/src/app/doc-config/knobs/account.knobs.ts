@@ -1,5 +1,12 @@
 import { Knob } from './Knob';
 
+export const ACCOUNT_EXPORT_KNOBS: Array<Knob> = [
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+    },
+];
+
 export const ACCOUNT_RECEIVABLE_KNOB: Array<Knob> = [
     {
         propertyName: 'address',

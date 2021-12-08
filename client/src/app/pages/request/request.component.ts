@@ -77,6 +77,10 @@ export class RequestComponent {
         return this.requestType === 'GET' || JSON.stringify(this.createRequestBody()) === '{}';
     }
 
+    showResponseType(): boolean {
+        return this.requestPath !== 'account/export' && this.requestPath !== 'distribution/rich-list-snapshot';
+    }
+
     sendRequest(): void {
         if (this.isLoading) {
             return;
@@ -86,8 +90,6 @@ export class RequestComponent {
             this.showRawResponse = false;
         }
         this.flipAutoShowRaw = false;
-
-
 
         this.isLoading = true;
         this.requestResponse = undefined;

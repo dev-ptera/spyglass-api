@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { saveAs } from 'file-saver';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,10 @@ export class ApiService {
     send(path: string, type: 'GET' | 'POST', body: any = {}): Promise<any> {
         // Custom Headers Resolved here.
         if (path === 'distribution/rich-list-snapshot') {
-            return this.downloadData(path, 'balances.json');
+            return this.saveRichListSnapshot(path, 'balances.json');
+        }
+        if (path === 'account/export') {
+            return this.saveAccountTransactions(path, `tx-${body.address}.csv`, body);
         }
 
         if (type === 'GET') {
@@ -25,12 +28,24 @@ export class ApiService {
         }
     }
 
-    downloadData(path: string, fileName: string): Promise<void> {
+    saveRichListSnapshot(path: string, fileName: string): Promise<void> {
         this._http
             .get<any>(`${this.url}/${path}`)
             .toPromise()
             .then((data) => {
                 const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                saveAs(blob, fileName);
+            });
+        return Promise.resolve();
+    }
+
+    saveAccountTransactions(path: string, fileName: string, body): Promise<void> {
+        this._http
+            .post(`${this.url}/${path}`, body, { responseType: 'text' })
+            .toPromise()
+            .then((data) => {
+                console.log(data);
+                const blob = new Blob([data], { type: 'application/text' });
                 saveAs(blob, fileName);
             });
         return Promise.resolve();
