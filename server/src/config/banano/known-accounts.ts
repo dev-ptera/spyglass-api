@@ -476,4 +476,9 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         alias: 'nanners.cc',
         type: 'representative',
     },
+    {
+        address: 'ban_15gfawgrsc6tkkm5p1gy749tkibchu73st1ojs3knz6rd3ejfcgt7rj5cmx9',
+        alias: 'validierung.cc Cologne',
+        type: 'representative'
+    }
 ];
