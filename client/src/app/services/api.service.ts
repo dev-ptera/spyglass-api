@@ -28,26 +28,31 @@ export class ApiService {
         }
     }
 
+    // distribution/rich-list-snapshot
     saveRichListSnapshot(path: string, fileName: string): Promise<void> {
-        this._http
+        return this._http
             .get<any>(`${this.url}/${path}`)
             .toPromise()
             .then((data) => {
                 const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
                 saveAs(blob, fileName);
-            });
-        return Promise.resolve();
+                return Promise.resolve();
+            }).catch((err) => Promise.reject(err));
     }
 
+    // account/export
     saveAccountTransactions(path: string, fileName: string, body): Promise<void> {
-        this._http
+       return this._http
             .post(`${this.url}/${path}`, body, { responseType: 'text' })
             .toPromise()
             .then((data) => {
                 console.log(data);
                 const blob = new Blob([data], { type: 'application/text' });
                 saveAs(blob, fileName);
-            });
-        return Promise.resolve();
+                return Promise.resolve();
+            }).catch((err) => {
+                const jsonErr = JSON.parse(err.error);
+                return Promise.reject(jsonErr);
+           });
     }
 }

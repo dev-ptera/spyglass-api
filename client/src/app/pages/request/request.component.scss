@@ -71,7 +71,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .property-line {
-    margin: 12px 0px;
+    margin: 4px 0px;
     display: flex;
     justify-content: space-between;
     div {
@@ -82,7 +82,7 @@ $splitScreenCutoff: 1850px;
         align-items: center;
         padding: 4px 8px;
         &:hover {
-            background: map-get($pxb-gray, 100);
+            background: map-get($pxb-white, 600);
         }
     }
 }

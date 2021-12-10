@@ -34,7 +34,7 @@ import { Component } from '@angular/core';
                 </div>
 
                 <div class="section-body">
-                    <div class="mat-h2 link" style="margin-bottom: 0">https://api.spyglass.pw/[PATH]</div>
+                    <div class="mat-h2 link" style="margin-bottom: 0">https://api.spyglass.pw/&#60;request-path&#62;</div>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@ import { Component } from '@angular/core';
                 <div class="mat-display-1" style="margin-bottom: 16px">Contact</div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Issues? Suggestions? Please let me know, my contact information is below, or post an issue
+                        Suggestions or issues? Please let me know, my contact information is below. Also please feel free to post an issue
                         directly on the
                         <a href="https://github.com/dev-ptera/spyglass-api" target="_blank" class="link">github</a>.
                     </div>
@@ -51,9 +51,9 @@ import { Component } from '@angular/core';
                             <div class="mat-h3"><span style="font-family: monospace">dev.ptera@gmail.com</span></div>
                         </li>
                         <li>
-                            <span style="font-family: monospace; word-break: break-all"
-                                >https://www.reddit.com/user/dev-ptera</span
-                            >
+                            <span style="font-family: monospace; word-break: break-all">
+                                https://www.reddit.com/user/dev-ptera
+                            </span>
                         </li>
                     </ul>
                 </div>
