@@ -31,9 +31,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
-    declarations: [AppComponent, RequestComponent, ResponsiveDirective, NavigationComponent],
+    declarations: [AppComponent, RequestComponent, ResponsiveDirective, NavigationComponent, HomeComponent],
     imports: [
         NgxJsonViewerModule,
         DrawerModule,

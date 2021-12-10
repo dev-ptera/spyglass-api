@@ -1,6 +1,9 @@
 <pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="280">
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
-        <pxb-drawer-header title="Spyglass API">
+        <pxb-drawer-header>
+            <div pxb-title-content (click)="goHome()" style="cursor: pointer; display: flex; align-items: center">
+                Spyglass API
+            </div>
             <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
