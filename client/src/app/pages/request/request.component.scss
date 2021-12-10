@@ -75,9 +75,15 @@ $splitScreenCutoff: 1850px;
     display: flex;
     justify-content: space-between;
     div {
+        min-height: 30px;
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        padding: 4px 8px;
+        &:hover {
+            background: map-get($pxb-gray, 100);
+        }
     }
 }
 

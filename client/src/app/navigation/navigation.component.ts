@@ -119,4 +119,8 @@ export class NavigationComponent {
         this.variant = this.vp.isMediumOrLess() ? 'temporary' : 'persistent';
         return this.variant;
     }
+
+    goHome(): void {
+        void this._router.navigate(['']);
+    }
 }

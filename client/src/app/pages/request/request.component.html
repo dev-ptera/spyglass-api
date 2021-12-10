@@ -1,14 +1,12 @@
 <ng-template #paramName let-requestParam="requestParam">
     <span style="padding: 0px 16px; cursor: help" [matTooltip]="requestParam.notes" matTooltipPosition="after">
-        <span style="padding: 0px 16px">
-            <span
-                class="prop-name"
-                [matBadgeSize]="'small'"
-                [matBadge]="requestParam.notes ? 'i' : ''"
-                [matBadgeOverlap]="false"
-            >
-                {{ requestParam.propertyName }}
-            </span>
+        <span
+            class="prop-name"
+            [matBadgeSize]="'small'"
+            [matBadge]="requestParam.notes ? 'i' : ''"
+            [matBadgeOverlap]="false"
+        >
+            {{ requestParam.propertyName }}
         </span>
     </span>
 </ng-template>
