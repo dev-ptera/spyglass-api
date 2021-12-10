@@ -71,7 +71,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .property-line {
-    margin: 4px 0px;
+    margin: 8px 0px;
     display: flex;
     justify-content: space-between;
     div {
@@ -89,6 +89,8 @@ $splitScreenCutoff: 1850px;
 
 .prop-name {
     display: inline-flex;
+    padding-right: 24px;
+    margin-right: -24px;
 }
 .section-body.sm .prop-name {
     font-size: 12px;

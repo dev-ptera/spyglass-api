@@ -98,3 +98,11 @@ body {
         border-color: rgba(37, 36, 36, 0.9) transparent transparent transparent;
     }
 }
+
+.mat-badge-small.mat-badge-above .mat-badge-content {
+    right: 0px!important;
+    top: 4px!important;
+}
+.sm .mat-badge-small.mat-badge-above .mat-badge-content {
+    top: 2px!important;
+}
