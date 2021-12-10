@@ -25,7 +25,8 @@ import { Component } from '@angular/core';
                         Use the navigation menu to view details about each endpoint & what data it returns.
                     </div>
                     <div class="mat-h3">
-                        Each endpoint returns data through a <span style="font-family: monospace">GET</span> or <span style="font-family: monospace">POST</span> request.
+                        Each endpoint returns data through a <span style="font-family: monospace">GET</span> or
+                        <span style="font-family: monospace">POST</span> request.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
                         Each request uses the root url below, combined with a specific API path.
