@@ -41,6 +41,7 @@
             <button
                 pxb-icon
                 mat-icon-button
+                disableRipple
                 (click)="toggleDrawerOpen()"
                 *ngIf="vp.isMediumOrLess()"
                 style="margin-left: -24px"
@@ -50,7 +51,7 @@
             <pxb-three-liner subtitle="Empowering the jungle to make cool stuff" [style.top.px]="isCollapsed ? 0 : 60">
                 <div pxb-title responsive class="title">
                     <img *ngIf="!isCollapsed" class="banano-logo" src="assets/bananologo.svg" />
-                    <div>Spyglass API</div>
+                    <div (click)="vp.sm ? goHome() : ''" [style.cursor]="vp.sm ? 'pointer' : 'unset'">Spyglass API</div>
                 </div>
             </pxb-three-liner>
         </pxb-app-bar>

@@ -34,7 +34,7 @@ import { Component } from '@angular/core';
                 </div>
 
                 <div class="section-body">
-                    <div class="mat-h2 link" style="margin-bottom: 0">https://api.spyglass.pw/&#60;request-path&#62;</div>
+                    <div class="mat-h2 link" style="margin-bottom: 0; word-break: break-all">https://api.spyglass.pw/banano/&#60;request-path&#62;</div>
                 </div>
             </div>
 
