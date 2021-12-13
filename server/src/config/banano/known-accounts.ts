@@ -481,5 +481,5 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         alias: 'validierung.cc Cologne',
         type: 'representative',
         owner: 'Lawrence#0388',
-    }
+    },
 ];

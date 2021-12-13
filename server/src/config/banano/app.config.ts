@@ -17,10 +17,10 @@ export const BACKUP_NODES = ['http://159.69.198.59:7070', 'https://api-beta.bana
 export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
 export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;
 export const BURN_ADDRESSES = [
-    "ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w", // official burn account
-    "ban_1uo1cano1bot1a1pha1616161616161616161616161616161616p3s5tifp", // banano walker burn account
-    "ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw", // volcano burn account
-    "ban_1111111111111111111111111111111111111111111111111111hifc8npp" // nano burn account
+    'ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w', // official burn account
+    'ban_1uo1cano1bot1a1pha1616161616161616161616161616161616p3s5tifp', // banano walker burn account
+    'ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw', // volcano burn account
+    'ban_1111111111111111111111111111111111111111111111111111hifc8npp', // nano burn account
 ];
 export const DEVELOPER_FUNDS = [
     'ban_1grapemjtr5n684bu1x38th57x3te8qt6xpsyusjyi4s3u1zdoh8s1czfjz4',
