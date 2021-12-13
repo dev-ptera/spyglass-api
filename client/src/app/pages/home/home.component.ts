@@ -8,12 +8,11 @@ import { Component } from '@angular/core';
                 <div class="mat-display-1" style="margin-bottom: 16px">Overview</div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Spyglass API is an open, free-to-use datasource that can be leveraged to fuel apps in the
+                        Spyglass API is an open-source & free-to-use REST API that can be used to fuel apps in the
                         <a href="https://banano.cc/" target="_blank" class="link">banano</a> ecosystem.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
-                        Note: There's currently no request throttling in place since this site is still in its infancy,
-                        but is planned to be added in the future.
+                        It is rate-limited at 10 requests per minute per IP address & has semi-reliable uptime.  Use at your own risk in a production environment.
                     </div>
                 </div>
             </div>

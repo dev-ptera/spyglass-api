@@ -6,6 +6,14 @@ export const ACCOUNT_EXPORT_KNOBS: Array<Knob> = [
         propertyType: 'string',
     },
 ];
+export const ACCOUNT_OVERVIEW_KNOBS: Array<Knob> = [
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+        restPathAlias: '[address]',
+    },
+];
+
 
 export const ACCOUNT_RECEIVABLE_KNOB: Array<Knob> = [
     {

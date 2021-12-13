@@ -13,6 +13,8 @@ const http = require('http');
 const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+
 process.env.UV_THREADPOOL_SIZE = String(16);
 
 app.use(morgan('dev'));
@@ -63,6 +65,7 @@ import {
     getRichListSnapshotPost,
     getReceivableTransactions,
     getAccountExport,
+    getAccountOverview,
 } from '@app/services';
 
 const corsOptions = {
@@ -85,9 +88,18 @@ app.use((req, res, next) => {
 
 app.use(cors(corsOptions));
 
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minutes
+    max: 10, // limit each IP to 10 requests per windowMs
+});
+
+//  apply to all requests
+app.use(limiter);
+
 /* Account */
 //app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
 app.get(`/${PATH_ROOT}/account/representative/:address`, (req, res) => getAccountRepresentative(req, res));
+app.get(`/${PATH_ROOT}/account/overview/:address`, (req, res) => getAccountOverview(req, res));
 app.post(`/${PATH_ROOT}/account/confirmed-transactions`, (req, res) => getConfirmedTransactions(req, res));
 app.post(`/${PATH_ROOT}/account/receivable-transactions`, (req, res) => getReceivableTransactions(req, res));
 app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));

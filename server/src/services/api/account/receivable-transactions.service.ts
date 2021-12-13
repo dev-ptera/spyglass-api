@@ -3,7 +3,7 @@ import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw } 
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
-const MAX_PENDING_SIZE = 500;
+const MAX_PENDING_SIZE = 10_000;
 
 type RequestBody = {
     address: string;

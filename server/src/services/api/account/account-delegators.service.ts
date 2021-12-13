@@ -29,6 +29,13 @@ const setBodyDefaults = (body: RequestBody): void => {
     }
 };
 
+export const getDelegatorsCountPromise = async (address): Promise<number> => {
+    const delegatorsCount = await delegatorsCountRpc(address).catch((err) => {
+        return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsCount', err, { address }));
+    });
+    return Number(delegatorsCount.count);
+};
+
 const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOverviewDto> => {
     setBodyDefaults(body);
     const address = body.address;
@@ -38,10 +45,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
     }
 
     // Fetch delegators count.
-    const delegatorsCount = await delegatorsCountRpc(address).catch((err) => {
-        return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsCount', err, { address }));
-    });
-    const count = Number(delegatorsCount.count);
+    const count = await getDelegatorsCountPromise(address).catch((err) => Promise.reject(err));
 
     // Fetch delegators: TODO: V23 this rpc command changes; adds new optional params to make life easier.
     const rpcResponse = await delegatorsRpc(address).catch((err) => {
