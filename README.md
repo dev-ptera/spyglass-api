@@ -1,6 +1,6 @@
 # spyglass-api
 
-Spyglass API is an open-source & free-to-use REST-ful datasource that can be used to fuel apps in the banano or nano ecosystem.  
+Spyglass API is a free-to-use REST-ful datasource which can be used to fuel apps in the banano or nano ecosystem.  
 There's currently request throttling in place but the default rates can be increased with the use of an authentication token (todo). 
 
 https://spyglass-api.web.app
