@@ -2,12 +2,12 @@ import { Knob } from './Knob';
 
 export const REPRESENTATIVES_UPTIME_KNOBS: Array<Knob> = [
     {
-        propertyName: 'representatives',
-        propertyType: 'array',
-    },
-    {
         propertyName: 'includePings',
         propertyType: 'boolean',
+    },
+    {
+        propertyName: 'representatives',
+        propertyType: 'array',
     },
 ];
 
@@ -62,6 +62,27 @@ export const ROOT_REPRESENTATIVES_KNOBS: Array<Knob> = [
     },
     {
         propertyName: 'maximumWeight',
+        propertyType: 'number',
+    },
+    {
+        propertyName: 'uptimeThresholdDay',
+        propertyType: 'number',
+        notes: 'Filter to only show representatives with an uptime that exceeds this percentage.  Only applicable when includeUptimeStats is enabled.',
+    },
+    {
+        propertyName: 'uptimeThresholdWeek',
+        propertyType: 'number',
+    },
+    {
+        propertyName: 'uptimeThresholdMonth',
+        propertyType: 'number',
+    },
+    {
+        propertyName: 'uptimeThresholdSemiAnnual',
+        propertyType: 'number',
+    },
+    {
+        propertyName: 'uptimeThresholdYear',
         propertyType: 'number',
     },
 ];

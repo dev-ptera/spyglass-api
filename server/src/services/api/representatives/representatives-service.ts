@@ -20,6 +20,11 @@ type RequestBody = {
     includeUptimePings?: boolean;
     minimumWeight?: number;
     maximumWeight?: number;
+    uptimeThresholdDay?: number;
+    uptimeThresholdWeek?: number;
+    uptimeThresholdMonth?: number;
+    uptimeThresholdSemiAnnual?: number;
+    uptimeThresholdYear?: number;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -72,6 +77,15 @@ const setBodyDefaults = (body: RequestBody): void => {
     // Trim spaces off of each filter address.
     body.addresses.map((addr) => addr.trim());
 };
+
+const filterByUptimeThreshold = (key: keyof RepresentativeDto['uptimeStats']['uptimePercentages'], threshold: number, repMap: Map<string, RepresentativeDto>): void => {
+    for (const address of repMap.keys()) {
+        const rep = repMap.get(address);
+        if (rep.uptimeStats && rep.uptimeStats.uptimePercentages[key] < threshold) {
+            repMap.delete(address);
+        }
+    }
+}
 
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
     const rpcData = await NANO_CLIENT.representatives(5000, true);
@@ -178,6 +192,23 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
                 rep.uptimeStats = stats;
             }
         }
+    }
+
+    // Filter out via uptime threshold requirements
+    if (body.uptimeThresholdDay) {
+        filterByUptimeThreshold('day', body.uptimeThresholdDay, repMap);
+    }
+    if (body.uptimeThresholdWeek) {
+        filterByUptimeThreshold('week', body.uptimeThresholdWeek, repMap);
+    }
+    if (body.uptimeThresholdMonth) {
+        filterByUptimeThreshold('month', body.uptimeThresholdMonth, repMap);
+    }
+    if (body.uptimeThresholdSemiAnnual) {
+        filterByUptimeThreshold('semiAnnual', body.uptimeThresholdSemiAnnual, repMap);
+    }
+    if (body.uptimeThresholdYear) {
+        filterByUptimeThreshold('year', body.uptimeThresholdYear, repMap);
     }
 
     // Construct large rep response-types dto

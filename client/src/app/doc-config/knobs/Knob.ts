@@ -4,7 +4,7 @@ export type Knob<> = {
     /** This is a property name in a POST request body sent to the server. */
     propertyName: string;
     /** The type of expected input. */
-    propertyType: 'array' | 'number' | 'string' | 'boolean';
+    propertyType: 'array' | 'number' | 'string' | 'boolean' | 'object';
     /** The API may have an internal default value set for any optional params. */
     defaultValue?: Array<number | string> | number | string | boolean | undefined | bigint;
     /** Anything of interest for a user to know. */

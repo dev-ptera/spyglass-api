@@ -1,6 +1,7 @@
 export type BlockDto = {
     blockAccount: string;
-    amount: string;
+    amount: number;
+    amountRaw: string;
     balance: string;
     height: number;
     timestamp: number;

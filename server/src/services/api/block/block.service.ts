@@ -1,5 +1,5 @@
 import { blocksInfoRpc } from '@app/rpc';
-import { getAccurateHashTimestamp, LOG_ERR } from '@app/services';
+import {convertFromRaw, getAccurateHashTimestamp, LOG_ERR} from '@app/services';
 import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
@@ -22,25 +22,27 @@ export const getBlockInfo = (req, res): void => {
             const block = blockInfo.blocks[hash];
             const contents = block.contents as BlocksInfoResponseContents;
             res.send({
-                blockAccount: block.block_account,
-                amount: block.amount,
+                amount: convertFromRaw(block.amount, 10),
+                amountRaw: block.amount,
                 balance: block.balance,
-                height: Number(block.height),
-                timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
+                blockAccount: block.block_account,
                 confirmed: block.confirmed,
-                subtype: block.subtype,
-                sourceAccount: block.source_account,
                 contents: {
-                    type: contents.type,
                     account: contents.account,
-                    previous: contents.previous,
-                    representative: contents.representative,
                     balance: contents.balance,
                     link: contents.link,
                     linkAsAccount: contents.link_as_account,
+                    previous: contents.previous,
+                    representative: contents.representative,
+                    type: contents.type,
                     signature: contents.signature,
                     work: contents.work,
                 },
+                height: Number(block.height),
+                timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
+                sourceAccount: block.source_account,
+                subtype: block.subtype,
+
             } as BlockDto);
         })
         .catch((err) => {

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
                 <div class="mat-display-1" style="margin-bottom: 16px">Overview</div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Spyglass API is an open-source & free-to-use REST API that can be used to fuel apps in the
+                        Spyglass API is an open-source & free-to-use REST API that can be leveraged to fuel apps in the
                         <a href="https://banano.cc/" target="_blank" class="link">banano</a> ecosystem.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
