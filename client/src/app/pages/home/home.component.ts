@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
                         <a href="https://banano.cc/" target="_blank" class="link">banano</a> ecosystem.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
-                        It is rate-limited at 10 requests per minute per IP address & has semi-reliable uptime.  Use at your own risk in a production environment.
+                        It is rate-limited at 20 requests per minute per IP address & has semi-reliable uptime.  Use at your own risk in a production environment.
                     </div>
                 </div>
             </div>
