@@ -15,7 +15,7 @@ const backupUptimeJson = () => {
     const todayString = mm + '/' + dd + '/' + yyyy;
     console.log(`Committing Representative Uptime Backup for date: ${todayString}`);
 
-    const dir = exec(`git add src/database/rep-uptime/* && git commit -m "[AUTO]: Backup Rep Uptime for ${todayString}" && git push `,
+    const dir = exec(`git add database/banano/rep-uptime/* && git commit -m "[AUTO]: Backup Rep Uptime for ${todayString}" && git push `,
         (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
