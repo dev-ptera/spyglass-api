@@ -1,4 +1,4 @@
-import { accountInfoRpc } from '@app/rpc';
+import {accountBalanceRpc, accountInfoRpc} from '@app/rpc';
 import {
     convertFromRaw,
     getDelegatorsCountPromise,
@@ -6,7 +6,7 @@ import {
     LOG_ERR,
     receivableTransactionsPromise,
 } from '@app/services';
-import { AccountInfoResponse, ErrorResponse } from '@dev-ptera/nano-node-rpc';
+import {AccountBalanceResponse, AccountInfoResponse, ErrorResponse} from '@dev-ptera/nano-node-rpc';
 import { AccountOverviewDto } from '@app/types';
 
 export const getUnopenedAccount = (): AccountInfoResponse => {
@@ -25,6 +25,16 @@ export const getUnopenedAccount = (): AccountInfoResponse => {
         pending: '0',
     };
 };
+
+/** Given an address, returns account balance using RPC commands. */
+const accountBalancePromise = (address: string): Promise<AccountBalanceResponse> =>
+    accountBalanceRpc(address)
+        .then((accountInfo: AccountBalanceResponse) => {
+            return Promise.resolve(accountInfo);
+        })
+        .catch((err) => {
+            return Promise.reject(LOG_ERR('getAccountOverview.getAccountBalance', err, { address }));
+        });
 
 const accountInfoPromise = (address: string): Promise<AccountInfoResponse> =>
     accountInfoRpc(address)
@@ -47,24 +57,31 @@ export const getAccountOverview = (req, res): void => {
     Promise.all([
         accountInfoPromise(address),
         getPRWeightPromise(),
-        receivableTransactionsPromise({ address, offset: 0, size: 10000 }),
+        accountBalancePromise(address),
         getDelegatorsCountPromise(address),
     ])
-        .then(([accountData, prWeight, receivable, delegatorsCount]) => {
+        .then(([accountData, prWeight, balance, delegatorsCount]) => {
             const weight = convertFromRaw(accountData.weight);
             const accountOverview: AccountOverviewDto = {
                 address,
+                balance: undefined,
+                balanceRaw: undefined,
                 blockCount: Number(accountData.block_count),
-                balance: convertFromRaw(accountData.balance),
-                balanceRaw: accountData.balance,
                 delegatorsCount: delegatorsCount,
                 opened: Boolean(accountData.open_block),
-                receivable: convertFromRaw(accountData.pending),
-                receivableRaw: accountData.pending,
-                representative: accountData.representative,
+                receivable: convertFromRaw(balance.pending, 10),
+                receivableRaw: balance.pending,
+                representative: undefined,
                 principal: weight > prWeight,
-                weight,
+                weight: undefined,
             };
+            if (accountOverview.opened) {
+                accountOverview.balance = convertFromRaw(balance.balance, 10),
+                accountOverview.balanceRaw = balance.balance,
+                accountOverview.representative = accountData.representative;
+                accountOverview.weight = weight;
+            }
+
             res.send(accountOverview);
         })
         .catch((err) => {

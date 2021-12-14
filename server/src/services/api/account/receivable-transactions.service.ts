@@ -3,7 +3,8 @@ import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw } 
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
-const MAX_PENDING_SIZE = 10_000;
+
+const MAX_PENDING_SIZE = 500;
 
 type RequestBody = {
     address: string;
@@ -36,7 +37,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
 
     /* Get a list of pending hashes for an account. */
     const pendingResponse = await accountsPendingRpc([address]).catch((err) =>
-        Promise.reject(LOG_ERR('pendingTransactionsPromise.accountsPendingRpc', err))
+        Promise.reject(LOG_ERR('pendingTransactionsPromise.accountsPendingRpc', err, { address, size }))
     );
 
     /* Add hashes to a list, accounting for offset & size restrictions. */
@@ -67,7 +68,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
                 });
             }
         })
-        .catch((err) => Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err)));
+        .catch((err) => Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size })));
 
     return dtos;
 };

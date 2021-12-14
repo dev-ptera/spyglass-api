@@ -1,13 +1,15 @@
 export type AccountOverviewDto = {
     opened: boolean;
     address: string;
-    balanceRaw: string;
-    balance: number;
+    balanceRaw?: string;
+    balance?: number;
     receivableRaw: string;
     receivable: number;
     blockCount: number;
     delegatorsCount: number;
-    representative: string;
+    representative?: string;
     principal: boolean;
-    weight: number;
+
+    /** I currently only know the weight for opened accounts. */
+    weight?: number;
 };
