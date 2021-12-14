@@ -1,1 +1,13 @@
-{"address":"ban_3346kkobb11qqpo17imgiybmwrgibr7yi34mwn5j6uywyke8f7fnfp94uyps","trackStartDate":"11/29/2021 5:24:37 AM","trackStartUnixTimestamp":1638181477134,"pingStats":[{"1":158}]}
+{
+  "address": "ban_3346kkobb11qqpo17imgiybmwrgibr7yi34mwn5j6uywyke8f7fnfp94uyps",
+  "trackStartDate": "11/29/2021 5:24:37 AM",
+  "trackStartUnixTimestamp": 1638181477134,
+  "pingStats": [
+    {
+      "1": 158
+    },
+    {
+      "0": 2077
+    }
+  ]
+}
