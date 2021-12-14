@@ -7,8 +7,6 @@ https://spyglass-api.web.app
 
 ## API
 
-Below is overview of each path in this API and the data returned.
-
 #### `account/confirmed-transactions`
 
 Returns a list of an account's confirmed blocks.  There are filters available to filter the results by block type and pagination support. 
