@@ -11,7 +11,7 @@ const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
         let cachedMemSize = AppCache.temp.get(LEDGER_SIZE_CACHE_KEY);
         if (cachedMemSize) {
             console.log('using cache');
-            resolve({ ledgerSizeMb: cachedMemSize });
+            return resolve({ ledgerSizeMb: cachedMemSize });
         }
 
         getSize(LEDGER_LOCATION, (err, size) => {
@@ -22,7 +22,7 @@ const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
             console.log('not using cache');
             const ledgerSizeMb = Number((size / 1000 / 1000).toFixed(2));
             AppCache.temp.put(LEDGER_SIZE_CACHE_KEY, ledgerSizeMb, minutesToMs(10));
-            resolve({ ledgerSizeMb });
+            return resolve({ ledgerSizeMb });
         });
     });
 
