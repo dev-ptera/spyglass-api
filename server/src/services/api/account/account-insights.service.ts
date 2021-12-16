@@ -47,7 +47,7 @@ const createBlankDto = (): InsightsDto => ({
     totalTxSent: 0,
 });
 
-const receiveTransaction = (
+const handleReceiveTransaction = (
     insightsDto: InsightsDto,
     transaction,
     amount: number,
@@ -73,7 +73,7 @@ const receiveTransaction = (
     }
 };
 
-const sendTransaction = (
+const handleSendTransaction = (
     insightsDto: InsightsDto,
     transaction,
     amount: number,
@@ -143,10 +143,10 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
         const amount = convertFromRaw(transaction.amount, 6);
         if (transaction['subtype'] === 'receive') {
             balance += amount;
-            receiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
+            handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
         } else if (transaction['subtype'] === 'send') {
             balance -= amount;
-            sendTransaction(insightsDto, transaction, amount, accountSentMap);
+            handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
         }
 
         // Audit max balance

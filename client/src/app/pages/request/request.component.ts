@@ -103,10 +103,10 @@ export class RequestComponent {
                 const contentEl = document.getElementById('response-content');
                 const width = scrollEl.clientWidth;
                 if (width < 1833 && !this._userAgentService.isMobileDevice()) {
-                    // TODO: Fix ios no-scroll
                     scrollEl.scrollTo({ top: contentEl.offsetTop + 32, behavior: 'smooth' });
                 }
 
+                /* Whenever showing an empty array as the response, show the raw response. */
                 if (data && data.length === 0) {
                     this.showRawResponse = true;
                     this.flipAutoShowRaw = true;
