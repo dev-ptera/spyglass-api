@@ -23,17 +23,23 @@ import { Component } from '@angular/core';
                     <div class="mat-h3">
                         Use the navigation menu to view details about each endpoint & what data it returns.
                     </div>
-                    <div class="mat-h3">
-                        Each endpoint returns data through a <span style="font-family: monospace">GET</span> or
-                        <span style="font-family: monospace">POST</span> request.
-                    </div>
                     <div class="mat-h3" style="margin-bottom: 0">
-                        Each request uses the root url below, combined with a specific API path.
+                        Each request uses the root url below combined with a specific API path; all paths are accessible via
+                        <span style="font-family: monospace">GET</span> or
+                        <span style="font-family: monospace">POST</span> requests.
                     </div>
                 </div>
 
-                <div class="section-body">
+                <div class="section-body" style="margin-bottom: 12px">
                     <div class="mat-h2 link" style="margin-bottom: 0; word-break: break-all">https://api.spyglass.pw/banano/&#60;request-path&#62;</div>
+                </div>
+                <div class="section-body">
+                    <div class="mat-h3">
+                        Each <span style="font-family: monospace">POST</span> request expects a JSON body; below is an example:
+                    </div>
+                    <div class="mat-h3" style="font-family: monospace; word-break: break-all; margin-bottom: 0">
+                       {{ examplePost }}
+                    </div>
                 </div>
             </div>
 
@@ -61,4 +67,9 @@ import { Component } from '@angular/core';
     `,
     styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {}
+export class HomeComponent {
+    examplePost = `
+curl -X POST https://api.spyglass.pw/banano/representatives
+-H 'Content-Type: application/json'
+-d '{"minimumWeight":"100000"}'`;
+}
