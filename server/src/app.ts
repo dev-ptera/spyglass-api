@@ -150,7 +150,7 @@ export const staggerServerUpdates = async (cacheFns: Array<{ method: Function; i
 };
 
 server.listen(port, () => {
-    console.log(`Running yellow-spyglass server on port ${port}.`);
+    console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile();
     void importHistoricHashTimestamps();

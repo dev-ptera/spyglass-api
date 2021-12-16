@@ -11,8 +11,7 @@ export const URL_WHITE_LIST = [
 ];
 
 export const MANUAL_PEER_MONITOR_URLS = BAN_NODE_MONITORS;
-export const LEDGER_LOCATION = '/representatives/batman/BananoData/data.ldb';
-export const HOST_NODE_NAME = 'batman';
+export const LEDGER_LOCATION = '/home/batman/BananoData/data.ldb';
 export const BACKUP_NODES = [
     //  'http://159.69.198.59:7070',
     //  'https://api-beta.banano.cc/'
