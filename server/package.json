@@ -14,6 +14,7 @@
     },
     "dependencies": {
         "@dev-ptera/nano-node-rpc": "^2.0.2",
+        "@types/memory-cache": "^0.2.1",
         "banano-unit-converter": "^0.1.0",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
@@ -23,6 +24,7 @@
         "express": "^4.16.4",
         "express-rate-limit": "^5.5.1",
         "get-folder-size": "^2.0.0",
+        "memory-cache": "^0.2.0",
         "morgan": "^1.10.0"
     },
     "devDependencies": {

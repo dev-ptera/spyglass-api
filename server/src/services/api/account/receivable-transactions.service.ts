@@ -3,7 +3,6 @@ import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw } 
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
-
 const MAX_PENDING_SIZE = 500;
 
 type RequestBody = {
@@ -68,7 +67,9 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
                 });
             }
         })
-        .catch((err) => Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size })));
+        .catch((err) =>
+            Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size }))
+        );
 
     return dtos;
 };

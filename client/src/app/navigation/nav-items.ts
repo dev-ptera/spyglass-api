@@ -111,11 +111,15 @@ export const ncNavItem: NavItem = {
     title: 'Nakamoto Coefficient',
     route: 'nakamoto-coefficient',
 };
+export const ledgerSizeNavItem: NavItem = {
+    title: 'Ledger Size',
+    route: 'ledger-size',
+};
 export const networkNavItem: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
-    children: [ncNavItem, peerVersionsNavItem, quorumNavItem],
+    children: [ledgerSizeNavItem, ncNavItem, peerVersionsNavItem, quorumNavItem],
 };
 
 export const accountInsightsNavItem: NavItem = {

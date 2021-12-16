@@ -12,6 +12,7 @@ export * from './DeveloperFundsDto';
 export * from './EulenMonitoredRepresentativeDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';
+export * from './LedgerSizeDto';
 export * from './MonitoredRepresentativeDto';
 export * from './NakamotoCoefficientDto';
 export * from './PeerVersionsDto';

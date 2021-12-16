@@ -1,12 +1,6 @@
-import {accountBalanceRpc, accountInfoRpc} from '@app/rpc';
-import {
-    convertFromRaw,
-    getDelegatorsCountPromise,
-    getPRWeightPromise,
-    LOG_ERR,
-    receivableTransactionsPromise,
-} from '@app/services';
-import {AccountBalanceResponse, AccountInfoResponse, ErrorResponse} from '@dev-ptera/nano-node-rpc';
+import { accountBalanceRpc, accountInfoRpc } from '@app/rpc';
+import { convertFromRaw, getDelegatorsCountPromise, getPRWeightPromise, LOG_ERR } from '@app/services';
+import { AccountBalanceResponse, AccountInfoResponse, ErrorResponse } from '@dev-ptera/nano-node-rpc';
 import { AccountOverviewDto } from '@app/types';
 
 export const getUnopenedAccount = (): AccountInfoResponse => {
@@ -76,8 +70,8 @@ export const getAccountOverview = (req, res): void => {
                 weight: undefined,
             };
             if (accountOverview.opened) {
-                accountOverview.balance = convertFromRaw(balance.balance, 10),
-                accountOverview.balanceRaw = balance.balance,
+                accountOverview.balance = convertFromRaw(balance.balance, 10);
+                accountOverview.balanceRaw = balance.balance;
                 accountOverview.representative = accountData.representative;
                 accountOverview.weight = weight;
             }

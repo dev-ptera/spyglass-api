@@ -28,6 +28,7 @@ import {
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
+    REQUESTS_PER_MINUTE,
     URL_WHITE_LIST,
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
@@ -66,6 +67,7 @@ import {
     getReceivableTransactions,
     getAccountExport,
     getAccountOverview,
+    getLedgerSize,
 } from '@app/services';
 
 const corsOptions = {
@@ -90,7 +92,7 @@ app.use(cors(corsOptions));
 
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
-    max: 20, // limit each IP to 20 requests per windowMs
+    max: REQUESTS_PER_MINUTE, // limit each IP to 20 requests per windowMs
 });
 
 //  apply to all requests
@@ -106,13 +108,8 @@ app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, re
 app.post(`/${PATH_ROOT}/account/insights`, (req, res) => getAccountInsights(req, res));
 app.post(`/${PATH_ROOT}/account/export`, (req, res) => getAccountExport(req, res));
 
-/* Representatives */
-app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(res));
-app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(res));
-app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
-app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
-app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
+/* Block */
+app.get(`/${PATH_ROOT}/block/:block`, (req, res) => getBlockInfo(req, res));
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/distribution/burn`, (req, res) => getBurn(res));
@@ -128,12 +125,18 @@ app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));
 app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
 
 /* Network */
+app.get(`/${PATH_ROOT}/network/ledger-size`, (req, res) => getLedgerSize(res));
 app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(res));
 app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(res));
 app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(res));
 
-/* Block */
-app.get(`/${PATH_ROOT}/block/:block`, (req, res) => getBlockInfo(req, res));
+/* Representatives */
+app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(res));
+app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(res));
+app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
+app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
+app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
+app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);

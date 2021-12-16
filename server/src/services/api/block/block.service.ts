@@ -1,5 +1,5 @@
 import { blocksInfoRpc } from '@app/rpc';
-import {convertFromRaw, getAccurateHashTimestamp, LOG_ERR} from '@app/services';
+import { convertFromRaw, getAccurateHashTimestamp, LOG_ERR } from '@app/services';
 import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
@@ -42,7 +42,6 @@ export const getBlockInfo = (req, res): void => {
                 timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
                 sourceAccount: block.source_account,
                 subtype: block.subtype,
-
             } as BlockDto);
         })
         .catch((err) => {

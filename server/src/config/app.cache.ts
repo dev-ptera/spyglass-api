@@ -4,6 +4,8 @@ import {
     KnownAccountDto,
     MonitoredRepresentativeDto,
 } from '@app/types';
+import { CacheClass } from 'memory-cache';
+const cache = require('memory-cache');
 
 export type AppCache = {
     /** Graph data for distribution. */
@@ -29,6 +31,9 @@ export type AppCache = {
 
     /** Top holders, sorted by balance. */
     richList: AccountBalanceDto[];
+
+    /** Temporary data that is fetched, cached, and released over time. */
+    temp: CacheClass<string, any>;
 };
 
 export const AppCache: AppCache = {
@@ -40,4 +45,5 @@ export const AppCache: AppCache = {
     onlineRepresentatives: [],
     onlineRepresentativesWithWeights: [],
     richList: [],
+    temp: new cache.Cache(),
 };

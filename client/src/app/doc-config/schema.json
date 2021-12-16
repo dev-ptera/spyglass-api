@@ -189,6 +189,9 @@
         "BlockDto": {
             "properties": {
                 "amount": {
+                    "type": "number"
+                },
+                "amountRaw": {
                     "type": "string"
                 },
                 "balance": {
@@ -266,6 +269,7 @@
             },
             "required": [
                 "amount",
+                "amountRaw",
                 "balance",
                 "blockAccount",
                 "confirmed",
@@ -763,6 +767,17 @@
                 "offlineUnixTimestamp",
                 "onlineDate",
                 "onlineUnixTimestamp"
+            ],
+            "type": "object"
+        },
+        "LedgerSizeDto": {
+            "properties": {
+                "ledgerSizeMb": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "ledgerSizeMb"
             ],
             "type": "object"
         },

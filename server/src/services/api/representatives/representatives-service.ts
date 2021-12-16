@@ -78,14 +78,18 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.addresses.map((addr) => addr.trim());
 };
 
-const filterByUptimeThreshold = (key: keyof RepresentativeDto['uptimeStats']['uptimePercentages'], threshold: number, repMap: Map<string, RepresentativeDto>): void => {
+const filterByUptimeThreshold = (
+    key: keyof RepresentativeDto['uptimeStats']['uptimePercentages'],
+    threshold: number,
+    repMap: Map<string, RepresentativeDto>
+): void => {
     for (const address of repMap.keys()) {
         const rep = repMap.get(address);
         if (rep.uptimeStats && rep.uptimeStats.uptimePercentages[key] < threshold) {
             repMap.delete(address);
         }
     }
-}
+};
 
 export const getRepresentativesPromise = async (body: RequestBody): Promise<RepresentativeDto[]> => {
     const rpcData = await NANO_CLIENT.representatives(5000, true);

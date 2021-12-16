@@ -24,3 +24,6 @@ export const printResourceUsage = (): void => {
         console.log(`${key} ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB`);
     }
 };
+
+/** Converts minutes to milliseconds. */
+export const minutesToMs = (minutes: number) => minutes * 1000 * 60;

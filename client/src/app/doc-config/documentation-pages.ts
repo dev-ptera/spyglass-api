@@ -28,7 +28,7 @@ import {
     blockNavItem,
     receivableTxNavItem,
     confirmedTxNavItem,
-    accountExport, accountOverviewNavItem,
+    accountExport, accountOverviewNavItem, ledgerSizeNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -209,6 +209,13 @@ export const apiDocumentationPages: Array<{
         route: `${networkNavItem.route}/${peerVersionsNavItem.route}`,
         apiPath: 'network/peers',
         responseSchema: 'PeerVersionsDto[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItem.route}/${ledgerSizeNavItem.route}`,
+        apiPath: 'network/ledger-size',
+        responseSchema: 'LedgerSizeDto',
         knobs: [],
         requestType: 'GET',
     },
