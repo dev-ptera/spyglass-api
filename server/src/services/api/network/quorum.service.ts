@@ -45,7 +45,7 @@ const calculateOnlineWeight = async (deltaPercentage: number) => {
     const onlineReps = await getRepresentativesPromise({ addresses: AppCache.onlineRepresentatives });
     let onlineWeight = 0;
     onlineReps.map((rep) => (onlineWeight += rep.weight));
-    const quorumDelta = Number(onlineWeight * (deltaPercentage / 100));
+    const quorumDelta = Math.round(Number(onlineWeight * (deltaPercentage / 100)));
     return {
         onlineWeight,
         quorumDelta,
