@@ -29,7 +29,7 @@ export const printResourceUsage = (): void => {
 export const minutesToMs = (minutes: number) => minutes * 1000 * 60;
 
 /** Converts seconds to milliseconds. */
-export const secondsToMs = (seconds: number) => seconds * 1000 * 60;
+export const secondsToMs = (seconds: number) => seconds * 1000;
 
 /** Sends response, caches result for specified time. */
 export const cacheSend = (res, data, cachePair: CachePair) => {

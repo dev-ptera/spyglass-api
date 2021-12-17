@@ -4,7 +4,7 @@ export type CachePair = { key: string; duration: number };
 
 export const LEDGER_SIZE_CACHE_PAIR = {
     key: 'ledgerSize',
-    duration: minutesToMs(10),
+    duration: minutesToMs(5),
 };
 
 export const QUORUM_CACHE_PAIR = {
