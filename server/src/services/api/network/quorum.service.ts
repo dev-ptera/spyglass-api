@@ -1,11 +1,13 @@
 import { QuorumDto, SupplyDto } from '@app/types';
-import { AppCache, NANO_CLIENT } from '@app/config';
+import { AppCache, NANO_CLIENT, QUORUM_CACHE_KEY } from '@app/config';
 import {
+    cacheSend,
     convertFromRaw,
     getOfflineRepresentativesPromise,
     getRepresentativesPromise,
     getSupplyPromise,
     LOG_ERR,
+    secondsToMs,
 } from '@app/services';
 import { ConfirmationQuorumResponse } from '@dev-ptera/nano-node-rpc';
 
@@ -103,6 +105,6 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
  * */
 export const getQuorum = (res): void => {
     getQuorumPromise()
-        .then((data) => res.send(data))
+        .then((data) => cacheSend(res, data, QUORUM_CACHE_KEY, secondsToMs(10)))
         .catch((err) => res.status(500).send(err));
 };

@@ -1,5 +1,5 @@
 import { rawToBan } from 'banano-unit-converter';
-import { useBananoConfig } from '@app/config';
+import { AppCache, useBananoConfig } from '@app/config';
 
 /** Wait interval in milliseconds. */
 export const sleep = (ms) =>
@@ -27,3 +27,12 @@ export const printResourceUsage = (): void => {
 
 /** Converts minutes to milliseconds. */
 export const minutesToMs = (minutes: number) => minutes * 1000 * 60;
+
+/** Converts seconds to milliseconds. */
+export const secondsToMs = (seconds: number) => seconds * 1000 * 60;
+
+/** Sends response, caches result for specified time. */
+export const cacheSend = (res, data, key, duration) => {
+    AppCache.temp.put(key, data, duration);
+    res.send(data);
+};

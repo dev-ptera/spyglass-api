@@ -67,7 +67,7 @@ import {
     getAccountOverview,
     getLedgerSize,
 } from '@app/services';
-import {corsOptions, memCache, rateLimter} from "@app/middleware";
+import { corsOptions, memCache, rateLimter } from '@app/middleware';
 
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
 

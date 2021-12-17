@@ -1,5 +1,5 @@
-import {REQUESTS_PER_MINUTE} from "@app/config";
-import {minutesToMs} from "@app/services";
+import { REQUESTS_PER_MINUTE } from '@app/config';
+import { minutesToMs } from '@app/services';
 const rateLimit = require('express-rate-limit');
 
 export const rateLimter = rateLimit({

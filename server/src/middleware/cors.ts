@@ -1,4 +1,4 @@
-import {IS_PRODUCTION, URL_WHITE_LIST} from "@app/config";
+import { IS_PRODUCTION, URL_WHITE_LIST } from '@app/config';
 
 export const corsOptions = {
     origin: function (origin, callback) {
