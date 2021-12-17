@@ -1,5 +1,5 @@
-import { cacheSend, convertFromRaw, LOG_ERR, minutesToMs } from '@app/services';
-import { AppCache, NAKAMOTO_COEFFICIENT_CACHE_KEY, NANO_CLIENT } from '@app/config';
+import { cacheSend, convertFromRaw, LOG_ERR } from '@app/services';
+import { AppCache, NAKAMOTO_COEFFICIENT_CACHE_PAIR, NANO_CLIENT } from '@app/config';
 import { NakamotoCoefficientDto } from '@app/types';
 
 /** Calculates nakamoto coefficient. */
@@ -34,6 +34,6 @@ const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto>
  *  In this context, it represents the number of representatives that must collude together to achieve consensus. */
 export const getNakamotoCoefficient = (res): void => {
     calcNakamotoCoefficientPromise()
-        .then((nc) => cacheSend(res, nc, NAKAMOTO_COEFFICIENT_CACHE_KEY, minutesToMs(1)))
+        .then((nc) => cacheSend(res, nc, NAKAMOTO_COEFFICIENT_CACHE_PAIR))
         .catch((err) => res.status(500).send(err));
 };
