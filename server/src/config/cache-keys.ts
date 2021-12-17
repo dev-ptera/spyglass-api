@@ -16,3 +16,8 @@ export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
     key: 'nc',
     duration: secondsToMs(30),
 };
+
+export const DELTA_CACHE_PAIR = {
+    key: 'delta',
+    duration: QUORUM_CACHE_PAIR.duration,
+};

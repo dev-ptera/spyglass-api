@@ -1,5 +1,5 @@
 import { QuorumDto, SupplyDto } from '@app/types';
-import { AppCache, NANO_CLIENT, QUORUM_CACHE_PAIR } from '@app/config';
+import {AppCache, DELTA_CACHE_PAIR, NANO_CLIENT, QUORUM_CACHE_PAIR} from '@app/config';
 import {
     cacheSend,
     convertFromRaw,
@@ -45,7 +45,7 @@ const calculateOnlineWeight = async (deltaPercentage: number) => {
     const onlineReps = await getRepresentativesPromise({ addresses: AppCache.onlineRepresentatives });
     let onlineWeight = 0;
     onlineReps.map((rep) => (onlineWeight += rep.weight));
-    const quorumDelta = Number(onlineWeight * deltaPercentage);
+    const quorumDelta = Number(onlineWeight * (deltaPercentage / 100));
     return {
         onlineWeight,
         quorumDelta,
@@ -60,7 +60,7 @@ const convertRaw = (rawQuorum: ConfirmationQuorumResponse): Partial<QuorumDto> =
     quorumDelta: convertFromRaw(rawQuorum.quorum_delta),
     onlineWeight: convertFromRaw(rawQuorum.online_stake_total),
     peersStakeWeight: convertFromRaw(rawQuorum.peers_stake_total),
-    onlineWeightQuorumPercent: Number(rawQuorum.online_weight_quorum_percent),
+    onlineWeightQuorumPercent: Number(rawQuorum.online_weight_quorum_percent), /* Whole Number */
     onlineWeightMinimum: convertFromRaw(rawQuorum.online_weight_minimum),
 });
 
@@ -82,6 +82,9 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
         nonBurnedSupply,
         onlineWeight
     ).catch((err) => Promise.reject(LOG_ERR('getQuorumPromise.calcOnlineOfflineRepWeights', err)));
+
+    /* Save this delta value in the app cache for future use; this is used the Nakamoto Coefficient service. */
+    AppCache.temp.put(DELTA_CACHE_PAIR.key, quorumDelta, DELTA_CACHE_PAIR.duration);
 
     return {
         noRepPercent,

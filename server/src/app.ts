@@ -172,13 +172,13 @@ server.listen(port, () => {
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void staggerServerUpdates([
-        knownAccounts,
         onlineRepresentatives,
         onlineRepresentativesWithWeights,
         monitoredRepresentatives,
         // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
+        knownAccounts,
         accountsDistribution,
     ]);
 });

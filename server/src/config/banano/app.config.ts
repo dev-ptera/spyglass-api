@@ -15,6 +15,7 @@ export const LEDGER_LOCATION = '/home/batman/BananoData/data.ldb';
 export const BACKUP_NODES = [
     //  'http://159.69.198.59:7070',
     //  'https://api-beta.banano.cc/'
+    'https://vault.banano.cc/api/node-api'
 ];
 export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
 export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;

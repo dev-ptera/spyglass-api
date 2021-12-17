@@ -1,12 +1,19 @@
-import { cacheSend, convertFromRaw, LOG_ERR } from '@app/services';
-import { AppCache, NAKAMOTO_COEFFICIENT_CACHE_PAIR, NANO_CLIENT } from '@app/config';
+import {cacheSend, convertFromRaw, getQuorumPromise, LOG_ERR} from '@app/services';
+import {AppCache, DELTA_CACHE_PAIR, NAKAMOTO_COEFFICIENT_CACHE_PAIR, NANO_CLIENT} from '@app/config';
 import { NakamotoCoefficientDto } from '@app/types';
 
 /** Calculates nakamoto coefficient. */
 const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
-    const delta = await NANO_CLIENT.confirmation_quorum()
-        .then((data) => convertFromRaw(data.quorum_delta))
-        .catch((err) => Promise.reject(LOG_ERR('calcNakamotoCoefficientPromise.confirmation_quorum', err)));
+
+    // Use a cached delta value if it's available, otherwise call the Quorum service.
+    let delta = 0;
+    if (AppCache.temp.get(DELTA_CACHE_PAIR.key)) {
+        delta = AppCache.temp.get(DELTA_CACHE_PAIR.key);
+    } else {
+        const quorum = await getQuorumPromise()
+            .catch((err) => Promise.reject(LOG_ERR('calcNakamotoCoefficientPromise.confirmation_quorum', err)));
+        delta = quorum.quorumDelta;
+    }
 
     let ncRepsWeight = 0;
     let nakamotoCoefficient = 0;
