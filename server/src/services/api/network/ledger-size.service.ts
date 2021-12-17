@@ -1,7 +1,6 @@
 import { LOG_ERR, minutesToMs } from '@app/services';
-import { AppCache, LEDGER_LOCATION } from '@app/config';
+import { AppCache, LEDGER_LOCATION, LEDGER_SIZE_CACHE_KEY } from '@app/config';
 import { LedgerSizeDto } from '@app/types';
-import {LEDGER_SIZE_CACHE_KEY} from "../../../config/cache-keys";
 
 const getSize = require('get-folder-size');
 
@@ -15,8 +14,9 @@ const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
             }
             console.log('not using cache');
             const ledgerSizeMb = Number((size / 1000 / 1000).toFixed(2));
-            AppCache.temp.put(LEDGER_SIZE_CACHE_KEY, ledgerSizeMb, minutesToMs(10));
-            return resolve({ ledgerSizeMb });
+            const dto = { ledgerSizeMb };
+            AppCache.temp.put(LEDGER_SIZE_CACHE_KEY, dto, minutesToMs(10));
+            return resolve(dto);
         });
     });
 
