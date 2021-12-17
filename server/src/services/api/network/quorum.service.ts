@@ -1,7 +1,7 @@
 import { QuorumDto, SupplyDto } from '@app/types';
-import {AppCache, DELTA_CACHE_PAIR, NANO_CLIENT, QUORUM_CACHE_PAIR} from '@app/config';
+import { AppCache, NANO_CLIENT, QUORUM_CACHE_PAIR } from '@app/config';
 import {
-    cacheSend,
+    cache,
     convertFromRaw,
     getOfflineRepresentativesPromise,
     getRepresentativesPromise,
@@ -60,7 +60,7 @@ const convertRaw = (rawQuorum: ConfirmationQuorumResponse): Partial<QuorumDto> =
     quorumDelta: convertFromRaw(rawQuorum.quorum_delta),
     onlineWeight: convertFromRaw(rawQuorum.online_stake_total),
     peersStakeWeight: convertFromRaw(rawQuorum.peers_stake_total),
-    onlineWeightQuorumPercent: Number(rawQuorum.online_weight_quorum_percent), /* Whole Number */
+    onlineWeightQuorumPercent: Number(rawQuorum.online_weight_quorum_percent) /* Whole Number */,
     onlineWeightMinimum: convertFromRaw(rawQuorum.online_weight_minimum),
 });
 
@@ -83,9 +83,22 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
         onlineWeight
     ).catch((err) => Promise.reject(LOG_ERR('getQuorumPromise.calcOnlineOfflineRepWeights', err)));
 
-    /* Save this delta value in the app cache for future use; this is used the Nakamoto Coefficient service. */
-    AppCache.temp.put(DELTA_CACHE_PAIR.key, quorumDelta, DELTA_CACHE_PAIR.duration);
+    const dto = {
+        noRepPercent,
+        noRepWeight,
+        nonBurnedWeight: nonBurnedSupply,
+        offlinePercent,
+        offlineWeight,
+        onlinePercent,
+        onlineWeight,
+        onlineWeightMinimum,
+        onlineWeightQuorumPercent,
+        peersStakeWeight,
+        quorumDelta,
+    };
 
+    // `getQuorumPromise` may be invoked by other functions, so it is cached here instead of in `getQuorum`.
+    cache(dto, QUORUM_CACHE_PAIR);
     return {
         noRepPercent,
         noRepWeight,
@@ -107,6 +120,6 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
  * */
 export const getQuorum = (res): void => {
     getQuorumPromise()
-        .then((data) => cacheSend(res, data, QUORUM_CACHE_PAIR))
+        .then((data) => res.send(data))
         .catch((err) => res.status(500).send(err));
 };

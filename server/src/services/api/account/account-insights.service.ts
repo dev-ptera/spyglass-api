@@ -1,6 +1,15 @@
-import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
+import {
+    cacheSend,
+    cacheSend2,
+    convertFromRaw,
+    getAccurateHashTimestamp,
+    isValidAddress,
+    LOG_ERR,
+} from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
+import { INSIGHTS_CACHE_PAIR } from '@app/config';
+import { determineDynamicCacheTime } from '@app/middleware';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -81,7 +90,6 @@ const handleSendTransaction = (
 ): void => {
     const recipient = transaction.account;
     insightsDto.totalTxSent += 1;
-    console.log(amount);
     insightsDto.totalAmountSent += amount;
     if (!insightsDto.firstOutTxHash) {
         insightsDto.firstOutTxHash = transaction.hash;
@@ -187,11 +195,13 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
  *  as well as account-specific stats for most all-time balance, most common sender, etc.
  */
 export const getAccountInsights = (req, res): void => {
+    const address = req.body.address;
+    const cache = { ...INSIGHTS_CACHE_PAIR };
     confirmedTransactionsPromise(req.body)
         .then((data) => {
-            res.send(data);
+            cache.key = `${INSIGHTS_CACHE_PAIR.key}/${address}`;
+            cache.duration = determineDynamicCacheTime(data.totalTxSent + data.totalTxReceived);
+            cacheSend(res, data, cache);
         })
-        .catch((err) => {
-            res.status(500).send(err);
-        });
+        .catch((err) => res.status(500).send(err));
 };

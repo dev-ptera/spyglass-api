@@ -17,7 +17,7 @@ export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
     duration: secondsToMs(30),
 };
 
-export const DELTA_CACHE_PAIR = {
-    key: 'delta',
-    duration: QUORUM_CACHE_PAIR.duration,
+export const INSIGHTS_CACHE_PAIR = {
+    key: 'account_insights',
+    duration: minutesToMs(1),
 };

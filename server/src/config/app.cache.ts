@@ -33,7 +33,7 @@ export type AppCache = {
     richList: AccountBalanceDto[];
 
     /** Temporary data that is fetched, cached, and released over time. */
-    temp: CacheClass<string, any>;
+    temp: CacheClass<string, any> & { has: Function };
 };
 
 export const AppCache: AppCache = {
@@ -47,3 +47,5 @@ export const AppCache: AppCache = {
     richList: [],
     temp: new cache.Cache(),
 };
+
+AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;

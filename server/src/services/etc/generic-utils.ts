@@ -36,3 +36,13 @@ export const cacheSend = (res, data, cachePair: CachePair) => {
     AppCache.temp.put(cachePair.key, data, cachePair.duration);
     res.send(data);
 };
+
+export const cacheSend2 = (res, data, key: string, duration: number) => {
+    AppCache.temp.put(key, data, duration);
+    res.send(data);
+};
+
+/** Caches result for specified time. */
+export const cache = (data, cachePair: CachePair) => {
+    AppCache.temp.put(cachePair.key, data, cachePair.duration);
+};
