@@ -1,19 +1,13 @@
 import { LOG_ERR, minutesToMs } from '@app/services';
 import { AppCache, LEDGER_LOCATION } from '@app/config';
 import { LedgerSizeDto } from '@app/types';
+import {LEDGER_SIZE_CACHE_KEY} from "../../../config/cache-keys";
 
 const getSize = require('get-folder-size');
-const LEDGER_SIZE_CACHE_KEY = 'ledgerSize';
 
 /** Calculates ledger size. Requires the LEDGER_LOCATION app config variable is set & directory is readable. */
 const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
     new Promise((resolve, reject) => {
-        let cachedMemSize = AppCache.temp.get(LEDGER_SIZE_CACHE_KEY);
-        if (cachedMemSize) {
-            console.log('using cache');
-            return resolve({ ledgerSizeMb: cachedMemSize });
-        }
-
         getSize(LEDGER_LOCATION, (err, size) => {
             if (err) {
                 LOG_ERR('getNodeStats.getLedgerSize', err);

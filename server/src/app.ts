@@ -1,5 +1,6 @@
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
+moduleAlias.addAlias('@app/middleware', __dirname + '/middleware');
 moduleAlias.addAlias('@app/rpc', __dirname + '/rpc');
 moduleAlias.addAlias('@app/services', __dirname + '/services');
 moduleAlias.addAlias('@app/types', __dirname + '/types');
@@ -13,7 +14,6 @@ const http = require('http');
 const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -28,8 +28,6 @@ import {
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
-    REQUESTS_PER_MINUTE,
-    URL_WHITE_LIST,
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
@@ -69,16 +67,7 @@ import {
     getAccountOverview,
     getLedgerSize,
 } from '@app/services';
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (IS_PRODUCTION && origin && URL_WHITE_LIST.indexOf(origin) === -1) {
-            callback(new Error(`Origin '${origin}' is not allowed by CORS`));
-        } else {
-            callback(null, true);
-        }
-    },
-};
+import {corsOptions, memCache, rateLimter} from "@app/middleware";
 
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
 
@@ -89,14 +78,8 @@ app.use((req, res, next) => {
 });
 
 app.use(cors(corsOptions));
-
-const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minutes
-    max: REQUESTS_PER_MINUTE, // limit each IP to 20 requests per windowMs
-});
-
-//  apply to all requests
-app.use(limiter);
+app.use(rateLimter);
+app.use(memCache);
 
 /* Account */
 //app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
