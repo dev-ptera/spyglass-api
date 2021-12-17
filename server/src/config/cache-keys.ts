@@ -17,6 +17,11 @@ export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
     duration: secondsToMs(30),
 };
 
+export const REP_SCORES_CACHE_PAIR = {
+    key: 'scores',
+    duration: secondsToMs(1),
+};
+
 export const INSIGHTS_CACHE_PAIR = {
     key: 'account_insights',
     duration: minutesToMs(1),

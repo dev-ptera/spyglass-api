@@ -1,3 +1,3 @@
 export type LedgerSizeDto = {
-    ledgerSizeMb: number;
+    ledgerSizeMB: number;
 };

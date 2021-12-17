@@ -28,7 +28,7 @@ import {
     blockNavItem,
     receivableTxNavItem,
     confirmedTxNavItem,
-    accountExport, accountOverviewNavItem, ledgerSizeNavItem,
+    accountExport, accountOverviewNavItem, ledgerSizeNavItem, repScoresNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -118,6 +118,13 @@ export const apiDocumentationPages: Array<{
         route: `${repNavItem.route}/${repOnlineNavItem.route}`,
         apiPath: 'representatives/online',
         responseSchema: 'string[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItem.route}/${repScoresNavItem.route}`,
+        apiPath: 'representatives/scores',
+        responseSchema: 'RepScoreDto[]',
         knobs: [],
         requestType: 'GET',
     },

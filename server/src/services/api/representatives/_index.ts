@@ -6,3 +6,4 @@ export * from './representatives-service';
 export * from './rep-utils';
 export * from './uptime-reps.service';
 export * from './offline-reps.service';
+export * from './scores.service';

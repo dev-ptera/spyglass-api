@@ -3,13 +3,14 @@ import {
     cacheSend2,
     convertFromRaw,
     getAccurateHashTimestamp,
+    getTransactionType,
     isValidAddress,
     LOG_ERR,
 } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { INSIGHTS_CACHE_PAIR } from '@app/config';
-import { determineDynamicCacheTime } from '@app/middleware';
+import { calcCacheDuration } from '@app/middleware';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -30,7 +31,8 @@ const setBodyDefaults = (body: RequestBody): void => {
 };
 
 const createBlankDto = (): InsightsDto => ({
-    amountChangedRep: 0,
+    totalTxChange: 0,
+    blockCount: 0,
     firstInTxHash: undefined,
     firstInTxUnixTimestamp: undefined,
     firstOutTxHash: undefined,
@@ -139,20 +141,24 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
     /* Iterate through the list of transactions, perform insight calculations. */
     let balance = 0;
     for (const transaction of accountHistory.history) {
+        insightsDto.blockCount++;
+
+        const type = getTransactionType(transaction);
+
         // Count Change Blocks
         if (!transaction.amount) {
-            if (transaction['subtype'] === 'change') {
-                insightsDto.amountChangedRep++;
+            if (type === 'change') {
+                insightsDto.totalTxChange++;
             }
             continue;
         }
 
         // Count Send / Receive Blocks & aggregate balances.
         const amount = convertFromRaw(transaction.amount, 6);
-        if (transaction['subtype'] === 'receive') {
+        if (type === 'receive') {
             balance += amount;
             handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
-        } else if (transaction['subtype'] === 'send') {
+        } else if (type === 'send') {
             balance -= amount;
             handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
         }
@@ -200,7 +206,7 @@ export const getAccountInsights = (req, res): void => {
     confirmedTransactionsPromise(req.body)
         .then((data) => {
             cache.key = `${INSIGHTS_CACHE_PAIR.key}/${address}`;
-            cache.duration = determineDynamicCacheTime(data.totalTxSent + data.totalTxReceived);
+            cache.duration = calcCacheDuration(data.blockCount);
             cacheSend(res, data, cache);
         })
         .catch((err) => res.status(500).send(err));

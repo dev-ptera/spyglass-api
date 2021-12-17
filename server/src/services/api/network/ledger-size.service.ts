@@ -12,8 +12,8 @@ const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
                 LOG_ERR('getNodeStats.getLedgerSize', err);
                 return reject({ error: 'Unable to read ledger size' });
             }
-            const ledgerSizeMb = Number((size / 1000 / 1000).toFixed(2));
-            resolve({ ledgerSizeMb });
+            const ledgerSizeMB = Number((size / 1000 / 1000).toFixed(2));
+            resolve({ ledgerSizeMB });
         });
     });
 

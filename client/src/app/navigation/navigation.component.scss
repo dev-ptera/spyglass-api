@@ -36,6 +36,9 @@
         text-align: center;
         margin-top: 8px;
     }
+    .pxb-app-bar-content {
+        overflow: visible!important;;
+    }
     @media only screen and (max-width: 1450px) {
         .pxb-app-bar-expanded .pxb-app-bar-background {
             background-size: cover !important;

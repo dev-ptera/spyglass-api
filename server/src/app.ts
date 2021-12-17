@@ -66,6 +66,7 @@ import {
     getAccountExport,
     getAccountOverview,
     getLedgerSize,
+    getScores,
 } from '@app/services';
 import { corsOptions, memCache, rateLimter } from '@app/middleware';
 
@@ -118,6 +119,7 @@ app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(res
 app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(res));
 app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
 app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
+app.get(`/${PATH_ROOT}/representatives/scores`, (req, res) => getScores(res));
 app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
 app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
 

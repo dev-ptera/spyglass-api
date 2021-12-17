@@ -1,7 +1,7 @@
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
-import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
+import { AccountHistoryResponse, Subtype } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 
 const SUBTYPE = {
     change: 'change',
@@ -50,14 +50,15 @@ const setBodyDefaults = (body: RequestBody): void => {
 export const convertToConfirmedTransactionDto = (
     transaction: AccountHistoryResponse['history'][0]
 ): ConfirmedTransactionDto => {
-    const rep = transaction['subtype'] === SUBTYPE.change ? transaction['representative'] : undefined;
+    const type = getTransactionType(transaction);
+    const rep = type === SUBTYPE.change ? transaction['representative'] : undefined;
     const unix = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
     const amount = transaction.amount;
 
     const dto: ConfirmedTransactionDto = {
         hash: transaction.hash,
         address: transaction.account,
-        type: transaction['subtype'],
+        type,
         height: Number(transaction.height),
         timestamp: unix,
         date: new Date(unix * 1000).toLocaleDateString() + ' ' + new Date(unix * 1000).toLocaleTimeString(),
@@ -95,7 +96,7 @@ const discoverConfirmedTransactions = async (
 
     // Iterate through each transaction history, filtering out types we dont need.
     for (const transaction of accountTx.history) {
-        const type = transaction['subtype'];
+        const type = getTransactionType(transaction);
         if (!body.includeSend && type === 'send') {
             continue;
         }
@@ -114,6 +115,9 @@ const discoverConfirmedTransactions = async (
     // Continue search.
     return false;
 };
+
+/** Returns type for a transaction; defaults to subtype, but fallbacks to use type when subtype is undefined. */
+export const getTransactionType = (tx: AccountHistoryResponse['history'][0]): Subtype => tx['subtype'] || tx['type'];
 
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {

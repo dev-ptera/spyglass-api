@@ -594,7 +594,7 @@
         },
         "InsightsDto": {
             "properties": {
-                "amountChangedRep": {
+                "blockCount": {
                     "type": "number"
                 },
                 "firstInTxHash": {
@@ -675,6 +675,9 @@
                 "totalAmountSent": {
                     "type": "number"
                 },
+                "totalTxChange": {
+                    "type": "number"
+                },
                 "totalTxReceived": {
                     "type": "number"
                 },
@@ -683,7 +686,7 @@
                 }
             },
             "required": [
-                "amountChangedRep",
+                "blockCount",
                 "firstInTxHash",
                 "firstInTxUnixTimestamp",
                 "firstOutTxHash",
@@ -704,8 +707,200 @@
                 "mostCommonSenderTxCount",
                 "totalAmountReceived",
                 "totalAmountSent",
+                "totalTxChange",
                 "totalTxReceived",
                 "totalTxSent"
+            ],
+            "type": "object"
+        },
+        "InsightsDtoV2": {
+            "properties": {
+                "blockCount": {
+                    "type": "number"
+                },
+                "changeStats": {
+                    "properties": {
+                        "totalTxChange": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "totalTxChange"
+                    ],
+                    "type": "object"
+                },
+                "heightBalances": {
+                    "items": {
+                        "properties": {
+                            "balance": {
+                                "type": "number"
+                            },
+                            "height": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "balance",
+                            "height"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "maxBalance": {
+                    "type": "number"
+                },
+                "maxBalanceHash": {
+                    "type": "string"
+                },
+                "receiveStats": {
+                    "properties": {
+                        "firstInTxHash": {
+                            "type": "string"
+                        },
+                        "firstInTxUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "lastInTxHash": {
+                            "type": "string"
+                        },
+                        "lastInTxUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "maxAmountReceived": {
+                            "type": "number"
+                        },
+                        "maxAmountReceivedHash": {
+                            "type": "string"
+                        },
+                        "mostCommonSenderAddress": {
+                            "type": "string"
+                        },
+                        "mostCommonSenderTxCount": {
+                            "type": "number"
+                        },
+                        "senders": {
+                            "items": {
+                                "properties": {
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    },
+                                    "count": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "amount",
+                                    "count"
+                                ],
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "totalAmountReceived": {
+                            "type": "number"
+                        },
+                        "totalTxReceived": {
+                            "type": "number"
+                        },
+                        "totalTxSent": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "firstInTxHash",
+                        "firstInTxUnixTimestamp",
+                        "lastInTxHash",
+                        "lastInTxUnixTimestamp",
+                        "maxAmountReceived",
+                        "maxAmountReceivedHash",
+                        "mostCommonSenderAddress",
+                        "mostCommonSenderTxCount",
+                        "senders",
+                        "totalAmountReceived",
+                        "totalTxReceived",
+                        "totalTxSent"
+                    ],
+                    "type": "object"
+                },
+                "sentStats": {
+                    "properties": {
+                        "firstOutTxHash": {
+                            "type": "string"
+                        },
+                        "firstOutTxUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "lastOutTxHash": {
+                            "type": "string"
+                        },
+                        "lastOutTxUnixTimestamp": {
+                            "type": "number"
+                        },
+                        "maxAmountSent": {
+                            "type": "number"
+                        },
+                        "maxAmountSentHash": {
+                            "type": "string"
+                        },
+                        "mostCommonRecipientAddress": {
+                            "type": "string"
+                        },
+                        "mostCommonRecipientTxCount": {
+                            "type": "number"
+                        },
+                        "recipients": {
+                            "items": {
+                                "properties": {
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    },
+                                    "count": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "amount",
+                                    "count"
+                                ],
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "totalAmountSent": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "firstOutTxHash",
+                        "firstOutTxUnixTimestamp",
+                        "lastOutTxHash",
+                        "lastOutTxUnixTimestamp",
+                        "maxAmountSent",
+                        "maxAmountSentHash",
+                        "mostCommonRecipientAddress",
+                        "mostCommonRecipientTxCount",
+                        "recipients",
+                        "totalAmountSent"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "blockCount",
+                "changeStats",
+                "maxBalance",
+                "maxBalanceHash",
+                "receiveStats",
+                "sentStats"
             ],
             "type": "object"
         },
@@ -772,12 +967,12 @@
         },
         "LedgerSizeDto": {
             "properties": {
-                "ledgerSizeMb": {
+                "ledgerSizeMB": {
                     "type": "number"
                 }
             },
             "required": [
-                "ledgerSizeMb"
+                "ledgerSizeMB"
             ],
             "type": "object"
         },
@@ -999,6 +1194,68 @@
                 "amountRaw",
                 "hash",
                 "timestamp"
+            ],
+            "type": "object"
+        },
+        "RepScoreDto": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "isMonitored": {
+                    "type": "boolean"
+                },
+                "isOnline": {
+                    "type": "boolean"
+                },
+                "isPrincipal": {
+                    "type": "boolean"
+                },
+                "score": {
+                    "type": "number"
+                },
+                "uptimePercentages": {
+                    "properties": {
+                        "day": {
+                            "type": "number"
+                        },
+                        "month": {
+                            "type": "number"
+                        },
+                        "semiAnnual": {
+                            "type": "number"
+                        },
+                        "week": {
+                            "type": "number"
+                        },
+                        "year": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "day",
+                        "month",
+                        "semiAnnual",
+                        "week",
+                        "year"
+                    ],
+                    "type": "object"
+                },
+                "weight": {
+                    "type": "number"
+                },
+                "weightPercentage": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "isMonitored",
+                "isOnline",
+                "isPrincipal",
+                "score",
+                "weight",
+                "weightPercentage"
             ],
             "type": "object"
         },
@@ -1301,6 +1558,25 @@
                 "devFundAmount",
                 "devFundPercent",
                 "totalAmount"
+            ],
+            "type": "object"
+        },
+        "Tx": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "count": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "address",
+                "amount",
+                "count"
             ],
             "type": "object"
         }

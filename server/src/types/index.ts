@@ -21,6 +21,7 @@ export * from './PRWeightRequirementDto';
 export * from './QuorumDto';
 export * from './RepresentativeDto';
 export * from './RepresentativeUptimeDto';
+export * from './RepScoreDto';
 export * from './RequestBody';
 export * from './Subtype';
 export * from './SupplyDto';

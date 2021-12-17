@@ -21,6 +21,10 @@ export const repRootNavItem: NavItem = {
     title: 'Representatives',
     route: 'representatives',
 };
+export const repScoresNavItem: NavItem = {
+    title: 'Scores',
+    route: 'scores',
+};
 export const repUptimeNavItem: NavItem = {
     title: 'Uptime',
     route: 'uptime',
@@ -39,6 +43,7 @@ export const repNavItem: NavItem = {
         repOnlineNavItem,
         prWeightRequirementNavItem,
         repRootNavItem,
+        repScoresNavItem,
         repUptimeNavItem,
     ],
 };

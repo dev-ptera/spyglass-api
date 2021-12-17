@@ -102,7 +102,8 @@ export class RequestComponent {
                 const scrollEl = document.getElementsByClassName('mat-sidenav-content')[0];
                 const contentEl = document.getElementById('response-content');
                 const width = scrollEl.clientWidth;
-                if (width < 1833 && !this._userAgentService.isMobileDevice()) {
+                // The number is determined by the screen width when the break occurs.
+                if (width < 1828 + 16 && !this._userAgentService.isMobileDevice()) {
                     scrollEl.scrollTo({ top: contentEl.offsetTop + 32, behavior: 'smooth' });
                 }
 

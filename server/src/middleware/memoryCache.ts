@@ -6,7 +6,7 @@ import {
     PATH_ROOT,
     QUORUM_CACHE_PAIR,
 } from '@app/config';
-import {minutesToMs, secondsToMs} from '@app/services';
+import { minutesToMs, secondsToMs } from '@app/services';
 
 const getCacheKey = (req): string => {
     const path = req.url.split(PATH_ROOT)[1];
@@ -40,7 +40,8 @@ export const memCache = (req, res, next) => {
     next();
 };
 
-export const determineDynamicCacheTime = (blockCount: number): number => {
+/** Uses block count to determine how long to cache results. */
+export const calcCacheDuration = (blockCount: number): number => {
     if (blockCount < 1000) {
         return secondsToMs(30);
     }
