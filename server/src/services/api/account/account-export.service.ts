@@ -1,6 +1,9 @@
 import { ConfirmedTransactionDto } from '@app/types';
 import { convertToConfirmedTransactionDto, isValidAddress, LOG_ERR } from '@app/services';
-import { accountHistoryRpc } from '@app/rpc';
+import {accountBlockCountRpc, accountHistoryRpc} from '@app/rpc';
+
+
+const MAX_TRANSACTION_COUNT = 100_000;
 
 const convertToCSV = (dtos: ConfirmedTransactionDto[]): string => {
     const json = dtos;
@@ -25,6 +28,15 @@ const getAccountExportPromise = async (body: { address: string }): Promise<strin
     if (!isValidAddress(address)) {
         return Promise.reject({ error: 'Address is required' });
     }
+
+    const blockCountResponse = await accountBlockCountRpc(address).catch((err) =>
+        Promise.reject(LOG_ERR('getAccountInsights.accountBlockCountRpc', err, { address }))
+    );
+
+    if (Number(blockCountResponse.block_count) > MAX_TRANSACTION_COUNT) {
+        return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
+    }
+
 
     const accountTx = await accountHistoryRpc(address, 0, -1).catch((err) => {
         return Promise.reject(LOG_ERR('getAccountExportPromise.accountHistoryRpc', err, { body }));

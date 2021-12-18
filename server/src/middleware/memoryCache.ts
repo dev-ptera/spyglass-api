@@ -4,7 +4,7 @@ import {
     LEDGER_SIZE_CACHE_PAIR,
     NAKAMOTO_COEFFICIENT_CACHE_PAIR,
     PATH_ROOT,
-    QUORUM_CACHE_PAIR,
+    QUORUM_CACHE_PAIR, REP_SCORES_CACHE_PAIR,
 } from '@app/config';
 import { minutesToMs, secondsToMs } from '@app/services';
 
@@ -14,7 +14,7 @@ const getCacheKey = (req): string => {
         case '/network/ledger-size': {
             return LEDGER_SIZE_CACHE_PAIR.key;
         }
-        case '/network/quorum': {
+        case '/network/quorum': { // TODO: use path as key?  Export CachedRequests = { path: string, duration: number, dynamicPath?: (key) => string }
             return QUORUM_CACHE_PAIR.key;
         }
         case '/network/nakamoto-coefficient': {
@@ -22,6 +22,9 @@ const getCacheKey = (req): string => {
         }
         case '/account/insights': {
             return `${INSIGHTS_CACHE_PAIR.key}/${req.body.address}`;
+        }
+        case '/representatives/scores': {
+            return  REP_SCORES_CACHE_PAIR.key;
         }
         default: {
             //statements;
