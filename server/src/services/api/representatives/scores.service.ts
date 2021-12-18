@@ -14,10 +14,26 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
     const principalWeightRequirement = await getPRWeightPromise();
     const onlineReps = new Set(AppCache.onlineRepresentatives);
 
+    let numberOfMonitoredReps = 0;
+    let totalUncheckedBlocks = 0;
+    let totalCementedBlocks = 0;
+    reps.map((rep => {
+        if (rep.nodeMonitorStats) {
+            numberOfMonitoredReps++;
+            totalUncheckedBlocks+=rep.nodeMonitorStats.uncheckedBlocks;
+            totalCementedBlocks+=rep.nodeMonitorStats.cementedBlocks;
+        }
+    }));
+
+    const avgUncheckedBlocks = totalUncheckedBlocks / (numberOfMonitoredReps || 1);
+    const avgCementedBlocks = totalCementedBlocks / (numberOfMonitoredReps || 1);
+
+
     for (const rep of reps) {
         const entry = {} as RepScoreDto;
+        const isMonitored = Boolean(rep.nodeMonitorStats);
         entry.address = rep.address;
-        entry.isMonitored = Boolean(rep.nodeMonitorStats);
+        entry.monitorStats = isMonitored ? {} as any : undefined;
         entry.isOnline = onlineReps.has(rep.address);
         entry.weight = rep.weight;
         entry.weightPercentage = rep.weight / (principalWeightRequirement * 1_000) * 100;
@@ -26,24 +42,42 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
 
         // Each rep starts with a score of 0 and is given points for each positive check.
         let score = 0;
-        if (entry.isOnline) {
-            score += 40;
-        }
-        if (entry.isMonitored) {
-            score += 10;
-        }
-        if (entry.uptimePercentages?.day > 90) {
-            score += 10;
-        }
-        if (entry.uptimePercentages?.semiAnnual > 95) {
-            score += 30;
+        if (entry.uptimePercentages?.day >= 98) {
+            score += 10
         }
         if (entry.weightPercentage < 1) {
             score += 10;
         }
+        if (entry.isOnline) {
+            score += 15;
+        }
+
+        // Max + 10
+        if (isMonitored) {
+            const monitorStats = entry.monitorStats;
+            score += 3;
+            // Memory is greater than 4GB?
+            monitorStats.hasMinMemoryRequirement = rep.nodeMonitorStats.totalMem >= 4096;
+            monitorStats.hasAboveAvgCementedBlocks = rep.nodeMonitorStats.cementedBlocks >= avgCementedBlocks;
+            monitorStats.hasAboveAvgUncheckedBlocks = rep.nodeMonitorStats.uncheckedBlocks >= avgUncheckedBlocks;
+
+            if (monitorStats.hasAboveAvgCementedBlocks) {
+                score += 2;
+            }
+            if (!monitorStats.hasAboveAvgUncheckedBlocks) {
+                score += 2;
+            }
+            if (monitorStats.hasMinMemoryRequirement) {
+                score += 3;
+            }
+        }
+
+        if (entry.uptimePercentages?.semiAnnual) {
+            score += Math.round(entry.uptimePercentages.semiAnnual * .55);  // Max +55
+        }
         entry.score = score;
 
-        if (score > 10) {
+        if (score >= 25) {
             scores.push(entry);
         }
     }
@@ -52,7 +86,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
     return scores;
 };
 
-/** Returns an array of representative scores. */
+/** Returns an array of representative scores. Max score is 100, omitting reps with a low score.. */
 export const getScores = (res): void => {
     getScoresPromise()
         .then((data) => cacheSend(res, data, REP_SCORES_CACHE_PAIR))

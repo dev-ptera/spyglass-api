@@ -1202,14 +1202,30 @@
                 "address": {
                     "type": "string"
                 },
-                "isMonitored": {
-                    "type": "boolean"
-                },
                 "isOnline": {
                     "type": "boolean"
                 },
                 "isPrincipal": {
                     "type": "boolean"
+                },
+                "monitorStats": {
+                    "properties": {
+                        "hasAboveAvgCementedBlocks": {
+                            "type": "boolean"
+                        },
+                        "hasAboveAvgUncheckedBlocks": {
+                            "type": "boolean"
+                        },
+                        "hasMinMemoryRequirement": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "hasAboveAvgCementedBlocks",
+                        "hasAboveAvgUncheckedBlocks",
+                        "hasMinMemoryRequirement"
+                    ],
+                    "type": "object"
                 },
                 "score": {
                     "type": "number"
@@ -1250,7 +1266,6 @@
             },
             "required": [
                 "address",
-                "isMonitored",
                 "isOnline",
                 "isPrincipal",
                 "score",
