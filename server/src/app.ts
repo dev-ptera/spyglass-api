@@ -126,11 +126,10 @@ app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentative
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
 
-export const staggerServerUpdates = async (cacheFns: Array<{ method: Function; interval: number }>) => {
+export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {
-        await fn.method();
+        fn.method();
         setInterval(() => fn.method(), fn.interval);
-        await sleep(2000);
     }
 };
 
@@ -173,7 +172,7 @@ server.listen(port, () => {
 
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
-    void staggerServerUpdates([
+    void setRefreshIncrements([
         onlineRepresentatives,
         onlineRepresentativesWithWeights,
         monitoredRepresentatives,

@@ -24,5 +24,5 @@ export const REP_SCORES_CACHE_PAIR = {
 
 export const INSIGHTS_CACHE_PAIR = {
     key: 'account_insights',
-    duration: undefined // dynamic size
+    duration: undefined, // dynamic size
 };

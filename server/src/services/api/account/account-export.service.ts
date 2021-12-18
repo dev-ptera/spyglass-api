@@ -1,7 +1,6 @@
 import { ConfirmedTransactionDto } from '@app/types';
 import { convertToConfirmedTransactionDto, isValidAddress, LOG_ERR } from '@app/services';
-import {accountBlockCountRpc, accountHistoryRpc} from '@app/rpc';
-
+import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
