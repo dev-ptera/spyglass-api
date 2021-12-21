@@ -1,16 +1,15 @@
 import {
     cacheSend,
-    cacheSend2,
     convertFromRaw,
     getAccurateHashTimestamp,
     getTransactionType,
     isValidAddress,
     LOG_ERR,
 } from '@app/services';
-import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
-import { InsightsDto } from '@app/types';
-import { INSIGHTS_CACHE_PAIR } from '@app/config';
-import { calcCacheDuration } from '@app/middleware';
+import {accountBlockCountRpc, accountHistoryRpc} from '@app/rpc';
+import {InsightsDto} from '@app/types';
+import {INSIGHTS_CACHE_PAIR} from '@app/config';
+import {calcCacheDuration} from '@app/middleware';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -31,13 +30,12 @@ const setBodyDefaults = (body: RequestBody): void => {
 };
 
 const createBlankDto = (): InsightsDto => ({
-    totalTxChange: 0,
     blockCount: 0,
     firstInTxHash: undefined,
     firstInTxUnixTimestamp: undefined,
     firstOutTxHash: undefined,
     firstOutTxUnixTimestamp: undefined,
-    heightBalances: [],
+    heightBalances: {},
     lastInTxHash: undefined,
     lastInTxUnixTimestamp: undefined,
     lastOutTxHash: undefined,
@@ -54,6 +52,7 @@ const createBlankDto = (): InsightsDto => ({
     mostCommonSenderTxCount: 0,
     totalAmountReceived: 0,
     totalAmountSent: 0,
+    totalTxChange: 0,
     totalTxReceived: 0,
     totalTxSent: 0,
 });
@@ -171,9 +170,8 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
 
         // Append new block to the list (change blocks are omitted.)
         if (body.includeHeightBalances) {
-            const height = Number(transaction.height);
-            const roundedBalance = balance > 100 ? Math.round(balance) : balance;
-            insightsDto.heightBalances.push({ balance: Number(roundedBalance.toFixed(3)), height });
+            const height = transaction.height;
+            insightsDto.heightBalances[height] = Number(balance.toFixed(8));
         }
     }
 
@@ -205,9 +203,11 @@ export const getAccountInsights = (req, res): void => {
     const cache = { ...INSIGHTS_CACHE_PAIR };
     confirmedTransactionsPromise(req.body)
         .then((data) => {
-            cache.key = `${INSIGHTS_CACHE_PAIR.key}/${address}`;
-            cache.duration = calcCacheDuration(data.blockCount);
-            cacheSend(res, data, cache);
+            //cache.key = `${INSIGHTS_CACHE_PAIR.key}/${address}`;
+            //cache.duration = calcCacheDuration(data.blockCount);
+            //cacheSend(res, data, cache);
+            // TODO: Be careful not to cache post requests, includeBlockHeights can change the requiredresponse.
+            res.send(data);
         })
         .catch((err) => res.status(500).send(err));
 };

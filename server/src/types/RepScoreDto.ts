@@ -1,14 +1,14 @@
 export type RepScoreDto = {
     address: string;
     alias?: string;
-    isOnline: boolean;
+    online: boolean;
     monitorStats?: {
         name: string;
         hasMinMemoryRequirement: boolean;
         hasAboveAvgCementedBlocks: boolean;
         hasBelowAvgUncheckedBlocks: boolean;
     };
-    isPrincipal: boolean;
+    principal: boolean;
     weight: number;
     weightPercentage: number;
     score: number;

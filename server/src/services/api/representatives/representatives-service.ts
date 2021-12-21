@@ -6,7 +6,7 @@ import {
     getPRWeightPromise,
     getAliasedReps,
 } from '@app/services';
-import { RepresentativeDto } from '@app/types';
+import {MonitoredRepresentativeDto, RepresentativeDto} from '@app/types';
 
 type RequestBody = {
     addresses?: string[];
@@ -109,7 +109,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         }
 
         if (weight >= minWeight && weight <= maxWeight) {
-            repMap.set(address, { address, weight });
+            repMap.set(address, { address, weight, online: false });
         }
         // Terminates loop early; results have to be sorted by weight descending for this to work.
         if (weight <= minWeight) {
@@ -117,11 +117,16 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         }
     }
 
+
+    const onlineAddresses = new Set(AppCache.onlineRepresentatives);
+
+    // Set online status
+    for (const address of repMap.keys()) {
+        repMap.get(address).online = onlineAddresses.has(address);
+    }
+
     // Filter map to only include Online Representatives
     if (body.isOnline) {
-        const onlineReps = AppCache.onlineRepresentatives;
-        const onlineAddresses = new Set<string>();
-        onlineReps.map((rep) => onlineAddresses.add(rep));
         for (const address of repMap.keys()) {
             if (!onlineAddresses.has(address)) {
                 repMap.delete(address);
@@ -161,9 +166,10 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         for (const stats of monitoredReps) {
             const rep = repMap.get(stats.address);
             if (rep) {
-                rep.nodeMonitorStats = { ...stats };
-                rep.nodeMonitorStats.address = undefined;
-                rep.nodeMonitorStats.online = undefined;
+                const monitoredStats: MonitoredRepresentativeDto = { ...stats};
+                monitoredStats.address = undefined;
+                monitoredStats.online = undefined;
+                rep.nodeMonitorStats = monitoredStats;
             }
         }
     }

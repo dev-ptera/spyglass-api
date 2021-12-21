@@ -4,7 +4,7 @@ export type InsightsDto = {
     firstInTxHash: string;
     firstOutTxUnixTimestamp: number;
     firstOutTxHash: string;
-    heightBalances?: Datapoint[];
+    heightBalances?: Object;
     lastInTxUnixTimestamp: number;
     lastInTxHash: string;
     lastOutTxUnixTimestamp: number;
@@ -26,14 +26,9 @@ export type InsightsDto = {
     totalTxSent: number;
 };
 
-type Datapoint = {
-    balance: number;
-    height: number;
-};
-
 export type InsightsDtoV2 = {
     blockCount: number;
-    heightBalances?: Datapoint[];
+    heightBalances?: Object;
     maxBalance: number;
     maxBalanceHash: string;
     changeStats: {

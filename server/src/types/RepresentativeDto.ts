@@ -1,9 +1,10 @@
 export type RepresentativeDto = {
     address: string;
+    online: boolean;
+    alias?: string;
     weight: number;
     delegatorsCount?: number;
     nodeMonitorStats?: {
-        address?: string;
         cementedBlocks?: number;
         confirmationInfo?: {
             average: number;
@@ -13,7 +14,6 @@ export type RepresentativeDto = {
         ip?: string;
         name?: string;
         nodeUptimeStartup?: number;
-        online?: boolean;
         representative?: string;
         peers?: number;
         totalMem?: number;
@@ -23,10 +23,7 @@ export type RepresentativeDto = {
         version?: string;
         weight?: number;
     };
-    alias?: string;
     uptimeStats?: {
-        address: string;
-        online: boolean;
         /* Not provided if representative has never been offline. */
         lastOutage?: {
             offlineUnixTimestamp: number;

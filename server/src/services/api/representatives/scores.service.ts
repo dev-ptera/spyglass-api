@@ -35,10 +35,10 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
         entry.address = rep.address;
         entry.alias =rep.alias;
         entry.monitorStats = isMonitored ? ({} as any) : undefined;
-        entry.isOnline = onlineReps.has(rep.address);
+        entry.online = onlineReps.has(rep.address);
         entry.weight = rep.weight;
         entry.weightPercentage = (rep.weight / (principalWeightRequirement * 1_000)) * 100;
-        entry.isPrincipal = rep.weight > principalWeightRequirement;
+        entry.principal = rep.weight > principalWeightRequirement;
         entry.uptimePercentages = rep.uptimeStats.uptimePercentages;
 
         // Each rep starts with a score of 0 and is given points for each positive check.
@@ -49,7 +49,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
         if (entry.weightPercentage < 1) {
             score += 10;
         }
-        if (entry.isOnline) {
+        if (entry.online) {
             score += 15;
         }
 

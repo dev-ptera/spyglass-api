@@ -355,21 +355,6 @@
             ],
             "type": "object"
         },
-        "Datapoint": {
-            "properties": {
-                "balance": {
-                    "type": "number"
-                },
-                "height": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "balance",
-                "height"
-            ],
-            "type": "object"
-        },
         "DelegatorDto": {
             "properties": {
                 "address": {
@@ -592,6 +577,31 @@
             ],
             "type": "object"
         },
+        "Function": {
+            "properties": {
+                "arguments": {
+                },
+                "caller": {
+                    "$ref": "#/definitions/Function"
+                },
+                "length": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "prototype": {
+                }
+            },
+            "required": [
+                "arguments",
+                "caller",
+                "length",
+                "name",
+                "prototype"
+            ],
+            "type": "object"
+        },
         "InsightsDto": {
             "properties": {
                 "blockCount": {
@@ -610,22 +620,7 @@
                     "type": "number"
                 },
                 "heightBalances": {
-                    "items": {
-                        "properties": {
-                            "balance": {
-                                "type": "number"
-                            },
-                            "height": {
-                                "type": "number"
-                            }
-                        },
-                        "required": [
-                            "balance",
-                            "height"
-                        ],
-                        "type": "object"
-                    },
-                    "type": "array"
+                    "$ref": "#/definitions/Object"
                 },
                 "lastInTxHash": {
                     "type": "string"
@@ -730,22 +725,7 @@
                     "type": "object"
                 },
                 "heightBalances": {
-                    "items": {
-                        "properties": {
-                            "balance": {
-                                "type": "number"
-                            },
-                            "height": {
-                                "type": "number"
-                            }
-                        },
-                        "required": [
-                            "balance",
-                            "height"
-                        ],
-                        "type": "object"
-                    },
-                    "type": "array"
+                    "$ref": "#/definitions/Object"
                 },
                 "maxBalance": {
                     "type": "number"
@@ -1082,6 +1062,17 @@
             ],
             "type": "object"
         },
+        "Object": {
+            "properties": {
+                "constructor": {
+                    "$ref": "#/definitions/Function"
+                }
+            },
+            "required": [
+                "constructor"
+            ],
+            "type": "object"
+        },
         "PRWeightRequirementDto": {
             "properties": {
                 "weight": {
@@ -1202,30 +1193,37 @@
                 "address": {
                     "type": "string"
                 },
-                "isOnline": {
-                    "type": "boolean"
-                },
-                "isPrincipal": {
-                    "type": "boolean"
+                "alias": {
+                    "type": "string"
                 },
                 "monitorStats": {
                     "properties": {
                         "hasAboveAvgCementedBlocks": {
                             "type": "boolean"
                         },
-                        "hasAboveAvgUncheckedBlocks": {
+                        "hasBelowAvgUncheckedBlocks": {
                             "type": "boolean"
                         },
                         "hasMinMemoryRequirement": {
                             "type": "boolean"
+                        },
+                        "name": {
+                            "type": "string"
                         }
                     },
                     "required": [
                         "hasAboveAvgCementedBlocks",
-                        "hasAboveAvgUncheckedBlocks",
-                        "hasMinMemoryRequirement"
+                        "hasBelowAvgUncheckedBlocks",
+                        "hasMinMemoryRequirement",
+                        "name"
                     ],
                     "type": "object"
+                },
+                "online": {
+                    "type": "boolean"
+                },
+                "principal": {
+                    "type": "boolean"
                 },
                 "score": {
                     "type": "number"
@@ -1266,8 +1264,8 @@
             },
             "required": [
                 "address",
-                "isOnline",
-                "isPrincipal",
+                "online",
+                "principal",
                 "score",
                 "weight",
                 "weightPercentage"
@@ -1287,9 +1285,6 @@
                 },
                 "nodeMonitorStats": {
                     "properties": {
-                        "address": {
-                            "type": "string"
-                        },
                         "cementedBlocks": {
                             "type": "number"
                         },
@@ -1319,9 +1314,6 @@
                         "nodeUptimeStartup": {
                             "type": "number"
                         },
-                        "online": {
-                            "type": "boolean"
-                        },
                         "peers": {
                             "type": "number"
                         },
@@ -1349,11 +1341,11 @@
                     },
                     "type": "object"
                 },
+                "online": {
+                    "type": "boolean"
+                },
                 "uptimeStats": {
                     "properties": {
-                        "address": {
-                            "type": "string"
-                        },
                         "lastOutage": {
                             "properties": {
                                 "durationMinutes": {
@@ -1380,9 +1372,6 @@
                                 "onlineUnixTimestamp"
                             ],
                             "type": "object"
-                        },
-                        "online": {
-                            "type": "boolean"
                         },
                         "pingStats": {
                             "items": {
@@ -1433,8 +1422,6 @@
                         }
                     },
                     "required": [
-                        "address",
-                        "online",
                         "trackingStartDate",
                         "trackingStartUnixTimestamp",
                         "uptimePercentages"
@@ -1447,6 +1434,7 @@
             },
             "required": [
                 "address",
+                "online",
                 "weight"
             ],
             "type": "object"
