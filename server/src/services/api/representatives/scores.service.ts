@@ -1,4 +1,4 @@
-import {AppCache, REP_SCORES_CACHE_PAIR, UPTIME_TRACKING_MIN_WEIGHT} from '@app/config';
+import { AppCache, REP_SCORES_CACHE_PAIR, UPTIME_TRACKING_MIN_WEIGHT } from '@app/config';
 import { cacheSend, getPRWeightPromise, getRepresentativesPromise } from '@app/services';
 import { RepScoreDto } from '@app/types';
 
@@ -33,7 +33,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
         const entry = {} as RepScoreDto;
         const isMonitored = Boolean(rep.nodeMonitorStats);
         entry.address = rep.address;
-        entry.alias =rep.alias;
+        entry.alias = rep.alias;
         entry.monitorStats = isMonitored ? ({} as any) : undefined;
         entry.online = onlineReps.has(rep.address);
         entry.weight = rep.weight;

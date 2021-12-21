@@ -309,8 +309,9 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
     },
     {
         address: 'ban_1hootubxy68fhhrctjmaias148tz91tsse3pq1pgmfedsm3cubhobuihqnxd',
-        alias: 'Eulen',
+        alias: 'Eulentier',
         type: 'representative',
+        owner: 'Eulentier#9166'
     },
     {
         address: 'ban_3goobcumtuqe37htu4qwtpkxnjj4jjheyz6e6kke3mro7d8zq5d36yskphqt',
@@ -481,5 +482,11 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         alias: 'validierung.cc Cologne',
         type: 'representative',
         owner: 'Lawrence#0388',
+    },
+    {
+        address: 'ban_3catgir1p6b1edo5trp7fdb8gsxx4y5ffshbphj73zzy5hu678rsry7srh8b',
+        alias: 'CatGirl',
+        type: 'representative',
+        owner: 'mirandaniel#3515',
     },
 ];

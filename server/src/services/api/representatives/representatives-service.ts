@@ -6,7 +6,7 @@ import {
     getPRWeightPromise,
     getAliasedReps,
 } from '@app/services';
-import {MonitoredRepresentativeDto, RepresentativeDto} from '@app/types';
+import { MonitoredRepresentativeDto, RepresentativeDto } from '@app/types';
 
 type RequestBody = {
     addresses?: string[];
@@ -117,7 +117,6 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         }
     }
 
-
     const onlineAddresses = new Set(AppCache.onlineRepresentatives);
 
     // Set online status
@@ -166,7 +165,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
         for (const stats of monitoredReps) {
             const rep = repMap.get(stats.address);
             if (rep) {
-                const monitoredStats: MonitoredRepresentativeDto = { ...stats};
+                const monitoredStats: MonitoredRepresentativeDto = { ...stats };
                 monitoredStats.address = undefined;
                 monitoredStats.online = undefined;
                 rep.nodeMonitorStats = monitoredStats;
