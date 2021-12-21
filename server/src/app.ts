@@ -58,7 +58,6 @@ import {
     getPeerVersions,
     getQuorum,
     convertManualKnownAccountsToJson,
-    cacheOnlineRepresentativesWithWeights,
     getBurn,
     getRichListSnapshot,
     getRichListSnapshotPost,
@@ -145,11 +144,6 @@ server.listen(port, () => {
         interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     };
 
-    const onlineRepresentativesWithWeights = {
-        method: cacheOnlineRepresentativesWithWeights,
-        interval: REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
-    };
-
     const accountsDistribution = {
         method: IS_PRODUCTION ? cacheAccountDistribution : () => {},
         interval: WALLETS_REFRESH_INTERVAL_MS,
@@ -174,7 +168,6 @@ server.listen(port, () => {
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
         onlineRepresentatives,
-        onlineRepresentativesWithWeights,
         monitoredRepresentatives,
         // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
