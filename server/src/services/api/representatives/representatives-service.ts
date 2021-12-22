@@ -229,7 +229,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 /**
  * Gets the top 5000 representatives & filters out smaller ones.
  */
-export const getRepresentatives = (req, res): void => {
+export const getRepresentativesV1 = (req, res): void => {
     const body = req.body as RequestBody;
     getRepresentativesPromise(body)
         .then((reps) => res.send(reps))

@@ -145,7 +145,7 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
 };
 
 /** For a given address, return a list of confirmed transactions. */
-export const getConfirmedTransactions = (req, res): void => {
+export const getConfirmedTransactionsV1 = (req, res): void => {
     setBodyDefaults(req.body);
     getConfirmedTransactionsPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {

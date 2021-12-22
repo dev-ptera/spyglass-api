@@ -239,7 +239,7 @@ export const getRepresentativesUptimePromise = async (body: RequestBody): Promis
 };
 
 /** Returns uptime metrics for a list of representatives. */
-export const getRepresentativesUptime = async (req, res): Promise<RepresentativeUptimeDto[]> => {
+export const getRepresentativesUptimeV1 = async (req, res): Promise<RepresentativeUptimeDto[]> => {
     const body = req.body as RequestBody;
     const uptimeStats = await getRepresentativesUptimePromise(body);
     res.send(uptimeStats);

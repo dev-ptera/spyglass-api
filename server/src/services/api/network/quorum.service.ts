@@ -118,7 +118,7 @@ export const getQuorumPromise = async (): Promise<QuorumDto> => {
  *  Statistics are not real-time nor 100% accurate since `onlineWeight` is calculated
  *  using online representatives provided via the `online-representatives` service.
  * */
-export const getQuorum = (res): void => {
+export const getQuorumV1 = (res): void => {
     getQuorumPromise()
         .then((data) => res.send(data))
         .catch((err) => res.status(500).send(err));

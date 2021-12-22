@@ -41,7 +41,7 @@ export const pruneRepresentatives = (balances: AccountBalanceDto[], includeRep: 
 };
 
 /** Uses the AppCache to return a list of accounts & their respective balance, sorted by balance descending. */
-export const getRichList = (req, res) => {
+export const getRichListV1 = (req, res) => {
     setBodyDefaults(req.body);
 
     const offset = Number(req.body.offset);
@@ -59,12 +59,12 @@ export const getRichList = (req, res) => {
 };
 
 /** Return Rich List Snapshot */
-export const getRichListSnapshot = (res) => {
+export const getRichListSnapshotV1 = (res) => {
     res.send(AppCache.richList);
 };
 
 /** Return Rich List Snapshot */
-export const getRichListSnapshotPost = (req, res) => {
+export const getRichListSnapshotPostV1 = (req, res) => {
     setBodyDefaults(req.body);
     const list = [];
     AppCache.richList.map((entry) => list.push(Object.assign({}, entry)));

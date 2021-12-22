@@ -7,6 +7,6 @@ export const getAliasedReps = (): AliasedRepresentativeDto[] => {
 };
 
 /** Returns an array of aliased representative addresses. */
-export const getAliasedRepresentatives = (res): void => {
+export const getAliasedRepresentativesV1 = (res): void => {
     res.send(getAliasedReps());
 };

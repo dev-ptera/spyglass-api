@@ -41,7 +41,7 @@ const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto>
 
 /** The Nakamoto coefficient represents the minimum number of entities to compromise a given subsystem.
  *  In this context, it represents the number of representatives that must collude together to achieve consensus. */
-export const getNakamotoCoefficient = (res): void => {
+export const getNakamotoCoefficientV1 = (res): void => {
     calcNakamotoCoefficientPromise()
         .then((nc) => cacheSend(res, nc, NAKAMOTO_COEFFICIENT_CACHE_PAIR))
         .catch((err) => res.status(500).send(err));

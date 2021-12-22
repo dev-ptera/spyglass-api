@@ -75,7 +75,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
 };
 
 /** Looks ups pending transactions for a given account. */
-export const getReceivableTransactions = (req, res): void => {
+export const getReceivableTransactionsV1 = (req, res): void => {
     receivableTransactionsPromise(req.body)
         .then((confirmedTx: ReceivableTransactionDto[]) => {
             res.send(confirmedTx);

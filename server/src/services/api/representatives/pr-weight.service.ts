@@ -12,7 +12,7 @@ export const getPRWeightPromise = (): Promise<number> =>
         .catch((err) => Promise.reject(LOG_ERR('getPRWeightPromise', err)));
 
 /** Returns weight required to be considered a principal representative. */
-export const getPRWeight = (res): void => {
+export const getPRWeightV1 = (res): void => {
     getPRWeightPromise()
         .then((weight) => res.send({ weight } as PRWeightRequirementDto))
         .catch((err) => res.status(500).send(err));

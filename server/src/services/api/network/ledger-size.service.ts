@@ -17,7 +17,7 @@ const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
         });
     });
 
-export const getLedgerSize = (res): void => {
+export const getLedgerSizeV1 = (res): void => {
     getLedgerSizePromise()
         .then((data) => cacheSend(res, data, LEDGER_SIZE_CACHE_PAIR))
         .catch((err) => res.status(500).send(err));

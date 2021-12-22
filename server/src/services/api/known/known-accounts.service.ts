@@ -130,7 +130,7 @@ export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
 };
 
 /** Returns a list of accounts that are known on the network (exchanges, representatives, funds, etc). */
-export const getKnownAccounts = (req, res): void => {
+export const getKnownAccountsV1 = (req, res): void => {
     const body = req.body as RequestBody;
     setBodyDefaults(req.body);
     const accounts = filterKnownAccounts(body);

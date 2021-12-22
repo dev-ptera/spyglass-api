@@ -44,7 +44,7 @@ const accountInfoPromise = (address: string): Promise<AccountInfoResponse> =>
         });
 
 /** Given an address, returns an overview of the account including balance, confirmed/pending transactions, delegators, etc. */
-export const getAccountOverview = (req, res): void => {
+export const getAccountOverviewV1 = (req, res): void => {
     const parts = req.url.split('/');
     const address = parts[parts.length - 1];
 

@@ -30,7 +30,7 @@ export const getPeerVersionsPromise = async (): Promise<PeerVersionsDto[]> => {
 };
 
 /** Returns protocol versions of all connected peers. */
-export const getPeerVersions = (res): void => {
+export const getPeerVersionsV1 = (res): void => {
     getPeerVersionsPromise()
         .then((data) => res.send(data))
         .catch((err) => res.status(500).send(err));

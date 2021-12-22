@@ -31,7 +31,7 @@ export const getSupplyPromise = async (): Promise<SupplyDto> => {
 };
 
 /** Returns circulating, burned, and core-team controlled supply statistics. */
-export const getSupply = (res): void => {
+export const getSupplyV1 = (res): void => {
     getSupplyPromise()
         .then((data) => {
             res.send(data);

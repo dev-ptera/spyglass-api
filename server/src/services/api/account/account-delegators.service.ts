@@ -80,7 +80,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
 };
 
 /** Given an address, returns a list of delegators. */
-export const getDelegators = (req, res): void => {
+export const getDelegatorsV1 = (req, res): void => {
     getDelegatorsPromise(req.body)
         .then((delegators) => {
             res.send(delegators);

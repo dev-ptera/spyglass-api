@@ -13,7 +13,7 @@ export const blocksInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse>
         });
 
 /** Returns block information for a given hash.  */
-export const getBlockInfo = (req, res): void => {
+export const getBlockInfoV1 = (req, res): void => {
     const parts = req.url.split('/');
     const hash = parts[parts.length - 1];
 

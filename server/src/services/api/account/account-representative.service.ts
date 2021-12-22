@@ -13,7 +13,7 @@ export const getAccountRepresentativePromise = async (address: string): Promise<
 };
 
 /** Returns an accounts representative. */
-export const getAccountRepresentative = (req, res): void => {
+export const getAccountRepresentativeV1 = (req, res): void => {
     const parts = req.url.split('/');
     const address = parts[parts.length - 1];
     if (!isValidAddress(address)) {

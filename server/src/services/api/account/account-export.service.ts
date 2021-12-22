@@ -53,7 +53,7 @@ const getAccountExportPromise = async (body: { address: string }): Promise<strin
 };
 
 /** For a given address, returns transactions in a csv format . */
-export const getAccountExport = (req, res): void => {
+export const getAccountExportV1 = (req, res): void => {
     getAccountExportPromise(req.body)
         .then((csv: string) => {
             res.send(csv);

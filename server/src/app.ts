@@ -31,41 +31,40 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
-    getNakamotoCoefficient,
-    getRepresentatives,
-    getAliasedRepresentatives,
-    sleep,
-    getBlockInfo,
-    getRepresentativesUptime,
+    getNakamotoCoefficientV1,
+    getRepresentativesV1,
+    getAliasedRepresentativesV1,
+    getBlockInfoV1,
+    getRepresentativesUptimeV1,
     cacheMonitoredReps,
     writeNewRepresentativeUptimePings,
     cacheKnownAccounts,
-    getKnownVanities,
-    getKnownAccounts,
-    getSupply,
-    getDeveloperFunds,
-    getPRWeight,
-    getAccountInsights,
-    getDelegators,
-    getConfirmedTransactions,
+    getKnownVanitiesV1,
+    getKnownAccountsV1,
+    getSupplyV1,
+    getDeveloperFundsV1,
+    getPRWeightV1,
+    getAccountInsightsV1,
+    getDelegatorsV1,
+    getConfirmedTransactionsV1,
     importHistoricHashTimestamps,
     cacheOnlineRepresentatives,
-    getAccountRepresentative,
+    getAccountRepresentativeV1,
     cacheAccountDistribution,
     parseRichListFromFile,
-    getDistributionBuckets,
-    getRichList,
-    getPeerVersions,
-    getQuorum,
+    getDistributionBucketsV1,
+    getRichListV1,
+    getPeerVersionsV1,
+    getQuorumV1,
     convertManualKnownAccountsToJson,
-    getBurn,
-    getRichListSnapshot,
-    getRichListSnapshotPost,
-    getReceivableTransactions,
-    getAccountExport,
-    getAccountOverview,
-    getLedgerSize,
-    getScores,
+    getBurnV1,
+    getRichListSnapshotV1,
+    getRichListSnapshotPostV1,
+    getReceivableTransactionsV1,
+    getAccountExportV1,
+    getAccountOverviewV1,
+    getLedgerSizeV1,
+    getScoresV1,
 } from '@app/services';
 import { corsOptions, memCache, rateLimter } from '@app/middleware';
 
@@ -82,45 +81,44 @@ app.use(rateLimter);
 app.use(memCache);
 
 /* Account */
-//app.post(`/${PATH_ROOT}/account/:address/delegators`, (req, res) => getDelegators(req, res));
-app.get(`/${PATH_ROOT}/account/representative/:address`, (req, res) => getAccountRepresentative(req, res));
-app.get(`/${PATH_ROOT}/account/overview/:address`, (req, res) => getAccountOverview(req, res));
-app.post(`/${PATH_ROOT}/account/confirmed-transactions`, (req, res) => getConfirmedTransactions(req, res));
-app.post(`/${PATH_ROOT}/account/receivable-transactions`, (req, res) => getReceivableTransactions(req, res));
-app.post(`/${PATH_ROOT}/account/delegators`, (req, res) => getDelegators(req, res));
-app.post(`/${PATH_ROOT}/account/insights`, (req, res) => getAccountInsights(req, res));
-app.post(`/${PATH_ROOT}/account/export`, (req, res) => getAccountExport(req, res));
+app.get(`/${PATH_ROOT}/v1/account/representative/:address`, (req, res) => getAccountRepresentativeV1(req, res));
+app.get(`/${PATH_ROOT}/v1/account/overview/:address`, (req, res) => getAccountOverviewV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/confirmed-transactions`, (req, res) => getConfirmedTransactionsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/receivable-transactions`, (req, res) => getReceivableTransactionsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req, res));
 
 /* Block */
-app.get(`/${PATH_ROOT}/block/:block`, (req, res) => getBlockInfo(req, res));
+app.get(`/${PATH_ROOT}/v1/block/:block`, (req, res) => getBlockInfoV1(req, res));
 
 /* Distribution */
-app.get(`/${PATH_ROOT}/distribution/burn`, (req, res) => getBurn(res));
-app.get(`/${PATH_ROOT}/distribution/supply`, (req, res) => getSupply(res));
-app.get(`/${PATH_ROOT}/distribution/buckets`, (req, res) => getDistributionBuckets(res));
-app.get(`/${PATH_ROOT}/distribution/developer-funds`, (req, res) => getDeveloperFunds(res));
-app.get(`/${PATH_ROOT}/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshot(res));
-app.post(`/${PATH_ROOT}/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshotPost(req, res));
-app.post(`/${PATH_ROOT}/distribution/rich-list`, (req, res) => getRichList(req, res));
+app.get(`/${PATH_ROOT}/v1/distribution/burn`, (req, res) => getBurnV1(res));
+app.get(`/${PATH_ROOT}/v1/distribution/supply`, (req, res) => getSupplyV1(res));
+app.get(`/${PATH_ROOT}/v1/distribution/buckets`, (req, res) => getDistributionBucketsV1(res));
+app.get(`/${PATH_ROOT}/v1/distribution/developer-funds`, (req, res) => getDeveloperFundsV1(res));
+app.get(`/${PATH_ROOT}/v1/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshotV1(res));
+app.post(`/${PATH_ROOT}/v1/distribution/rich-list-snapshot`, (req, res) => getRichListSnapshotPostV1(req, res));
+app.post(`/${PATH_ROOT}/v1/distribution/rich-list`, (req, res) => getRichListV1(req, res));
 
 /* Known */
-app.get(`/${PATH_ROOT}/known/vanities`, (req, res) => getKnownVanities(res));
-app.post(`/${PATH_ROOT}/known/accounts`, (req, res) => getKnownAccounts(req, res));
+app.get(`/${PATH_ROOT}/v1/known/vanities`, (req, res) => getKnownVanitiesV1(res));
+app.post(`/${PATH_ROOT}/v1/known/accounts`, (req, res) => getKnownAccountsV1(req, res));
 
 /* Network */
-app.get(`/${PATH_ROOT}/network/ledger-size`, (req, res) => getLedgerSize(res));
-app.get(`/${PATH_ROOT}/network/quorum`, (req, res) => getQuorum(res));
-app.get(`/${PATH_ROOT}/network/peers`, (req, res) => getPeerVersions(res));
-app.get(`/${PATH_ROOT}/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficient(res));
+app.get(`/${PATH_ROOT}/v1/network/ledger-size`, (req, res) => getLedgerSizeV1(res));
+app.get(`/${PATH_ROOT}/v1/network/quorum`, (req, res) => getQuorumV1(res));
+app.get(`/${PATH_ROOT}/v1/network/peers`, (req, res) => getPeerVersionsV1(res));
+app.get(`/${PATH_ROOT}/v1/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficientV1(res));
 
 /* Representatives */
-app.get(`/${PATH_ROOT}/representatives/pr-weight`, (req, res) => getPRWeight(res));
-app.get(`/${PATH_ROOT}/representatives/aliases`, (req, res) => getAliasedRepresentatives(res));
-app.get(`/${PATH_ROOT}/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
-app.get(`/${PATH_ROOT}/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
-app.get(`/${PATH_ROOT}/representatives/scores`, (req, res) => getScores(res));
-app.post(`/${PATH_ROOT}/representatives`, (req, res) => getRepresentatives(req, res));
-app.post(`/${PATH_ROOT}/representatives/uptime`, (req, res) => getRepresentativesUptime(req, res));
+app.get(`/${PATH_ROOT}/v1/representatives/pr-weight`, (req, res) => getPRWeightV1(res));
+app.get(`/${PATH_ROOT}/v1/representatives/aliases`, (req, res) => getAliasedRepresentativesV1(res));
+app.get(`/${PATH_ROOT}/v1/representatives/monitored`, (req, res) => sendCached(res, 'monitoredReps'));
+app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => sendCached(res, 'onlineRepresentatives'));
+app.get(`/${PATH_ROOT}/v1/representatives/scores`, (req, res) => getScoresV1(res));
+app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentativesV1(req, res));
+app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptimeV1(req, res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);

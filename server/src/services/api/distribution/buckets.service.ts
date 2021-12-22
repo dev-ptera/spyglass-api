@@ -158,6 +158,6 @@ export const cacheAccountDistribution = async (): Promise<void> => {
 };
 
 /** Returns number of accounts that hold each wealth bucket (eg. [1-10], [10_000-100_000]) */
-export const getDistributionBuckets = (res): void => {
+export const getDistributionBucketsV1 = (res): void => {
     res.send(AppCache.accountDistributionStats);
 };

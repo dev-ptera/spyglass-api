@@ -28,7 +28,7 @@ export const getBurnPromise = async (): Promise<BurnAccountsDto> => {
 };
 
 /** Returns burn-account statistics. */
-export const getBurn = (res): void => {
+export const getBurnV1 = (res): void => {
     getBurnPromise()
         .then((data) => {
             res.send(data);

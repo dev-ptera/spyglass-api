@@ -198,7 +198,7 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
 /** Given an account address, it will return chart datapoints that represent that account's balance over time,
  *  as well as account-specific stats for most all-time balance, most common sender, etc.
  */
-export const getAccountInsights = (req, res): void => {
+export const getAccountInsightsV1 = (req, res): void => {
     const address = req.body.address;
     const cache = { ...INSIGHTS_CACHE_PAIR };
     confirmedTransactionsPromise(req.body)
