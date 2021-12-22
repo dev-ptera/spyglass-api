@@ -28,7 +28,7 @@ const setBodyDefaults = (body: RequestBody): void => {
     }
 };
 
-/** Fetches remote spyglass known accounts. */
+/** Fetches remote spyglass known accounts, falls back to local known accounts data. */
 const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
     new Promise<KnownAccountDto[]>((resolve) => {
         axios
@@ -39,7 +39,7 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
             .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
             .catch((err) => {
                 LOG_ERR('fetchSpyglassRemoteKnownAccounts', err);
-                resolve([]);
+                resolve(KNOWN_ACCOUNTS);
             });
     });
 
@@ -58,57 +58,60 @@ const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
-/** Responsible for fetching known accounts from local/remote sources. */
+/** Responsible for fetching known accounts from local/remote sources.
+ *
+ * Order of insertion:
+ * 1. Local entries via KNOWN_ACCOUNTS.
+ * 2. Kirby API
+ * 3. Remote KNOWN_ACCOUNTS via spyglass-api master branch.
+ * */
 const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const start = LOG_INFO('Refreshing Known Accounts');
     const kirbyKnownAccounts = await fetchKirbyKnownAccounts();
     const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
-    const aliasSet = new Set<string>();
-    const addressSet = new Set<string>();
-
-    // On initial load, use the local KNOWN_ACCOUNTS data.
-    if (AppCache.knownAccounts.length === 0) {
-        KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
-    }
-
-    // Clear the current list if we pulled down the new list successfully.
-    if (spyglassKnownAccountsRemote.length > 0) {
-        AppCache.knownAccounts = [];
-    } else {
-        // Add existing known accounts to the map so we don't lose any past data.
-        AppCache.knownAccounts.map((account) => knownAccountMap.set(account.address, account));
-    }
 
     /* Kirby entries are entered first. */
-    for (const kirbyKnownAccount of kirbyKnownAccounts) {
-        if (kirbyKnownAccount.type) {
-            kirbyKnownAccount.type = kirbyKnownAccount.type.toLowerCase() as any;
-        }
-        knownAccountMap.set(kirbyKnownAccount.address, kirbyKnownAccount);
-    }
+    kirbyKnownAccounts.map((account) => {
+        insertEntries(account, knownAccountMap);
+    })
 
-    /* Loop through the map of known accounts & populate the alias & address sets;
-       These sets are used to identify & remove duplicate entries between data sources. */
-    for (const key of knownAccountMap.keys()) {
-        const account = knownAccountMap.get(key);
-        aliasSet.add(account.alias);
-        addressSet.add(account.address);
-    }
-
-    /* Spyglass entries are entered next & override any duplicate aliases. */
-    for (const spyglassKnownAccount of spyglassKnownAccountsRemote) {
-        if (aliasSet.has(spyglassKnownAccount.alias) || addressSet.has(spyglassKnownAccount.address)) {
-            knownAccountMap.delete(spyglassKnownAccount.address);
-        }
-        knownAccountMap.set(spyglassKnownAccount.address, spyglassKnownAccount);
-    }
+    /* Spyglass entries are entered next & override any duplicate fields. */
+    spyglassKnownAccountsRemote.map((account) => {
+        insertEntries(account, knownAccountMap);
+    });
 
     const accounts = Array.from(knownAccountMap.values());
     accounts.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
     LOG_INFO('Known Accounts Updated', start);
     return accounts;
 };
+
+const insertEntries = (newInfo: KnownAccountDto, map: Map<string, KnownAccountDto>): void => {
+
+    // Make sure this field is all lowercase.
+    if (newInfo.type) {
+        newInfo.type = newInfo.type.toLowerCase() as any;
+    }
+
+    // Handle new insertions.
+    const previouslyKnown = map.get(newInfo.address);
+    if (!previouslyKnown) {
+        map.set(newInfo.address, newInfo);
+        return;
+    }
+
+    // Handle overwriting existing entries.
+    if (newInfo.type) {
+        previouslyKnown.type = newInfo.type;
+    }
+    if (newInfo.alias) {
+        previouslyKnown.alias = newInfo.alias;
+    }
+    if (newInfo.owner) {
+        previouslyKnown.owner = newInfo.owner;
+    }
+}
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];

@@ -9,7 +9,7 @@ export type KnownAccountType =
     | ''
     | 'representative'
     | 'exchange'
-    | 'developer'
+    | 'distribution'
     | 'faucet'
     | 'explorer'
     | 'citizen'

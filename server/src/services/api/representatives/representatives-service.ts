@@ -189,6 +189,7 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Append uptime stats to each rep.
     if (body.includeUptimeStats) {
+        // TODO: Filter reps with <= UPTIME_THRESHOLD weight before attempt to search
         const uptimeStats = await getRepresentativesUptimePromise({
             representatives: Array.from(repMap.keys()),
             includePings: body.includeUptimePings,
