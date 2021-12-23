@@ -6,6 +6,7 @@ moduleAlias.addAlias('@app/services', __dirname + '/services');
 moduleAlias.addAlias('@app/types', __dirname + '/types');
 
 import * as express from 'express';
+import * as cors from 'cors';
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -75,6 +76,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors());
 app.use(rateLimter);
 app.use(memCache);
 
