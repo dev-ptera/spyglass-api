@@ -6,7 +6,6 @@ moduleAlias.addAlias('@app/services', __dirname + '/services');
 moduleAlias.addAlias('@app/types', __dirname + '/types');
 
 import * as express from 'express';
-import * as cors from 'cors';
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -66,7 +65,7 @@ import {
     getLedgerSizeV1,
     getScoresV1,
 } from '@app/services';
-import { corsOptions, memCache, rateLimter } from '@app/middleware';
+import { memCache, rateLimter } from '@app/middleware';
 
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
 
@@ -76,7 +75,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors(corsOptions));
 app.use(rateLimter);
 app.use(memCache);
 
