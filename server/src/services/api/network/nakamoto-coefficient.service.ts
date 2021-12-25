@@ -7,7 +7,7 @@ const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto>
     // Use a cached delta value if it's available, otherwise call the Quorum service.
     let delta: number;
     if (AppCache.temp.has(QUORUM_CACHE_PAIR.key)) {
-        delta = AppCache.temp.get(QUORUM_CACHE_PAIR.key);
+        delta = AppCache.temp.get(QUORUM_CACHE_PAIR.key).quorumDelta;
     } else {
         const quorum = await getQuorumPromise().catch(Promise.reject);
         delta = quorum.quorumDelta;
