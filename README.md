@@ -104,6 +104,14 @@ Returns a list of representatives; includes extensive filtering options.
 
 Returns uptime statistics for a given representative.
   
+  
+## Stack
+
+The documentation site (`/client`) is written using Angular.
+
+The server is written using ExpressJS and Typescript. 
+
+
 ## Contact
 
 Suggestions or issues? Please feel free to post an issue directly on the github.
