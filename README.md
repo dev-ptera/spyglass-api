@@ -109,7 +109,7 @@ Returns uptime statistics for a given representative.
 
 The documentation site (`/client`) is written using Angular.
 
-The server is written using ExpressJS and Typescript. 
+The server (`/server`) is written using ExpressJS and Typescript. 
 
 
 ## Contact
