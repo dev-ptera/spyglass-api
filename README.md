@@ -1,7 +1,7 @@
 # spyglass-api
 
 Spyglass API is a free-to-use REST-ful datasource which can be used to fuel apps in the banano or nano ecosystem.  
-There's currently request throttling in place but the default rates can be increased with the use of an authentication token (todo). 
+There's currently request throttling in place, but the default rates can be increased with the use of an authentication token (todo). 
 
 https://spyglass-api.web.app
 
@@ -29,7 +29,7 @@ Returns the account's representative.
 
 #### `account/receivable-transactions`
 
-Returns a list of pending transactions.  Includes options for paginations.
+Returns a list of pending transactions.  Includes options for pagination.
 
 #### `block/block`
 
@@ -99,6 +99,10 @@ Returns the weight required for a representative to be considered a principal re
 #### `representatives/representatives`
 
 Returns a list of representatives; includes extensive filtering options.
+
+#### `representatives/scores`
+
+Assigns a score [1-100] to each representative based on uptime, weight & other factors.
 
 #### `representatives/uptime`
 
