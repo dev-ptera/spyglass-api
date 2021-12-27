@@ -108,6 +108,14 @@ Assigns a score [1-100] to each representative based on uptime, weight & other f
 
 Returns uptime statistics for a given representative.
   
+  
+## Stack
+
+The documentation site (`/client`) is written using Angular.
+
+The server (`/server`) is written using ExpressJS and Typescript. 
+
+
 ## Contact
 
 Suggestions or issues? Please feel free to post an issue directly on the github.
