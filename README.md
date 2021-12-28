@@ -119,11 +119,10 @@ For Nano, rep uptime is not being calculated since I'm not hosting this service.
 
 ### Banano
 
-For Banano, representative uptime is analyzed & stored for each rep with a weight of >10,000 BAN and is calculated on a daily, weekly, monthly, semi-anually, and yearly basis.  
+For Banano, representative uptime is analyzed & stored for each rep with a weight of >10,000 BAN and is calculated on a daily, weekly, monthly, semi-anually, and yearly basis.  Checks happen every minute & if a representative fails to pass an 'online' check 3 consecutive times, the representative is considered offline until it reappears as online. The results of each check are stored in JSON files (`database/banano/rep-uptime`) & are backed-up automatically each day via an automation script.
 
 For Prinicipal Representatives, I use the Nano RPC `representatives_online` command and aggregate the results from several nodes (`/config/banano`).  For Non-Principal Representives, since these nodes do not rebroadcast votes, they do not appear within the RPC command used for PRs (this is specific to V22).  If a non-PR rep is running some form of node-monitor software & I am peered with them, they will appear as online.
 
-If a representative fails to pass an `online` check 3 consecutive times, the representative is considered offline until it passes the online check again.  These checks happen every minute & the uptime JSON files are backed-up automatically each day via an automation script.
 
 ## Contact
 
