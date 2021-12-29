@@ -1,7 +1,7 @@
 const { exec } = require("child_process");
 
-// Run every 7 days.
-const dayMs = 1000 * 60 * 60 * 24 * 7;
+// Run every 1 days.
+const dayMs = 1000 * 60 * 60 * 24 * 1;
 
 console.log('Started script at time: ');
 console.log(new Date().toLocaleTimeString());

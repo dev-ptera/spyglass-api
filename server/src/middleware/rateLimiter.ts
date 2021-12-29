@@ -1,4 +1,4 @@
-export const REQUESTS_PER_MINUTE = 20;
+export const REQUESTS_PER_MINUTE = 50;
 // TODO: issue key and reduce to 10.
 
 const rateLimit = require('express-rate-limit');
