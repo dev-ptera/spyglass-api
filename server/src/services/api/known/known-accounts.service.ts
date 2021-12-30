@@ -114,6 +114,9 @@ const insertEntries = (newInfo: KnownAccountDto, map: Map<string, KnownAccountDt
 }
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
+    if (!body || !body.typeFilter) {
+        return AppCache.knownAccounts;
+    }
     const accounts: KnownAccountDto[] = [];
     const filter = body.typeFilter.toLowerCase().trim();
     AppCache.knownAccounts.map((account) => {

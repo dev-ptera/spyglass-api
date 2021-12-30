@@ -2,13 +2,13 @@ export type InsightsDto = {
     blockCount: number;
     firstInTxUnixTimestamp: number;
     firstInTxHash: string;
-    firstOutTxUnixTimestamp: number;
-    firstOutTxHash: string;
+    firstOutTxUnixTimestamp?: number;
+    firstOutTxHash?: string;
     heightBalances?: Object;
     lastInTxUnixTimestamp: number;
     lastInTxHash: string;
-    lastOutTxUnixTimestamp: number;
-    lastOutTxHash: string;
+    lastOutTxUnixTimestamp?: number;
+    lastOutTxHash?: string;
     maxAmountReceivedHash: string;
     maxAmountReceived: number;
     maxAmountSentHash: string;
@@ -17,7 +17,7 @@ export type InsightsDto = {
     maxBalance: number;
     mostCommonSenderAddress: string;
     mostCommonSenderTxCount: number;
-    mostCommonRecipientAddress: string;
+    mostCommonRecipientAddress?: string;
     mostCommonRecipientTxCount: number;
     totalAmountReceived: number;
     totalAmountSent: number;
