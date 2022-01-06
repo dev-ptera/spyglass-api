@@ -1191,6 +1191,9 @@
                 "alias": {
                     "type": "string"
                 },
+                "daysAge": {
+                    "type": "number"
+                },
                 "monitorStats": {
                     "properties": {
                         "hasAboveAvgCementedBlocks": {
@@ -1259,6 +1262,7 @@
             },
             "required": [
                 "address",
+                "daysAge",
                 "online",
                 "principal",
                 "score",

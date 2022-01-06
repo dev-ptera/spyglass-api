@@ -2,6 +2,7 @@ export type RepScoreDto = {
     address: string;
     alias?: string;
     online: boolean;
+    daysAge: number;
     monitorStats?: {
         name: string;
         hasMinMemoryRequirement: boolean;
