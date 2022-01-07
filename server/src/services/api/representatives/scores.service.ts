@@ -50,10 +50,10 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
         if (entry.weightPercentage < 1) {
             score += 10;
         }
-        if (entry.daysAge < 30) {
+        if (entry.daysAge > 30) {
             score += 5;
         }
-        if (entry.daysAge < 45) {
+        if (entry.daysAge > 45) {
             score += 5;
         }
         if (entry.online) {
