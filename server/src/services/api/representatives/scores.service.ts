@@ -48,7 +48,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
             score += 10;
         }
         if (entry.weightPercentage < 1) {
-            score += 10;
+            score += 5;
         }
         if (entry.daysAge > 30) {
             score += 5;
@@ -81,9 +81,9 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
             }
         }
 
-        // Max +55
+        // Max +60
         if (entry.uptimePercentages?.semiAnnual) {
-            score += Math.round(entry.uptimePercentages.semiAnnual * 0.55);
+            score += Math.round(entry.uptimePercentages.semiAnnual * 0.60);
         }
         entry.score = score;
 
