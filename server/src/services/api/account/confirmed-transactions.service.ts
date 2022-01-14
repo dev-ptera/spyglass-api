@@ -81,7 +81,7 @@ const discoverConfirmedTransactions = async (
     searches: number,
     confirmedTx: ConfirmedTransactionDto[]
 ): Promise<boolean> => {
-    const rpcSearchSize = 200;
+    const rpcSearchSize = 2000;
     const address = body.address;
     const offset = Number(body.offset) + rpcSearchSize * searches;
 

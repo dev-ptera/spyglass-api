@@ -1,5 +1,4 @@
 import {
-    cacheSend,
     convertFromRaw,
     getAccurateHashTimestamp,
     getTransactionType,
@@ -9,7 +8,6 @@ import {
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { INSIGHTS_CACHE_PAIR } from '@app/config';
-import { calcCacheDuration } from '@app/middleware';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
