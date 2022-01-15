@@ -14,6 +14,9 @@ type RequestBody = {
     includeSend?: boolean;
     includeReceive?: boolean;
     includeChange?: boolean;
+    filterAddresses?: string[];
+    minAmount?: number,
+    maxAmount?: number,
     offset?: number;
     size?: number;
 };
@@ -23,6 +26,7 @@ const DEFAULT_BODY: RequestBody = {
     includeSend: true,
     includeReceive: true,
     includeChange: true,
+    filterAddresses: [],
     offset: 0,
     size: 25,
 };
@@ -84,6 +88,9 @@ const discoverConfirmedTransactions = async (
     const rpcSearchSize = 2000;
     const address = body.address;
     const offset = Number(body.offset) + rpcSearchSize * searches;
+    const hasMaxAmountFilter = Boolean(body.maxAmount);
+    const hasMinAmountFilter = Boolean(body.minAmount);
+    const addressFilterSet = new Set(body.filterAddresses);
 
     const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize).catch((err) => {
         return Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }));
@@ -105,6 +112,28 @@ const discoverConfirmedTransactions = async (
         }
         if (!body.includeReceive && type === 'receive') {
             continue;
+        }
+
+        // Amount Filters
+        if ((hasMinAmountFilter || hasMaxAmountFilter) && type !== 'change') {
+
+            if (hasMaxAmountFilter && convertFromRaw(transaction.amount, 10) > body.maxAmount) {
+                continue;
+            }
+            if (hasMinAmountFilter && convertFromRaw(transaction.amount, 10) < body.minAmount) {
+                continue;
+            }
+        }
+
+        // Address Filters
+        if (addressFilterSet.size > 0) {
+            if (type === 'change') {
+                if (!addressFilterSet.has(transaction['representative'])) {
+                    continue;
+                }
+            } else if (!addressFilterSet.has(transaction.account)) {
+                continue;
+            }
         }
         confirmedTx.push(convertToConfirmedTransactionDto(transaction));
         if (confirmedTx.length === body.size) {

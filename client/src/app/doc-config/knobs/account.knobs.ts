@@ -14,7 +14,6 @@ export const ACCOUNT_OVERVIEW_KNOBS: Array<Knob> = [
     },
 ];
 
-
 export const ACCOUNT_RECEIVABLE_KNOB: Array<Knob> = [
     {
         propertyName: 'address',
@@ -81,6 +80,11 @@ export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
         propertyType: 'string',
     },
     {
+        propertyName: 'filterAddresses',
+        propertyType: 'array',
+        notes: 'Only show transactions where these addresses were either the sender, recipient, or new representative',
+    },
+    {
         propertyName: 'includeChange',
         propertyType: 'boolean',
         defaultValue: true,
@@ -94,6 +98,16 @@ export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
         propertyName: 'includeSend',
         propertyType: 'boolean',
         defaultValue: true,
+    },
+    {
+        propertyName: 'maxAmount',
+        propertyType: 'number',
+        notes: 'Maximum number of required to included (not raw)',
+    },
+    {
+        propertyName: 'minAmount',
+        propertyType: 'number',
+        notes: 'Minimum number of required to included (not raw)',
     },
     {
         propertyName: 'offset',
