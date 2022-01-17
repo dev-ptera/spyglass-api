@@ -82,7 +82,7 @@ export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
     {
         propertyName: 'filterAddresses',
         propertyType: 'array',
-        notes: 'Only show transactions where these addresses were either the sender, recipient, or new representative',
+        notes: 'Only show transactions that include these addresses as sender, recipient, or new representative',
     },
     {
         propertyName: 'includeChange',
@@ -102,12 +102,12 @@ export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
     {
         propertyName: 'maxAmount',
         propertyType: 'number',
-        notes: 'Maximum number of required to included (not raw)',
+        notes: 'Maximum number sent/received to be included (not raw)',
     },
     {
         propertyName: 'minAmount',
         propertyType: 'number',
-        notes: 'Minimum number of required to included (not raw)',
+        notes: 'Minimum number sent/received to be included (not raw)',
     },
     {
         propertyName: 'offset',

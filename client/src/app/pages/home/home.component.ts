@@ -69,7 +69,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
     examplePost = `
-curl -X POST https://api.spyglass.pw/banano/representatives
+curl -X POST https://api.spyglass.pw/banano/v1/representatives
 -H 'Content-Type: application/json'
 -d '{"minimumWeight":"100000"}'`;
 }
