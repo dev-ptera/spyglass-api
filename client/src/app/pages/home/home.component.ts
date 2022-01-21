@@ -12,7 +12,8 @@ import { Component } from '@angular/core';
                         <a href="https://banano.cc/" target="_blank" class="link">banano</a> ecosystem.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
-                        It is rate-limited at 10 requests per minute per IP address & has semi-reliable uptime.  Use at your own risk in a production environment.
+                        It is rate-limited at 10 requests per minute per IP address & has semi-reliable uptime. Use at
+                        your own risk in a production environment.
                     </div>
                 </div>
             </div>
@@ -24,21 +25,28 @@ import { Component } from '@angular/core';
                         Use the navigation menu to view details about each endpoint & what data it returns.
                     </div>
                     <div class="mat-h3" style="margin-bottom: 0">
-                        Each request uses the root url below combined with a specific API path; all paths are accessible via
+                        Each request uses the root url below combined with a specific API path; all paths are accessible
+                        via
                         <span style="font-family: monospace">GET</span> or
                         <span style="font-family: monospace">POST</span> requests.
                     </div>
                 </div>
 
                 <div class="section-body" style="margin-bottom: 12px">
-                    <div class="mat-h2 link" style="margin-bottom: 0; word-break: break-all">https://api.spyglass.pw/banano/&#60;request-path&#62;</div>
+                    <div class="mat-h2 link" style="margin-bottom: 0; word-break: break-all">
+                        https://api.spyglass.pw/banano/&#60;request-path&#62;
+                    </div>
                 </div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Each <span style="font-family: monospace">POST</span> request expects a JSON body; below is an example:
+                        Each <span style="font-family: monospace">POST</span> request expects a JSON body; below is an
+                        example:
                     </div>
-                    <div class="mat-h3" style="font-family: monospace; word-break: break-all; margin-bottom: 0; font-size: 16px;">
-                       {{ examplePost }}
+                    <div
+                        class="mat-h3"
+                        style="font-family: monospace; word-break: break-all; margin-bottom: 0; font-size: 16px;"
+                    >
+                        {{ examplePost }}
                     </div>
                 </div>
             </div>
@@ -47,8 +55,8 @@ import { Component } from '@angular/core';
                 <div class="mat-display-1" style="margin-bottom: 16px">Contact</div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Suggestions or issues? Please let me know, my contact information is below. Also please feel free to post an issue
-                        directly on the
+                        Suggestions or issues? Please let me know, my contact information is below. Also please feel
+                        free to post an issue directly on the
                         <a href="https://github.com/dev-ptera/spyglass-api" target="_blank" class="link">github</a>.
                     </div>
                     <ul>
