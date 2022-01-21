@@ -13,7 +13,6 @@ import * as Colors from '@brightlayer-ui/colors';
     styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent {
-    colors = Colors;
     isCollapsed: boolean;
 
     scrollContainerClassName = {
@@ -24,8 +23,6 @@ export class NavigationComponent {
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
     navItems = APP_NAV_ITEMS;
-
-    scrollEl: Element;
 
     constructor(
         public vp: ViewportService,
