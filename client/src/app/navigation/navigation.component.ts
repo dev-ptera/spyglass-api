@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { DrawerLayoutVariantType } from '@pxblue/angular-components';
+import { DrawerLayoutVariantType } from '@brightlayer-ui/angular-components';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { APP_NAV_ITEMS, NavItem } from './nav-items';
 import { ViewportService } from '../services/viewport.service';
 import { DrawerStateService } from '../services/drawer-state.service';
-import * as Colors from '@pxblue/colors';
+import * as Colors from '@brightlayer-ui/colors';
 
 @Component({
     selector: 'app-navigation',
@@ -68,15 +68,11 @@ export class NavigationComponent {
         this._stateService.setDrawerOpen(false);
     }
 
-    openDrawer(): void {
-        this._stateService.setDrawerOpen(true);
-    }
-
     getSelectedItem(): string {
         return this._stateService.getSelectedItem();
     }
 
-    // Observes route changes and determines which PXB Auth page to show via route name.
+    // Observes route changes and determines which page to show via route name.
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {

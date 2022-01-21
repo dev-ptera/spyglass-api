@@ -37,7 +37,7 @@ import { Component } from '@angular/core';
                     <div class="mat-h3">
                         Each <span style="font-family: monospace">POST</span> request expects a JSON body; below is an example:
                     </div>
-                    <div class="mat-h3" style="font-family: monospace; word-break: break-all; margin-bottom: 0">
+                    <div class="mat-h3" style="font-family: monospace; word-break: break-all; margin-bottom: 0; font-size: 16px;">
                        {{ examplePost }}
                     </div>
                 </div>
