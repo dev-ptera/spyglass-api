@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { APP_NAV_ITEMS, NavItem } from './nav-items';
 import { ViewportService } from '../services/viewport.service';
 import { DrawerStateService } from '../services/drawer-state.service';
-import * as Colors from '@brightlayer-ui/colors';
 
 @Component({
     selector: 'app-navigation',
