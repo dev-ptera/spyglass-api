@@ -5,6 +5,7 @@ export const BAN_KNOWN_VANITIES = [
     'ban_1creepi89mp48wkyg5fktgap9j6165d8yz6g1fbe5pneinz3by9o54fuq63m',
     'ban_1defi11tou1nbhyp8y4onwsiq5jcur19xe54mcmew1xonnz6e1d1sw74yefu',
     'ban_1duckjfam7tcartyzk4eeouu17h7t8bpcjyyh4o31ih3qd7scz9w5a4u6qd4',
+    'ban_3eksah6pqhinb5dfbwnt5i1noqwqahndrgd1g1ggna7uxba1wrhd8yn9ch8z',
     'ban_1eska1qx1cd1x7tkbo4wmuofpsq69dekk7h5n6yo967kjq43nhhobrhno95x',
     'ban_1fomofudww7niykjtpzqgu9zpojtxx1f4pedjguk1gsrft44ere77sh1ky8g',
     'ban_1h11mrypctfiexeo3swn1odo78uazf8oudrbqhcpzqyxjpu7eksrad8t1shg',
@@ -17,4 +18,5 @@ export const BAN_KNOWN_VANITIES = [
     'ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad',
     'ban_3fudcakefr9jyw7b4kfafrgaekmd37ez7q4pmzuo1fd7wo9jo8gsha7z7e1c',
     'ban_3hxnx1gegfqmmhcnd13qipjxgo7mbw1bwprxq7334sr5b4hie5u1wj845n6m',
+    'ban_1mak1hc3fnopkh7xbt7z4b3d8qn4bhysaddwg8uw6a7rb9x5od6gxzkzo6gp'
 ];
