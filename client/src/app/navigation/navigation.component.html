@@ -1,37 +1,37 @@
-<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="280">
-    <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
-        <pxb-drawer-header>
-            <div pxb-title-content (click)="goHome()" style="cursor: pointer; display: flex; align-items: center">
+<blui-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="280">
+    <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true">
+        <blui-drawer-header>
+            <div blui-title-content (click)="goHome()" style="cursor: pointer; display: flex; align-items: center">
                 Spyglass API
             </div>
-            <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
+            <button mat-icon-button blui-icon (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
-        </pxb-drawer-header>
-        <pxb-drawer-body>
-            <pxb-drawer-nav-group>
-                <pxb-drawer-nav-item
+        </blui-drawer-header>
+        <blui-drawer-body>
+            <blui-drawer-nav-group>
+                <blui-drawer-nav-item
                     *ngFor="let navItem of navItems"
                     [divider]="true"
                     [title]="navItem.title"
                     [selected]="navItem.title === getSelectedItem()"
                     (select)="selectItem(navItem)"
                 >
-                    <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
-                    <pxb-drawer-nav-item
+                    <mat-icon blui-icon>{{ navItem.icon }}</mat-icon>
+                    <blui-drawer-nav-item
                         *ngFor="let nestedNavItem of navItem.children"
                         [divider]="true"
                         [title]="nestedNavItem.title"
                         [selected]="navItem.route + '/' + nestedNavItem.route === getSelectedItem()"
                         (select)="selectNestedNavItem(navItem, nestedNavItem)"
                     >
-                    </pxb-drawer-nav-item>
-                </pxb-drawer-nav-item>
-            </pxb-drawer-nav-group>
-        </pxb-drawer-body>
-    </pxb-drawer>
-    <div pxb-content class="page-container" responsive>
-        <pxb-app-bar
+                    </blui-drawer-nav-item>
+                </blui-drawer-nav-item>
+            </blui-drawer-nav-group>
+        </blui-drawer-body>
+    </blui-drawer>
+    <div blui-content class="page-container" responsive>
+        <blui-app-bar
             [variant]="vp.sm ? 'collapsed' : 'expanded'"
             [scrollThreshold]="100"
             [scrollContainerClassName]="scrollContainerClassName"
@@ -39,7 +39,7 @@
             (collapsedChange)="isCollapsed = $event"
         >
             <button
-                pxb-icon
+                blui-icon
                 mat-icon-button
                 disableRipple
                 (click)="toggleDrawerOpen()"
@@ -48,13 +48,13 @@
             >
                 <mat-icon>menu</mat-icon>
             </button>
-            <pxb-three-liner subtitle="Empowering the jungle to make cool stuff" [style.top.px]="isCollapsed ? 0 : 60">
-                <div pxb-title responsive class="title">
+            <blui-three-liner subtitle="Empowering the jungle to make cool stuff" [style.top.px]="isCollapsed ? 0 : 60">
+                <div blui-title responsive class="title">
                     <img *ngIf="!isCollapsed" class="banano-logo" src="assets/bananologo.svg" />
                     <div (click)="vp.sm ? goHome() : ''" [style.cursor]="vp.sm ? 'pointer' : 'unset'">Spyglass API</div>
                 </div>
-            </pxb-three-liner>
-        </pxb-app-bar>
+            </blui-three-liner>
+        </blui-app-bar>
         <router-outlet></router-outlet>
         <a
             href="https://github.com/dev-ptera/spyglass-api"
@@ -64,4 +64,4 @@
             >Github</a
         >
     </div>
-</pxb-drawer-layout>
+</blui-drawer-layout>

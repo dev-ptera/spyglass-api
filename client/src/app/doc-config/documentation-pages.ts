@@ -28,7 +28,10 @@ import {
     blockNavItem,
     receivableTxNavItem,
     confirmedTxNavItem,
-    accountExport, accountOverviewNavItem, ledgerSizeNavItem, repScoresNavItem,
+    accountExport,
+    accountOverviewNavItem,
+    ledgerSizeNavItem,
+    repScoresNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -39,7 +42,8 @@ import {
     ACCOUNT_INSIGHTS_KNOB,
     ACCOUNT_RECEIVABLE_KNOB,
     ACCOUNT_CONFIRMED_KNOB,
-    ACCOUNT_EXPORT_KNOBS, ACCOUNT_OVERVIEW_KNOBS,
+    ACCOUNT_EXPORT_KNOBS,
+    ACCOUNT_OVERVIEW_KNOBS,
 } from './knobs/account.knobs';
 import { DISTRIBUTION_RICH_LIST_KNOBS } from './knobs/distribution.knobs';
 import { BLOCK_KNOBS } from './knobs/block.knobs';

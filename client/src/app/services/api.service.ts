@@ -37,12 +37,13 @@ export class ApiService {
                 const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
                 saveAs(blob, fileName);
                 return Promise.resolve();
-            }).catch((err) => Promise.reject(err));
+            })
+            .catch((err) => Promise.reject(err));
     }
 
     // account/export
     saveAccountTransactions(path: string, fileName: string, body): Promise<void> {
-       return this._http
+        return this._http
             .post(`${this.url}/${path}`, body, { responseType: 'text' })
             .toPromise()
             .then((data) => {
@@ -50,9 +51,10 @@ export class ApiService {
                 const blob = new Blob([data], { type: 'application/text' });
                 saveAs(blob, fileName);
                 return Promise.resolve();
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 const jsonErr = JSON.parse(err.error);
                 return Promise.reject(jsonErr);
-           });
+            });
     }
 }

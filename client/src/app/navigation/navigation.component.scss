@@ -17,30 +17,30 @@
 }
 
 ::ng-deep {
-    .pxb-app-bar-expanded .pxb-app-bar-background {
+    .blui-app-bar-expanded .blui-app-bar-background {
         background-image: url('../../assets/bg-footer.svg');
         background-size: contain;
         opacity: 1;
     }
-    .pxb-app-bar-body-wrapper,
-    .pxb-three-liner {
+    .blui-app-bar-body-wrapper,
+    .blui-three-liner {
         width: 100%;
         justify-content: center;
         margin: 0 !important;
     }
-    .sm .pxb-three-liner {
+    .sm .blui-three-liner {
         justify-content: start;
         margin-left: 16px !important;
     }
-    .pxb-three-liner-subtitle {
+    .blui-three-liner-subtitle {
         text-align: center;
         margin-top: 8px;
     }
-    .pxb-app-bar-content {
-        overflow: visible!important;;
+    .blui-app-bar-content {
+        overflow: visible !important;
     }
     @media only screen and (max-width: 1450px) {
-        .pxb-app-bar-expanded .pxb-app-bar-background {
+        .blui-app-bar-expanded .blui-app-bar-background {
             background-size: cover !important;
         }
     }

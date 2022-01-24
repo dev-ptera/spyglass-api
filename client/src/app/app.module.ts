@@ -16,7 +16,7 @@ import {
     EmptyStateModule,
     SpacerModule,
     ThreeLinerModule,
-} from '@pxblue/angular-components';
+} from '@brightlayer-ui/angular-components';
 import { ResponsiveDirective } from './directives/responsive.directive';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';

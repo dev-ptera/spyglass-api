@@ -1,4 +1,4 @@
-@import '~@pxblue/colors/palette';
+@import '~@brightlayer-ui/colors/palette';
 
 :host {
     display: flex;
@@ -47,7 +47,7 @@ $splitScreenCutoff: 1850px;
     }
 
     .section-body {
-        background-color: map-get($pxb-white, 300);
+        background-color: map-get($blui-white, 300);
         padding: 16px;
         margin-top: 32px;
         font-family: monospace;
@@ -82,7 +82,7 @@ $splitScreenCutoff: 1850px;
         align-items: center;
         padding: 4px 8px;
         &:hover {
-            background: map-get($pxb-white, 600);
+            background: map-get($blui-white, 600);
         }
     }
 }
