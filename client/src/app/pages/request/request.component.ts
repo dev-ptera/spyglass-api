@@ -78,7 +78,9 @@ export class RequestComponent {
     }
 
     showResponseType(): boolean {
-        return this.requestPath !== 'account/export' && this.requestPath !== 'distribution/rich-list-snapshot';
+        return (this.requestPath
+            && !this.requestPath.includes('account/export')
+            && !this.requestPath.includes('distribution/rich-list-snapshot'));
     }
 
     sendRequest(): void {
