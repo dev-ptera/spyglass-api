@@ -74,9 +74,6 @@ export class NavigationComponent {
             if (route instanceof NavigationEnd) {
                 const url = route.urlAfterRedirects;
                 for (const route of APP_NAV_ITEMS) {
-                    if (this.matchesRoute(url, route)) {
-                        return;
-                    }
                     for (const child of route.children || []) {
                         if (this.matchesRoute(url, route, child)) {
                             return;
@@ -87,15 +84,11 @@ export class NavigationComponent {
         });
     }
 
-    /** Returns tree if it found the active route. */
-    private matchesRoute(url: string, routeObj: NavItem, child?: NavItem): boolean {
-        if (routeObj && url === `/${routeObj.route}`) {
-            this.toolbarTitle = routeObj.title;
-            this._stateService.setSelectedItem(routeObj.title);
-            return true;
-        }
-        if (routeObj && child && url === `/${routeObj.route}/${child.route}`) {
+    /** Expands correct navigation group & sets toolbar title on NavigationEnd. */
+    private matchesRoute(url: string, routeObj: NavItem, child: NavItem): boolean {
+        if (url === `/${routeObj.route}/${child.route}`) {
             this.toolbarTitle = child.title;
+            routeObj.expanded = true;
             this._stateService.setSelectedItem(`${routeObj.route}/${child.route}`);
             return true;
         }

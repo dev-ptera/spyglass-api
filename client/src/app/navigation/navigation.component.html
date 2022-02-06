@@ -13,6 +13,7 @@
                 <blui-drawer-nav-item
                     *ngFor="let navItem of navItems"
                     [divider]="true"
+                    [expanded]="navItem.expanded"
                     [title]="navItem.title"
                     [selected]="navItem.title === getSelectedItem()"
                     (select)="selectItem(navItem)"
