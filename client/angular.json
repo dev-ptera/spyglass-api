@@ -103,7 +103,8 @@
                         "styles": [
                             "src/styles.scss",
                             "./node_modules/@brightlayer-ui/angular-themes/theme.scss",
-                            "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss"
+                            "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss",
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
                         ],
                         "scripts": []
                     }
