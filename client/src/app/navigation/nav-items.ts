@@ -3,6 +3,7 @@ export type NavItem = {
     route: string;
     icon?: string;
     children?: NavItem[];
+    expanded?: boolean;
 };
 
 export const repAliasNavItem: NavItem = {

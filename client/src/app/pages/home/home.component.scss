@@ -1,4 +1,4 @@
-@import '~@brightlayer-ui/colors/palette';
+@use '@brightlayer-ui/colors/palette' as blui;
 
 :host {
     display: flex;
@@ -28,7 +28,7 @@ $splitScreenCutoff: 1850px;
 }
 
 .section-body {
-    background-color: map-get($blui-white, 300);
+    background-color: map-get(blui.$blui-white, 300);
     padding: 16px;
     font-family: monospace;
 }

@@ -14,10 +14,11 @@ export class ApiService {
 
     send(path: string, type: 'GET' | 'POST', body: any = {}): Promise<any> {
         // Custom Headers Resolved here.
-        if (path === 'distribution/rich-list-snapshot') {
+        console.log(path);
+        if (path.includes('distribution/rich-list-snapshot')) {
             return this.saveRichListSnapshot(path, 'balances.json');
         }
-        if (path === 'account/export') {
+        if (path.includes('account/export')) {
             return this.saveAccountTransactions(path, `tx-${body.address}.csv`, body);
         }
 

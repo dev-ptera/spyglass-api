@@ -13,6 +13,7 @@
                 <blui-drawer-nav-item
                     *ngFor="let navItem of navItems"
                     [divider]="true"
+                    [expanded]="navItem.expanded"
                     [title]="navItem.title"
                     [selected]="navItem.title === getSelectedItem()"
                     (select)="selectItem(navItem)"
@@ -32,6 +33,7 @@
     </blui-drawer>
     <div blui-content class="page-container" responsive>
         <blui-app-bar
+            [class.no-elevation]="vp.sm"
             [variant]="vp.sm ? 'collapsed' : 'expanded'"
             [scrollThreshold]="100"
             [scrollContainerClassName]="scrollContainerClassName"

@@ -55,8 +55,8 @@ import { Component } from '@angular/core';
                 <div class="mat-display-1" style="margin-bottom: 16px">Contact</div>
                 <div class="section-body">
                     <div class="mat-h3">
-                        Suggestions or issues? Please let me know, my contact information is below. Also please feel
-                        free to post an issue directly on the
+                        Suggestions or issues? Please let me know; my contact information is below. Also please feel
+                        free to post an issue on
                         <a href="https://github.com/dev-ptera/spyglass-api" target="_blank" class="link">github</a>.
                     </div>
                     <ul>

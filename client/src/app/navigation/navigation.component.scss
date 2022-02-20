@@ -16,7 +16,15 @@
     flex-direction: column;
 }
 
+.no-elevation {
+    box-shadow: none!important;
+}
+
 ::ng-deep {
+    .blui-app-bar * {
+        transition: color 0ms!important;
+    }
+
     .blui-app-bar-expanded .blui-app-bar-background {
         background-image: url('../../assets/bg-footer.svg');
         background-size: contain;
