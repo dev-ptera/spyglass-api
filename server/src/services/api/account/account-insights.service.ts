@@ -1,10 +1,4 @@
-import {
-    convertFromRaw,
-    getAccurateHashTimestamp,
-    getTransactionType,
-    isValidAddress,
-    LOG_ERR,
-} from '@app/services';
+import { convertFromRaw, getAccurateHashTimestamp, getTransactionType, isValidAddress, LOG_ERR } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { INSIGHTS_CACHE_PAIR } from '@app/config';

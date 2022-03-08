@@ -40,7 +40,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
         entry.weightPercentage = (rep.weight / (principalWeightRequirement * 1_000)) * 100;
         entry.principal = rep.weight > principalWeightRequirement;
         entry.uptimePercentages = rep.uptimeStats.uptimePercentages;
-        entry.daysAge = Number( ((Date.now()- rep.uptimeStats.trackingStartUnixTimestamp) / 86_400_000).toFixed(2));
+        entry.daysAge = Number(((Date.now() - rep.uptimeStats.trackingStartUnixTimestamp) / 86_400_000).toFixed(2));
 
         // Each rep starts with a score of 0 and is given points for each positive check.
         let score = 0;
@@ -80,7 +80,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
 
         // Max +70
         if (entry.uptimePercentages?.semiAnnual) {
-            score += Math.round(entry.uptimePercentages.semiAnnual * 0.70);
+            score += Math.round(entry.uptimePercentages.semiAnnual * 0.7);
         }
         entry.score = score;
 

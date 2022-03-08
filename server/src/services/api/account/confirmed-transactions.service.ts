@@ -15,8 +15,8 @@ type RequestBody = {
     includeReceive?: boolean;
     includeChange?: boolean;
     filterAddresses?: string[];
-    minAmount?: number,
-    maxAmount?: number,
+    minAmount?: number;
+    maxAmount?: number;
     offset?: number;
     size?: number;
 };
@@ -116,7 +116,6 @@ const discoverConfirmedTransactions = async (
 
         // Amount Filters
         if ((hasMinAmountFilter || hasMaxAmountFilter) && type !== 'change') {
-
             if (hasMaxAmountFilter && convertFromRaw(transaction.amount, 10) > body.maxAmount) {
                 continue;
             }
