@@ -5,6 +5,13 @@ There's currently request throttling in place, but the default rates can be incr
 
 https://spyglass-api.web.app
 
+## Local Development
+
+To run the server API locally for development purposes, you must first: 
+
+1. Copy the `server/.env.template` file to `server/.env` based on your desired configuration.
+2. [TODO] Add more detail here. 
+
 ## API
 
 #### `account/confirmed-transactions`

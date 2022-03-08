@@ -489,4 +489,9 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         type: 'representative',
         owner: 'mirandaniel#3515',
     },
+    {
+        address: 'ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i',
+        alias: 'banano.vegas',
+        type: 'faucet',
+    }
 ];
