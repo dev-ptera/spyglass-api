@@ -413,7 +413,7 @@
   },
   {
     "address": "ban_3unityd1rqwde1p33ax61aan6tqa1f6xm9epjkhmsfktr3rdwg4z5td5ua3n",
-    "alias": "Unity"s Node",
+    "alias": "Unity's Node",
     "type": "representative"
   },
   {
@@ -512,9 +512,9 @@
     "alias": "Banbucket.ninja",
     "type": "faucet"
   },
-    {
-        "address": "ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i",
-        "alias": "banano.vegas",
-        "type": "faucet",
-    }
+  {
+    "address": "ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i",
+    "alias": "banano.vegas",
+    "type": "faucet"
+  }
 ]
