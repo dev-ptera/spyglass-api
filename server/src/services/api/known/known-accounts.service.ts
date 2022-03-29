@@ -74,7 +74,7 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     /* Kirby entries are entered first. */
     kirbyKnownAccounts.map((account) => {
         insertEntries(account, knownAccountMap);
-    })
+    });
 
     /* Spyglass entries are entered next & override any duplicate fields. */
     spyglassKnownAccountsRemote.map((account) => {
@@ -88,7 +88,6 @@ const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
 };
 
 const insertEntries = (newInfo: KnownAccountDto, map: Map<string, KnownAccountDto>): void => {
-
     // Make sure this field is all lowercase.
     if (newInfo.type) {
         newInfo.type = newInfo.type.toLowerCase() as any;
@@ -111,7 +110,7 @@ const insertEntries = (newInfo: KnownAccountDto, map: Map<string, KnownAccountDt
     if (newInfo.owner) {
         previouslyKnown.owner = newInfo.owner;
     }
-}
+};
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     if (!body || !body.typeFilter) {

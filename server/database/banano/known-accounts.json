@@ -486,5 +486,35 @@
     "alias": "CatGirl",
     "type": "representative",
     "owner": "mirandaniel#3515"
+  },
+  {
+    "address": "ban_3fzpw7pb9xt64qhwi47oa47x9zj713fkshntdk5y7khmn54n18szb7ymybdt",
+    "alias": "r/banano Test Giveaway Fund (March 2022)",
+    "type": "distribution"
+  },
+  {
+    "address": "ban_3rccbanjyesftqfj3zc5mqn5nd3ai5hqrw4twsz45rk8hq3xu93c4zue4s1f",
+    "alias": "r/cryptocurrency Giveaway Fund (March 2022)",
+    "type": "distribution"
+  },
+  {
+    "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
+    "alias": "Nanswap Sending Account",
+    "type": "exchange"
+  },
+  {
+    "address": "ban_3bdrip3ir5d9y3i1qi5z47pwcmd6jm39xzzzxnebrwfyoje63qa5dmnhm8f9",
+    "alias": "Banano Drip",
+    "type": "faucet"
+  },
+  {
+    "address": "ban_1j3rqseffoin7x5z5y1ehaqe1n7todza41kdf4oyga8phps3ea31u39ruchu",
+    "alias": "Banbucket.ninja",
+    "type": "faucet"
+  },
+  {
+    "address": "ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i",
+    "alias": "banano.vegas",
+    "type": "faucet"
   }
 ]

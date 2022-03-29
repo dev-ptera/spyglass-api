@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
-import {EulenMonitoredRepresentativeDto, KnownAccountDto, MonitoredRepresentativeDto} from '@app/types';
+import { EulenMonitoredRepresentativeDto, KnownAccountDto, MonitoredRepresentativeDto } from '@app/types';
 import { LOG_INFO, LOG_ERR, getPRWeightPromise } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
@@ -183,18 +183,22 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
     reps.map((rep) => {
         if (knownAccountMap.has(rep.address)) {
             if (rep.name !== knownAccountMap.get(rep.address).alias) {
-                LOG_INFO(`Mismatched alias for account ${rep.address} \nMONITORED: ${rep.name} vs KNOWN: ${knownAccountMap.get(rep.address).alias}`);
-                knownAccountMap.get(rep.address).alias = rep.name
+                LOG_INFO(
+                    `Mismatched alias for account ${rep.address} \nMONITORED: ${rep.name} vs KNOWN: ${
+                        knownAccountMap.get(rep.address).alias
+                    }`
+                );
+                knownAccountMap.get(rep.address).alias = rep.name;
             }
         } else {
-            AppCache.knownAccounts.push( {
+            AppCache.knownAccounts.push({
                 address: rep.address,
                 alias: rep.name,
                 type: 'representative',
-            })
+            });
         }
-    })
-}
+    });
+};
 
 /** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
 export const cacheMonitoredReps = async (): Promise<void> => {

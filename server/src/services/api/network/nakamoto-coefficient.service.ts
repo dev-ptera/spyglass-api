@@ -29,7 +29,7 @@ const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto>
     }
 
     // Remove the 'online' attribute from the reps.
-    ncRepresentatives.map((rep) => rep.online = undefined);
+    ncRepresentatives.map((rep) => (rep.online = undefined));
 
     return {
         delta,
