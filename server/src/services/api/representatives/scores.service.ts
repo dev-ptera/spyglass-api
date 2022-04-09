@@ -2,7 +2,7 @@ import { AppCache, REP_SCORES_CACHE_PAIR, UPTIME_TRACKING_MIN_WEIGHT } from '@ap
 import { cacheSend, getPRWeightPromise, getRepresentativesPromise } from '@app/services';
 import { RepScoreDto } from '@app/types';
 
-/** Use this method to update the list of `onlineRepresentatives` in the AppCache. */
+/** Use this method to retrieve a list of representative scores. */
 export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
     const reps = await getRepresentativesPromise({
         minimumWeight: UPTIME_TRACKING_MIN_WEIGHT,
