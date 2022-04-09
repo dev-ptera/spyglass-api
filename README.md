@@ -127,6 +127,11 @@ For Banano, representative uptime is analyzed & stored for each rep with a weigh
 
 For Prinicipal Representatives, I use the Nano RPC `representatives_online` command and aggregate the results from several nodes (`/config/banano`).  For Non-Principal Representives, since these nodes do not rebroadcast votes, they do not appear within the RPC command used for PRs (this is specific to V22).  If a non-PR rep is running some form of node-monitor software & I am peered with them, they will appear as online.  Non-PRs that run node-monitor software can manually have their node added to a list of known representatives so that they appear regardless of peer status.
 
+### Local Development
+
+To run the server, run `cd server && yarn start`.
+
+To run the client, run `cd client && yarn start`. 
 
 ## Contact
 

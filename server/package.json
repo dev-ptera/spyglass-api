@@ -1,6 +1,6 @@
 {
     "name": "spyglass-api",
-    "description": "The API for www.yellowspyglass.com",
+    "description": "Spyglass API is a free-to-use REST-ful datasource which can be used to fuel apps in the banano or nano ecosystem.  See more details at https://spyglass-api.web.app",
     "version": "1.0.0",
     "engines": {
         "node": ">=10.0.0"
