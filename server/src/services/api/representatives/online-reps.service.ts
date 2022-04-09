@@ -70,8 +70,10 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
     return Array.from(onlineReps.values());
 };
 
-/** Use this method to update the list of `onlineRepresentatives` in the AppCache. */
-/** Use this method to update the list of `onlineRepresentativesWithWeights` in the AppCache. */
+/** Use this method to update the list of `onlineRepresentatives` and `onlineRepresentativesWithWeights` in the AppCache.
+    Note: The `monitored-reps.service` can also mark representatives as online. Non-PRs do not appear
+    in the list via RPC commands, so the monitored service marks monitored small reps as online.
+ */
 export const cacheOnlineRepresentatives = async (): Promise<void> => {
     const start = LOG_INFO('Updating Online Reps');
     const onlineReps = await getOnlineRepsPromise();
