@@ -1,5 +1,5 @@
 import { accountsPendingRpc } from '@app/rpc';
-import { LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw } from '@app/services';
+import {LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw, isValidAddress} from '@app/services';
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
@@ -33,6 +33,11 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
     const address = body.address;
     const offset = body.offset;
     const size = body.size;
+
+
+    if (!isValidAddress(address)) {
+        return Promise.reject({ error: 'Address is required' });
+    }
 
     /* Get a list of pending hashes for an account. */
     const pendingResponse = await accountsPendingRpc([address]).catch((err) =>
