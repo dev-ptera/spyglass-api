@@ -429,11 +429,6 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
         type: 'exchange',
     },
     {
-        address: 'ban_151sj7ainc3379f37acp9e81qsy9kyfprkb7m6gn56aifeyy1hzdcmquy69b',
-        alias: 'manhlicious',
-        type: 'representative',
-    },
-    {
         address: 'ban_3pa1m3g79i1h7uijugndjeytpmqbsg6hc19zm8m7foqygwos1mmcqmab91hh',
         alias: 'just_dmitry',
         type: 'representative',
