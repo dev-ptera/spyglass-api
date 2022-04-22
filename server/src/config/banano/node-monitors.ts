@@ -26,5 +26,6 @@ export const BAN_NODE_MONITORS = [
     'https://banano.kga.earth/api.php', // kga earth,
     'https://node.getbanano.cc/api.php', // getbanano.cc,
     'https://node-va.banano.cc/api.php', // cake
-    'https://moonano.sumuun.net/api.php' // moonano
+    'https://moonano.sumuun.net/api.php', // moonano
+    'https://node.otahirs.cz/' // percy
 ];
