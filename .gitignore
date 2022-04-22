@@ -45,3 +45,4 @@ testem.log
 Thumbs.db
 
 .angular
+/server/src/middleware/api-access-tokens.ts
