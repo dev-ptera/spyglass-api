@@ -35,6 +35,7 @@ import {
     getRepresentativesV1,
     getAliasedRepresentativesV1,
     getBlockInfoV1,
+    getBlocksInfoV1,
     getRepresentativesUptimeV1,
     cacheMonitoredReps,
     writeNewRepresentativeUptimePings,
@@ -91,6 +92,7 @@ app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req
 
 /* Block */
 app.get(`/${PATH_ROOT}/v1/block/:block`, (req, res) => getBlockInfoV1(req, res));
+app.post(`/${PATH_ROOT}/v1/blocks/blocks`, (req, res) => getBlocksInfoV1(req, res));
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/v1/distribution/burn`, (req, res) => getBurnV1(res));
