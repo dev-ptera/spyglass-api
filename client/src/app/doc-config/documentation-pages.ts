@@ -47,6 +47,7 @@ import {
 } from './knobs/account.knobs';
 import { DISTRIBUTION_RICH_LIST_KNOBS } from './knobs/distribution.knobs';
 import { BLOCK_KNOBS } from './knobs/block.knobs';
+import { BLOCKS_KNOBS } from './knobs/blocks.knobs';
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -250,5 +251,12 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'BlockDto',
         knobs: BLOCK_KNOBS,
         requestType: 'GET',
+    },
+    {
+        route: `${blockNavItemParent.route}/${blockNavItem.route}`,
+        apiPath: 'v1/blocks/blocks',
+        responseSchema: 'BlockDto[]',
+        knobs: BLOCKS_KNOBS,
+        requestType: 'POST',
     },
 ];
