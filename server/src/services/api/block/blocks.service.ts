@@ -4,39 +4,40 @@ import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
 type RequestBody = {
-    blocks: string[],
-}
+    blocks: string[];
+};
 
 const DEFAULT_BODY: RequestBody = {
     blocks: [],
-}
+};
 
 const setBodyDefaults = (body: RequestBody): void => {
     if (body.blocks === undefined) {
         body.blocks = DEFAULT_BODY.blocks;
     }
-}
+};
 
 export const blocksInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse> =>
-blocksInfoRpc(blocks)
-    .then((blocks: BlocksInfoResponse) => {
-        return Promise.resolve(blocks);
-    })
-    .catch((err) => {
-        return Promise.reject(LOG_ERR('blocksInfoPromise', err, { blocks }));
-    });
+    blocksInfoRpc(blocks)
+        .then((blocks: BlocksInfoResponse) => {
+            return Promise.resolve(blocks);
+        })
+        .catch((err) => {
+            return Promise.reject(LOG_ERR('blocksInfoPromise', err, { blocks }));
+        });
 
 /** Returns block infos for given hashes (csv)*/
 export const getBlocksInfoV1 = (req, res): void => {
     setBodyDefaults(req.body);
     const hashes = req.body.blocks;
-    if (hashes.length > 500) {
-        res.status(500).send('Too many blocks requested. Max 500.');
+    const maxNumberBlocks = 500;
+    if (hashes.length > maxNumberBlocks) {
+        res.status(500).send({ error: `Too many blocks requested. Max is ${maxNumberBlocks}` });
     }
     blocksInfoPromise(hashes)
         .then((blockInfo: BlocksInfoResponse) => {
             let blocks_info = [];
-            for (let i=0; i < hashes.length; i++) {
+            for (let i = 0; i < hashes.length; i++) {
                 const block = blockInfo.blocks[hashes[i]];
                 const contents = block.contents as BlocksInfoResponseContents;
                 blocks_info.push({
@@ -67,4 +68,4 @@ export const getBlocksInfoV1 = (req, res): void => {
         .catch((err) => {
             res.status(500).send(err);
         });
-}
+};

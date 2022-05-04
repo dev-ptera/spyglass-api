@@ -175,11 +175,15 @@ export const blockNavItem: NavItem = {
     title: 'Block',
     route: 'block',
 };
+export const blocksNavItem: NavItem = {
+    title: 'Blocks',
+    route: 'blocks',
+};
 export const blockNavItemParent: NavItem = {
     title: 'Block',
-    route: 'account',
+    route: 'block',
     icon: 'receipt_long',
-    children: [blockNavItem],
+    children: [blockNavItem, blocksNavItem],
 };
 
 export const APP_NAV_ITEMS = [

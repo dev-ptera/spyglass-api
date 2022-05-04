@@ -1,5 +1,5 @@
 import { accountBalanceRpc, accountInfoRpc } from '@app/rpc';
-import {convertFromRaw, getDelegatorsCountPromise, getPRWeightPromise, isValidAddress, LOG_ERR} from '@app/services';
+import { convertFromRaw, getDelegatorsCountPromise, getPRWeightPromise, isValidAddress, LOG_ERR } from '@app/services';
 import { AccountBalanceResponse, AccountInfoResponse, ErrorResponse } from '@dev-ptera/nano-node-rpc';
 import { AccountOverviewDto } from '@app/types';
 
@@ -49,7 +49,7 @@ export const getAccountOverviewV1 = (req, res): void => {
     const address = parts[parts.length - 1];
 
     if (!isValidAddress(address)) {
-        return res.status(500).send({error: 'Address is required'});
+        return res.status(500).send({ error: 'Address is required' });
     }
 
     Promise.all([

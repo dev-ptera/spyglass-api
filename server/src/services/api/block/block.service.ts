@@ -3,7 +3,7 @@ import { convertFromRaw, getAccurateHashTimestamp, LOG_ERR } from '@app/services
 import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
-export const blocksInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse> =>
+export const blockInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse> =>
     blocksInfoRpc(blocks)
         .then((blocks: BlocksInfoResponse) => {
             return Promise.resolve(blocks);
@@ -17,7 +17,7 @@ export const getBlockInfoV1 = (req, res): void => {
     const parts = req.url.split('/');
     const hash = parts[parts.length - 1];
 
-    blocksInfoPromise([hash])
+    blockInfoPromise([hash])
         .then((blockInfo: BlocksInfoResponse) => {
             const block = blockInfo.blocks[hash];
             const contents = block.contents as BlocksInfoResponseContents;

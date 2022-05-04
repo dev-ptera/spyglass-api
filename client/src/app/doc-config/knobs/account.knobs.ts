@@ -27,7 +27,7 @@ export const ACCOUNT_RECEIVABLE_KNOB: Array<Knob> = [
     {
         propertyName: 'size',
         propertyType: 'number',
-        notes: 'Number of delegators to return. Defaults to show 50 receivable transactions with a max of 500.',
+        notes: 'Number of transactions to return. Defaults to show 50 receivable transactions with a max of 500.',
     },
 ];
 

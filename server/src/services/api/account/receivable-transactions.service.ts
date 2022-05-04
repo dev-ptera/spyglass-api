@@ -1,5 +1,5 @@
 import { accountsPendingRpc } from '@app/rpc';
-import {LOG_ERR, blocksInfoPromise, getAccurateHashTimestamp, convertFromRaw, isValidAddress} from '@app/services';
+import { LOG_ERR, blockInfoPromise, getAccurateHashTimestamp, convertFromRaw, isValidAddress } from '@app/services';
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
@@ -34,7 +34,6 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
     const offset = body.offset;
     const size = body.size;
 
-
     if (!isValidAddress(address)) {
         return Promise.reject({ error: 'Address is required' });
     }
@@ -59,7 +58,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
 
     /* For each hash, look up details. */
     const dtos: ReceivableTransactionDto[] = [];
-    await blocksInfoPromise(hashes)
+    await blockInfoPromise(hashes)
         .then((blocksResponse: BlocksInfoResponse) => {
             for (const hash in blocksResponse.blocks) {
                 const block = blocksResponse.blocks[hash];

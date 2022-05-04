@@ -12,6 +12,10 @@ export class ApiService {
 
     constructor(private readonly _http: HttpClient) {}
 
+    fetchDescriptions(): Promise<string> {
+        return this._http.get('assets/api_description.txt', { responseType: 'text' }).toPromise<string>();
+    }
+
     send(path: string, type: 'GET' | 'POST', body: any = {}): Promise<any> {
         // Custom Headers Resolved here.
         console.log(path);

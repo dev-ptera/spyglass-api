@@ -1,5 +1,10 @@
 <ng-template #paramName let-requestParam="requestParam">
-    <span style="padding: 0px 16px; cursor: help" [matTooltip]="requestParam.notes" matTooltipPosition="after" matTooltipClass="api-tooltip">
+    <span
+        style="padding: 0px 16px; cursor: help"
+        [matTooltip]="requestParam.notes"
+        matTooltipPosition="after"
+        matTooltipClass="api-tooltip"
+    >
         <span
             class="prop-name"
             [matBadgeSize]="'small'"
@@ -23,6 +28,13 @@
 
 <div class="page-container" responsive>
     <div>
+        <div class="section-title">
+            <div>Description</div>
+        </div>
+        <div class="section-body" style="display: flex">
+            {{ description }}
+        </div>
+
         <div class="section-title">
             <div>Request Path</div>
             <ng-template [ngTemplateOutlet]="sendButton"></ng-template>

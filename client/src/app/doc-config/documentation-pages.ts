@@ -32,6 +32,7 @@ import {
     accountOverviewNavItem,
     ledgerSizeNavItem,
     repScoresNavItem,
+    blocksNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -253,8 +254,8 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${blockNavItemParent.route}/${blockNavItem.route}`,
-        apiPath: 'v1/blocks/blocks',
+        route: `${blockNavItemParent.route}/${blocksNavItem.route}`,
+        apiPath: 'v1/blocks',
         responseSchema: 'BlockDto[]',
         knobs: BLOCKS_KNOBS,
         requestType: 'POST',

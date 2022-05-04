@@ -22,6 +22,8 @@ export class RequestComponent {
     showRawResponse = false;
     flipAutoShowRaw = false;
     requestType: 'POST' | 'GET';
+    description: string;
+    pathDescriptionMap = new Map<string, string>();
 
     constructor(
         private readonly _userAgentService: UserAgentService,
@@ -33,6 +35,10 @@ export class RequestComponent {
         this._listenForRouteChanges();
     }
 
+    ngOnInit(): void {
+        this.fetchAndParseDescriptions();
+    }
+
     // Observes route changes, updates active requestPath and requestParams based on active route.
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
@@ -42,6 +48,7 @@ export class RequestComponent {
                 for (const requestPage of apiDocumentationPages) {
                     if (url === `/${requestPage.route}`) {
                         this.requestPath = requestPage.apiPath;
+                        this.applyDescription(requestPage.apiPath);
                         this.requestKnobs = requestPage.knobs;
                         this.createResponseType(requestPage.responseSchema);
                         this.requestType = requestPage.requestType;
@@ -78,9 +85,52 @@ export class RequestComponent {
     }
 
     showResponseType(): boolean {
-        return (this.requestPath
-            && !this.requestPath.includes('account/export')
-            && !this.requestPath.includes('distribution/rich-list-snapshot'));
+        return (
+            this.requestPath &&
+            !this.requestPath.includes('account/export') &&
+            !this.requestPath.includes('distribution/rich-list-snapshot')
+        );
+    }
+
+    /** Using the current request path, iterates through the api->description map to find the correct description. */
+    applyDescription(apiPath: string): void {
+        const keys = [];
+        for (const [key] of this.pathDescriptionMap) {
+            keys.push(key);
+        }
+
+        const sortedByLength = keys.sort(function (a, b) {
+            return b.length - a.length;
+        });
+
+        for (const route of sortedByLength) {
+            if (apiPath.includes(route)) {
+                console.log(route);
+                this.description = this.pathDescriptionMap.get(route);
+                break;
+            }
+        }
+    }
+
+    /** Fetches a file that has all routes & api descriptions.  Parses this file to create a map of apiPath->description */
+    fetchAndParseDescriptions(): void {
+        this._apiService
+            .fetchDescriptions()
+            .then((text) => {
+                const split = text.split('####');
+                const trimmed = split.map((entry) => entry.trim());
+                const cleaned = trimmed.map((entry) => entry.replace(/`/g, '').split(/\r\n\r\n/));
+                cleaned.map((entry) => {
+                    if (entry[0].trim().length > 0) {
+                        this.pathDescriptionMap.set(entry[0], entry[1]);
+                    }
+                });
+                this.applyDescription(this.requestPath);
+            })
+            .catch((err) => {
+                console.error('unable to fetch api descriptions');
+                console.error(err);
+            });
     }
 
     sendRequest(): void {
