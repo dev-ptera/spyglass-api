@@ -37,11 +37,11 @@ Returns a list of pending transactions.  Includes options for pagination.
 
 #### `block`
 
-Returns block information for a single block.
+Returns information for a single block.
 
 #### `blocks`
 
-Returns block information for an array of blocks.
+Returns information for multiple blocks.
 
 #### `distribution/burn`
 
@@ -65,7 +65,7 @@ Returns the entire list of accounts and their respective balances.
 
 #### `distribution/supply`
 
-Returns statistics around circulating/uncirculating supply, burned supply,
+Returns statistics around circulating/uncirculating supply, burned supply, etc.
 
 #### `known/accounts`
 
@@ -87,6 +87,10 @@ Returns how large the ledger is in MB. (only for a single node; ledger size betw
 #### `network/nakamoto-coefficient`
 
 Returns how many bad actors would be required to attack the network.
+
+#### `network/node-stats`
+
+Returns statistics for the node running this API.
 
 #### `network/peers`
 

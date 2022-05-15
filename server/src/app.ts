@@ -41,6 +41,7 @@ import {
     getDeveloperFundsV1,
     getPRWeightV1,
     getAccountInsightsV1,
+    getNodeStatsV1,
     getDelegatorsV1,
     getConfirmedTransactionsV1,
     importHistoricHashTimestamps,
@@ -116,6 +117,7 @@ app.post(`/${PATH_ROOT}/v1/known/accounts`, (req, res) => getKnownAccountsV1(req
 
 /* Network */
 app.get(`/${PATH_ROOT}/v1/network/ledger-size`, (req, res) => getLedgerSizeV1(res));
+app.get(`/${PATH_ROOT}/v1/network/node-stats`, (req, res) => getNodeStatsV1(res));
 app.get(`/${PATH_ROOT}/v1/network/quorum`, (req, res) => getQuorumV1(res));
 app.get(`/${PATH_ROOT}/v1/network/peers`, (req, res) => getPeerVersionsV1(res));
 app.get(`/${PATH_ROOT}/v1/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficientV1(res));

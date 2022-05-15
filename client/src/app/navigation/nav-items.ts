@@ -121,11 +121,15 @@ export const ledgerSizeNavItem: NavItem = {
     title: 'Ledger Size',
     route: 'ledger-size',
 };
+export const nodeStatsNavItem: NavItem = {
+    title: 'Node Stats',
+    route: 'node-stats',
+};
 export const networkNavItemParent: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
-    children: [ledgerSizeNavItem, ncNavItem, peerVersionsNavItem, quorumNavItem],
+    children: [ledgerSizeNavItem, ncNavItem, nodeStatsNavItem, peerVersionsNavItem, quorumNavItem],
 };
 
 export const accountInsightsNavItem: NavItem = {
@@ -198,6 +202,6 @@ export const APP_NAV_ITEMS = [
     distributionNavItemParent,
     knownNavItemParent,
     networkNavItemParent,
-    repNavItemParent,
     priceNavItem,
+    repNavItemParent,
 ];

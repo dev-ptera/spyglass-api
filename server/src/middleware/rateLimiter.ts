@@ -7,7 +7,7 @@ export const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: async (request) => {
         if (API_ACCESS_TOKENS.includes(request.get('Authorization'))) {
-            return 200;
+            return 1000;
         } else return REQUESTS_PER_MINUTE;
     },
     message: { error: 'Too many requests, please try again later.' },

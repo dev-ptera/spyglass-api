@@ -33,7 +33,7 @@ import {
     ledgerSizeNavItem,
     repScoresNavItem,
     blocksNavItem,
-    priceNavItem,
+    priceNavItem, nodeStatsNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -230,6 +230,13 @@ export const apiDocumentationPages: Array<{
         route: `${networkNavItemParent.route}/${ledgerSizeNavItem.route}`,
         apiPath: 'v1/network/ledger-size',
         responseSchema: 'LedgerSizeDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItemParent.route}/${nodeStatsNavItem.route}`,
+        apiPath: 'v1/network/node-stats',
+        responseSchema: 'HostNodeStatsDto',
         knobs: [],
         requestType: 'GET',
     },
