@@ -7,6 +7,7 @@ moduleAlias.addAlias('@app/types', __dirname + '/types');
 
 import * as express from 'express';
 import * as cors from 'cors';
+import 'express-async-errors';
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -16,9 +17,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 process.env.UV_THREADPOOL_SIZE = String(16);
-
-app.use(morgan('dev'));
-app.use(bodyParser.json()); //utilizes the body-parser package
 
 import {
     AppCache,
@@ -67,19 +65,25 @@ import {
     getLedgerSizeV1,
     getScoresV1,
 } from '@app/services';
-import { memCache, rateLimter } from '@app/middleware';
+import { memCache, rateLimiter } from '@app/middleware';
 
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
 
-/* Set response headers to text-json */
-app.use((req, res, next) => {
+
+/* Middleware */
+app.use(morgan('dev'));
+app.use(bodyParser.json()); //utilizes the body-parser package
+app.use(cors());
+app.use(rateLimiter);
+app.use(memCache);
+app.use((err, req, res, next) => {  // Handle async errors; don't crash the server.
+    console.error(`Uncaught exception: ${err}`);
+    res.status(500).send({ errorMsg: 'Internal Server Error' });
+});
+app.use((req, res, next) => { // Handle worst case scenario; uncaught errors.
     res.setHeader('Content-Type', 'application/json');
     next();
 });
-
-app.use(cors());
-app.use(rateLimter);
-app.use(memCache);
 
 /* Account */
 app.get(`/${PATH_ROOT}/v1/account/representative/:address`, (req, res) => getAccountRepresentativeV1(req, res));
