@@ -17,7 +17,7 @@ export const LOG_INFO = (msg: string, startTime?: number): any => {
     const hasCheck = msg.includes('Updated');
 
     if (IS_PRODUCTION) {
-        return now;
+        return;
     }
 
     const timestamp = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;

@@ -11,10 +11,6 @@ import 'express-async-errors';
 
 const dotenv = require('dotenv');
 dotenv.config();
-const http = require('http');
-const app = express();
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -23,6 +19,7 @@ import {
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
+    PRICE_DATA_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
@@ -64,11 +61,15 @@ import {
     getAccountOverviewV1,
     getLedgerSizeV1,
     getScoresV1,
+    cachePriceData,
 } from '@app/services';
 import { memCache, rateLimiter } from '@app/middleware';
 
+const http = require('http');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
-
+const app = express();
 
 /* Middleware */
 app.use(morgan('dev'));
@@ -76,11 +77,13 @@ app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
 app.use(rateLimiter);
 app.use(memCache);
-app.use((err, req, res, next) => {  // Handle async errors; don't crash the server.
+app.use((err, req, res, next) => {
+    // Handle async errors; don't crash the server.
     console.error(`Uncaught exception: ${err}`);
     res.status(500).send({ errorMsg: 'Internal Server Error' });
 });
-app.use((req, res, next) => { // Handle worst case scenario; uncaught errors.
+app.use((req, res, next) => {
+    // Handle worst case scenario; uncaught errors.
     res.setHeader('Content-Type', 'application/json');
     next();
 });
@@ -126,6 +129,9 @@ app.get(`/${PATH_ROOT}/v1/representatives/scores`, (req, res) => getScoresV1(res
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentativesV1(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptimeV1(req, res));
 
+/* Price */
+app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
+
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
 
@@ -168,6 +174,11 @@ server.listen(port, () => {
         interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     };
 
+    const priceData = {
+        method: cachePriceData,
+        interval: PRICE_DATA_REFRESH_INTERVAL_MS,
+    };
+
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
@@ -177,6 +188,7 @@ server.listen(port, () => {
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
         knownAccounts,
+        priceData,
         accountsDistribution,
     ]);
 });

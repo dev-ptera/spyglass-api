@@ -34,7 +34,7 @@ export const prWeightRequirementNavItem: NavItem = {
     title: 'PR Weight',
     route: 'pr-weight',
 };
-export const repNavItem: NavItem = {
+export const repNavItemParent: NavItem = {
     title: 'Representatives',
     route: 'representatives',
     icon: 'how_to_vote',
@@ -77,7 +77,7 @@ export const richListSnapshotNavItem: NavItem = {
     route: 'rich-list-snapshot',
 };
 
-export const distributionNavItem: NavItem = {
+export const distributionNavItemParent: NavItem = {
     title: 'Distribution',
     route: 'distribution',
     icon: 'logo_dev',
@@ -98,7 +98,7 @@ export const knownVanitiesNavItem: NavItem = {
     title: 'Vanities',
     route: 'vanities',
 };
-export const knownNavItem: NavItem = {
+export const knownNavItemParent: NavItem = {
     title: 'Known',
     route: 'known',
     icon: 'fingerprint',
@@ -121,7 +121,7 @@ export const ledgerSizeNavItem: NavItem = {
     title: 'Ledger Size',
     route: 'ledger-size',
 };
-export const networkNavItem: NavItem = {
+export const networkNavItemParent: NavItem = {
     title: 'Network',
     route: 'network',
     icon: 'share',
@@ -156,7 +156,7 @@ export const receivableTxNavItem: NavItem = {
     title: 'Receivable Tx',
     route: 'receivable',
 };
-export const accountNavItem: NavItem = {
+export const accountNavItemParent: NavItem = {
     title: 'Account',
     route: 'account',
     icon: 'account_balance_wallet',
@@ -186,11 +186,18 @@ export const blockNavItemParent: NavItem = {
     children: [blockNavItem, blocksNavItem],
 };
 
+export const priceNavItem: NavItem = {
+    title: 'Price',
+    route: 'price',
+    icon: 'currency_bitcoin',
+};
+
 export const APP_NAV_ITEMS = [
-    accountNavItem,
+    accountNavItemParent,
     blockNavItemParent,
-    distributionNavItem,
-    knownNavItem,
-    networkNavItem,
-    repNavItem,
+    distributionNavItemParent,
+    knownNavItemParent,
+    networkNavItemParent,
+    repNavItemParent,
+    priceNavItem,
 ];

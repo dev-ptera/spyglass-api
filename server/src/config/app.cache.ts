@@ -3,6 +3,7 @@ import {
     AccountDistributionStatsDto,
     KnownAccountDto,
     MonitoredRepresentativeDto,
+    PriceDataDto,
 } from '@app/types';
 import { CacheClass } from 'memory-cache';
 const cache = require('memory-cache');
@@ -29,6 +30,9 @@ export type AppCache = {
     /** Online representatives, sorted by weight. */
     onlineRepresentativesWithWeights: { address: string; weight: number }[];
 
+    /** Populated by CoinMarketCap API. */
+    priceData: PriceDataDto;
+
     /** Top holders, sorted by balance. */
     richList: AccountBalanceDto[];
 
@@ -44,6 +48,7 @@ export const AppCache: AppCache = {
     offlinePingsMap: new Map<string, number>(),
     onlineRepresentatives: [],
     onlineRepresentativesWithWeights: [],
+    priceData: undefined,
     richList: [],
     temp: new cache.Cache(),
 };
