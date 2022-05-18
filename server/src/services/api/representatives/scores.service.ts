@@ -94,7 +94,7 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
     return scores;
 };
 
-/** Returns an array of representative scores. Max score is 100, omitting reps with a low score.. */
+/** Returns an array of representative scores. Max score is 100, omitting reps with a low score. */
 export const getScoresV1 = (res): void => {
     getScoresPromise()
         .then((data) => cacheSend(res, data, REP_SCORES_CACHE_PAIR))

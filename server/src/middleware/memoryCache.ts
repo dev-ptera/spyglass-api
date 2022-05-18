@@ -1,5 +1,5 @@
 import {
-    AppCache,
+    AppCache, HOST_NODE_STATS_PAIR,
     INSIGHTS_CACHE_PAIR,
     LEDGER_SIZE_CACHE_PAIR,
     NAKAMOTO_COEFFICIENT_CACHE_PAIR,
@@ -12,20 +12,23 @@ import { minutesToMs, secondsToMs } from '@app/services';
 const getCacheKey = (req): string => {
     const path = req.url.split(PATH_ROOT)[1];
     switch (path) {
-        case '/network/ledger-size': {
+        case '/v1/network/ledger-size': {
             return LEDGER_SIZE_CACHE_PAIR.key;
         }
-        case '/network/quorum': {
+        case '/v1/network/quorum': {
             // TODO: use path as key?  Export CachedRequests = { path: string, duration: number, dynamicPath?: (key) => string }
             return QUORUM_CACHE_PAIR.key;
         }
-        case '/network/nakamoto-coefficient': {
+        case '/v1/network/nakamoto-coefficient': {
             return NAKAMOTO_COEFFICIENT_CACHE_PAIR.key;
         }
-        case '/account/insights': {
+        case '/v1/network/node-stats': {
+            return HOST_NODE_STATS_PAIR.key;
+        }
+        case '/v1/account/insights': {
             return `${INSIGHTS_CACHE_PAIR.key}/${req.body.address}`;
         }
-        case '/representatives/scores': {
+        case '/v1/representatives/scores': {
             return REP_SCORES_CACHE_PAIR.key;
         }
         default: {

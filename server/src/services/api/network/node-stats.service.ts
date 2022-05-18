@@ -2,9 +2,10 @@ import {getPeerVersionsPromise} from "./peer-versions.service";
 import {HostNodeStatsDto} from "@app/types";
 import {uptimeRpc} from "../../../rpc/calls/uptime.rpc";
 import {blockCountRpc} from "../../../rpc/calls/block-count.rpc";
-import {AppCache, LEDGER_LOCATION} from "@app/config";
+import {AppCache, HOST_NODE_STATS_PAIR, LEDGER_LOCATION} from "@app/config";
 import {versionRpc} from "../../../rpc/calls/version.rpc";
 import {LOG_ERR} from "../../log/error.service";
+import {cacheSend} from "../../etc/generic-utils";
 
 const getSize = require('get-folder-size');
 const spawn = require('child_process');
@@ -82,7 +83,7 @@ export const getNodeStatsV1 = async (res) => {
             uncheckedBlocks: Number(blockCount.unchecked),
             usedMemoryGB: usedMemoryGB,
         }
-        res.send(data);
+        return cacheSend(res, data, HOST_NODE_STATS_PAIR);
     } catch (err) {
         LOG_ERR('getNodeStatsV1', err);
         return res.status(500).send({ error: 'Unable to get node statistics.' });
