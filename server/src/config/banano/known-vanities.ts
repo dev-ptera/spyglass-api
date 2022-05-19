@@ -31,5 +31,4 @@ export const BAN_KNOWN_VANITIES = [
     'ban_3ftmwrap5qeirm53wndr6811tbnnraho587awkxn1xgrwfgry97cb4bouiwh',
     'ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4',
     'ban_3po1ywrp9m967z9xpd9cwwfdg1gteuk4n7dcyoatkgpjgne5yx459wyoyxzj',
-    'ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad',
 ];
