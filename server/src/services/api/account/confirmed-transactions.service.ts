@@ -92,16 +92,14 @@ const discoverConfirmedTransactions = async (
     const hasMinAmountFilter = Boolean(body.minAmount);
     const addressFilterSet = new Set(body.filterAddresses);
 
-    const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize).catch((err) => {
-        return Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }));
-    });
+    const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize);
 
-    // If we have ran out of search results, it's time to exit.
+    // If we run out of search results, it's time to exit.
     if (!accountTx.history || accountTx.history.length === 0) {
         return true;
     }
 
-    // Iterate through each transaction history, filtering out types we dont need.
+    // Iterate through each transaction history, filtering out types we don't need.
     for (const transaction of accountTx.history) {
         const type = getTransactionType(transaction);
         if (!body.includeSend && type === 'send') {
@@ -151,25 +149,34 @@ export const getTransactionType = (tx: AccountHistoryResponse['history'][0]): Su
 export const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
     const address = body.address;
 
+    if (!address) {
+        return Promise.reject({ errorMsg: "Address is required", errorCode: 1});
+    }
     if (!isValidAddress(address)) {
-        return Promise.reject({ error: 'Address is required' });
+        return Promise.reject({ errorMsg: "Invalid address", errorCode: 2});
     }
 
-    const accountBlockCount = await accountBlockCountRpc(address).catch((err) =>
-        Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
-    );
-
-    console.log(accountBlockCount.block_count);
+    try {
+        await accountBlockCountRpc(address);
+    } catch (err) {
+        if (err.error === 'Account not found') { // RPC error.
+            return Promise.reject({ errorMsg: "Unopened Account", errorCode: 3});
+        }
+        return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
+    }
 
     let searchPage = 0;
     let completedSearch = false;
     const confirmedTransactions: ConfirmedTransactionDto[] = [];
-    while (!completedSearch) {
-        completedSearch = await discoverConfirmedTransactions(body, searchPage++, confirmedTransactions).catch((err) =>
-            Promise.reject(LOG_ERR('accountHistoryPromise.discoverConfirmedTransactions', err))
-        );
+
+    try {
+        while (!completedSearch) {
+            completedSearch = await discoverConfirmedTransactions(body, searchPage++, confirmedTransactions);
+        }
+        return confirmedTransactions;
+    } catch (err) {
+        return Promise.reject(LOG_ERR('accountHistoryPromise.discoverConfirmedTransactions', err));
     }
-    return confirmedTransactions;
 };
 
 /** For a given address, return a list of confirmed transactions. */
@@ -180,6 +187,15 @@ export const getConfirmedTransactionsV1 = (req, res): void => {
             res.send(confirmedTx);
         })
         .catch((err) => {
+            if (err.errorCode === 1) {
+                return res.status(400).send(err);
+            }
+            if (err.errorCode === 2) {
+                return res.status(400).send(err);
+            }
+            if (err.errorCode === 3) {
+                return res.status(200).send([]);
+            }
             res.status(500).send(err);
         });
 };

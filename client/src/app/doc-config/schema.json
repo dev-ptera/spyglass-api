@@ -654,11 +654,8 @@
                 }
             },
             "required": [
-                "availableDiskSpaceGB",
                 "cementedBlocks",
                 "currentBlock",
-                "ledgerSizeMB",
-                "location",
                 "nodeUptimeSeconds",
                 "nodeVendor",
                 "peerCount",
@@ -666,9 +663,7 @@
                 "rpcVersion",
                 "storeVendor",
                 "storeVersion",
-                "totalMemoryGB",
-                "uncheckedBlocks",
-                "usedMemoryGB"
+                "uncheckedBlocks"
             ],
             "type": "object"
         },
@@ -1043,6 +1038,12 @@
                 "currentBlock": {
                     "type": "number"
                 },
+                "delegatorsCount": {
+                    "type": "number"
+                },
+                "fundedDelegatorsCount": {
+                    "type": "number"
+                },
                 "ip": {
                     "type": "string"
                 },
@@ -1365,6 +1366,9 @@
                     "type": "string"
                 },
                 "delegatorsCount": {
+                    "type": "number"
+                },
+                "fundedDelegatorsCount": {
                     "type": "number"
                 },
                 "nodeMonitorStats": {

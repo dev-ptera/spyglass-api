@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import { EulenMonitoredRepresentativeDto, KnownAccountDto, MonitoredRepresentativeDto } from '@app/types';
-import { LOG_INFO, LOG_ERR, getPRWeightPromise } from '@app/services';
+import { LOG_INFO, LOG_ERR, getPRWeightPromise, populateDelegatorsCount } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
 type NanoNodeMonitorStats = {
@@ -86,6 +86,7 @@ const groomDto = async (allPeerStats: NanoNodeMonitorStats[]): Promise<Monitored
     // Prune duplicate monitors by address
     const uniqueMonitors = new Set<NanoNodeMonitorStats>();
     const addresses = new Set<string>();
+    const delegatorMap = new Map<string, { delegatorsCount: number }>();
 
     for (const rep of allPeerStats) {
         if (rep && !addresses.has(rep.nanoNodeAccount)) {
@@ -93,28 +94,43 @@ const groomDto = async (allPeerStats: NanoNodeMonitorStats[]): Promise<Monitored
             uniqueMonitors.add(rep);
         }
     }
+    try {
+        await populateDelegatorsCount(Array.from(addresses.values()));
+    } catch (err) {
+        return Promise.reject(LOG_ERR('getRepDetails.groomDto.populateDelegatorsCount', err));
+    }
+
+    let delegatorsCount;
+    let fundedDelegatorsCount;
 
     for (const rep of Array.from(uniqueMonitors.values())) {
+        if (AppCache.delegatorCount.has(rep.nanoNodeAccount)) {
+            delegatorsCount = AppCache.delegatorCount.get(rep.nanoNodeAccount).total;
+            fundedDelegatorsCount = AppCache.delegatorCount.get(rep.nanoNodeAccount).funded;
+        }
         groomedDetails.push({
             address: rep.nanoNodeAccount,
-            representative: rep.repAccount,
-            weight: rep.votingWeight,
-            name: rep.nanoNodeName,
-            peers: Number(rep.numPeers),
-            online: true,
             cementedBlocks: rep.cementedBlocks,
             confirmationInfo: rep.confirmationInfo,
-            ip: rep.ip,
-            version: rep.version,
-            location: rep.nodeLocation,
-            nodeUptimeStartup: rep.nodeUptimeStartup,
-            uncheckedBlocks: Number(rep.uncheckedBlocks),
             currentBlock: Number(rep.currentBlock),
+            delegatorsCount,
+            fundedDelegatorsCount: fundedDelegatorsCount,
+            ip: rep.ip,
+            location: rep.nodeLocation,
+            name: rep.nanoNodeName,
+            nodeUptimeStartup: rep.nodeUptimeStartup,
+            online: true,
+            peers: Number(rep.numPeers),
+            representative: rep.repAccount,
             systemLoad: rep.systemLoad,
             totalMem: rep.totalMem,
+            uncheckedBlocks: Number(rep.uncheckedBlocks),
             usedMem: rep.usedMem,
+            version: rep.version,
+            weight: rep.votingWeight,
         });
     }
+
     return Promise.resolve(groomedDetails);
 };
 
@@ -183,11 +199,11 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
     reps.map((rep) => {
         if (knownAccountMap.has(rep.address)) {
             if (rep.name !== knownAccountMap.get(rep.address).alias) {
-                LOG_INFO(
+               /* LOG_INFO(
                     `Mismatched alias for account ${rep.address} \nMONITORED: ${rep.name} vs KNOWN: ${
                         knownAccountMap.get(rep.address).alias
                     }`
-                );
+                ); */
                 knownAccountMap.get(rep.address).alias = rep.name;
             }
         } else {

@@ -165,6 +165,12 @@ To run the server, run `cd server && yarn && yarn start`.
 
 To run the client, run `cd client && yarn && yarn start`. 
 
+
+## Caching
+
+There's stuff that is cached.  Talk about it here! Why is it cached? 
+
+
 ## Contact
 
 Suggestions or issues? Please feel free to post an issue directly on the github.

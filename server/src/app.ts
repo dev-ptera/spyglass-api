@@ -15,7 +15,7 @@ dotenv.config();
 process.env.UV_THREADPOOL_SIZE = String(16);
 
 import {
-    AppCache,
+    AppCache, DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
@@ -62,9 +62,9 @@ import {
     getAccountOverviewV1,
     getLedgerSizeV1,
     getScoresV1,
-    cachePriceData,
+    cachePriceData, cacheDelegatorsCount, sleep,
 } from '@app/services';
-import { memCache, rateLimiter } from '@app/middleware';
+import {memCache, rateLimiter, serverRestart} from '@app/middleware';
 
 const http = require('http');
 const morgan = require('morgan');
@@ -76,6 +76,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
+app.use(serverRestart);
 app.use(rateLimiter);
 app.use(memCache);
 app.use((err, req, res, next) => {
@@ -139,7 +140,12 @@ const server = http.createServer(app);
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {
-        fn.method();
+        try {
+            await sleep(1000);
+            fn.method();
+        } catch (err) {
+
+        }
         setInterval(() => fn.method(), fn.interval);
     }
 };
@@ -181,16 +187,22 @@ server.listen(port, () => {
         interval: PRICE_DATA_REFRESH_INTERVAL_MS,
     };
 
+    const delegatorCount = {
+        method: cacheDelegatorsCount,
+        interval: DELEGATORS_COUNT_REFRESH_INTERVAL_MS
+    }
+
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
+        delegatorCount,
         onlineRepresentatives,
+        priceData,
         monitoredRepresentatives,
         // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
         knownAccounts,
-        priceData,
         accountsDistribution,
     ]);
 });

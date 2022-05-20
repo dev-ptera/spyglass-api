@@ -1,7 +1,7 @@
-import { NANO_CLIENT } from '@app/config';
+import { AppCache, NANO_CLIENT } from '@app/config';
 import * as RPC from '@dev-ptera/nano-node-rpc';
-import { MonitoredRepresentativeDto } from '@app/types';
-import { LOG_ERR } from '@app/services';
+import { DelegatorsOverviewDto, MonitoredRepresentativeDto } from '@app/types';
+import { getDelegatorsPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO, minutesToMs } from '@app/services';
 
 /** This file contains just random helpers to help clean up the logic from various rep-based util. */
 
@@ -18,31 +18,26 @@ export const sortMonitoredRepsByName = (onlineReps: MonitoredRepresentativeDto[]
         return textA < textB ? -1 : textA > textB ? 1 : 0;
     });
 
-/** Given a map of representatives, populates delegators count. */
-export const populateDelegatorsCount = async (
-    reps: Map<string, Partial<{ delegatorsCount: number }>>
-): Promise<void> => {
-    const delegatorCountPromises: Promise<{ address: string; delegatorsCount: number }>[] = [];
+/** Given a list of representatives, updates the delegator count cache if `ignoreCache` is not specified.  */
+export const populateDelegatorsCount =
+    async (reps: string[], overwriteCache?: boolean): Promise<void> => {
 
-    for (const address of reps.keys()) {
-        delegatorCountPromises.push(
-            NANO_CLIENT.delegators_count(address)
-                .then((data: RPC.DelegatorsCountResponse) =>
-                    Promise.resolve({
-                        address,
-                        delegatorsCount: Number(data.count),
+        const delegatorCountPromises: Promise<void>[] = [];
+
+        for (const address of reps) {
+            if (!AppCache.delegatorCount.has(address) || overwriteCache) {
+                delegatorCountPromises.push(
+                    getDelegatorsPromise({ address, size: 0 }).then((data: DelegatorsOverviewDto) => {
+                        AppCache.delegatorCount
+                            .set(address, { total: data.count, funded: data.count - data.emptyCount });
                     })
-                )
-                .catch((err) => {
-                    LOG_ERR('cacheRepresentatives.delegators_count', err, { address });
-                    return Promise.resolve({
-                        address,
-                        delegatorsCount: 0,
-                    });
-                })
-        );
-    }
-    await Promise.all(delegatorCountPromises).then((data) => {
-        data.map((pair) => (reps.get(pair.address).delegatorsCount = Number(pair.delegatorsCount)));
-    });
+                );
+            }
+        }
+
+        try {
+            await Promise.all(delegatorCountPromises);
+        } catch (err) {
+            LOG_ERR('populateDelegatorsCount', err);
+        }
 };

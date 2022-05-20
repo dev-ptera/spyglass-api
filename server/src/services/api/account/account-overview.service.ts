@@ -49,7 +49,7 @@ export const getAccountOverviewV1 = (req, res): void => {
     const address = parts[parts.length - 1];
 
     if (!isValidAddress(address)) {
-        return res.status(500).send({ error: 'Address is required' });
+        return res.status(400).send({ error: 'Address is required' });
     }
 
     Promise.all([

@@ -1,4 +1,3 @@
-
 // https://github.com/appditto/MonKey/tree/master/server/assets/illustrations/vanities
 export const BAN_KNOWN_VANITIES = [
     // ban_1
@@ -20,7 +19,6 @@ export const BAN_KNOWN_VANITIES = [
     'ban_1wbanktxc5mtnydsjq6doy81wsnn7fw1z7yzw4zzieb6dfkihjtbwzgrxt9i',
     'ban_1wirginxksoeggr1u51a797tytmicokwnxxsosmd1q3mapuad4j6hdzeh617',
     'ban_1yekta1xn94qdnbmmj1tqg76zk3apcfd31pjmuy6d879e3mr469a4o4sdhd4',
-
 
     // ban_3
     'ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad',

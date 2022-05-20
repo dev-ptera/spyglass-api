@@ -18,4 +18,6 @@ export type MonitoredRepresentativeDto = {
     usedMem?: number;
     version?: string;
     weight?: number;
+    delegatorsCount?: number;
+    fundedDelegatorsCount?: number;
 };

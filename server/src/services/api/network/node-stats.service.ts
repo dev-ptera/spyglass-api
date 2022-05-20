@@ -1,31 +1,30 @@
-import {getPeerVersionsPromise} from "./peer-versions.service";
-import {HostNodeStatsDto} from "@app/types";
-import {uptimeRpc} from "../../../rpc/calls/uptime.rpc";
-import {blockCountRpc} from "../../../rpc/calls/block-count.rpc";
-import {AppCache, HOST_NODE_STATS_PAIR, LEDGER_LOCATION} from "@app/config";
-import {versionRpc} from "../../../rpc/calls/version.rpc";
-import {LOG_ERR} from "../../log/error.service";
-import {cacheSend} from "../../etc/generic-utils";
+import { getPeerVersionsPromise } from './peer-versions.service';
+import { HostNodeStatsDto } from '@app/types';
+import { uptimeRpc } from '../../../rpc/calls/uptime.rpc';
+import { blockCountRpc } from '../../../rpc/calls/block-count.rpc';
+import { AppCache, HOST_NODE_STATS_PAIR, LEDGER_LOCATION } from '@app/config';
+import { versionRpc } from '../../../rpc/calls/version.rpc';
+import { LOG_ERR } from '../../log/error.service';
+import { cacheSend } from '../../etc/generic-utils';
 
 const getSize = require('get-folder-size');
 const spawn = require('child_process');
 const os = require('os');
 
-
 /** Gets the ledger size, requires read permissions enabled. */
-const calcLedgerSizeMB = async(): Promise<number> =>
+const calcLedgerSizeMB = async (): Promise<number> =>
     new Promise((resolve) => {
         getSize(LEDGER_LOCATION, (err, size) => {
             if (err) {
                 LOG_ERR('getNodeStats.getLedgerSize', err);
                 resolve(undefined);
-            } else{
+            } else {
                 resolve(Number((size / 1000 / 1000).toFixed(2)));
             }
         });
-    })
+    });
 
-const calcDiskSpaceGB = async(): Promise<number> =>
+const calcDiskSpaceGB = async (): Promise<number> =>
     new Promise((resolve) => {
         spawn.exec('node scripts/calc-avail-diskspace', (err, stdout, stderr) => {
             if (err || stderr) {
@@ -36,13 +35,11 @@ const calcDiskSpaceGB = async(): Promise<number> =>
                 resolve(Number(Number(stdout).toFixed(5)));
             }
         });
-    })
-
+    });
 
 export const getNodeStatsV1 = async (res) => {
-
     const freeMemoryGB = os.freemem() / 1024 / 1024 / 1024;
-    const totalMemoryGB = os.totalmem()  / 1024 / 1024 / 1024;
+    const totalMemoryGB = os.totalmem() / 1024 / 1024 / 1024;
     const usedMemoryGB = totalMemoryGB - freeMemoryGB;
     const addressAsRepresentative = String(process.env.PUBLIC_REP_ADDRESS || '').trim();
     const availableDiskSpaceGB = await calcDiskSpaceGB();
@@ -51,7 +48,7 @@ export const getNodeStatsV1 = async (res) => {
     try {
         const peerStats = await getPeerVersionsPromise();
         let peerCount = 0;
-        peerStats.map((entry) => peerCount+=entry.count);
+        peerStats.map((entry) => (peerCount += entry.count));
         const uptime = await uptimeRpc();
         const blockCount = await blockCountRpc();
         const version = await versionRpc();
@@ -82,10 +79,10 @@ export const getNodeStatsV1 = async (res) => {
             totalMemoryGB: totalMemoryGB,
             uncheckedBlocks: Number(blockCount.unchecked),
             usedMemoryGB: usedMemoryGB,
-        }
+        };
         return cacheSend(res, data, HOST_NODE_STATS_PAIR);
     } catch (err) {
         LOG_ERR('getNodeStatsV1', err);
         return res.status(500).send({ error: 'Unable to get node statistics.' });
     }
-}
+};

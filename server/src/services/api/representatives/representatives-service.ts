@@ -1,12 +1,7 @@
-import { AppCache, NANO_CLIENT } from '@app/config';
-import { rawToBan } from 'banano-unit-converter';
-import {
-    populateDelegatorsCount,
-    getRepresentativesUptimePromise,
-    getPRWeightPromise,
-    getAliasedReps,
-} from '@app/services';
-import { MonitoredRepresentativeDto, RepresentativeDto } from '@app/types';
+import {AppCache, NANO_CLIENT} from '@app/config';
+import {rawToBan} from 'banano-unit-converter';
+import {getAliasedReps, getPRWeightPromise, getRepresentativesUptimePromise, LOG_ERR,} from '@app/services';
+import {MonitoredRepresentativeDto, RepresentativeDto} from '@app/types';
 
 type RequestBody = {
     addresses?: string[];
@@ -145,7 +140,12 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Append delegatorsCount to each rep.
     if (body.includeDelegatorCount) {
-        await populateDelegatorsCount(repMap);
+        for (const address of repMap.keys()) {
+            if (AppCache.delegatorCount.has(address)) {
+                repMap.get(address).delegatorsCount = AppCache.delegatorCount.get(address).total;
+                repMap.get(address).fundedDelegatorsCount = AppCache.delegatorCount.get(address).funded;
+            }
+        }
     }
 
     // Append alias to each rep.
@@ -233,5 +233,8 @@ export const getRepresentativesV1 = (req, res): void => {
     const body = req.body as RequestBody;
     getRepresentativesPromise(body)
         .then((reps) => res.send(reps))
-        .catch((err) => res.status(500).send(err));
+        .catch((err) => {
+            LOG_ERR('getRepresentativesPromise', err);
+            res.status(500).send(err)
+        });
 };

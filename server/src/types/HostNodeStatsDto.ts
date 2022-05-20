@@ -15,4 +15,4 @@ export type HostNodeStatsDto = {
     protocolVersion: string;
     nodeVendor: string;
     storeVendor: string;
-}
+};

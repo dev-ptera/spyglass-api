@@ -1,4 +1,11 @@
-import { convertFromRaw, isValidAddress, LOG_ERR } from '@app/services';
+import {
+    convertFromRaw,
+    getRepresentativesPromise,
+    isValidAddress,
+    LOG_ERR,
+    LOG_INFO,
+    populateDelegatorsCount
+} from '@app/services';
 import { DelegatorDto, DelegatorsOverviewDto } from '@app/types';
 import { delegatorsCountRpc, delegatorsRpc } from '@app/rpc';
 
@@ -30,41 +37,53 @@ const setBodyDefaults = (body: RequestBody): void => {
 };
 
 export const getDelegatorsCountPromise = async (address): Promise<number> => {
-    const delegatorsCount = await delegatorsCountRpc(address).catch((err) => {
+    try {
+        const delegatorsCount = await delegatorsCountRpc(address);
+        return Number(delegatorsCount.count);
+    } catch (err) {
         return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsCount', err, { address }));
-    });
-    return Number(delegatorsCount.count);
+    }
 };
 
-const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOverviewDto> => {
+export const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOverviewDto> => {
     setBodyDefaults(body);
     const address = body.address;
 
+    if (!address) {
+        return Promise.reject({ errorMsg: 'Address is required.', errorCode: 1 });
+    }
+
     if (!isValidAddress(address)) {
-        return Promise.reject(LOG_ERR('getDelegatorsPromise', { error: 'Address is required' }));
+        return Promise.reject({ errorMsg: 'Address is invalid.', errorCode: 2 });
     }
 
     // Fetch delegators count.
-    const count = await getDelegatorsCountPromise(address).catch((err) => Promise.reject(err));
+    let count = 0;
+    try {
+        count = await getDelegatorsCountPromise(address);
+    } catch (err) {
+        return Promise.reject(LOG_ERR('getDelegatorsPromise.getDelegatorsCountPromise', err, { address }));
+    }
 
-    // Fetch delegators: TODO: V23 this rpc command changes; adds new optional params to make life easier.
-    const rpcResponse = await delegatorsRpc(address).catch((err) => {
+    // Fetch delegators
+    let rpcResponse;
+    try {
+        rpcResponse = await delegatorsRpc(address, '10000000000000000000000000');
+    } catch (err) {
         return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsRpc', err, { address }));
-    });
+    }
 
     // Loop through rpc results, filter out zero weight delegators
-    const delegators: DelegatorDto[] = [];
     let weightSum = 0;
-    let emptyCount = 0;
+    let weightedCount = 0;
+    const delegators: DelegatorDto[] = [];
+
     for (const address in rpcResponse.delegators) {
-        if (rpcResponse.delegators[address] === '0') {
-            emptyCount++;
-        } else {
-            const weight = Number(convertFromRaw(rpcResponse.delegators[address]));
-            weightSum += weight;
-            if (weight >= body.threshold) {
-                delegators.push({ address, weight });
-            }
+        weightedCount++;
+        const weight = Number(convertFromRaw(rpcResponse.delegators[address]));
+        weightSum += weight;
+        if (body.size !== 0 && weight >= body.threshold) {
+            delegators.push({ address, weight });
         }
     }
 
@@ -73,7 +92,7 @@ const getDelegatorsPromise = async (body: RequestBody): Promise<DelegatorsOvervi
 
     return {
         count,
-        emptyCount,
+        emptyCount: count - weightedCount,
         weightSum,
         delegators: delegators.splice(body.offset).slice(0, body.size),
     };
@@ -86,6 +105,28 @@ export const getDelegatorsV1 = (req, res): void => {
             res.send(delegators);
         })
         .catch((err) => {
-            res.status(500).send(err);
+            if (err.errorCode === 1) {
+                return res.status(400).send(err);
+            }
+            if (err.errorCode === 2) {
+                return res.status(400).send(err);
+            }
+            LOG_ERR('getDelegatorsV1', err);
+            return res.status(500).send({ errorMsg: 'Internal Error' });
         });
+};
+
+
+/** Refreshes the list of delegators vs fundedDelegetors. */
+export const cacheDelegatorsCount = async (): Promise<void> => {
+    const start = LOG_INFO('Refreshing Delegator Count Cache');
+    const repResponse = await getRepresentativesPromise({ minimumWeight: 100_000 });
+    console.log(repResponse.length);
+    const addresses = [];
+    repResponse.map((rep) => {
+        addresses.push(rep.address);
+    })
+
+    await populateDelegatorsCount(addresses, true);
+    LOG_INFO('Delegator Cache Count Updated', start);
 };
