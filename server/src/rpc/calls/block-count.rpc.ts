@@ -1,5 +1,5 @@
-import {NANO_CLIENT} from '@app/config';
-import {BlockCountResponse} from "@dev-ptera/nano-node-rpc";
+import { NANO_CLIENT } from '@app/config';
+import { BlockCountResponse } from '@dev-ptera/nano-node-rpc';
 
 export const blockCountRpc = async (): Promise<BlockCountResponse> =>
     NANO_CLIENT.block_count()

@@ -70,7 +70,7 @@ export const ACCOUNT_DELEGATORS_KNOB: Array<Knob> = [
     {
         propertyName: 'threshold',
         propertyType: 'number',
-        notes: 'Minimum required balance for a delegator to be included in the response. This not in raw. Defaults to 0.0001.',
+        notes: 'Minimum required balance for a delegator to be included in the response. This not in raw. Default & Minimum is 0.0001 (BAN).',
     },
 ];
 

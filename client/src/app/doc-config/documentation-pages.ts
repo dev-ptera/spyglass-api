@@ -33,7 +33,8 @@ import {
     ledgerSizeNavItem,
     repScoresNavItem,
     blocksNavItem,
-    priceNavItem, nodeStatsNavItem,
+    priceNavItem,
+    nodeStatsNavItem,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';

@@ -38,6 +38,9 @@ export type AppCache = {
 
     /** Temporary data that is fetched, cached, and released over time. */
     temp: CacheClass<string, any> & { has: Function };
+
+    /** Store delegator count */
+    delegatorCount: Map<string, { total: number; funded: number }>;
 };
 
 export const AppCache: AppCache = {
@@ -51,6 +54,7 @@ export const AppCache: AppCache = {
     priceData: undefined,
     richList: [],
     temp: new cache.Cache(),
+    delegatorCount: new Map<string, { total: number; funded: number }>(),
 };
 
 AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;

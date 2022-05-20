@@ -1,6 +1,7 @@
 export type DelegatorsOverviewDto = {
     delegators: DelegatorDto[];
     count: number;
+    fundedCount: number;
     emptyCount: number;
     weightSum: number;
 };
