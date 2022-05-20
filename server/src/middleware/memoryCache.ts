@@ -43,7 +43,6 @@ export const memCache = (req, res, next) => {
     const key = getCacheKey(req);
     const cached = AppCache.temp.get(key);
     if (cached) {
-        console.log('sending cached results');
         return res.send(cached);
     }
     next();
