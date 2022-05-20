@@ -27,7 +27,7 @@ const calcMinutes = (mins: number) => 60000 * mins;
 
 export const PRICE_DATA_REFRESH_INTERVAL_MS = calcMinutes(IS_PRODUCTION ? 15 : 120);
 export const REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS = calcMinutes(1);
-export const DELEGATORS_COUNT_REFRESH_INTERVAL_MS = calcMinutes(2)
+export const DELEGATORS_COUNT_REFRESH_INTERVAL_MS = calcMinutes(5);
 export const REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS = calcMinutes(1);

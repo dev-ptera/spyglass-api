@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Peers, peersRpc } from '@app/rpc';
 import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import { EulenMonitoredRepresentativeDto, KnownAccountDto, MonitoredRepresentativeDto } from '@app/types';
-import { LOG_INFO, LOG_ERR, getPRWeightPromise, populateDelegatorsCount } from '@app/services';
+import { getPRWeightPromise, LOG_ERR, LOG_INFO } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
 
 type NanoNodeMonitorStats = {
@@ -86,7 +86,6 @@ const groomDto = async (allPeerStats: NanoNodeMonitorStats[]): Promise<Monitored
     // Prune duplicate monitors by address
     const uniqueMonitors = new Set<NanoNodeMonitorStats>();
     const addresses = new Set<string>();
-    const delegatorMap = new Map<string, { delegatorsCount: number }>();
 
     for (const rep of allPeerStats) {
         if (rep && !addresses.has(rep.nanoNodeAccount)) {
@@ -94,16 +93,10 @@ const groomDto = async (allPeerStats: NanoNodeMonitorStats[]): Promise<Monitored
             uniqueMonitors.add(rep);
         }
     }
-    try {
-        await populateDelegatorsCount(Array.from(addresses.values()));
-    } catch (err) {
-        return Promise.reject(LOG_ERR('getRepDetails.groomDto.populateDelegatorsCount', err));
-    }
-
-    let delegatorsCount;
-    let fundedDelegatorsCount;
 
     for (const rep of Array.from(uniqueMonitors.values())) {
+        let delegatorsCount;
+        let fundedDelegatorsCount;
         if (AppCache.delegatorCount.has(rep.nanoNodeAccount)) {
             delegatorsCount = AppCache.delegatorCount.get(rep.nanoNodeAccount).total;
             fundedDelegatorsCount = AppCache.delegatorCount.get(rep.nanoNodeAccount).funded;
@@ -199,7 +192,7 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
     reps.map((rep) => {
         if (knownAccountMap.has(rep.address)) {
             if (rep.name !== knownAccountMap.get(rep.address).alias) {
-               /* LOG_INFO(
+                /* LOG_INFO(
                     `Mismatched alias for account ${rep.address} \nMONITORED: ${rep.name} vs KNOWN: ${
                         knownAccountMap.get(rep.address).alias
                     }`

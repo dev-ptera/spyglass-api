@@ -1,7 +1,7 @@
-import {AppCache, NANO_CLIENT} from '@app/config';
-import {rawToBan} from 'banano-unit-converter';
-import {getAliasedReps, getPRWeightPromise, getRepresentativesUptimePromise, LOG_ERR,} from '@app/services';
-import {MonitoredRepresentativeDto, RepresentativeDto} from '@app/types';
+import { AppCache, NANO_CLIENT } from '@app/config';
+import { rawToBan } from 'banano-unit-converter';
+import { getAliasedReps, getPRWeightPromise, getRepresentativesUptimePromise, LOG_ERR } from '@app/services';
+import { MonitoredRepresentativeDto, RepresentativeDto } from '@app/types';
 
 type RequestBody = {
     addresses?: string[];
@@ -235,6 +235,6 @@ export const getRepresentativesV1 = (req, res): void => {
         .then((reps) => res.send(reps))
         .catch((err) => {
             LOG_ERR('getRepresentativesPromise', err);
-            res.status(500).send(err)
+            res.status(500).send(err);
         });
 };

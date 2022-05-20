@@ -15,7 +15,8 @@ dotenv.config();
 process.env.UV_THREADPOOL_SIZE = String(16);
 
 import {
-    AppCache, DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
+    AppCache,
+    DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
@@ -62,9 +63,11 @@ import {
     getAccountOverviewV1,
     getLedgerSizeV1,
     getScoresV1,
-    cachePriceData, cacheDelegatorsCount, sleep,
+    cachePriceData,
+    cacheDelegatorsCount,
+    sleep,
 } from '@app/services';
-import {memCache, rateLimiter, serverRestart} from '@app/middleware';
+import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
 const http = require('http');
 const morgan = require('morgan');
@@ -143,9 +146,7 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
         try {
             await sleep(1000);
             fn.method();
-        } catch (err) {
-
-        }
+        } catch (err) {}
         setInterval(() => fn.method(), fn.interval);
     }
 };
@@ -189,8 +190,8 @@ server.listen(port, () => {
 
     const delegatorCount = {
         method: cacheDelegatorsCount,
-        interval: DELEGATORS_COUNT_REFRESH_INTERVAL_MS
-    }
+        interval: DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
+    };
 
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */

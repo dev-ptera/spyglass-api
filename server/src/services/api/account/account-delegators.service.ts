@@ -1,13 +1,7 @@
-import {
-    convertFromRaw,
-    getRepresentativesPromise,
-    isValidAddress,
-    LOG_ERR,
-    LOG_INFO,
-    populateDelegatorsCount
-} from '@app/services';
+import { convertFromRaw, getRepresentativesPromise, isValidAddress, LOG_ERR, LOG_INFO, sleep } from '@app/services';
 import { DelegatorDto, DelegatorsOverviewDto } from '@app/types';
 import { delegatorsCountRpc, delegatorsRpc } from '@app/rpc';
+import { AppCache } from '@app/config';
 
 type RequestBody = {
     address: string;
@@ -75,15 +69,17 @@ export const getDelegatorsPromise = async (body: RequestBody): Promise<Delegator
 
     // Loop through rpc results, filter out zero weight delegators
     let weightSum = 0;
-    let weightedCount = 0;
+    let fundedCount = 0;
     const delegators: DelegatorDto[] = [];
 
     for (const address in rpcResponse.delegators) {
-        weightedCount++;
         const weight = Number(convertFromRaw(rpcResponse.delegators[address]));
         weightSum += weight;
-        if (body.size !== 0 && weight >= body.threshold) {
-            delegators.push({ address, weight });
+        if (weight >= body.threshold) {
+            fundedCount++;
+            if (body.size > 0) {
+                delegators.push({ address, weight });
+            }
         }
     }
 
@@ -92,7 +88,8 @@ export const getDelegatorsPromise = async (body: RequestBody): Promise<Delegator
 
     return {
         count,
-        emptyCount: count - weightedCount,
+        fundedCount,
+        emptyCount: count - fundedCount,
         weightSum,
         delegators: delegators.splice(body.offset).slice(0, body.size),
     };
@@ -116,17 +113,39 @@ export const getDelegatorsV1 = (req, res): void => {
         });
 };
 
-
 /** Refreshes the list of delegators vs fundedDelegetors. */
 export const cacheDelegatorsCount = async (): Promise<void> => {
     const start = LOG_INFO('Refreshing Delegator Count Cache');
     const repResponse = await getRepresentativesPromise({ minimumWeight: 100_000 });
-    console.log(repResponse.length);
     const addresses = [];
     repResponse.map((rep) => {
         addresses.push(rep.address);
-    })
+    });
 
     await populateDelegatorsCount(addresses, true);
     LOG_INFO('Delegator Cache Count Updated', start);
+};
+
+/** Given a list of representatives, updates the delegator count cache if `ignoreCache` is not specified.  */
+const populateDelegatorsCount = async (reps: string[], overwriteCache?: boolean): Promise<void> => {
+    const delegatorCountPromises: Promise<void>[] = [];
+
+    for (const address of reps) {
+        if (!AppCache.delegatorCount.has(address) || overwriteCache) {
+            delegatorCountPromises.push(
+                getDelegatorsPromise({ address, size: 0 }).then((data: DelegatorsOverviewDto) => {
+                    AppCache.delegatorCount.set(address, { total: data.count, funded: data.fundedCount });
+                })
+            );
+        }
+    }
+
+    try {
+        for (const updateCachePromise of delegatorCountPromises) {
+            await updateCachePromise.then();
+            await sleep(250);
+        }
+    } catch (err) {
+        LOG_ERR('populateDelegatorsCount', err);
+    }
 };

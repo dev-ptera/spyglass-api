@@ -150,19 +150,20 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
     const address = body.address;
 
     if (!address) {
-        return Promise.reject({ errorMsg: "Address is required", errorCode: 1});
+        return Promise.reject({ errorMsg: 'Address is required', errorCode: 1 });
     }
     if (!isValidAddress(address)) {
-        return Promise.reject({ errorMsg: "Invalid address", errorCode: 2});
+        return Promise.reject({ errorMsg: 'Invalid address', errorCode: 2 });
     }
 
     try {
         await accountBlockCountRpc(address);
     } catch (err) {
-        if (err.error === 'Account not found') { // RPC error.
-            return Promise.reject({ errorMsg: "Unopened Account", errorCode: 3});
+        if (err.error === 'Account not found') {
+            // RPC error.
+            return Promise.reject({ errorMsg: 'Unopened Account', errorCode: 3 });
         }
-        return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
+        return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err));
     }
 
     let searchPage = 0;

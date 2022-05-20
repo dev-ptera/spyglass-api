@@ -2,6 +2,7 @@ import { accountBalanceRpc, accountInfoRpc } from '@app/rpc';
 import { convertFromRaw, getDelegatorsCountPromise, getPRWeightPromise, isValidAddress, LOG_ERR } from '@app/services';
 import { AccountBalanceResponse, AccountInfoResponse, ErrorResponse } from '@dev-ptera/nano-node-rpc';
 import { AccountOverviewDto } from '@app/types';
+import { AppCache } from '@app/config';
 
 export const getUnopenedAccount = (): AccountInfoResponse => {
     return {
@@ -43,6 +44,13 @@ const accountInfoPromise = (address: string): Promise<AccountInfoResponse> =>
             }
         });
 
+const accountDelegatorsPromise = (address): Promise<number> => {
+    if (AppCache.delegatorCount.has(address)) {
+        return Promise.resolve(AppCache.delegatorCount.get(address).funded);
+    }
+    return getDelegatorsCountPromise(address);
+};
+
 /** Given an address, returns an overview of the account including balance, confirmed/pending transactions, delegators, etc. */
 export const getAccountOverviewV1 = (req, res): void => {
     const parts = req.url.split('/');
@@ -56,7 +64,7 @@ export const getAccountOverviewV1 = (req, res): void => {
         accountInfoPromise(address),
         getPRWeightPromise(),
         accountBalancePromise(address),
-        getDelegatorsCountPromise(address),
+        accountDelegatorsPromise(address),
     ])
         .then(([accountData, prWeight, balance, delegatorsCount]) => {
             const weight = convertFromRaw(accountData.weight);

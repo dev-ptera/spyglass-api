@@ -3,6 +3,7 @@ export type RepresentativeDto = {
     online: boolean;
     alias?: string;
     weight: number;
+    /* Delegator counts not provided for small reps. */
     delegatorsCount?: number;
     fundedDelegatorsCount?: number;
     nodeMonitorStats?: {
