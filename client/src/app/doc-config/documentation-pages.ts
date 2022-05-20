@@ -103,7 +103,7 @@ export const apiDocumentationPages: Array<{
     },
     {
         route: `${accountNavItemParent.route}/${confirmedTxNavItem.route}`,
-        apiPath: 'v1/account/confirmed-transactions',
+        apiPath: 'v2/account/confirmed-transactions',
         responseSchema: 'ConfirmedTransactionDto[]',
         knobs: ACCOUNT_CONFIRMED_KNOB,
         requestType: 'POST',

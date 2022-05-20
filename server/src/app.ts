@@ -65,7 +65,7 @@ import {
     getScoresV1,
     cachePriceData,
     cacheDelegatorsCount,
-    sleep,
+    sleep, getConfirmedTransactionsV2,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -97,6 +97,7 @@ app.use((req, res, next) => {
 app.get(`/${PATH_ROOT}/v1/account/representative/:address`, (req, res) => getAccountRepresentativeV1(req, res));
 app.get(`/${PATH_ROOT}/v1/account/overview/:address`, (req, res) => getAccountOverviewV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/confirmed-transactions`, (req, res) => getConfirmedTransactionsV1(req, res));
+app.post(`/${PATH_ROOT}/v2/account/confirmed-transactions`, (req, res) => getConfirmedTransactionsV2(req, res));
 app.post(`/${PATH_ROOT}/v1/account/receivable-transactions`, (req, res) => getReceivableTransactionsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));

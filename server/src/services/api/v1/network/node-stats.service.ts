@@ -1,11 +1,10 @@
 import { getPeerVersionsPromise } from './peer-versions.service';
 import { HostNodeStatsDto } from '@app/types';
-import { uptimeRpc } from '../../../rpc/calls/uptime.rpc';
-import { blockCountRpc } from '../../../rpc/calls/block-count.rpc';
+import { uptimeRpc } from '../../../../rpc/calls/uptime.rpc';
+import { blockCountRpc } from '../../../../rpc/calls/block-count.rpc';
 import { AppCache, HOST_NODE_STATS_PAIR, LEDGER_LOCATION } from '@app/config';
-import { versionRpc } from '../../../rpc/calls/version.rpc';
-import { LOG_ERR } from '../../log/error.service';
-import { cacheSend } from '../../etc/generic-utils';
+import { versionRpc } from '../../../../rpc/calls/version.rpc';
+import { LOG_ERR, cacheSend } from '@app/services';
 
 const getSize = require('get-folder-size');
 const spawn = require('child_process');

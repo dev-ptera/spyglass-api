@@ -51,7 +51,7 @@ const setBodyDefaults = (body: RequestBody): void => {
     body.size = Math.min(body.size, 500);
 };
 
-export const convertToConfirmedTransactionDto = (
+const convertToConfirmedTransactionDto = (
     transaction: AccountHistoryResponse['history'][0]
 ): ConfirmedTransactionDto => {
     const type = getTransactionType(transaction);
@@ -143,10 +143,10 @@ const discoverConfirmedTransactions = async (
 };
 
 /** Returns type for a transaction; defaults to subtype, but fallbacks to use type when subtype is undefined. */
-export const getTransactionType = (tx: AccountHistoryResponse['history'][0]): Subtype => tx['subtype'] || tx['type'];
+const getTransactionType = (tx: AccountHistoryResponse['history'][0]): Subtype => tx['subtype'] || tx['type'];
 
 /** For a given address, return a list of confirmed transactions. */
-export const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
+const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
     const address = body.address;
 
     if (!address) {
@@ -180,8 +180,9 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
     }
 };
 
+
 /** For a given address, return a list of confirmed transactions. */
-export const getConfirmedTransactionsV1 = (req, res): void => {
+export const getConfirmedTransactionsV2 = (req, res): void => {
     setBodyDefaults(req.body);
     getConfirmedTransactionsPromise(req.body)
         .then((confirmedTx: ConfirmedTransactionDto[]) => {
