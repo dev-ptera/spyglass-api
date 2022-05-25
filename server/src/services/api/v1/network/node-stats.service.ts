@@ -53,10 +53,12 @@ export const getNodeStatsV1 = async (res) => {
         const version = await versionRpc();
 
         let location = undefined;
+        let monitorUrl = undefined;
         if (AppCache.monitoredReps && addressAsRepresentative) {
             for (const rep of AppCache.monitoredReps) {
                 if (rep.address === addressAsRepresentative) {
                     location = rep.location;
+                    monitorUrl = rep.ip;
                     break;
                 }
             }
@@ -70,6 +72,7 @@ export const getNodeStatsV1 = async (res) => {
             location: location,
             nodeVendor: version.node_vendor,
             nodeUptimeSeconds: Number(uptime.seconds),
+            monitorUrl,
             peerCount,
             protocolVersion: version.protocol_version,
             rpcVersion: version.rpc_version,

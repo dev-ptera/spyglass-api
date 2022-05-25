@@ -1,6 +1,6 @@
 export const BAN_NODE_MONITORS = [
     /** DOMAIN | IP */
-    '108.39.249.5', //batman
+    '108.39.199.48', //batman
     '45.77.190.142', // Cabbit
     '192.210.243.189', // hentai
     '142.93.243.3', // Nunu

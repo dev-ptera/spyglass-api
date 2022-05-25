@@ -8,6 +8,7 @@ export type HostNodeStatsDto = {
     totalMemoryGB?: number;
     ledgerSizeMB?: number;
     availableDiskSpaceGB?: number;
+    monitorUrl?: string;
     nodeUptimeSeconds: number;
     location?: string;
     rpcVersion: string;
