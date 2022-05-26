@@ -21,6 +21,7 @@ import {
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
     PRICE_DATA_REFRESH_INTERVAL_MS,
+    REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
@@ -65,7 +66,9 @@ import {
     getScoresV1,
     cachePriceData,
     cacheDelegatorsCount,
-    sleep, getConfirmedTransactionsV2,
+    sleep,
+    getConfirmedTransactionsV2,
+    cacheRepresentativeScores,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -194,6 +197,11 @@ server.listen(port, () => {
         interval: DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     };
 
+    const representativeScores = {
+        method: cacheRepresentativeScores,
+        interval: REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
+    };
+
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
@@ -204,6 +212,7 @@ server.listen(port, () => {
         // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
+        representativeScores,
         knownAccounts,
         accountsDistribution,
     ]);

@@ -180,7 +180,6 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
     }
 };
 
-
 /** For a given address, return a list of confirmed transactions. */
 export const getConfirmedTransactionsV2 = (req, res): void => {
     setBodyDefaults(req.body);

@@ -4,6 +4,7 @@ import {
     KnownAccountDto,
     MonitoredRepresentativeDto,
     PriceDataDto,
+    RepScoreDto,
 } from '@app/types';
 import { CacheClass } from 'memory-cache';
 const cache = require('memory-cache');
@@ -41,6 +42,9 @@ export type AppCache = {
 
     /** Store delegator count */
     delegatorCount: Map<string, { total: number; funded: number }>;
+
+    /** Stores representative scores. */
+    representativeScores: RepScoreDto[];
 };
 
 export const AppCache: AppCache = {
@@ -55,6 +59,7 @@ export const AppCache: AppCache = {
     richList: [],
     temp: new cache.Cache(),
     delegatorCount: new Map<string, { total: number; funded: number }>(),
+    representativeScores: [],
 };
 
 AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;

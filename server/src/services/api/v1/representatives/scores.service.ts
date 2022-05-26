@@ -1,5 +1,5 @@
-import { AppCache, REP_SCORES_CACHE_PAIR, UPTIME_TRACKING_MIN_WEIGHT } from '@app/config';
-import { cacheSend, getPRWeightPromise, getRepresentativesPromise } from '@app/services';
+import { AppCache, UPTIME_TRACKING_MIN_WEIGHT } from '@app/config';
+import { getPRWeightPromise, getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
 import { RepScoreDto } from '@app/types';
 
 /** Use this method to retrieve a list of representative scores. */
@@ -96,7 +96,17 @@ export const getScoresPromise = async (): Promise<RepScoreDto[]> => {
 
 /** Returns an array of representative scores. Max score is 100, omitting reps with a low score. */
 export const getScoresV1 = (res): void => {
-    getScoresPromise()
-        .then((data) => cacheSend(res, data, REP_SCORES_CACHE_PAIR))
-        .catch((err) => res.status(500).send(err));
+    res.send(AppCache.representativeScores);
+};
+
+/** Refreshes the list of delegators vs fundedDelegetors. */
+export const cacheRepresentativeScores = async (): Promise<void> => {
+    try {
+        const start = LOG_INFO('Refreshing Rep Scores');
+        const scores = await getScoresPromise();
+        AppCache.representativeScores = scores;
+        LOG_INFO('Representative Scores Updated', start);
+    } catch (err) {
+        LOG_ERR('cacheRepresentativeScores', err);
+    }
 };

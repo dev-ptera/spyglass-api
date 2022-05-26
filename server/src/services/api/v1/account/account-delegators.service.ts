@@ -128,24 +128,14 @@ export const cacheDelegatorsCount = async (): Promise<void> => {
 
 /** Given a list of representatives, updates the delegator count cache if `ignoreCache` is not specified.  */
 const populateDelegatorsCount = async (reps: string[], overwriteCache?: boolean): Promise<void> => {
-    const delegatorCountPromises: Promise<void>[] = [];
-
     for (const address of reps) {
         if (!AppCache.delegatorCount.has(address) || overwriteCache) {
-            delegatorCountPromises.push(
-                getDelegatorsPromise({ address, size: 0 }).then((data: DelegatorsOverviewDto) => {
-                    AppCache.delegatorCount.set(address, { total: data.count, funded: data.fundedCount });
-                })
-            );
+            try {
+                const data = await getDelegatorsPromise({ address, size: 0 });
+                AppCache.delegatorCount.set(address, { total: data.count, funded: data.fundedCount });
+            } catch (err) {
+                LOG_ERR('populateDelegatorsCount', err);
+            }
         }
-    }
-
-    try {
-        for (const updateCachePromise of delegatorCountPromises) {
-            await updateCachePromise.then();
-            await sleep(250);
-        }
-    } catch (err) {
-        LOG_ERR('populateDelegatorsCount', err);
     }
 };
