@@ -148,7 +148,7 @@ const server = http.createServer(app);
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {
         try {
-            await sleep(1000);
+            await sleep(2000);
             fn.method();
         } catch (err) {}
         setInterval(() => fn.method(), fn.interval);
@@ -205,8 +205,8 @@ server.listen(port, () => {
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
-        delegatorCount,
         onlineRepresentatives,
+        delegatorCount,
         priceData,
         monitoredRepresentatives,
         // This has to be called after the monitoredRepresentatives & onlineRepresentatives calls.
