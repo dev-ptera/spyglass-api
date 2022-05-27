@@ -2,11 +2,12 @@ import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
     KnownAccountDto,
-    MonitoredRepresentativeDto,
+    MonitoredRepresentativeDto, PingStats,
     PriceDataDto,
     RepScoreDto,
 } from '@app/types';
 import { CacheClass } from 'memory-cache';
+import {PingDoc} from "@app/services";
 const cache = require('memory-cache');
 
 export type AppCache = {
@@ -45,6 +46,9 @@ export type AppCache = {
 
     /** Stores representative scores. */
     representativeScores: RepScoreDto[];
+
+    /** Stores representative uptime metrics in memory to reduce number of file reads. */
+    pingDocMap: Map<string, PingDoc>;
 };
 
 export const AppCache: AppCache = {
@@ -60,6 +64,7 @@ export const AppCache: AppCache = {
     temp: new cache.Cache(),
     delegatorCount: new Map<string, { total: number; funded: number }>(),
     representativeScores: [],
+    pingDocMap: new Map<string, PingDoc>()
 };
 
 AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;

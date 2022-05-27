@@ -27,7 +27,7 @@ const monthMaxPings = 2_629_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS
 const semiAnnualMaxPings = (6 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
 const yearMaxPings = (12 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
 
-type PingDoc = {
+export type PingDoc = {
     address: string;
     trackStartUnixTimestamp: number;
     trackStartDate: string;
@@ -78,8 +78,9 @@ const writeRepDoc = async (data: PingDoc): Promise<void> => {
 const formatStingDate = (timestamp: number) =>
     new Date(timestamp).toLocaleDateString() + ' ' + new Date(timestamp).toLocaleTimeString();
 
-/** Stores representative ping data in a local JSON file. */
-export const writeRepStatistics = async (repAddress: string, isOnline: boolean) => {
+/** Stores representative ping data in a local JSON file.
+ *  This is called every interval & only by the writeNewRepresentativeUptimePings service. */
+const writeRepStatistics = async (repAddress: string, isOnline: boolean) => {
     const data = await getRepDoc(repAddress);
     const emptyDoc = !data || !data.pingStats || !data.pingStats[data.pingStats.length - 1];
 
@@ -110,12 +111,14 @@ export const writeRepStatistics = async (repAddress: string, isOnline: boolean) 
             }
         }
         const timestamp = data.trackStartUnixTimestamp;
-        await writeRepDoc({
+        const pingDoc: PingDoc = {
             address: data.address,
             trackStartDate: formatStingDate(timestamp),
             trackStartUnixTimestamp: data.trackStartUnixTimestamp,
             pingStats,
-        });
+        };
+        await writeRepDoc(pingDoc);
+        AppCache.pingDocMap.set(repAddress, pingDoc);
     }
     return Promise.resolve();
 };
@@ -228,7 +231,7 @@ export const getRepresentativesUptimePromise = async (body: RequestBody): Promis
     }
     const uptimeStats: RepresentativeUptimeDto[] = [];
     for (const address of body.representatives) {
-        const data = await getRepDoc(address);
+        const data = AppCache.pingDocMap.get(address);
         if (!data) {
             continue;
         }
