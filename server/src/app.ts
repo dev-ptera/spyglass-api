@@ -79,7 +79,7 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 const app = express();
 
 /* Middleware */
-app.use(morgan('dev'));
+app.use(morgan('short'));
 app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
 app.use(serverRestart);
