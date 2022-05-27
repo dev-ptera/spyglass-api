@@ -83,7 +83,7 @@ app.use(morgan('short'));
 app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
 app.use(serverRestart);
-app.use(rateLimiter);
+// app.use(rateLimiter);
 app.use(memCache);
 app.use((err, req, res, next) => {
     // Handle async errors; don't crash the server.
