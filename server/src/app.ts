@@ -68,7 +68,7 @@ import {
     cacheDelegatorsCount,
     sleep,
     getConfirmedTransactionsV2,
-    cacheRepresentativeScores,
+    cacheRepresentativeScores, getSupplyCreeperLegacy,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -141,6 +141,9 @@ app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentat
 
 /* Price */
 app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
+
+/* Creeper Legacy */
+app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
 const port: number = Number(process.env.PORT || 3000);
 const server = http.createServer(app);

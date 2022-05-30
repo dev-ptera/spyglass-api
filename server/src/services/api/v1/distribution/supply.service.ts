@@ -40,3 +40,26 @@ export const getSupplyV1 = (res): void => {
             res.status(500).send(err);
         });
 };
+
+export const getSupplyCreeperLegacy = (res): void => {
+    /* Schema to follow: {
+        circulating,
+        uncirculating,
+        burned,
+        total
+        https://github.com/meltingice/nanocrawler/blob/banano_official/src/server/helpers/circulatingSupply.js
+     */
+    getSupplyPromise()
+        .then((data) => {
+            const creeperSchema = {
+                circulating: data.circulatingAmount,
+                uncirculating: data.devFundAmount,
+                burned: data.burnedAmount,
+                total: data.totalAmount - data.burnedAmount
+            }
+            res.send(creeperSchema);
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
+}
