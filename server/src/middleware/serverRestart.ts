@@ -1,4 +1,4 @@
-import { AppCache, IS_PRODUCTION } from '@app/config';
+import { IS_PRODUCTION } from '@app/config';
 
 let RESUME = false;
 setTimeout(() => {

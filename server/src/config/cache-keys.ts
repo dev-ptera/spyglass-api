@@ -1,4 +1,4 @@
-import { minutesToMs, secondsToMs } from '@app/services';
+import { minutesToMs } from '@app/services';
 
 export type CachePair = { key: string; duration: number };
 

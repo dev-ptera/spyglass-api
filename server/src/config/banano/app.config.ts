@@ -1,6 +1,16 @@
 import { BAN_KNOWN_VANITIES } from './known-vanities';
-import { BAN_KNOWN_ACCOUNTS } from './known-accounts';
 import { BAN_NODE_MONITORS } from './node-monitors';
+import {LOG_ERR} from "@app/services";
+
+const fs = require('fs');
+const readFileContents = (file: string): any => {
+        try {
+            const data = fs.readFileSync(file, 'utf8');
+            return JSON.parse(data);
+        } catch (err) {
+            LOG_ERR('readFileContents', err, { file });
+        }
+}
 
 export const PATH_ROOT = 'banano';
 export const URL_WHITE_LIST = [
@@ -18,7 +28,7 @@ export const BACKUP_NODES = [
     'https://vault.banano.cc/api/node-api',
 ];
 export const KNOWN_VANITIES = BAN_KNOWN_VANITIES;
-export const KNOWN_ACCOUNTS = BAN_KNOWN_ACCOUNTS;
+export const KNOWN_ACCOUNTS = readFileContents('database/banano/known-accounts.json');
 export const BURN_ADDRESSES = [
     'ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w', // official burn account
     'ban_1uo1cano1bot1a1pha1616161616161616161616161616161616p3s5tifp', // banano walker burn account

@@ -8,12 +8,6 @@ moduleAlias.addAlias('@app/types', __dirname + '/types');
 import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
-
-const dotenv = require('dotenv');
-dotenv.config();
-
-process.env.UV_THREADPOOL_SIZE = String(16);
-
 import {
     AppCache,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
@@ -28,49 +22,52 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
-    getNakamotoCoefficientV1,
-    getRepresentativesV1,
+    cacheAccountDistribution,
+    cacheDelegatorsCount,
+    cacheKnownAccounts,
+    cacheMonitoredReps,
+    cacheOnlineRepresentatives,
+    cachePriceData,
+    cacheRepresentativeScores,
+    getAccountExportV1,
+    getAccountInsightsV1,
+    getAccountOverviewV1,
+    getAccountRepresentativeV1,
     getAliasedRepresentativesV1,
     getBlockInfoV1,
     getBlocksInfoV1,
-    getRepresentativesUptimeV1,
-    cacheMonitoredReps,
-    writeNewRepresentativeUptimePings,
-    cacheKnownAccounts,
-    getKnownVanitiesV1,
-    getKnownAccountsV1,
-    getSupplyV1,
-    getDeveloperFundsV1,
-    getPRWeightV1,
-    getAccountInsightsV1,
-    getNodeStatsV1,
-    getDelegatorsV1,
-    getConfirmedTransactionsV1,
-    importHistoricHashTimestamps,
-    cacheOnlineRepresentatives,
-    getAccountRepresentativeV1,
-    cacheAccountDistribution,
-    parseRichListFromFile,
-    getDistributionBucketsV1,
-    getRichListV1,
-    getPeerVersionsV1,
-    getQuorumV1,
-    convertManualKnownAccountsToJson,
     getBurnV1,
-    getRichListSnapshotV1,
-    getRichListSnapshotPostV1,
-    getReceivableTransactionsV1,
-    getAccountExportV1,
-    getAccountOverviewV1,
-    getLedgerSizeV1,
-    getScoresV1,
-    cachePriceData,
-    cacheDelegatorsCount,
-    sleep,
+    getConfirmedTransactionsV1,
     getConfirmedTransactionsV2,
-    cacheRepresentativeScores, getSupplyCreeperLegacy,
+    getDelegatorsV1,
+    getDeveloperFundsV1,
+    getDistributionBucketsV1,
+    getKnownAccountsV1,
+    getKnownVanitiesV1,
+    getLedgerSizeV1,
+    getNakamotoCoefficientV1,
+    getNodeStatsV1,
+    getPeerVersionsV1,
+    getPRWeightV1,
+    getQuorumV1,
+    getReceivableTransactionsV1,
+    getRepresentativesUptimeV1,
+    getRepresentativesV1,
+    getRichListSnapshotPostV1,
+    getRichListSnapshotV1,
+    getRichListV1,
+    getScoresV1,
+    getSupplyCreeperLegacy,
+    getSupplyV1,
+    sleep,
+    writeNewRepresentativeUptimePings,
 } from '@app/services';
-import { memCache, rateLimiter, serverRestart } from '@app/middleware';
+import {memCache, serverRestart} from '@app/middleware';
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+process.env.UV_THREADPOOL_SIZE = String(16);
 
 const http = require('http');
 const morgan = require('morgan');
@@ -161,9 +158,8 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
 server.listen(port, () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
-    void parseRichListFromFile();
-    void importHistoricHashTimestamps();
-    convertManualKnownAccountsToJson();
+  //  void parseRichListFromFile();
+  //  void importHistoricHashTimestamps();
 
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,
@@ -204,6 +200,7 @@ server.listen(port, () => {
         method: cacheRepresentativeScores,
         interval: REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     };
+
 
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */

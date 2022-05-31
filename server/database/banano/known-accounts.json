@@ -1,515 +1,1067 @@
 [
-  {
-    "address": "ban_3a1dokzzuc334kpsedakxz5hw4cauexjori8spcf7pninujry43dxkbam4o6",
-    "alias": "BNswap"
-  },
-  {
-    "address": "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr",
-    "alias": "Genesis",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn",
-    "alias": "Cake",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1fomoz167m7o38gw4rzt7hz67oq6itejpt4yocrfywujbpatd711cjew8gjj",
-    "alias": "FOMO",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3runnerrxm74165sfmystpktzsyp7eurixwpk59tejnn8xamn8zog18abrda",
-    "alias": "Banano Runner",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj",
-    "alias": "Giveaway Fund: 1",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf",
-    "alias": "Giveaway Fund: 3",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1pearw95xajkzq1nmo6cixo1ugijk6gpm1ifwyegz6un4mt71qb1iw3fhmj4",
-    "alias": "Giveaway Fund: Pear",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1acaih1rhhczkfayd3iadpjroyfbbrzm1jrkx77qfep7fnuzky7mmwzx4544",
-    "alias": "Giveaway Fund: Acai",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1ycheefobbddbde1p7874ky4ifiwebfuabkyqptunwwk84z3rgzktbqeo9fk",
-    "alias": "Giveaway Fund: Lychee",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3gojim9wh3t9w5aa8nhjbmkue8mes9frmrhy6wpqb34ikajw8h39hnbbap31",
-    "alias": "Giveaway Fund: Goji",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1mangozo4tnfq97hdtu8z9rdjsqnyo33i7o9aohoxsfbpx8kgwhrfu1rggj8",
-    "alias": "Giveaway Fund: Mango",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1me1onk3a11nw3kou14776fuyxtnmoatuqmpeioybffqx6okd53mo1iqmrym",
-    "alias": "Giveaway Fund: Melon",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3carobzdy3ah8pq1xzn38jkc46ozuu8qfx7eqzr8nyiy5yefwbaua6rkh3of",
-    "alias": "Giveaway Fund: Carob",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1grapemjtr5n684bu1x38th57x3te8qt6xpsyusjyi4s3u1zdoh8s1czfjz4",
-    "alias": "Giveaway Fund: Grape",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3kiwizqifxokn47pp6fh5jmytoaiaeynjhx4u5r6ug13apx3345enf4mr1ep",
-    "alias": "Giveaway Fund: Kiwi",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1app1es6zce5943ydasp5r5ma77cdcqt6be8qz7f88woayuqstzrjjmob4eb",
-    "alias": "Giveaway Fund: Apple",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_1emusk6m8hypb46dbp6eaiu3j6xjwwwaqw98y6hqyje53ncjciyqzj3skt9n",
-    "alias": "Papa Musk",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_3fo1d1ng6mfqumfoojqby13nahaugqbe5n6n3trof4q8kg5amo9mribg4muo",
-    "alias": "Folding",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w",
-    "alias": "Burn",
-    "type": "burn"
-  },
-  {
-    "address": "ban_1monkeyt1x77a1rp9bwtthajb8odapbmnzpyt8357ac8a1bcron34i3r9y66",
-    "alias": "MonkeyTalks"
-  },
-  {
-    "address": "ban_1ka1ium4pfue3uxtntqsrib8mumxgazsjf58gidh1xeo5te3whsq8z476goo",
-    "alias": "Kalium",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1boompow14irck1yauquqypt7afqrh8b6bbu5r93pc6hgbqs7z6o99frcuym",
-    "alias": "BoomPoW"
-  },
-  {
-    "address": "ban_1faucetjuiyuwnz94j4c7s393r95sk5ac7p5usthmxct816osgqh3qd1caet",
-    "alias": "Banano Faucet",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1nrcne47secz1hnm9syepdoob7t1r4xrhdzih3zohb1c3z178edd7b6ygc4x",
-    "alias": "CoinEx",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1oaocnrcaystcdtaae6woh381wftyg4k7bespu19m5w18ze699refhyzu6bo",
-    "alias": "Kuyumcu",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1tipbotgges3ss8pso6xf76gsyqnb69uwcxcyhouym67z7ofefy1jz7kepoy",
-    "alias": "Banano Tipbots",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1sebrep1mbkdtdb39nsouw5wkkk6o497wyrxtdp71sm878fxzo1kwbf9k79b",
-    "alias": "sebrock19.de",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3px37c9f6w361j65yoasrcs6wh3hmmyb6eacpis7dwzp8th4hbb9izgba51j",
-    "alias": "Banano Italio - La Giungla",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1wha1enz8k8r65k6nb89cxqh6cq534zpixmuzqwbifpnqrsycuegbmh54au6",
-    "alias": "bananode.eu",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3p3sp1ynb5i3qxmqoha3pt79hyk8gxhtr58tk51qctwyyik6hy4dbbqbanan",
-    "alias": "BananOslo",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg",
-    "alias": "batman",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1creepi89mp48wkyg5fktgap9j6165d8yz6g1fbe5pneinz3by9o54fuq63m",
-    "alias": "creeper.banano.cc",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3grayknbwtrjdsbdgsjbx4fzds7eufjqghzu6on57aqxte7fhhh14gxbdz61",
-    "alias": "Gray",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3m8mdu1jxuntoe19wemgohduss3cn7ctxbt41ioh87mfjz9ho8o15yhjas96",
-    "alias": "Cabbit Node",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1fnx59bqpx11s1yn7i5hba3ot5no4ypy971zbkp5wtium3yyafpwhhwkq8fc",
-    "alias": "banano.nifni.net",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1bestrep6gq14bt4bi7w446m9knc6matfad7qcii7edeb33iipooh46dotdz",
-    "alias": "node.banano.ch",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3binance1adje7uwzjmsyxsqxjt8c471i33xo39k94twkipntmrqt1ii5t57",
-    "alias": "Unofficial Binance Representative 1",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1banbet1hxxe9aeu11oqss9sxwe814jo9ym8c98653j1chq4k4yaxjsacnhc",
-    "alias": "BananoBet Rep",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3srechjntpdomi9dbaksfxkpk4o134kchii8iozd98aa5f3txbej96wb77mg",
-    "alias": "Yellow Trust",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1ce1ery6hqwyqqyh15m4atcoaywd8rycyapjjooqeg7gi149kmatjbb3wiwx",
-    "alias": "Celery (Dev Salary)"
-  },
-  {
-    "address": "ban_3pp1antnfudas6ad44kwpad4jb376cihftskq9ne76hazosi654gjdohriai",
-    "alias": "Banano Powerplant",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1crane864e1cn1g3p9mrduf49hp86gfgfosp8rib43smxxuqp3phq1yiu58k",
-    "alias": "Crane Faucet",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1b1ack1188caohzjdj65uarnk4kobzrnr3q3oc3bew5rfkyqxzu81zhjgp1e",
-    "alias": "Black Monkey",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_36e1qnwo5faf7uapp6gbzzmzt3bgz6a93txuukmr45pmodcy4q7pwaray1u9",
-    "alias": "Atomars Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1fxc48dynhbjb69uuyue4bsfuymxick8js14synwznduy61g6i9esdeasmem",
-    "alias": "GJ Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_16tduo1cu9ydp8ris3o5w4rm96myqics5o8tjw8s13ja8owba6xfpwc8399r",
-    "alias": "Banroulettecom Hot Wallet",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1gooj14qko1u6md87aga9c53nf4iphyt1ua7x3kq1wnkdh49u5mndqygbr1q",
-    "alias": "Ataix Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_16bfuppfebtmgh1t8ktpk4eq4dyz5m1ztxesznagd916jzk8b87qity3habz",
-    "alias": "Unnamed Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3yafcjcq79cjfm4wio5db6drffmf61jh8cosoijmg3eppzmbxb4kej8t3dze",
-    "alias": "qtrade Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1bujgzb69qr4owkcm3qu35mb843qtwnx4zf8q3myjw1dui7br5k87k84e54d",
-    "alias": "ViteX Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1gtkt1ekpazojhxwnym9ur61cz4w7n8yez5yq81id6cb8k63bhwx7axhtsxx",
-    "alias": "Bitmesh Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3wwd51yoxeafubpn84gy7tje7yw6ccqcach9m4yfn46sf15itnysap9dd1xc",
-    "alias": "Citex Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3w6yatruhkxgu4bhx1d8zggpwafrq3z7xyrqchuw8h5xa9aqhnrj7mi79mtu",
-    "alias": "Qbtc Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3x1o69xsppjb1d9owsn8x6uqr8a1ttpitsu3yya7iyimaboqhb9urb8x61y8",
-    "alias": "Txbit Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad",
-    "alias": "Mercatox Cold Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3k76rawffjm79qedoc54nhk3edkq5makoyp73b1t6q6j9yjeq633q1xck9g8",
-    "alias": "Mercatox Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1banbet955hwemgsqrb8afycd3nykaqaxsn7iaydcctfrwi3rbb36y17fbcb",
-    "alias": "Bananobet Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1w5q77ocgfrjn6sqwudfuygtomwyij8ijes3y5g8kaydxsf8f4jpz4n9q9a3",
-    "alias": "Nanogames Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3iejwmk1n3fqdntwcgudhmddo9bpwa8jzx6g361iq6rzbsrzonekmdus9yj5",
-    "alias": "Bananoroyale Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1nrcne47secz1hnm9syepdoob7t1r4xrhdzih3zohb1c3z178edd7b6ygc4x",
-    "alias": "Coinex Deposits",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1gxx3dbrprrh9ycf1p5wo9qgmftppg6z7688njum14aybjkaiweqmwpuu9py",
-    "alias": "BananoLooker Donations",
-    "type": "explorer"
-  },
-  {
-    "address": "ban_1hootubxy68fhhrctjmaias148tz91tsse3pq1pgmfedsm3cubhobuihqnxd",
-    "alias": "Eulentier",
-    "type": "representative",
-    "owner": "Eulentier#9166"
-  },
-  {
-    "address": "ban_3goobcumtuqe37htu4qwtpkxnjj4jjheyz6e6kke3mro7d8zq5d36yskphqt",
-    "alias": "Goob Cum",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1gt4ti4gnzjre341pqakzme8z94atcyuuawoso8gqwdx5m4a77wu1mxxighh",
-    "alias": "bagend.notellem.win",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3tacocatezozswnu8xkh66qa1dbcdujktzmfpdj7ax66wtfrio6h5sxikkep",
-    "alias": "Taco",
-    "type": "representative"
-  },
-  {
-    "address": "ban_339yi5dqeo38rnfo8p6f4q5amxifje7r1mam1ye33f9xr3fy3s1mxyy3pwc3",
-    "alias": "NeutralGood",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1crpaybw8jip7fm98fzfxnjajb55ty76oyzmpfwe9s66u4aod37tm3kxba8q",
-    "alias": "CRPay",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3cutenodsyi4mtgjyin91zp9k4i3cbkemj8cxfaigskibz4ow68u3yeao8bs",
-    "alias": "Cutenods",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1hentaiqzbhasuyg5tcyhso79ma3wuiektphbnjcekifmawuugdri93trt8f",
-    "alias": "Hentai",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3nnfzzxp84zj7e7zrbsf65hngs51b76gda179bc4dxr7fkjtbtxq744w6gcx",
-    "alias": "Woodrisian",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3rz8d5n7iodhmyjk8xpc68x87iw96a14fdfazwrfefucmhggw6i1a9nxi9yy",
-    "alias": "banano-pixels",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1kirby19w89i35yenyesnz7zqdyguzdb3e819dxrhdegdnsaphzeug39ntxj",
-    "alias": "Kirby",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_1yekta1xn94qdnbmmj1tqg76zk3apcfd31pjmuy6d879e3mr469a4o4sdhd4",
-    "alias": "Yekta",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_3fudcakefr9jyw7b4kfafrgaekmd37ez7q4pmzuo1fd7wo9jo8gsha7z7e1c",
-    "alias": "Fudcake",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_19bantanopcajd8ptfg9aedn8osgrzyrbupte5j4p1je69e5diz8qtc4dopf",
-    "alias": "Bantano",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_19potasho7ozny8r1drz3u3hb3r97fw4ndm4hegdsdzzns1c3nobdastcgaa",
-    "alias": "node.jungletv.live",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1nunu9z3puk3dehuoh3djesa4psro1mcqoi48pr64jxzf6osm6iqkmjupwfh",
-    "alias": "Nunu",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3uo1cafr4p5qkyjn57jjuqbmsddds86j6g6tzi4q16ek3xfjumprpb51pmuz",
-    "alias": "Volcano Burn Pool",
-    "type": "burn"
-  },
-  {
-    "address": "ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw",
-    "alias": "Volcano Burn Wallet",
-    "type": "burn"
-  },
-  {
-    "address": "ban_3yip4x7tccmayjim1h6mjof46hhjfgukn86gs8ic87b8ig6r9jtptogp8skc",
-    "alias": "Gypsy",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1airtunes8qctdtjhnfu5tpegk337rgcgnbtktozg6ttz3hordo6chf5c31r",
-    "alias": "Airtune",
-    "type": "citizen"
-  },
-  {
-    "address": "ban_3cutenodsyi4mtgjyin91zp9k4i3cbkemj8cxfaigskibz4ow68u3yeao8bs",
-    "alias": "boopowo",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3unityd1rqwde1p33ax61aan6tqa1f6xm9epjkhmsfktr3rdwg4z5td5ua3n",
-    "alias": "Unity's Node",
-    "type": "representative"
-  },
-  {
-    "address": "ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4",
-    "alias": "Polygon Hot Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_1po1yco1cnoyymrm3xnf7h9iaway1bg5kqxq3cfb3za98gq73tfmjm4mp11n",
-    "alias": "Polygon Cold Wallet",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3pa1m3g79i1h7uijugndjeytpmqbsg6hc19zm8m7foqygwos1mmcqmab91hh",
-    "alias": "just_dmitry",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1kawandahui9bbj64a3qejbxayqzqgqgqnp3fefn7x7xuwmizy4ur6zy6n4a",
-    "alias": "kawanda",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1on1ybanskzzsqize1477wximtkdzrftmxqtajtwh4p4tg1w6awn1hq677cp",
-    "alias": "OnlyBans",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1jtprixunfus5mozkzj5gtfm79b54p3pwnje8snh9ugu998cfk13qceepwn5",
-    "alias": "JungleTV Prize faucet",
-    "type": "faucet",
-    "owner": "gbl08ma"
-  },
-  {
-    "address": "ban_3h7xtjwkm65ufoedjei6z7xfmuyfgehq3t7zm5et4osdyha1qn9ewrisyncz",
-    "alias": "FutureNanners",
-    "owner": "futuremanhank#3843",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt",
-    "alias": "getbanano.cc",
-    "owner": "u/iMalFect",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1ort4j8gh5pcst7i4mbgtsjsihiwpdrd5fj8mwxdc7hw18n67nanwxzoz45t",
-    "alias": "Bananorlando",
-    "owner": "u/homelab-express",
-    "type": "representative"
-  },
-  {
-    "address": "ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe",
-    "alias": "nanners.cc",
-    "type": "representative"
-  },
-  {
-    "address": "ban_15gfawgrsc6tkkm5p1gy749tkibchu73st1ojs3knz6rd3ejfcgt7rj5cmx9",
-    "alias": "validierung.cc Cologne",
-    "type": "representative",
-    "owner": "Lawrence#0388"
-  },
-  {
-    "address": "ban_3catgir1p6b1edo5trp7fdb8gsxx4y5ffshbphj73zzy5hu678rsry7srh8b",
-    "alias": "CatGirl",
-    "type": "representative",
-    "owner": "mirandaniel#3515"
-  },
-  {
-    "address": "ban_3fzpw7pb9xt64qhwi47oa47x9zj713fkshntdk5y7khmn54n18szb7ymybdt",
-    "alias": "r/banano Test Giveaway Fund (March 2022)",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3rccbanjyesftqfj3zc5mqn5nd3ai5hqrw4twsz45rk8hq3xu93c4zue4s1f",
-    "alias": "r/cryptocurrency Giveaway Fund (March 2022)",
-    "type": "distribution"
-  },
-  {
-    "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
-    "alias": "Nanswap Sending Account",
-    "type": "exchange"
-  },
-  {
-    "address": "ban_3bdrip3ir5d9y3i1qi5z47pwcmd6jm39xzzzxnebrwfyoje63qa5dmnhm8f9",
-    "alias": "Banano Drip",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1j3rqseffoin7x5z5y1ehaqe1n7todza41kdf4oyga8phps3ea31u39ruchu",
-    "alias": "Banbucket.ninja",
-    "type": "faucet"
-  },
-  {
-    "address": "ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i",
-    "alias": "banano.vegas",
-    "type": "faucet"
-  }
+    {
+        "address": "ban_1airtunes8qctdtjhnfu5tpegk337rgcgnbtktozg6ttz3hordo6chf5c31r",
+        "alias": "Airtune",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_1zookix8zpo13go1xrbwcmodjfsr8xw5e18smbmz8mh4orkmd33t8zmescpo",
+        "alias": "Allowances",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_16c58nu7kmays7bmfaq7u4zpf8oady9ydgwkb6pcxegyx3n1nxygix5r4hpi",
+        "alias": "Altilly",
+        "illicit": 1,
+        "owner": "Altilly",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1gooj14qko1u6md87aga9c53nf4iphyt1ua7x3kq1wnkdh49u5mndqygbr1q",
+        "alias": "Ataix Hot Wallet",
+        "illicit": 0,
+        "owner": "Ataix",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_36e1qnwo5faf7uapp6gbzzmzt3bgz6a93txuukmr45pmodcy4q7pwaray1u9",
+        "alias": "Atomars Hot Wallet",
+        "illicit": 1,
+        "owner": "Atomars",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1gt4ti4gnzjre341pqakzme8z94atcyuuawoso8gqwdx5m4a77wu1mxxighh",
+        "alias": "bagend.notellem.win",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3bdrip3ir5d9y3i1qi5z47pwcmd6jm39xzzzxnebrwfyoje63qa5dmnhm8f9",
+        "alias": "Banano Drip",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1faucetjuiyuwnz94j4c7s393r95sk5ac7p5usthmxct816osgqh3qd1caet",
+        "alias": "Banano Faucet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_3px37c9f6w361j65yoasrcs6wh3hmmyb6eacpis7dwzp8th4hbb9izgba51j",
+        "alias": "Banano Italiano - La Giungla",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3pp1antnfudas6ad44kwpad4jb376cihftskq9ne76hazosi654gjdohriai",
+        "alias": "Banano Powerplant",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_3runnerrxm74165sfmystpktzsyp7eurixwpk59tejnn8xamn8zog18abrda",
+        "alias": "Banano Runner",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_19i3rxxmdtxa7zsxoroygx38xpcad4gp7ouwf9bn5raum1d3mc4b5w7proxy",
+        "alias": "Banano Runner Botter",
+        "illicit": 1,
+        "owner": "Unknown",
+        "type": "suspicious"
+    },
+    {
+        "address": "ban_1tipbotgges3ss8pso6xf76gsyqnb69uwcxcyhouym67z7ofefy1jz7kepoy",
+        "alias": "Banano Tipbots",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3uf1gx114fqm9ppiwp3sw1mywzzr9d8uwhrw9e85zpgdt48eopruqnqpdb68",
+        "alias": "banano-faucet[.]herokuapp[.]com",
+        "illicit": 0,
+        "owner": "TNV",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3rz8d5n7iodhmyjk8xpc68x87iw96a14fdfazwrfefucmhggw6i1a9nxi9yy",
+        "alias": "banano-pixels",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1fnx59bqpx11s1yn7i5hba3ot5no4ypy971zbkp5wtium3yyafpwhhwkq8fc",
+        "alias": "banano.nifni.net",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1kq1zmwjz1fh8mauqhb3u88j7rizcdjic851f7kgmnoishnmcm7m15xkxr1i",
+        "alias": "banano.vegas",
+        "illicit": null,
+        "owner": "Banano Vegas",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1banbet955hwemgsqrb8afycd3nykaqaxsn7iaydcctfrwi3rbb36y17fbcb",
+        "alias": "Bananobet Hot Wallet",
+        "illicit": 0,
+        "owner": "Banbet",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1banbet1hxxe9aeu11oqss9sxwe814jo9ym8c98653j1chq4k4yaxjsacnhc",
+        "alias": "BananoBet Rep",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1uwidgukruggyde49g8kqyztxuw6z38dxhy4jj1ppe4xzjooo4kstwfyqfce",
+        "alias": "BananoBust",
+        "illicit": 0,
+        "owner": "BananoBust",
+        "type": "gambling"
+    },
+    {
+        "address": "ban_3craftbqpyfbr4gdjhdwnrsd4zwr73wg6xojnr61nres8mnbz5x1o6563qxc",
+        "alias": "BananoCraft",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1wha1enz8k8r65k6nb89cxqh6cq534zpixmuzqwbifpnqrsycuegbmh54au6",
+        "alias": "Bananode.eu",
+        "illicit": 0,
+        "owner": "Gustav",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1gxx3dbrprrh9ycf1p5wo9qgmftppg6z7688njum14aybjkaiweqmwpuu9py",
+        "alias": "BananoLooker Donations",
+        "type": "explorer"
+    },
+    {
+        "address": "ban_1ort4j8gh5pcst7i4mbgtsjsihiwpdrd5fj8mwxdc7hw18n67nanwxzoz45t",
+        "alias": "kga.earth",
+        "owner": "u/homelab-express",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3iejwmk1n3fqdntwcgudhmddo9bpwa8jzx6g361iq6rzbsrzonekmdus9yj5",
+        "alias": "Bananoroyale Hot Wallet",
+        "illicit": 0,
+        "owner": "Losha1x#7618",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3p3sp1ynb5i3qxmqoha3pt79hyk8gxhtr58tk51qctwyyik6hy4dbbqbanan",
+        "alias": "BananOslo 🍌",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1banexkcfuieufzxksfrxqf6xy8e57ry1zdtq9yn7jntzhpwu4pg4hajojmq",
+        "alias": "Banano[.]Exchange exchange",
+        "illicit": 0,
+        "owner": "contact@banano.exchange",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3my8jqfurgii17r1rbj5saw34xdm3digq4iwgy7pak8ewa4568d75qs7ht7h",
+        "alias": "Banano[.]Exchange registration",
+        "illicit": 0,
+        "owner": "contact@banano.exchange",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1swapdwa9wwaxh38htsrupc6zfrcojtqz4kd6jssrat6cec1ggfjnnm6hypz",
+        "alias": "Banano[.]Exchange swap",
+        "illicit": 0,
+        "owner": "contact@banano.exchange",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1j3rqseffoin7x5z5y1ehaqe1n7todza41kdf4oyga8phps3ea31u39ruchu",
+        "alias": "Banbucket.ninja",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_3r7xjnq4ywn1sf387xzpgbytwuaa6hgfurd11mx7qagkx1hiuq73ka63hbxz",
+        "alias": "BanLotto",
+        "illicit": 0,
+        "owner": "BanLotto",
+        "type": "gambling"
+    },
+    {
+        "address": "ban_16tduo1cu9ydp8ris3o5w4rm96myqics5o8tjw8s13ja8owba6xfpwc8399r",
+        "alias": "Banroulettecom Hot Wallet",
+        "illicit": 0,
+        "owner": "BanRoulette",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1kwin96znfqopi7be3shxcxn8qeruirob885oaya4ix5pkrnpsou4u5qbeaa",
+        "alias": "BanSlots",
+        "illicit": 0,
+        "owner": "BanSlots",
+        "type": "gambling"
+    },
+    {
+        "address": "ban_19bantanopcajd8ptfg9aedn8osgrzyrbupte5j4p1je69e5diz8qtc4dopf",
+        "alias": "Bantano",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_1banfarm4mz9xno94qj64xbkodiawck6s8trxuamr8tga9s5jnx58rc67qzf",
+        "alias": "ban[.]farm",
+        "illicit": 0,
+        "owner": "banfarm@protonmail.com",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1t8hyu6taczfq3gmdqkwcxc6z4pt3sfwg5m7op488hxjmne55r16tebaoztb",
+        "alias": "ban[.]farm old",
+        "illicit": 0,
+        "owner": "banfarm@protonmail.com",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg",
+        "alias": "batman",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1p3oxrfuqddcb4r7ercjwdnxiyn1bwqspzettum7c8x1awsnd5zqtj5f1d6m",
+        "alias": "BC[.]Game",
+        "illicit": 0,
+        "owner": "BC.Game",
+        "type": "gambling"
+    },
+    {
+        "address": "ban_1gtkt1ekpazojhxwnym9ur61cz4w7n8yez5yq81id6cb8k63bhwx7axhtsxx",
+        "alias": "Bitmesh Hot Wallet",
+        "illicit": 1,
+        "owner": "Bitmesh",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1b1ack1188caohzjdj65uarnk4kobzrnr3q3oc3bew5rfkyqxzu81zhjgp1e",
+        "alias": "Black Monkey",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_3temho9bnim1acqzwwa673yeggeudzo6y857y4t38pmu6jx79amtku8szp3s",
+        "alias": "Black Monkey Rount 1",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3a1dokzzuc334kpsedakxz5hw4cauexjori8spcf7pninujry43dxkbam4o6",
+        "alias": "BNswap",
+        "illicit": 0,
+        "owner": "BNSwap",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1boompow14irck1yauquqypt7afqrh8b6bbu5r93pc6hgbqs7z6o99frcuym",
+        "alias": "BoomPoW",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3cutenodsyi4mtgjyin91zp9k4i3cbkemj8cxfaigskibz4ow68u3yeao8bs",
+        "alias": "boopowo",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3boost5r4bosii4c3ad6yubf5npmkgm5rb7kecyzmnu337p9bta8kgikb1a4",
+        "alias": "Booster",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1burnbabyburndiscoinferno111111111111111111111111111aj49sw3w",
+        "alias": "Burn",
+        "type": "burn"
+    },
+    {
+        "address": "ban_3m8mdu1jxuntoe19wemgohduss3cn7ctxbt41ioh87mfjz9ho8o15yhjas96",
+        "alias": "Cabbit Node",
+        "illicit": 0,
+        "owner": "TriggerHaven",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn",
+        "alias": "Cake",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3catgir1p6b1edo5trp7fdb8gsxx4y5ffshbphj73zzy5hu678rsry7srh8b",
+        "alias": "CatGirl",
+        "type": "representative",
+        "owner": "mirandaniel#3515"
+    },
+    {
+        "address": "ban_1ce1ery6hqwyqqyh15m4atcoaywd8rycyapjjooqeg7gi149kmatjbb3wiwx",
+        "alias": "Celery (Dev Salary)",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3wwd51yoxeafubpn84gy7tje7yw6ccqcach9m4yfn46sf15itnysap9dd1xc",
+        "alias": "Citex Hot Wallet",
+        "illicit": 0,
+        "owner": "Citex",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1nrcne47secz1hnm9syepdoob7t1r4xrhdzih3zohb1c3z178edd7b6ygc4x",
+        "alias": "Coinex Deposits",
+        "illicit": 0,
+        "owner": "CoinEx",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1bonusncatu5rsrctx1djmgrragfwpj4ujsk939utmtdwskhtiourh8997eh",
+        "alias": "Contributor Bonuses",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1crane864e1cn1g3p9mrduf49hp86gfgfosp8rib43smxxuqp3phq1yiu58k",
+        "alias": "Crane Faucet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1creepi89mp48wkyg5fktgap9j6165d8yz6g1fbe5pneinz3by9o54fuq63m",
+        "alias": "creeper.banano.cc",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1crpaybw8jip7fm98fzfxnjajb55ty76oyzmpfwe9s66u4aod37tm3kxba8q",
+        "alias": "CRPay",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1defi11tou1nbhyp8y4onwsiq5jcur19xe54mcmew1xonnz6e1d1sw74yefu",
+        "alias": "Defi",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3disc5557sb9ri99h7czmn6ms5kcfsafnsxekarg1pp9f3a1ik4ndjcb9cod",
+        "alias": "Discord Beta Rewards",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1treatf1gc4acpgjqzg9jxthwqnew7gef5wf7mru4ffyeb9ayj61rejzs5st",
+        "alias": "Discord Halloween",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1santayq7qgtoar9s9kx9ur5jw6ustty741bxnidanf8miuakju7kqb8imwo",
+        "alias": "Discord Santa",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3dnbrpg7abg7fuhryp3jq5r56ka4aijjen6ysxushujq9r69f31ip1dbx3qc",
+        "alias": "Dungeons and Banano",
+        "illicit": 0,
+        "owner": "Zanefold",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1hootubxy68fhhrctjmaias148tz91tsse3pq1pgmfedsm3cubhobuihqnxd",
+        "alias": "Eulentier",
+        "type": "representative",
+        "owner": "Eulentier#9166"
+    },
+    {
+        "address": "ban_3ri6hkmndz8aehqjhuru1s5ozcb14ifzyqbax8p8arm9u7pykz6qoaj8rimz",
+        "alias": "Facebook bonus-program phish",
+        "illicit": 1,
+        "owner": "Unknown",
+        "type": "suspicious"
+    },
+    {
+        "address": "ban_3ftmco1d3sogpnq9j8gsa7t95xugtzj116hkudxj1spkw86476pzicua61ek",
+        "alias": "Fantom Cold Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3ftmhot3nssj1ae3gt4o4ksa6p1wamub3jaet4odjt67wp9wy9ahn83umw81",
+        "alias": "Fantom Hot Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3346kkobb11qqpo17imgiybmwrgibr7yi34mwn5j6uywyke8f7fnfp94uyps",
+        "alias": "faucet[.]prussia[.]dev",
+        "illicit": 0,
+        "owner": "Prussia",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3fo1d1ng6mfqumfoojqby13nahaugqbe5n6n3trof4q8kg5amo9mribg4muo",
+        "alias": "Folding",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1fomoz167m7o38gw4rzt7hz67oq6itejpt4yocrfywujbpatd711cjew8gjj",
+        "alias": "FOMO",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3fudcakefr9jyw7b4kfafrgaekmd37ez7q4pmzuo1fd7wo9jo8gsha7z7e1c",
+        "alias": "Fudcake",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_3h7xtjwkm65ufoedjei6z7xfmuyfgehq3t7zm5et4osdyha1qn9ewrisyncz",
+        "alias": "FutureNanners",
+        "owner": "futuremanhank#3843",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr",
+        "alias": "Genesis",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt",
+        "alias": "getbanano.cc",
+        "owner": "u/iMalFect",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt ",
+        "alias": "getbanano[.]cc",
+        "illicit": 0,
+        "owner": "IMalFect",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj",
+        "alias": "Giveaway Fund: 1",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf",
+        "alias": "Giveaway Fund: 3",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1acaih1rhhczkfayd3iadpjroyfbbrzm1jrkx77qfep7fnuzky7mmwzx4544",
+        "alias": "Giveaway Fund: Acai",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1app1es6zce5943ydasp5r5ma77cdcqt6be8qz7f88woayuqstzrjjmob4eb",
+        "alias": "Giveaway Fund: Apple",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3carobzdy3ah8pq1xzn38jkc46ozuu8qfx7eqzr8nyiy5yefwbaua6rkh3of",
+        "alias": "Giveaway Fund: Carob",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3gojim9wh3t9w5aa8nhjbmkue8mes9frmrhy6wpqb34ikajw8h39hnbbap31",
+        "alias": "Giveaway Fund: Goji",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1grapemjtr5n684bu1x38th57x3te8qt6xpsyusjyi4s3u1zdoh8s1czfjz4",
+        "alias": "Giveaway Fund: Grape",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3kiwizqifxokn47pp6fh5jmytoaiaeynjhx4u5r6ug13apx3345enf4mr1ep",
+        "alias": "Giveaway Fund: Kiwi",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1ycheefobbddbde1p7874ky4ifiwebfuabkyqptunwwk84z3rgzktbqeo9fk",
+        "alias": "Giveaway Fund: Lychee",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1mangozo4tnfq97hdtu8z9rdjsqnyo33i7o9aohoxsfbpx8kgwhrfu1rggj8",
+        "alias": "Giveaway Fund: Mango",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1me1onk3a11nw3kou14776fuyxtnmoatuqmpeioybffqx6okd53mo1iqmrym",
+        "alias": "Giveaway Fund: Melon",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1pearw95xajkzq1nmo6cixo1ugijk6gpm1ifwyegz6un4mt71qb1iw3fhmj4",
+        "alias": "Giveaway Fund: Pear",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1fxc48dynhbjb69uuyue4bsfuymxick8js14synwznduy61g6i9esdeasmem",
+        "alias": "GJ Hot Wallet",
+        "illicit": 0,
+        "owner": "GJ",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3goobcumtuqe37htu4qwtpkxnjj4jjheyz6e6kke3mro7d8zq5d36yskphqt",
+        "alias": "Goob Cum",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3grayknbwtrjdsbdgsjbx4fzds7eufjqghzu6on57aqxte7fhhh14gxbdz61",
+        "alias": "Gray",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3yip4x7tccmayjim1h6mjof46hhjfgukn86gs8ic87b8ig6r9jtptogp8skc",
+        "alias": "Banode01",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1hentaiqzbhasuyg5tcyhso79ma3wuiektphbnjcekifmawuugdri93trt8f",
+        "alias": "Hentai",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3jdj931n6yo6gncyqmcdi6xccfmbbno73f91ma43nmnumcxft1rsqysexek4",
+        "alias": "HotBit Hot Wallet",
+        "illicit": 0,
+        "owner": "HotBit",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_36eco9trqigca9q4qujeskxmkj5q1kg5bjbh4y8f5n4z6i7n7dwjge1wyw8s",
+        "alias": "JITSwap",
+        "illicit": 0,
+        "owner": "/u/jitswap",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1jung1eb3uomk1gsx7w6w7toqrikxm5pgn5wbsg5fpy96ckpdf6wmiuuzpca",
+        "alias": "JungleTV",
+        "illicit": 0,
+        "owner": "gbl08ma",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1jtprixunfus5mozkzj5gtfm79b54p3pwnje8snh9ugu998cfk13qceepwn5",
+        "alias": "JungleTV Prize faucet",
+        "illicit": 0,
+        "owner": "gbl08ma",
+        "type": "faucet"
+    },
+    {
+        "address": "ban_1rainrjfauss66rbormm3td5gucnnza41w78qepdmzy15dprgb6qrp6x516h",
+        "alias": "JungleTV Rain",
+        "illicit": 0,
+        "owner": "gbl08ma",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1skiph85moxba9eqzpxejazxcaqfddq8xwsdgjn7yy4t1ano81oncieo6bib",
+        "alias": "JungleTV Skip",
+        "illicit": 0,
+        "owner": "gbl08ma",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3pa1m3g79i1h7uijugndjeytpmqbsg6hc19zm8m7foqygwos1mmcqmab91hh",
+        "alias": "palm.just-dmitry.ru",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1ka1ium4pfue3uxtntqsrib8mumxgazsjf58gidh1xeo5te3whsq8z476goo",
+        "alias": "Kalium",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1kawandahui9bbj64a3qejbxayqzqgqgqnp3fefn7x7xuwmizy4ur6zy6n4a",
+        "alias": "kawanda",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1kirby19w89i35yenyesnz7zqdyguzdb3e819dxrhdegdnsaphzeug39ntxj",
+        "alias": "Kirby",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_3kucodzfu56iiqxa5krw4wk1hqgw15ifzqriiouyp66x4nkaqup4tf53hihc",
+        "alias": "KuCoin IT AMA",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1oaocnrcaystcdtaae6woh381wftyg4k7bespu19m5w18ze699refhyzu6bo",
+        "alias": "Kuyumcu",
+        "illicit": 0,
+        "owner": "mail@nano.trade",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3faucb1o9ifundznqw6xn1xkybztz4zfbn4fw95ujfy48ds1ebayzycfsspk",
+        "alias": "Meme Faucet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad",
+        "alias": "Mercatox Cold Wallet",
+        "illicit": 0,
+        "owner": "Mercatox",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3k76rawffjm79qedoc54nhk3edkq5makoyp73b1t6q6j9yjeq633q1xck9g8",
+        "alias": "Mercatox Hot Wallet",
+        "illicit": 0,
+        "owner": "Mercatox",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_14bbb43paw4gtkc69j445e6ogxytns35ks9qk8pe7g37qyc7as63tipfz6gp",
+        "alias": "Miner log seed swiper",
+        "illicit": 1,
+        "owner": "Unknown",
+        "type": "suspicious"
+    },
+    {
+        "address": "ban_3matchhw9ksc9xfqdhedfn34n8kw6woxr36gnyoop7jc14j7unw9uknhjk8h",
+        "alias": "Monkey Match 1",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3jan54btk13gsutxw6brj1i7e31zip4zj43u4jde7qad3hchx8u1gc6jwxd9",
+        "alias": "Monkey Match Jan",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1mar4j94wjqnkourdfw1jwqzsn4a9p6fqfjzrjsyjiym4zixm1ek3bkqk1r7",
+        "alias": "Monkey Match March",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1no4g7k51giqnhscpqm153hamoe956958yrr79sggzgy8wriiemx7owh89ka",
+        "alias": "Monkey Match Nov1",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1no3g6ho99zjfgujgkyqmmedi4k9u46yxwnf8bchxs4sof1yg334u8yrt4h5",
+        "alias": "Monkey Match Nov2",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1no1g31yq9ne9b1uhzge7co6af34qot37ydifagy13cb53ki7dor1yeceg8f",
+        "alias": "Monkey Match Nov3",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3mkys1ot6iqq7ebmawpdognrbgzkos6hs765c8xjrp7gnce7akbntouxr4m5",
+        "alias": "MonkeySlots Cold",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1s1hot8adygxuj96f35dicnmd47cctazoaiia9uduk731nqt6fuenfax9ckt",
+        "alias": "MonkeySlots Hot",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_33kcz3a5ozp18hdqpe7dgetz9bzdtifku5iw7bdcy1xfb8hfo1xz4qhwoqfp",
+        "alias": "MonkeySlots Old",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "gambling"
+    },
+    {
+        "address": "ban_3fww7iebi9xq4a9j4mujxmqtfke1ad6g6ta13fijcxni4scasoyzdxauegj3",
+        "alias": "MonkeySlots Warm",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1monkeyt1x77a1rp9bwtthajb8odapbmnzpyt8357ac8a1bcron34i3r9y66",
+        "alias": "MonkeyTalks",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1ddaz5y8jk47hkicpi1kc38kg359r74y38gmmq6moiki11gx1g4a9qb4r7c6",
+        "alias": "moon[.]banano[.]trade",
+        "illicit": 0,
+        "owner": "mail@nano.trade",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1nannerspntaoqyrtnzjj76joe6yqjcterj6ef3qkdc6kfgswqu3pfaaqphe",
+        "alias": "nanners.cc",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1w5q77ocgfrjn6sqwudfuygtomwyij8ijes3y5g8kaydxsf8f4jpz4n9q9a3",
+        "alias": "Nanogames Hot Wallet",
+        "illicit": 0,
+        "owner": "Nanogames.io",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3kuyumcu9yj65b51kqu9cbohio9oeysymxt51fxkrg5idw8qaxqpk4yq6nzy",
+        "alias": "Nano[.]trade airdrop",
+        "illicit": 0,
+        "owner": "mail@nano.trade",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
+        "alias": "Nanswap Sending Account",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_339yi5dqeo38rnfo8p6f4q5amxifje7r1mam1ye33f9xr3fy3s1mxyy3pwc3",
+        "alias": "NeutralGood",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1nice4sy9fgcb8qxbx7nkj9ajc79aapqnayrfk4gow184mgnfm49ncstg36w",
+        "alias": "NiceBanano",
+        "illicit": 0,
+        "owner": "Sau412",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_1bestrep6gq14bt4bi7w446m9knc6matfad7qcii7edeb33iipooh46dotdz",
+        "alias": "node.banano.ch",
+        "type": "representative"
+    },
+    {
+        "address": "ban_19potasho7ozny8r1drz3u3hb3r97fw4ndm4hegdsdzzns1c3nobdastcgaa",
+        "alias": "node.jungletv.live",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1nunu9z3puk3dehuoh3djesa4psro1mcqoi48pr64jxzf6osm6iqkmjupwfh",
+        "alias": "Nunu",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1on1ybanskzzsqize1477wximtkdzrftmxqtajtwh4p4tg1w6awn1hq677cp",
+        "alias": "OnlyBans",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1emusk6m8hypb46dbp6eaiu3j6xjwwwaqw98y6hqyje53ncjciyqzj3skt9n",
+        "alias": "Papa Musk",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_1po1yco1cnoyymrm3xnf7h9iaway1bg5kqxq3cfb3za98gq73tfmjm4mp11n",
+        "alias": "Polygon Cold Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4",
+        "alias": "Polygon Hot Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1mine1fnjzz84gwapyqhfw1d115zst859pf1u5rzge8hehzjg9ztchokmghb",
+        "alias": "PowerPlant Old",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3w6yatruhkxgu4bhx1d8zggpwafrq3z7xyrqchuw8h5xa9aqhnrj7mi79mtu",
+        "alias": "Qbtc Hot Wallet",
+        "illicit": 1,
+        "owner": "QBTC",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3yafcjcq79cjfm4wio5db6drffmf61jh8cosoijmg3eppzmbxb4kej8t3dze",
+        "alias": "qtrade Hot Wallet",
+        "illicit": 0,
+        "owner": "QTrade",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3fzpw7pb9xt64qhwi47oa47x9zj713fkshntdk5y7khmn54n18szb7ymybdt",
+        "alias": "r/banano Test Giveaway Fund (March 2022)",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3rccbanjyesftqfj3zc5mqn5nd3ai5hqrw4twsz45rk8hq3xu93c4zue4s1f",
+        "alias": "r/cryptocurrency Giveaway Fund (March 2022)",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3fsaqscgz8scrpua1erfyh3kbzgq7qabmbjmcznpwci3e9i5borwexg96h5t",
+        "alias": "Reddit fraud",
+        "illicit": 1,
+        "owner": "",
+        "type": "fraud"
+    },
+    {
+        "address": "ban_1sebrep1mbkdtdb39nsouw5wkkk6o497wyrxtdp71sm878fxzo1kwbf9k79b",
+        "alias": "sebrock19.de",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3tacocatezozswnu8xkh66qa1dbcdujktzmfpdj7ax66wtfrio6h5sxikkep",
+        "alias": "Taco",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3imophzbk9ruq3ju18jyw37376h3wdeon15asw4yj3kfgxs6m1eg7784a4im",
+        "alias": "Tip[.]cc",
+        "illicit": 0,
+        "owner": "Tip.cc",
+        "type": "service"
+    },
+    {
+        "address": "ban_3x1o69xsppjb1d9owsn8x6uqr8a1ttpitsu3yya7iyimaboqhb9urb8x61y8",
+        "alias": "Txbit Hot Wallet",
+        "illicit": 0,
+        "owner": "TxBit",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3unityd1rqwde1p33ax61aan6tqa1f6xm9epjkhmsfktr3rdwg4z5td5ua3n",
+        "alias": "Unity's Node",
+        "type": "representative"
+    },
+    {
+        "address": "ban_16bfuppfebtmgh1t8ktpk4eq4dyz5m1ztxesznagd916jzk8b87qity3habz",
+        "alias": "Unnamed Hot Wallet",
+        "illicit": 0,
+        "owner": "Unnamed",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3binance1adje7uwzjmsyxsqxjt8c471i33xo39k94twkipntmrqt1ii5t57",
+        "alias": "Unofficial Binance Representative 1",
+        "type": "representative"
+    },
+    {
+        "address": "ban_15gfawgrsc6tkkm5p1gy749tkibchu73st1ojs3knz6rd3ejfcgt7rj5cmx9",
+        "alias": "validierung.cc 🇩🇪 ",
+        "type": "representative",
+        "owner": "Lawrence#0388"
+    },
+    {
+        "address": "ban_1bujgzb69qr4owkcm3qu35mb843qtwnx4zf8q3myjw1dui7br5k87k84e54d",
+        "alias": "ViteX Hot Wallet",
+        "illicit": 0,
+        "owner": "ViteX",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_39cbuas38tfnoikkn38d15n94qokaciwx8mhh5ia4n5pqn4e3y9dw4x9jzic",
+        "alias": "ViteX New",
+        "illicit": 0,
+        "owner": "ViteX",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3j67xu1yuhfbezm7myw7bhzekj1mdzjkhhtctrqz5d9sanar8wt6hkgexzwn",
+        "alias": "Volcano",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3aesopmzk64oakzy3gnnpge9uzfe8eo4nfkdk6gexouwjewpj5j4dchg9ioh",
+        "alias": "Volcano - Aesops Fables",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3uo1cafr4p5qkyjn57jjuqbmsddds86j6g6tzi4q16ek3xfjumprpb51pmuz",
+        "alias": "Volcano Burn Pool",
+        "type": "burn"
+    },
+    {
+        "address": "ban_1ban116su1fur16uo1cano16su1fur16161616161616161616166a1sf7xw",
+        "alias": "Volcano Burn Wallet",
+        "type": "burn"
+    },
+    {
+        "address": "ban_1wa1ker54qq93emzpxqkfo5cjfh88qhhx18r4yi3xj6jhbb367ukgkh3d3gw",
+        "alias": "Walker Cold",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3hotwkr9xuk8c9eixqafn8jf8oxzwagc8rtrgmuf973s5c96hp4g9ix3jw9c",
+        "alias": "Walker Hot",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3bsco1dfwmwpnnjjqyqb9f7f83gtxsrmgdzdjdz58u6dhga5ajsgtsdz1g8h",
+        "alias": "WBan BSC Cold Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1wbanktxc5mtnydsjq6doy81wsnn7fw1z7yzw4zzieb6dfkihjtbwzgrxt9i",
+        "alias": "WBan BSC Hot Wallet",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_3he11oi45zcfe3i65wogyikf1569mu1jcf9kj4o7jojpebmmkbhrpf38qrqx",
+        "alias": "WeChat/Reddit giveaways",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "distribution"
+    },
+    {
+        "address": "ban_3nnfzzxp84zj7e7zrbsf65hngs51b76gda179bc4dxr7fkjtbtxq744w6gcx",
+        "alias": "Woodrisian",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1wbanhr5jr179uw34793g96qihwmisd6bypp9ofy6yy77hchge96tqmwhq9a",
+        "alias": "Wrapped Banano Old",
+        "illicit": 0,
+        "owner": "Banano",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1yekta1xn94qdnbmmj1tqg76zk3apcfd31pjmuy6d879e3mr469a4o4sdhd4",
+        "alias": "Yekta",
+        "type": "citizen"
+    },
+    {
+        "address": "ban_3srechjntpdomi9dbaksfxkpk4o134kchii8iozd98aa5f3txbej96wb77mg",
+        "alias": "Yellow Trust",
+        "type": "representative"
+    },
+    {
+        "address": "ban_3p1anetee7arfx9zbmspwf9c8c5r88wy6zkgwcbt7rndtcqsoj6fzuy11na3",
+        "alias": "BananoPlanet.cc",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1gprxwnms1ddqiiwzyfnezzh8iphbbkkyuyuitawtsgnqzqyi8zu8sq9xzja",
+        "alias": "benisnode.xyz",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1otahirsy63kwzi6e3578wm1q6d67pgcude31gkd7e31gcktuguuyhdtzton",
+        "alias": "FI Monke 🐒",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1kapppaojer1mnhrex1thbr4gpzto5uprz339jbqmms4eqgoe78usx85rjrs",
+        "alias": "Ka",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1moonanoj76om1e9gnji5mdfsopnr5ddyi6k3qtcbs8nogyjaa6p8j87sgid",
+        "alias": "Moonano",
+        "type": "representative"
+    },
+    {
+        "address": "ban_177d6g6o3g8tdgqd7ia9aitx5xkrs4o776bnci1exiqstrpwztbgg368gyj8",
+        "alias": "node.banano.app",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1heart7e8u4tnyowup9hwchx8tkfaqjiyp67si74gdanziizegf7p37jd6gf",
+        "alias": "One Love",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1mutsny6d7d95w733rah4e5s14nutdtodgjh1wjxoyfnhsxchf9ars1en4a8",
+        "alias": "v23.0",
+        "type": "representative"
+    },
+    {
+        "address": "ban_1yag3k5uegjz5o3xbek83yibbb75sdne3rjtuuh3ry555pr835781eh9wecy",
+        "alias": "Yag",
+        "type": "representative"
+    }
 ]
