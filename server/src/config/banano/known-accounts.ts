@@ -200,7 +200,7 @@ export const BAN_KNOWN_ACCOUNTS: KnownAccountDto[] = [
     },
     {
         address: 'ban_1ce1ery6hqwyqqyh15m4atcoaywd8rycyapjjooqeg7gi149kmatjbb3wiwx',
-        alias: 'Dev Salary',
+        alias: 'Celery (Dev Salary)',
     },
     {
         address: 'ban_3pp1antnfudas6ad44kwpad4jb376cihftskq9ne76hazosi654gjdohriai',
