@@ -105,7 +105,7 @@ const getFrontiersData = async (): Promise<FrontiersData> => {
 };
 
 /** File which is used to store the list of top holders. */
-const getAllBalancesFileName = (): string => `./database/${PROFILE}/balaances.json`;
+const getAllBalancesFileName = (): string => `database/${PROFILE}/balances.json`;
 
 /** Whenever the rich list is still loading due to a server restart, read from a stored file. */
 export const parseRichListFromFile = async (): Promise<void> =>

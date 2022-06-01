@@ -32,3 +32,5 @@ rep-uptime-dev
 .env
 serviceAccountKey.ts
 balances.json
+
+api-access-tokens.json

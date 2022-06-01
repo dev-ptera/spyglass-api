@@ -1,7 +1,12 @@
-import { API_ACCESS_TOKENS } from './api-access-tokens';
+
+import {readFileContents} from "@app/services";
+
 export const REQUESTS_PER_MINUTE = 50;
 
 const rateLimit = require('express-rate-limit');
+const API_ACCESS_TOKENS = readFileContents('src/middleware/api-access-tokens.json');
+
+console.log(__dirname);
 
 export const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000,
