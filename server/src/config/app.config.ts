@@ -5,7 +5,7 @@ import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
 import { NanoClient } from '@dev-ptera/nano-node-rpc';
 import { KnownAccountDto } from '@app/types';
-import {readFileContents} from "@app/services";
+import { readFileContents } from '@app/services';
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -63,8 +63,6 @@ export const DEVELOPER_FUNDS: string[] = [];
 export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig()
     ? BAN.UPTIME_TRACKING_MIN_WEIGHT
     : NANO.UPTIME_TRACKING_MIN_WEIGHT;
-
-
 
 export const readLocalConfig = async (): Promise<void> => {
     KNOWN_ACCOUNTS.push(...readFileContents(`database/${PROFILE}/known-accounts.json`));

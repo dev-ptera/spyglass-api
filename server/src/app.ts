@@ -9,7 +9,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
 
-const dotenv = require('dotenv');  // Import before @app/config.
+const dotenv = require('dotenv'); // Import before @app/config.
 dotenv.config();
 
 import {
@@ -63,7 +63,9 @@ import {
     getRichListV1,
     getScoresV1,
     getSupplyCreeperLegacy,
-    getSupplyV1, importHistoricHashTimestamps, parseRichListFromFile,
+    getSupplyV1,
+    importHistoricHashTimestamps,
+    parseRichListFromFile,
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';

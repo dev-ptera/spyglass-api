@@ -116,7 +116,8 @@ export const parseRichListFromFile = async (): Promise<void> =>
                 if (err) {
                     LOG_ERR(
                         'parseRichListFromFile.readFile',
-                        "Could not import the rich list; this file will be auto-generated in a production setting.");
+                        'Could not import the rich list; this file will be auto-generated in a production setting.'
+                    );
                 } else {
                     try {
                         const parsed = JSON.parse(data);
