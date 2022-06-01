@@ -55,11 +55,11 @@ export const getSupplyCreeperLegacy = (res): void => {
                 circulating: data.circulatingAmount,
                 uncirculating: data.devFundAmount,
                 burned: data.burnedAmount,
-                total: data.totalAmount - data.burnedAmount
-            }
+                total: data.totalAmount - data.burnedAmount,
+            };
             res.send(creeperSchema);
         })
         .catch((err) => {
             res.status(500).send(err);
         });
-}
+};

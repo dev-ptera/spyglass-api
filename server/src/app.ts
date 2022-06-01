@@ -8,8 +8,13 @@ moduleAlias.addAlias('@app/types', __dirname + '/types');
 import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
+
+const dotenv = require('dotenv');  // Import before @app/config.
+dotenv.config();
+
 import {
     AppCache,
+    readLocalConfig,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
@@ -20,6 +25,7 @@ import {
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     WALLETS_REFRESH_INTERVAL_MS,
+    PROFILE,
 } from '@app/config';
 import {
     cacheAccountDistribution,
@@ -62,10 +68,7 @@ import {
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
-import {memCache, serverRestart} from '@app/middleware';
-
-const dotenv = require('dotenv');
-dotenv.config();
+import { memCache, serverRestart } from '@app/middleware';
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -88,7 +91,6 @@ app.use((err, req, res, next) => {
     res.status(500).send({ errorMsg: 'Internal Server Error' });
 });
 app.use((req, res, next) => {
-    // Handle worst case scenario; uncaught errors.
     res.setHeader('Content-Type', 'application/json');
     next();
 });
@@ -155,11 +157,12 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
     }
 };
 
-server.listen(port, () => {
+server.listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
-  //  void parseRichListFromFile();
-  //  void importHistoricHashTimestamps();
+    //  void parseRichListFromFile();
+    //  void importHistoricHashTimestamps();
+    await readLocalConfig();
 
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,
@@ -200,7 +203,6 @@ server.listen(port, () => {
         method: cacheRepresentativeScores,
         interval: REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     };
-
 
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */

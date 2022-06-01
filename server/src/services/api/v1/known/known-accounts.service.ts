@@ -42,7 +42,6 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
-
 /** Responsible for fetching known accounts from local/remote sources.
  *
  * Order of insertion:
