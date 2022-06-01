@@ -1,4 +1,4 @@
-import { AppCache, NANO_CLIENT } from '@app/config';
+import {AppCache, NANO_CLIENT, UPTIME_TRACKING_MIN_WEIGHT} from '@app/config';
 import { rawToBan } from 'banano-unit-converter';
 import { getAliasedReps, getPRWeightPromise, getRepresentativesUptimePromise, LOG_ERR } from '@app/services';
 import { MonitoredRepresentativeDto, RepresentativeDto } from '@app/types';
@@ -189,9 +189,10 @@ export const getRepresentativesPromise = async (body: RequestBody): Promise<Repr
 
     // Append uptime stats to each rep.
     if (body.includeUptimeStats) {
-        // TODO: Filter reps with <= UPTIME_THRESHOLD weight before attempt to search
+        const repsWithUptimeStats = Array.from(repMap.keys())
+            .filter((address) => repMap.get(address).weight >= UPTIME_TRACKING_MIN_WEIGHT);
         const uptimeStats = await getRepresentativesUptimePromise({
-            representatives: Array.from(repMap.keys()),
+            representatives: repsWithUptimeStats,
             includePings: body.includeUptimePings,
         });
         for (const stats of uptimeStats) {
