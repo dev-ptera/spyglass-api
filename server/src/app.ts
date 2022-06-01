@@ -25,7 +25,6 @@ import {
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     WALLETS_REFRESH_INTERVAL_MS,
-    PROFILE,
 } from '@app/config';
 import {
     cacheAccountDistribution,
@@ -64,7 +63,7 @@ import {
     getRichListV1,
     getScoresV1,
     getSupplyCreeperLegacy,
-    getSupplyV1,
+    getSupplyV1, importHistoricHashTimestamps, parseRichListFromFile,
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
@@ -160,8 +159,8 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
 server.listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
-    //  void parseRichListFromFile();
-    //  void importHistoricHashTimestamps();
+    void parseRichListFromFile();
+    void importHistoricHashTimestamps();
     await readLocalConfig();
 
     const onlineRepresentatives = {

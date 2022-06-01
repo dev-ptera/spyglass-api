@@ -9,9 +9,6 @@ type FrontiersData = {
     richList: AccountBalanceDto[];
 };
 
-/** File which is used to store the list of top holders. */
-export const ALL_BALANCES_FILE_NAME = `./database/${PROFILE}/balances.json`;
-
 const createEmptyStats = (): AccountDistributionStatsDto => ({
     number0_0001: 0,
     number0_001: 0,
@@ -107,31 +104,40 @@ const getFrontiersData = async (): Promise<FrontiersData> => {
     });
 };
 
+/** File which is used to store the list of top holders. */
+const getAllBalancesFileName = (): string => `./database/${PROFILE}/balaances.json`;
+
 /** Whenever the rich list is still loading due to a server restart, read from a stored file. */
 export const parseRichListFromFile = async (): Promise<void> =>
     new Promise((resolve) => {
         const start = LOG_INFO('Refreshing / Importing Rich List File');
-        fs.readFile(ALL_BALANCES_FILE_NAME, 'utf8', (err, data) => {
-            if (err) {
-                LOG_ERR('parseRichListFromFile.readFile', err);
-            } else {
-                try {
-                    const parsed = JSON.parse(data);
-                    AppCache.accountDistributionStats = parsed.distributionStats;
-                    AppCache.richList = parsed.richList;
-                    LOG_INFO('Rich List File Updated', start);
-                } catch (err) {
-                    LOG_ERR('parseRichListFromFile.parseFile', err);
+        try {
+            fs.readFile(getAllBalancesFileName(), 'utf8', (err, data) => {
+                if (err) {
+                    LOG_ERR(
+                        'parseRichListFromFile.readFile',
+                        "Could not import the rich list; this file will be auto-generated in a production setting.");
+                } else {
+                    try {
+                        const parsed = JSON.parse(data);
+                        AppCache.accountDistributionStats = parsed.distributionStats;
+                        AppCache.richList = parsed.richList;
+                        LOG_INFO('Rich List File Updated', start);
+                    } catch (err) {
+                        LOG_ERR('parseRichListFromFile.parseFile', err);
+                    }
                 }
-            }
+                resolve();
+            });
+        } catch (err) {
             resolve();
-        });
+        }
     });
 
 /** Writes the rich list to a local json file.
  * Whenever the server is restarted, this file is parsed & stored into the AppCache to quickly deliver a snapshot of data. */
 const writeLocalRichListJson = (data: FrontiersData): void => {
-    fs.writeFile(ALL_BALANCES_FILE_NAME, JSON.stringify(data), { flag: 'w' }, (err) => {
+    fs.writeFile(getAllBalancesFileName(), JSON.stringify(data), { flag: 'w' }, (err) => {
         if (err) {
             LOG_ERR('cacheAccountDistribution.writeFile', err);
         }
