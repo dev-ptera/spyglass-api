@@ -1,8 +1,10 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
 import { NanoClient } from '@dev-ptera/nano-node-rpc';
 import { KnownAccountDto } from '@app/types';
-
 const fs = require('fs');
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
