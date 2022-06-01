@@ -148,9 +148,9 @@ const getRepDetails = (rpcData: Peers): Promise<MonitoredRepresentativeDto[]> =>
 
     // This service includes the ability to manually hard-code peer monitor ips or host names.
     // Even if this node isn't directly connected to these monitors as a peer, we can still display their node stats.
-    MANUAL_PEER_MONITOR_URLS.map((url: string) => {
-        peerIpAddresses.add(url);
-        peerMonitorStatsPromises.push(getPeerMonitorStats(url));
+    MANUAL_PEER_MONITOR_URLS.map((rep: { name: string; url: string }) => {
+        peerIpAddresses.add(rep.url);
+        peerMonitorStatsPromises.push(getPeerMonitorStats(rep.url));
     });
 
     // Add all peer ips to the list of ips to fetch.

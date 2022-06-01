@@ -9,13 +9,12 @@ import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
 
-const dotenv = require('dotenv');
+const dotenv = require('dotenv'); // Import before @app/config.
 dotenv.config();
-
-process.env.UV_THREADPOOL_SIZE = String(16);
 
 import {
     AppCache,
+    readLocalConfig,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
@@ -28,49 +27,51 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import {
-    getNakamotoCoefficientV1,
-    getRepresentativesV1,
+    cacheAccountDistribution,
+    cacheDelegatorsCount,
+    cacheKnownAccounts,
+    cacheMonitoredReps,
+    cacheOnlineRepresentatives,
+    cachePriceData,
+    cacheRepresentativeScores,
+    getAccountExportV1,
+    getAccountInsightsV1,
+    getAccountOverviewV1,
+    getAccountRepresentativeV1,
     getAliasedRepresentativesV1,
     getBlockInfoV1,
     getBlocksInfoV1,
-    getRepresentativesUptimeV1,
-    cacheMonitoredReps,
-    writeNewRepresentativeUptimePings,
-    cacheKnownAccounts,
-    getKnownVanitiesV1,
-    getKnownAccountsV1,
-    getSupplyV1,
-    getDeveloperFundsV1,
-    getPRWeightV1,
-    getAccountInsightsV1,
-    getNodeStatsV1,
-    getDelegatorsV1,
-    getConfirmedTransactionsV1,
-    importHistoricHashTimestamps,
-    cacheOnlineRepresentatives,
-    getAccountRepresentativeV1,
-    cacheAccountDistribution,
-    parseRichListFromFile,
-    getDistributionBucketsV1,
-    getRichListV1,
-    getPeerVersionsV1,
-    getQuorumV1,
-    convertManualKnownAccountsToJson,
     getBurnV1,
-    getRichListSnapshotV1,
-    getRichListSnapshotPostV1,
-    getReceivableTransactionsV1,
-    getAccountExportV1,
-    getAccountOverviewV1,
-    getLedgerSizeV1,
-    getScoresV1,
-    cachePriceData,
-    cacheDelegatorsCount,
-    sleep,
+    getConfirmedTransactionsV1,
     getConfirmedTransactionsV2,
-    cacheRepresentativeScores, getSupplyCreeperLegacy,
+    getDelegatorsV1,
+    getDeveloperFundsV1,
+    getDistributionBucketsV1,
+    getKnownAccountsV1,
+    getKnownVanitiesV1,
+    getLedgerSizeV1,
+    getNakamotoCoefficientV1,
+    getNodeStatsV1,
+    getPeerVersionsV1,
+    getPRWeightV1,
+    getQuorumV1,
+    getReceivableTransactionsV1,
+    getRepresentativesUptimeV1,
+    getRepresentativesV1,
+    getRichListSnapshotPostV1,
+    getRichListSnapshotV1,
+    getRichListV1,
+    getScoresV1,
+    getSupplyCreeperLegacy,
+    getSupplyV1,
+    importHistoricHashTimestamps,
+    parseRichListFromFile,
+    sleep,
+    writeNewRepresentativeUptimePings,
 } from '@app/services';
-import { memCache, rateLimiter, serverRestart } from '@app/middleware';
+import { memCache, serverRestart } from '@app/middleware';
+
+process.env.UV_THREADPOOL_SIZE = String(16);
 
 const http = require('http');
 const morgan = require('morgan');
@@ -91,7 +92,6 @@ app.use((err, req, res, next) => {
     res.status(500).send({ errorMsg: 'Internal Server Error' });
 });
 app.use((req, res, next) => {
-    // Handle worst case scenario; uncaught errors.
     res.setHeader('Content-Type', 'application/json');
     next();
 });
@@ -158,12 +158,12 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
     }
 };
 
-server.listen(port, () => {
+server.listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile();
     void importHistoricHashTimestamps();
-    convertManualKnownAccountsToJson();
+    await readLocalConfig();
 
     const onlineRepresentatives = {
         method: cacheOnlineRepresentatives,

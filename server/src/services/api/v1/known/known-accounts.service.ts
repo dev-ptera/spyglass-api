@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { KnownAccountDto, KnownAccountType } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
 import { AppCache, KNOWN_ACCOUNTS, PROFILE } from '@app/config';
-const fs = require('fs');
 
 type RequestBody = {
     includeOwner?: boolean;
@@ -43,21 +42,6 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
-/** Fetches known accounts from Kirby's API.  */
-const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
-    new Promise<KnownAccountDto[]>((resolve) => {
-        axios
-            .request({
-                method: 'GET',
-                url: 'https://kirby.eu.pythonanywhere.com/api/v1/resources/addresses/all',
-            })
-            .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
-            .catch((err) => {
-                LOG_ERR('fetchKirbyKnownAccounts', err);
-                resolve([]);
-            });
-    });
-
 /** Responsible for fetching known accounts from local/remote sources.
  *
  * Order of insertion:
@@ -67,14 +51,8 @@ const fetchKirbyKnownAccounts = (): Promise<KnownAccountDto[]> =>
  * */
 const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const start = LOG_INFO('Refreshing Known Accounts');
-    const kirbyKnownAccounts = await fetchKirbyKnownAccounts();
     const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
-
-    /* Kirby entries are entered first. */
-    kirbyKnownAccounts.map((account) => {
-        insertEntries(account, knownAccountMap);
-    });
 
     /* Spyglass entries are entered next & override any duplicate fields. */
     spyglassKnownAccountsRemote.map((account) => {
@@ -142,16 +120,4 @@ export const getKnownAccountsV1 = (req, res): void => {
 /** Call this method to update the known accounts in the AppCache. */
 export const cacheKnownAccounts = async (): Promise<void> => {
     AppCache.knownAccounts = await getKnownAccountsPromise();
-};
-
-/** Converts the KNOWN_ACCOUNTS object to a json file;
- * The JSON file is then fetched remotely from the master branch to allow updates without restarting the server. */
-export const convertManualKnownAccountsToJson = (): void => {
-    const file = `database/${PROFILE}/known-accounts.json`;
-    fs.writeFile(`${file}`, JSON.stringify(KNOWN_ACCOUNTS, null, 2), (err) => {
-        if (err) {
-            LOG_ERR('convertManualKnownAccountsToJson', err);
-            throw err;
-        }
-    });
 };

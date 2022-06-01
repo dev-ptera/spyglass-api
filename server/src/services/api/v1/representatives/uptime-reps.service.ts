@@ -20,13 +20,6 @@ const DEFAULT_BODY: RequestBody = {
 
 const fs = require('fs');
 
-const MINIMUM_WEIGHT_TO_MEASURE_UPTIME = UPTIME_TRACKING_MIN_WEIGHT;
-const dayMaxPings = 86_400_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
-const weekMaxPings = 604_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
-const monthMaxPings = 2_629_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
-const semiAnnualMaxPings = (6 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
-const yearMaxPings = (12 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
-
 export type PingDoc = {
     address: string;
     trackStartUnixTimestamp: number;
@@ -156,8 +149,17 @@ const calculateLastOutageStatistics = (pingStats: PingStats[]): LastOutage => {
     return lastOutage;
 };
 
+let i = 0;
+
 /** Given a PingStats array, calculates daily, weekly, etc uptime statistics. */
 const calculateUptimePercentages = (pingStats: PingStats[]) => {
+
+    const dayMaxPings = 86_400_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
+    const weekMaxPings = 604_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
+    const monthMaxPings = 2_629_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
+    const semiAnnualMaxPings = (6 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
+    const yearMaxPings = (12 * 2_629_800_000) / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
+
     const makeNewPingTracker = () => ({ offline: 0, online: 0 });
     const dayPings = makeNewPingTracker();
     const weekPings = makeNewPingTracker();
@@ -181,6 +183,7 @@ const calculateUptimePercentages = (pingStats: PingStats[]) => {
             duration--;
         }
     }
+
     return {
         day: calculateUptimePercentage(dayPings.online, Math.min(dayMaxPings, pingTotal)),
         week: calculateUptimePercentage(weekPings.online, Math.min(weekMaxPings, pingTotal)),
@@ -215,6 +218,7 @@ export const writeNewRepresentativeUptimePings = async (): Promise<void> => {
     const start = LOG_INFO('Refreshing Uptime Pings');
     const onlineReps = AppCache.onlineRepresentatives;
     const onlineRepsSet = new Set(onlineReps);
+    const MINIMUM_WEIGHT_TO_MEASURE_UPTIME = UPTIME_TRACKING_MIN_WEIGHT;
     const largeReps = await getRepresentativesPromise({
         minimumWeight: MINIMUM_WEIGHT_TO_MEASURE_UPTIME,
     });
@@ -229,6 +233,7 @@ export const getRepresentativesUptimePromise = async (body: RequestBody): Promis
     if (body.includePings === undefined) {
         body.includePings = DEFAULT_BODY.includePings;
     }
+
     const uptimeStats: RepresentativeUptimeDto[] = [];
     for (const address of body.representatives) {
         const data = AppCache.pingDocMap.get(address);

@@ -2,12 +2,13 @@ import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
     KnownAccountDto,
-    MonitoredRepresentativeDto, PingStats,
+    MonitoredRepresentativeDto,
     PriceDataDto,
     RepScoreDto,
 } from '@app/types';
 import { CacheClass } from 'memory-cache';
-import {PingDoc} from "@app/services";
+import { minutesToMs, PingDoc } from '@app/services';
+
 const cache = require('memory-cache');
 
 export type AppCache = {
@@ -64,7 +65,40 @@ export const AppCache: AppCache = {
     temp: new cache.Cache(),
     delegatorCount: new Map<string, { total: number; funded: number }>(),
     representativeScores: [],
-    pingDocMap: new Map<string, PingDoc>()
+    pingDocMap: new Map<string, PingDoc>(),
 };
 
 AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;
+
+export type CachePair = { key: string; duration: number };
+
+export const LEDGER_SIZE_CACHE_PAIR = {
+    key: 'ledgerSize',
+    duration: minutesToMs(5),
+};
+
+export const QUORUM_CACHE_PAIR = {
+    key: 'quorum',
+    duration: minutesToMs(1),
+};
+
+export const HOST_NODE_STATS_PAIR = {
+    key: 'hostNodeStats',
+    duration: minutesToMs(1),
+};
+
+export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
+    key: 'nc',
+    duration: minutesToMs(1),
+};
+
+// Move me to AppCache & refresh every minute.
+export const REP_SCORES_CACHE_PAIR = {
+    key: 'scores',
+    duration: minutesToMs(1),
+};
+
+export const INSIGHTS_CACHE_PAIR = {
+    key: 'account_insights',
+    duration: undefined, // dynamic size
+};
