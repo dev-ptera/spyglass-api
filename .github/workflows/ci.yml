@@ -41,7 +41,7 @@ jobs:
           args: push ${{ secrets.DOCKER_REPO }}/creeper-api:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
 
   deploy_node_app:
-    name: Deploy Noda App
+    name: Deploy Node App
     needs: build_and_publish_node_app
     runs-on: ubuntu-latest
     env:
