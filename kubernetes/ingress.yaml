@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: creeper-api-ingress
+  namespace: creeper-api
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - api.creeper.banano.cc
+      secretName: api-creeper-banano-cc-server-secret
+  rules:
+    - host: api.creeper.banano.cc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: creeper-api-service
+                port:
+                  number: 3001
