@@ -1,16 +1,10 @@
-FROM node:lts-alpine
-
-ENV NODE_ENV=production
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
-COPY . /app
+COPY . .
 
-RUN npm install -g -s --no-progress yarn && \
-  yarn && \
-  yarn run build && \
-  yarn cache clean
+RUN yarn
+RUN yarn build
 
-EXPOSE 3001
-
-CMD ["npm", "run","start"]
+CMD ["yarn","start"]
