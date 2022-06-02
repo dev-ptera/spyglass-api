@@ -66,11 +66,11 @@ jobs:
         working-directory: ./kubernetes
         run: |
           kustomize edit set image replaceme=${{ secrets.DOCKER_REPO }}/creeper-api:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
-          kustomize build . > creeper-api-k.yaml
+          kustomize build . > creeper-api-deployment-k.yaml
 
       - name: Deploy image to k8s cluster
         uses: bbedward/kubectl@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f ./kubernetes/creeper-api-k.yaml
+          args: apply -f ./kubernetes/creeper-api-deployment-k.yaml
