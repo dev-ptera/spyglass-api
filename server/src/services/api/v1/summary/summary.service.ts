@@ -1,16 +1,12 @@
-import { HostNodeStatsDto, ExplorerSummaryDto, SupplyDto } from '@app/types';
+import { ExplorerSummaryDto, HostNodeStatsDto, SupplyDto } from '@app/types';
 import { getSupplyPromise } from '../distribution/supply.service';
 import { LOG_ERR } from '../../../log/error.service';
-import { AppCache, EXPLORER_SUMMARY_STATS_PAIR } from '@app/config';
+import { AppCache } from '@app/config';
 import { getNodeStatsPromise } from '../network/node-stats.service';
 import { blockCountRpc } from '../../../../rpc/calls/block-count.rpc';
 import { getRepresentativesPromise } from '../representatives/representatives-service';
 
 const getSummaryPromise = async (): Promise<ExplorerSummaryDto> => {
-    if (AppCache.temp.has(EXPLORER_SUMMARY_STATS_PAIR.key)) {
-        return AppCache.temp.get(EXPLORER_SUMMARY_STATS_PAIR.key);
-    }
-
     // Supply
     let supply = {} as SupplyDto;
     try {
@@ -64,7 +60,6 @@ const getSummaryPromise = async (): Promise<ExplorerSummaryDto> => {
         principalRepsOnlineCount: prRepsOnline,
         totalPrincipalRepsCount: prReps.length,
     };
-    AppCache.temp.put(EXPLORER_SUMMARY_STATS_PAIR.key, data, EXPLORER_SUMMARY_STATS_PAIR.duration);
     return data;
 };
 
