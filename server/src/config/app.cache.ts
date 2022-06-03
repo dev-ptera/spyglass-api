@@ -87,6 +87,11 @@ export const HOST_NODE_STATS_PAIR = {
     duration: minutesToMs(1),
 };
 
+export const EXPLORER_SUMMARY_STATS_PAIR = {
+    key: 'explorerSummaryKey',
+    duration: minutesToMs(2),
+};
+
 export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
     key: 'nc',
     duration: minutesToMs(1),

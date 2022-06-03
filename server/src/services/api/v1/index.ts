@@ -5,3 +5,4 @@ export * from './known/_index';
 export * from './network/_index';
 export * from './representatives/_index';
 export * from './price/_index';
+export * from './summary/summary.service';

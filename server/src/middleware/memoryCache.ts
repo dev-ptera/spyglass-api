@@ -1,5 +1,6 @@
 import {
     AppCache,
+    EXPLORER_SUMMARY_STATS_PAIR,
     HOST_NODE_STATS_PAIR,
     INSIGHTS_CACHE_PAIR,
     LEDGER_SIZE_CACHE_PAIR,
@@ -25,6 +26,9 @@ const getCacheKey = (req): string => {
         }
         case '/v1/network/node-stats': {
             return HOST_NODE_STATS_PAIR.key;
+        }
+        case '/v1/explorer-summary': {
+            return EXPLORER_SUMMARY_STATS_PAIR.key;
         }
         case '/v1/account/insights': {
             return `${INSIGHTS_CACHE_PAIR.key}/${req.body.address}`;

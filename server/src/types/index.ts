@@ -11,6 +11,7 @@ export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
 export * from './EulenMonitoredRepresentativeDto';
+export * from './ExplorerSummaryDto';
 export * from './HostNodeStatsDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';

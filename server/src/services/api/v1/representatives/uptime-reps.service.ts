@@ -153,7 +153,6 @@ let i = 0;
 
 /** Given a PingStats array, calculates daily, weekly, etc uptime statistics. */
 const calculateUptimePercentages = (pingStats: PingStats[]) => {
-
     const dayMaxPings = 86_400_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
     const weekMaxPings = 604_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;
     const monthMaxPings = 2_629_800_000 / REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS;

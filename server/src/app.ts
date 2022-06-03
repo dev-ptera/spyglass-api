@@ -47,6 +47,7 @@ import {
     getDelegatorsV1,
     getDeveloperFundsV1,
     getDistributionBucketsV1,
+    getExplorerSummaryV1,
     getKnownAccountsV1,
     getKnownVanitiesV1,
     getLedgerSizeV1,
@@ -141,6 +142,9 @@ app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentat
 
 /* Price */
 app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
+
+/* Explorer Summary */
+app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(res));
 
 /* Creeper Legacy */
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
