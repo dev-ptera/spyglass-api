@@ -14,7 +14,7 @@ spec:
   tls:
     - hosts:
         - api.creeper.banano.cc
-      secretName: api.creeper-banano-cc-server-secret
+      secretName: api.creeper-banano-cc-v6-server-secret
   rules:
     - host: api.creeper.banano.cc
       http:
