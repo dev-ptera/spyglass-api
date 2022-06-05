@@ -6,11 +6,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      real_ip_header CF-Connecting-IP;
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   tls:
     - hosts:
         - api.creeper.banano.cc
-      secretName: api.creeper-banano-cc-v4-server-secret
+      secretName: api.creeper-banano-cc-server-secret
   rules:
     - host: api.creeper.banano.cc
       http:
