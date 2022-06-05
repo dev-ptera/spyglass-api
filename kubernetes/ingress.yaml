@@ -13,10 +13,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - api.creeper.banano.cc
-      secretName: api-creeper-banano-cc-v6-server-secret
+        - apicreeper.banano.cc
+      secretName: apicreeper-banano-cc-server-secret
   rules:
-    - host: api.creeper.banano.cc
+    - host: apicreeper.banano.cc
       http:
         paths:
           - path: /
