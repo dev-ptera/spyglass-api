@@ -827,14 +827,14 @@
     },
     {
         "address": "ban_1po1yco1cnoyymrm3xnf7h9iaway1bg5kqxq3cfb3za98gq73tfmjm4mp11n",
-        "alias": "Polygon Cold Wallet",
+        "alias": "WBan Polygon Cold Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
     },
     {
         "address": "ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4",
-        "alias": "Polygon Hot Wallet",
+        "alias": "WBan Polygon Hot Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
