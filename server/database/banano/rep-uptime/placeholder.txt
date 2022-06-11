@@ -1,1 +1,0 @@
-Representative uptime statistics go into this folder.
