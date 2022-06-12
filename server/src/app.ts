@@ -149,10 +149,9 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 /* Creeper Legacy */
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
+app.set('host', '127.0.0.1');
 
-app.set('host', process.env.HOST || '0.0.0.0');
-
-const port: number = Number(process.env.PORT || 3000);
+const port = Number(process.env.PORT || 3000);
 const host = app.get('host');
 const server = http.createServer(app);
 
