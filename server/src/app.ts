@@ -149,7 +149,11 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 /* Creeper Legacy */
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
+
+app.set('host', process.env.HOST || '0.0.0.0');
+
 const port: number = Number(process.env.PORT || 3000);
+const host = app.get('host');
 const server = http.createServer(app);
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
@@ -162,7 +166,7 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
     }
 };
 
-server.listen(port, async () => {
+server.listen(port, host, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile();
