@@ -150,9 +150,7 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
 
-//app.set('host', '127.0.0.1');
 const port = Number(process.env.PORT || 3000);
-//const host = app.get('host');
 const server = http.createServer(app);
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
