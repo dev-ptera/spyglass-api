@@ -38,6 +38,9 @@ export const REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const WALLETS_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);
 export const KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS = calcMinutes(60);
 
+/** These sites can endlessly request resources without throttling. */
+export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
+
 /** Ledger location, used to populate ledger size stats.  Must have read permission granted. */
 export const LEDGER_LOCATION = useBananoConfig() ? BAN.LEDGER_LOCATION : NANO.LEDGER_LOCATION;
 
