@@ -4,9 +4,8 @@ import { AccountRepresentativeDto } from '@app/types';
 
 /** Uses RPC command to fetch an account's representative. */
 export const getAccountRepresentativePromise = async (address: string): Promise<AccountRepresentativeDto> => {
-    const accountRepRpcResponse = await accountRepresentativeRpc(address).catch((err) => {
-        return Promise.reject(LOG_ERR('getAccountRepresentativePromise', err, { address }));
-    });
+    const accountRepRpcResponse = await accountRepresentativeRpc(address).catch((err) =>
+        Promise.reject(LOG_ERR('getAccountRepresentativePromise', err, { address })));
     return {
         representative: accountRepRpcResponse.representative,
     };

@@ -149,7 +149,8 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 /* Creeper Legacy */
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
-const port: number = Number(process.env.PORT || 3000);
+
+const port = Number(process.env.PORT || 3000);
 const server = http.createServer(app);
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {

@@ -52,20 +52,12 @@ export const getDelegatorsPromise = async (body: RequestBody): Promise<Delegator
     }
 
     // Fetch delegators count.
-    let count = 0;
-    try {
-        count = await getDelegatorsCountPromise(address);
-    } catch (err) {
-        return Promise.reject(LOG_ERR('getDelegatorsPromise.getDelegatorsCountPromise', err, { address }));
-    }
+    const count = await getDelegatorsCountPromise(address)
+        .catch((err) => Promise.reject(LOG_ERR('getDelegatorsPromise.getDelegatorsCountPromise', err, { address })));
 
     // Fetch delegators
-    let rpcResponse;
-    try {
-        rpcResponse = await delegatorsRpc(address, '10000000000000000000000000');
-    } catch (err) {
-        return Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsRpc', err, { address }));
-    }
+    const rpcResponse = await delegatorsRpc(address, '10000000000000000000000000')
+        .catch((err) => Promise.reject(LOG_ERR('getDelegatorsPromise.delegatorsRpc', err, { address })));
 
     // Loop through rpc results, filter out zero weight delegators
     let weightSum = 0;
