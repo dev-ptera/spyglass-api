@@ -70,7 +70,7 @@ import {
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
-import { memCache, serverRestart } from '@app/middleware';
+import {memCache, rateLimiter, serverRestart} from '@app/middleware';
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -81,11 +81,14 @@ const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.string
 const app = express();
 
 /* Middleware */
-app.use(morgan('short'));
+if (!IS_PRODUCTION) {
+    app.use(morgan('short'));
+}
 app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
 app.use(serverRestart);
-// app.use(rateLimiter);
+app.set('trust proxy', 1)
+app.use(rateLimiter);
 app.use(memCache);
 app.use((err, req, res, next) => {
     // Handle async errors; don't crash the server.

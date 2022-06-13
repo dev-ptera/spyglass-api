@@ -6,12 +6,15 @@ export const REQUESTS_PER_MINUTE = 50;
 const rateLimit = require('express-rate-limit');
 const API_ACCESS_TOKENS = readFileContents(`database/${PROFILE}/api-access-tokens.json`);
 
-console.log(__dirname);
+
 
 export const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: async (request) => {
+
+
         if (API_ACCESS_TOKENS.includes(request.get('Authorization'))) {
+            console.log(request.get('Authorization'));
             return 1000;
         } else return REQUESTS_PER_MINUTE;
     },
