@@ -27,9 +27,7 @@ const accountBalancePromise = (address: string): Promise<AccountBalanceResponse>
         .then((accountInfo: AccountBalanceResponse) => {
             return Promise.resolve(accountInfo);
         })
-        .catch((err) => {
-            return Promise.reject(LOG_ERR('getAccountOverview.getAccountBalance', err, { address }));
-        });
+        .catch((err) => Promise.reject(LOG_ERR('getAccountOverview.getAccountBalance', err, { address })));
 
 const accountInfoPromise = (address: string): Promise<AccountInfoResponse> =>
     accountInfoRpc(address)

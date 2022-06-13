@@ -36,9 +36,9 @@ const getAccountExportPromise = async (body: { address: string }): Promise<strin
         return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
     }
 
-    const accountTx = await accountHistoryRpc(address, 0, -1).catch((err) => {
-        return Promise.reject(LOG_ERR('getAccountExportPromise.accountHistoryRpc', err, { body }));
-    });
+    const accountTx = await accountHistoryRpc(address, 0, -1).catch((err) =>
+        Promise.reject(LOG_ERR('getAccountExportPromise.accountHistoryRpc', err, { body }))
+    );
 
     const dtos = [];
     accountTx.history.map((tx) => dtos.push(convertToConfirmedTransactionDto(tx)));
