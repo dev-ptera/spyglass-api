@@ -36,6 +36,7 @@ import {
     cacheRepresentativeScores,
     getAccountExportV1,
     getAccountInsightsV1,
+    getAccountNFTs,
     getAccountOverviewV1,
     getAccountRepresentativeV1,
     getAliasedRepresentativesV1,
@@ -70,7 +71,7 @@ import {
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
-import {memCache, rateLimiter, serverRestart} from '@app/middleware';
+import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -87,7 +88,7 @@ if (!IS_PRODUCTION) {
 app.use(bodyParser.json()); //utilizes the body-parser package
 app.use(cors());
 app.use(serverRestart);
-app.set('trust proxy', 1)
+app.set('trust proxy', 1);
 app.use(rateLimiter);
 app.use(memCache);
 app.use((err, req, res, next) => {
@@ -109,6 +110,7 @@ app.post(`/${PATH_ROOT}/v1/account/receivable-transactions`, (req, res) => getRe
 app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req, res));
+app.get(`/${PATH_ROOT}/v1/account/nfts/:address`, (req, res) => getAccountNFTs(req, res));
 
 /* Block */
 app.get(`/${PATH_ROOT}/v1/block/:block`, (req, res) => getBlockInfoV1(req, res));
@@ -151,7 +153,6 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 
 /* Creeper Legacy */
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
-
 
 const port = Number(process.env.PORT || 3000);
 const server = http.createServer(app);

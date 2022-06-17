@@ -41,14 +41,14 @@ const getRepDoc = async (repAddress: string): Promise<PingDoc> => {
     return new Promise(async (resolve) => {
         await fs.readFile(formatDocName(repAddress), 'utf8', (err, data) => {
             if (err) {
-            //    LOG_ERR('getRepDoc', err, { address: repAddress });
+                //    LOG_ERR('getRepDoc', err, { address: repAddress });
                 resolve(undefined);
             }
 
             try {
                 resolve(JSON.parse(data));
             } catch (err) {
-              //  LOG_ERR('getRepDoc.parseJson', err, { address: repAddress });
+                //  LOG_ERR('getRepDoc.parseJson', err, { address: repAddress });
                 resolve(undefined);
             }
         });
