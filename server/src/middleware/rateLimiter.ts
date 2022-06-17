@@ -13,7 +13,6 @@ export const rateLimiter = rateLimit({
         if (origin && URL_WHITE_LIST.includes(origin)) {
             return 1000;
         }
-        console.log(origin);
         if (API_ACCESS_TOKENS.includes(request.get('Authorization'))) {
             console.log(request.get('Authorization'));
             return 1000;

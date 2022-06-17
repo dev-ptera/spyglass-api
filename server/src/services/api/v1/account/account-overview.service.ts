@@ -51,7 +51,6 @@ const accountDelegatorsPromise = (address): Promise<number> => {
 
 /** Given an address, returns an overview of the account including balance, confirmed/pending transactions, delegators, etc. */
 export const getAccountOverviewV1 = (req, res): void => {
-    console.log(req.headers['x-forwarded-for'] || req.socket.remoteAddress);
     const parts = req.url.split('/');
     const address = parts[parts.length - 1];
 
