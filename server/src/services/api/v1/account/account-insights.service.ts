@@ -1,7 +1,13 @@
-import { convertFromRaw, getAccurateHashTimestamp, getTransactionType, isValidAddress, LOG_ERR } from '@app/services';
+import {
+    convertFromRaw,
+    getAccurateHashTimestamp,
+    getTransactionType,
+    isValidAddress,
+    LOG_ERR, sleep,
+} from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
-import { INSIGHTS_CACHE_PAIR } from '@app/config';
+import {Subject} from "rxjs";
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -100,70 +106,79 @@ const handleSendTransaction = (
     }
 };
 
-const confirmedTransactionsPromise = async (body: RequestBody): Promise<InsightsDto> => {
-    setBodyDefaults(body);
-    const address = body.address;
-
-    if (!isValidAddress(address)) {
-        return Promise.reject({ error: 'Address is required' });
+/** Given an insights dto, prunes height balances if user did not request them. */
+const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean): InsightsDto => {
+    const clone = Object.assign({}, data);
+    if (!includeHeightBalances) {
+        clone.heightBalances = undefined;
     }
+    return clone;
+}
 
-    const blockCountResponse = await accountBlockCountRpc(address).catch((err) =>
-        Promise.reject(LOG_ERR('getAccountInsights.accountBlockCountRpc', err, { address }))
-    );
+/** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
+const iterateAccountHistory = async (address: string, blockCount: number): Promise<InsightsDto> => {
 
-    if (Number(blockCountResponse.block_count) > MAX_TRANSACTION_COUNT) {
-        return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
+    const accountHistoryCalls = [];
+    let blocksRequested = 0;
+    const transactionsPerRequest = 10_000;
+    while (blocksRequested < blockCount) {
+        accountHistoryCalls.push(accountHistoryRpc(address, blocksRequested, transactionsPerRequest, true));
+        blocksRequested+=transactionsPerRequest;
     }
-
-    const accountHistory = await accountHistoryRpc(address, 0, -1, true).catch((err) =>
-        Promise.reject(LOG_ERR('getAccountInsights.accountHistoryRpc', err, { address }))
-    );
 
     /* Map of <recipient address, balance> for each account a given `address` has interacted with. */
     const accountSentMap = new Map<string, number>();
     const accountReceivedMap = new Map<string, number>();
+    let balance = 0;
+    let height = 0;
+
     const insightsDto = createBlankDto();
 
-    if (!body.includeHeightBalances) {
-        insightsDto.heightBalances = undefined;
-    }
+    for (const request of accountHistoryCalls) {
 
-    /* Iterate through the list of transactions, perform insight calculations. */
-    let balance = 0;
-    for (const transaction of accountHistory.history) {
-        insightsDto.blockCount++;
+        const accountHistory = await request.catch((err) =>
+            Promise.reject(LOG_ERR('getAccountInsights.accountHistoryRpc', err, { address }))
+        );
 
-        const type = getTransactionType(transaction);
+        /* Iterate through the list of transactions, perform insight calculations. */
+        for (const transaction of accountHistory.history) {
+            insightsDto.blockCount++;
 
-        // Count Change Blocks
-        if (!transaction.amount) {
-            if (type === 'change') {
-                insightsDto.totalTxChange++;
+            const type = getTransactionType(transaction);
+
+            // Count Change Blocks
+            if (!transaction.amount) {
+                if (type === 'change') {
+                    insightsDto.totalTxChange++;
+                }
+                continue;
             }
-            continue;
-        }
 
-        // Count Send / Receive Blocks & aggregate balances.
-        const amount = convertFromRaw(transaction.amount, 6);
-        if (type === 'receive') {
-            balance += amount;
-            handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
-        } else if (type === 'send') {
-            balance -= amount;
-            handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
-        }
+            // Count Send / Receive Blocks & aggregate balances.
+            const amount = convertFromRaw(transaction.amount, 6);
+            if (type === 'receive') {
+                balance += amount;
+                handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
+            } else if (type === 'send') {
+                balance -= amount;
+                handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
+            }
 
-        // Audit max balance
-        if (balance >= insightsDto.maxBalance) {
-            insightsDto.maxBalance = balance;
-            insightsDto.maxBalanceHash = transaction.hash;
-        }
+            // Audit max balance
+            if (balance >= insightsDto.maxBalance) {
+                insightsDto.maxBalance = balance;
+                insightsDto.maxBalanceHash = transaction.hash;
+            }
 
-        // Append new block to the list (change blocks are omitted.)
-        if (body.includeHeightBalances) {
-            const height = transaction.height;
+            // Append new block to the list (change blocks are omitted.)
+            height = Number(transaction.height);
             insightsDto.heightBalances[height] = Number(balance.toFixed(8));
+        }
+
+        // If we pulled down all transactions, continue.
+        // Otherwise pause before pulling down more transactions.
+        if (height !== blockCount) {
+            await sleep(500);
         }
     }
 
@@ -184,22 +199,58 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
             insightsDto.mostCommonSenderTxCount = accountMaxReceivedCount;
         }
     }
+
     return insightsDto;
+}
+
+const activeInsightsRequests = new Map<string, Subject<InsightsDto>>();
+
+const confirmedTransactionsPromise = async (body: RequestBody): Promise<InsightsDto> => {
+    setBodyDefaults(body);
+    const address = body.address;
+
+    if (!isValidAddress(address)) {
+        return Promise.reject({ error: 'Address is required' });
+    }
+
+    const blockCountResponse = await accountBlockCountRpc(address).catch((err) =>
+        Promise.reject(LOG_ERR('getAccountInsights.accountBlockCountRpc', err, { address }))
+    );
+
+    const blockCount = Number(blockCountResponse.block_count);
+    if (blockCount > MAX_TRANSACTION_COUNT) {
+        return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
+    }
+
+    const subject = new Subject<InsightsDto>();
+
+    // If duplicated request has been received, listen for the emitted resulted.
+    if (activeInsightsRequests.has(address)) {
+        return new Promise((resolve) => {
+            activeInsightsRequests.get(address).subscribe((data) => {
+                resolve(formatHeightBalances(data, body.includeHeightBalances));
+            })
+        })
+    // Otherwise iterate account balances, emit result when complete.
+    } else {
+        activeInsightsRequests.set(address, subject);
+        try {
+            const data = await iterateAccountHistory(address, blockCount);
+            subject.next(data);
+            return formatHeightBalances(data, body.includeHeightBalances);
+        } catch (err) {
+            LOG_ERR('iterateAccountHistory', err);
+        } finally {
+            activeInsightsRequests.delete(address);
+        }
+    }
 };
 
 /** Given an account address, it will return chart datapoints that represent that account's balance over time,
  *  as well as account-specific stats for most all-time balance, most common sender, etc.
  */
 export const getAccountInsightsV1 = (req, res): void => {
-    const address = req.body.address;
-    const cache = { ...INSIGHTS_CACHE_PAIR };
     confirmedTransactionsPromise(req.body)
-        .then((data) => {
-            //cache.key = `${INSIGHTS_CACHE_PAIR.key}/${address}`;
-            //cache.duration = calcCacheDuration(data.blockCount);
-            //cacheSend(res, data, cache);
-            // TODO: Be careful not to cache post requests, includeBlockHeights can change the requiredresponse.
-            res.send(data);
-        })
+        .then((data) => res.send(data))
         .catch((err) => res.status(500).send(err));
 };

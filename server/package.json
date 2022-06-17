@@ -25,7 +25,8 @@
         "express-rate-limit": "^5.5.1",
         "get-folder-size": "^2.0.0",
         "memory-cache": "^0.2.0",
-        "morgan": "^1.10.0"
+        "morgan": "^1.10.0",
+        "rxjs": "^7.5.5"
     },
     "devDependencies": {
         "@pxblue/prettier-config": "^1.0.2",
