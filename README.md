@@ -102,7 +102,7 @@ Returns information about network weight; online, offline, no-rep weights.
 
 #### `price`
 
-Returns a snapshot of price data; updated every 15 minutes.
+Returns a snapshot of price data; updated every 30 minutes.
 
 #### `representatives/aliases`
 
