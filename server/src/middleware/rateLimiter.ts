@@ -1,5 +1,5 @@
 import { readFileContents } from '@app/services';
-import {PROFILE, URL_WHITE_LIST} from '@app/config';
+import { PROFILE, URL_WHITE_LIST } from '@app/config';
 
 export const REQUESTS_PER_MINUTE = 50;
 

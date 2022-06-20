@@ -1,6 +1,7 @@
 /* Types sent to the client. */
 export * from './AccountBalanceDto';
 export * from './AccountDistributionStatsDto';
+export * from './AccountNFTDto';
 export * from './AccountRepresentativeDto';
 export * from './AliasedRepresentativeDto';
 export * from './AccountOverviewDto';

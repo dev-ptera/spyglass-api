@@ -93,7 +93,8 @@ const discoverConfirmedTransactions = async (
     const addressFilterSet = new Set(body.filterAddresses);
 
     const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize).catch((err) =>
-        Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body })));
+        Promise.reject(LOG_ERR('accountHistoryPromise.accountHistoryRpc', err, { body }))
+    );
 
     // If we have ran out of search results, it's time to exit.
     if (!accountTx.history || accountTx.history.length === 0) {

@@ -3,11 +3,12 @@ import {
     getAccurateHashTimestamp,
     getTransactionType,
     isValidAddress,
-    LOG_ERR, sleep,
+    LOG_ERR,
+    sleep,
 } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
-import {Subject} from "rxjs";
+import { Subject } from 'rxjs';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -113,17 +114,16 @@ const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean)
         clone.heightBalances = undefined;
     }
     return clone;
-}
+};
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
 const iterateAccountHistory = async (address: string, blockCount: number): Promise<InsightsDto> => {
-
     const accountHistoryCalls = [];
     let blocksRequested = 0;
     const transactionsPerRequest = 10_000;
     while (blocksRequested < blockCount) {
         accountHistoryCalls.push(accountHistoryRpc(address, blocksRequested, transactionsPerRequest, true));
-        blocksRequested+=transactionsPerRequest;
+        blocksRequested += transactionsPerRequest;
     }
 
     /* Map of <recipient address, balance> for each account a given `address` has interacted with. */
@@ -135,7 +135,6 @@ const iterateAccountHistory = async (address: string, blockCount: number): Promi
     const insightsDto = createBlankDto();
 
     for (const request of accountHistoryCalls) {
-
         const accountHistory = await request.catch((err) =>
             Promise.reject(LOG_ERR('getAccountInsights.accountHistoryRpc', err, { address }))
         );
@@ -201,7 +200,7 @@ const iterateAccountHistory = async (address: string, blockCount: number): Promi
     }
 
     return insightsDto;
-}
+};
 
 const activeInsightsRequests = new Map<string, Subject<InsightsDto>>();
 
@@ -229,9 +228,9 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
         return new Promise((resolve) => {
             activeInsightsRequests.get(address).subscribe((data) => {
                 resolve(formatHeightBalances(data, body.includeHeightBalances));
-            })
-        })
-    // Otherwise iterate account balances, emit result when complete.
+            });
+        });
+        // Otherwise iterate account balances, emit result when complete.
     } else {
         activeInsightsRequests.set(address, subject);
         try {

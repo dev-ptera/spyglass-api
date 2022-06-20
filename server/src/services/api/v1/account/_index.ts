@@ -5,3 +5,4 @@ export * from './account-insights.service';
 export * from './receivable-transactions.service';
 export * from './confirmed-transactions.service';
 export * from './account-export.service';
+export * from './account-nfts.service';
