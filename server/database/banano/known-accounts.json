@@ -1084,27 +1084,27 @@
     {
         "address": "ban_3greenp7kzetigfjcfgbis1ad63m4hyyyit9usd1g4byuxg81g79fc8aiwtr",
         "alias": "Rainforest Coalition",
-        "owner": "The Banano Forest Team"
+        "owner": "BananoForest"
     },
     {
         "address": "ban_3greengegg8of5dqjqfzqzkjkkygtaptn39uyja4xncd13eqftcpw4r4xmfb",
         "alias": "Cool Earth",
-        "owner": "The Banano Forest Team"
+        "owner": "BananoForest"
     },
     {
         "address": "ban_3green9hp4hg8ejbpiq5fykktaz3scjoop9nzinq8m8kxu1xi6fi5ds3gwm8",
         "alias": "The Amazon Conservation Team",
-        "owner": "The Banano Forest Team"
+        "owner": "BananoForest"
     },
     {
         "address": "ban_3greenxg9oxkaei556wrxwzwdxie4ehmzhmi7fyztofhantxjysntceq5sx5",
         "alias": "The Rainforest Alliance",
-        "owner": "The Banano Forest Team"
+        "owner": "BananoForest"
     },
     {
         "address": "ban_3sinkoff1yj9z5fougwao1gbjtsmb98u1j5p9kcrndqcc4irdxgzsjbem96e",
         "alias": "Banano Forest Faucet",
-        "owner": "The Banano Forest Team",
+        "owner": "BananoForest",
         "type": "faucet"
     },
     {
@@ -1163,6 +1163,16 @@
         "address": "ban_3j8gwrkc7qgx11rrncdw8bzuuo4ojwp3xkawspefm3sbac3s5i6f48dgewfd",
         "alias": "BANANO HUB",
         "owner": "MKZI",
+        "type": "donation"
+    },
+    {
+        "address": "ban_1gbtqa74cexnsm3fpaihi9mo6bo7fha9e5w5go5jphaoqb44ddft36i6utxp",
+        "alias": "Freerice 6.9 tip",
+        "type": "donation"
+    },
+    {
+        "address": "ban_1ricex9kie3if1qros9s84joa6hnqd97nqc9fo58ca4ro3b1hnpyujjixoyt",
+        "alias": "Freerice donation",
         "type": "donation"
     }
 ]
