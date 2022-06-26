@@ -37,7 +37,7 @@ const getAccountNFTsPromise = async (address: string): Promise<AccountNFTDto[]> 
     return ownedNfts;
 };
 
-export const getAccountNFTs = (req, res): void => {
+export const getAccountNFTsV1 = (req, res): void => {
     const parts = req.url.split('/');
     const address = parts[parts.length - 1];
     if (!isValidAddress(address)) {

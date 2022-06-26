@@ -1,5 +1,5 @@
 import { accountBlockCountRpc, accountHistoryRpc, frontierCountRpc, frontiersRpc } from '@app/rpc';
-import {LOG_ERR, LOG_INFO, sleep} from '@app/services';
+import { LOG_ERR, LOG_INFO, sleep } from '@app/services';
 import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
 
 const fs = require('fs');
@@ -13,10 +13,7 @@ type BlockTimestamp = {
 };
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
-const iterateAccountHistory = async (
-    address: string,
-    blockCount: number
-): Promise<void> => {
+const iterateAccountHistory = async (address: string, blockCount: number): Promise<void> => {
     const accountHistoryCalls = [];
     let blocksRequested = 0;
     const transactionsPerRequest = 10_000;
@@ -63,7 +60,6 @@ export const findFrontiers = async (): Promise<void> => {
     });
 
     console.log('frontiers loaded');
-
 
     for (const address in frontiersResponse.frontiers) {
         try {

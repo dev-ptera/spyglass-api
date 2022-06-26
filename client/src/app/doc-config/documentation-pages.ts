@@ -34,7 +34,7 @@ import {
     repScoresNavItem,
     blocksNavItem,
     priceNavItem,
-    nodeStatsNavItem,
+    nodeStatsNavItem, accountBlockAtHeight,
 } from '../navigation/nav-items';
 import { Knob } from './knobs/Knob';
 import { REPRESENTATIVES_UPTIME_KNOBS, ROOT_REPRESENTATIVES_KNOBS } from './knobs/representatives.knobs';
@@ -46,11 +46,12 @@ import {
     ACCOUNT_RECEIVABLE_KNOB,
     ACCOUNT_CONFIRMED_KNOB,
     ACCOUNT_EXPORT_KNOBS,
-    ACCOUNT_OVERVIEW_KNOBS,
+    ACCOUNT_OVERVIEW_KNOBS, ACCOUNT_BLOCK_AT_HEIGHT_KNOBS,
 } from './knobs/account.knobs';
 import { DISTRIBUTION_RICH_LIST_KNOBS } from './knobs/distribution.knobs';
 import { BLOCK_KNOBS } from './knobs/block.knobs';
 import { BLOCKS_KNOBS } from './knobs/blocks.knobs';
+
 
 export const apiDocumentationPages: Array<{
     route: string;
@@ -60,10 +61,31 @@ export const apiDocumentationPages: Array<{
     requestType: 'GET' | 'POST';
 }> = [
     {
+        route: `${accountNavItemParent.route}/${accountBlockAtHeight.route}`,
+        apiPath: 'v1/account/block-at-height',
+        responseSchema: 'BlockDto',
+        knobs: ACCOUNT_BLOCK_AT_HEIGHT_KNOBS,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItemParent.route}/${confirmedTxNavItem.route}`,
+        apiPath: 'v2/account/confirmed-transactions',
+        responseSchema: 'ConfirmedTransactionDto[]',
+        knobs: ACCOUNT_CONFIRMED_KNOB,
+        requestType: 'POST',
+    },
+    {
         route: `${accountNavItemParent.route}/${accountDelegatorsNavItem.route}`,
         apiPath: 'v1/account/delegators',
         responseSchema: 'DelegatorsOverviewDto',
         knobs: ACCOUNT_DELEGATORS_KNOB,
+        requestType: 'POST',
+    },
+    {
+        route: `${accountNavItemParent.route}/${accountExport.route}`,
+        apiPath: 'v1/account/export',
+        responseSchema: 'string',
+        knobs: ACCOUNT_EXPORT_KNOBS,
         requestType: 'POST',
     },
     {
@@ -72,6 +94,13 @@ export const apiDocumentationPages: Array<{
         responseSchema: 'InsightsDto',
         knobs: ACCOUNT_INSIGHTS_KNOB,
         requestType: 'POST',
+    },
+    {
+        route: `${accountNavItemParent.route}/${accountOverviewNavItem.route}`,
+        apiPath: 'v1/account/overview/[address]',
+        responseSchema: 'AccountOverviewDto',
+        knobs: ACCOUNT_OVERVIEW_KNOBS,
+        requestType: 'GET',
     },
     {
         route: `${accountNavItemParent.route}/${accountRepresentativeNavItem.route}`,
@@ -88,95 +117,18 @@ export const apiDocumentationPages: Array<{
         requestType: 'POST',
     },
     {
-        route: `${accountNavItemParent.route}/${accountExport.route}`,
-        apiPath: 'v1/account/export',
-        responseSchema: 'string',
-        knobs: ACCOUNT_EXPORT_KNOBS,
+        route: `${blockNavItemParent.route}/${blockNavItem.route}`,
+        apiPath: 'v1/block/[hash]',
+        responseSchema: 'BlockDto',
+        knobs: BLOCK_KNOBS,
+        requestType: 'GET',
+    },
+    {
+        route: `${blockNavItemParent.route}/${blocksNavItem.route}`,
+        apiPath: 'v1/blocks',
+        responseSchema: 'BlockDto[]',
+        knobs: BLOCKS_KNOBS,
         requestType: 'POST',
-    },
-    {
-        route: `${accountNavItemParent.route}/${accountOverviewNavItem.route}`,
-        apiPath: 'v1/account/overview/[address]',
-        responseSchema: 'AccountOverviewDto',
-        knobs: ACCOUNT_OVERVIEW_KNOBS,
-        requestType: 'GET',
-    },
-    {
-        route: `${accountNavItemParent.route}/${confirmedTxNavItem.route}`,
-        apiPath: 'v2/account/confirmed-transactions',
-        responseSchema: 'ConfirmedTransactionDto[]',
-        knobs: ACCOUNT_CONFIRMED_KNOB,
-        requestType: 'POST',
-    },
-    {
-        route: `${repNavItemParent.route}/${repRootNavItem.route}`,
-        apiPath: 'v1/representatives',
-        responseSchema: 'RepresentativeDto[]',
-        knobs: ROOT_REPRESENTATIVES_KNOBS,
-        requestType: 'POST',
-    },
-    {
-        route: `${repNavItemParent.route}/${repAliasNavItem.route}`,
-        apiPath: 'v1/representatives/aliases',
-        responseSchema: 'AliasedRepresentativeDto[]',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${repNavItemParent.route}/${repOnlineNavItem.route}`,
-        apiPath: 'v1/representatives/online',
-        responseSchema: 'string[]',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${repNavItemParent.route}/${repScoresNavItem.route}`,
-        apiPath: 'v1/representatives/scores',
-        responseSchema: 'RepScoreDto[]',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${repNavItemParent.route}/${repUptimeNavItem.route}`,
-        apiPath: 'v1/representatives/uptime',
-        responseSchema: 'RepresentativeUptimeDto[]',
-        knobs: REPRESENTATIVES_UPTIME_KNOBS,
-        requestType: 'POST',
-    },
-    {
-        route: `${repNavItemParent.route}/${repMonitoredNavItem.route}`,
-        apiPath: 'v1/representatives/monitored',
-        responseSchema: 'MonitoredRepresentativeDto[]',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${repNavItemParent.route}/${prWeightRequirementNavItem.route}`,
-        apiPath: 'v1/representatives/pr-weight',
-        responseSchema: 'PRWeightRequirementDto',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${knownNavItemParent.route}/${knownAccountsNavItem.route}`,
-        apiPath: 'v1/known/accounts',
-        responseSchema: 'KnownAccountDto[]', // TODO: Fix type!
-        knobs: KNOWN_ACCOUNTS_KNOBS,
-        requestType: 'POST',
-    },
-    {
-        route: `${knownNavItemParent.route}/${knownVanitiesNavItem.route}`,
-        apiPath: 'v1/known/vanities',
-        responseSchema: 'string[]',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${distributionNavItemParent.route}/${developerFundsNavItem.route}`,
-        apiPath: 'v1/distribution/developer-funds',
-        responseSchema: 'DeveloperFundsDto',
-        knobs: [],
-        requestType: 'GET',
     },
     {
         route: `${distributionNavItemParent.route}/${burnNavItem.route}`,
@@ -186,9 +138,9 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${distributionNavItemParent.route}/${supplyNavItem.route}`,
-        apiPath: 'v1/distribution/supply',
-        responseSchema: 'SupplyDto',
+        route: `${distributionNavItemParent.route}/${distributionBuckets.route}`,
+        apiPath: 'v1/distribution/buckets',
+        responseSchema: 'AccountDistributionStatsDto',
         knobs: [],
         requestType: 'GET',
     },
@@ -196,13 +148,6 @@ export const apiDocumentationPages: Array<{
         route: `${distributionNavItemParent.route}/${developerFundsNavItem.route}`,
         apiPath: 'v1/distribution/developer-funds',
         responseSchema: 'DeveloperFundsDto',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${distributionNavItemParent.route}/${distributionBuckets.route}`,
-        apiPath: 'v1/distribution/buckets',
-        responseSchema: 'AccountDistributionStatsDto',
         knobs: [],
         requestType: 'GET',
     },
@@ -221,9 +166,23 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${networkNavItemParent.route}/${peerVersionsNavItem.route}`,
-        apiPath: 'v1/network/peers',
-        responseSchema: 'PeerVersionsDto[]',
+        route: `${distributionNavItemParent.route}/${supplyNavItem.route}`,
+        apiPath: 'v1/distribution/supply',
+        responseSchema: 'SupplyDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${knownNavItemParent.route}/${knownAccountsNavItem.route}`,
+        apiPath: 'v1/known/accounts',
+        responseSchema: 'KnownAccountDto[]', // TODO: Fix type!
+        knobs: KNOWN_ACCOUNTS_KNOBS,
+        requestType: 'POST',
+    },
+    {
+        route: `${knownNavItemParent.route}/${knownVanitiesNavItem.route}`,
+        apiPath: 'v1/known/vanities',
+        responseSchema: 'string[]',
         knobs: [],
         requestType: 'GET',
     },
@@ -235,9 +194,23 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
+        route: `${networkNavItemParent.route}/${ncNavItem.route}`,
+        apiPath: 'v1/network/nakamoto-coefficient',
+        responseSchema: 'NakamotoCoefficientDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
         route: `${networkNavItemParent.route}/${nodeStatsNavItem.route}`,
         apiPath: 'v1/network/node-stats',
         responseSchema: 'HostNodeStatsDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${networkNavItemParent.route}/${peerVersionsNavItem.route}`,
+        apiPath: 'v1/network/peers',
+        responseSchema: 'PeerVersionsDto[]',
         knobs: [],
         requestType: 'GET',
     },
@@ -249,31 +222,59 @@ export const apiDocumentationPages: Array<{
         requestType: 'GET',
     },
     {
-        route: `${networkNavItemParent.route}/${ncNavItem.route}`,
-        apiPath: 'v1/network/nakamoto-coefficient',
-        responseSchema: 'NakamotoCoefficientDto',
-        knobs: [],
-        requestType: 'GET',
-    },
-    {
-        route: `${blockNavItemParent.route}/${blockNavItem.route}`,
-        apiPath: 'v1/block/[hash]',
-        responseSchema: 'BlockDto',
-        knobs: BLOCK_KNOBS,
-        requestType: 'GET',
-    },
-    {
-        route: `${blockNavItemParent.route}/${blocksNavItem.route}`,
-        apiPath: 'v1/blocks',
-        responseSchema: 'BlockDto[]',
-        knobs: BLOCKS_KNOBS,
-        requestType: 'POST',
-    },
-    {
         route: `${priceNavItem.route}`,
         apiPath: 'v1/price',
         responseSchema: 'PriceDataDto',
         knobs: [],
         requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${repAliasNavItem.route}`,
+        apiPath: 'v1/representatives/aliases',
+        responseSchema: 'AliasedRepresentativeDto[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${repMonitoredNavItem.route}`,
+        apiPath: 'v1/representatives/monitored',
+        responseSchema: 'MonitoredRepresentativeDto[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${repOnlineNavItem.route}`,
+        apiPath: 'v1/representatives/online',
+        responseSchema: 'string[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${prWeightRequirementNavItem.route}`,
+        apiPath: 'v1/representatives/pr-weight',
+        responseSchema: 'PRWeightRequirementDto',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${repRootNavItem.route}`,
+        apiPath: 'v1/representatives',
+        responseSchema: 'RepresentativeDto[]',
+        knobs: ROOT_REPRESENTATIVES_KNOBS,
+        requestType: 'POST',
+    },
+    {
+        route: `${repNavItemParent.route}/${repScoresNavItem.route}`,
+        apiPath: 'v1/representatives/scores',
+        responseSchema: 'RepScoreDto[]',
+        knobs: [],
+        requestType: 'GET',
+    },
+    {
+        route: `${repNavItemParent.route}/${repUptimeNavItem.route}`,
+        apiPath: 'v1/representatives/uptime',
+        responseSchema: 'RepresentativeUptimeDto[]',
+        knobs: REPRESENTATIVES_UPTIME_KNOBS,
+        requestType: 'POST',
     },
 ];

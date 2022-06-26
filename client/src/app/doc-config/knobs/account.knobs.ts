@@ -1,5 +1,16 @@
 import { Knob } from './Knob';
 
+export const ACCOUNT_BLOCK_AT_HEIGHT_KNOBS: Array<Knob> = [
+    {
+        propertyName: 'address',
+        propertyType: 'string',
+    },
+    {
+        propertyName: 'height',
+        propertyType: 'number',
+    },
+];
+
 export const ACCOUNT_EXPORT_KNOBS: Array<Knob> = [
     {
         propertyName: 'address',

@@ -7,6 +7,10 @@ https://spyglass-api.web.app
 
 ## API
 
+#### `account/block-at-height`
+
+Given an address and a height, returns the block info for the account.
+
 #### `account/confirmed-transactions`
 
 Returns a list of an account's confirmed blocks.  There are filters available to filter the results by block type and pagination support. 

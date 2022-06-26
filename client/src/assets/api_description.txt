@@ -1,4 +1,7 @@
 
+#### `account/block-at-height`
+
+Given an address and a height, returns the block info for the account.
 
 #### `account/confirmed-transactions`
 

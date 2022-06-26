@@ -1,7 +1,6 @@
 import { blocksInfoRpc } from '@app/rpc';
-import { convertFromRaw, getAccurateHashTimestamp, LOG_ERR } from '@app/services';
-import { BlockDto } from '@app/types';
-import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
+import { blockInfoPromiseV2, LOG_ERR } from '@app/services';
+import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 
 type RequestBody = {
     blocks: string[];
@@ -27,45 +26,18 @@ export const blocksInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse>
         });
 
 /** Returns block infos for given hashes (csv)*/
-export const getBlocksInfoV1 = (req, res): void => {
+export const getBlocksInfoV1 = async (req, res): Promise<void> => {
     setBodyDefaults(req.body);
-    const hashes = req.body.blocks;
-    const maxNumberBlocks = 500;
+    const hashes = req.body.blocks; // TODO this should be 'hashes'.
+    const maxNumberBlocks = 500; // TODO 'maxNumberHashes'
     if (hashes.length > maxNumberBlocks) {
         res.status(500).send({ error: `Too many blocks requested. Max is ${maxNumberBlocks}` });
     }
-    blocksInfoPromise(hashes)
-        .then((blockInfo: BlocksInfoResponse) => {
-            let blocks_info = [];
-            for (let i = 0; i < hashes.length; i++) {
-                const block = blockInfo.blocks[hashes[i]];
-                const contents = block.contents as BlocksInfoResponseContents;
-                blocks_info.push({
-                    amount: convertFromRaw(block.amount, 10),
-                    amountRaw: block.amount,
-                    balance: block.balance,
-                    blockAccount: block.block_account,
-                    confirmed: block.confirmed,
-                    contents: {
-                        account: contents.account,
-                        balance: contents.balance,
-                        link: contents.link,
-                        linkAsAccount: contents.link_as_account,
-                        previous: contents.previous,
-                        representative: contents.representative,
-                        type: contents.type,
-                        signature: contents.signature,
-                        work: contents.work,
-                    },
-                    height: Number(block.height),
-                    timestamp: getAccurateHashTimestamp(hashes[i], block.local_timestamp),
-                    sourceAccount: block.source_account,
-                    subtype: block.subtype,
-                } as BlockDto);
-            }
-            res.send(blocks_info);
-        })
-        .catch((err) => {
-            res.status(500).send(err);
-        });
+
+    try {
+        const dtos = await blockInfoPromiseV2(hashes);
+        res.send(dtos);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 };
