@@ -1,17 +1,17 @@
 import { accountHistoryRpc, frontierCountRpc, frontiersRpc } from '@app/rpc';
-import { LOG_ERR, LOG_INFO, sleep } from '@app/services';
+import { LOG_ERR, LOG_INFO } from '@app/services';
 import { FrontierCountResponse } from '@dev-ptera/nano-node-rpc';
 import { AppCache } from '@app/config';
 import axios, { AxiosResponse } from 'axios';
 
 const fs = require('fs');
 
-/** File which is used to store the list of top holders. */
 export const BLOCKS_WITH_MISSING_TIMESTAMPS = './database/banano/blocks-with-missing-timestamp.json';
 export const CREEPER_TIMESTAMPS = './database/banano/creeper-timestamps-round-2.csv';
 
-/** Uses the frontiers RPC call to iterate through all accounts.
- * Filters out small balance accounts & proceeds to lookup remaining accounts' representative. */
+/**
+ *
+ * */
 export const getFrontiersDataToFindMissingTimestampBlocks = async (): Promise<string[]> => {
     const frontiersCountResponse: FrontierCountResponse = await frontierCountRpc().catch((err) => {
         return Promise.reject(LOG_ERR('getFrontiersData.getFrontiersCount', err));
@@ -79,6 +79,7 @@ const fetchCreeperTimestamp = (blocks: string[]): Promise<any> => {
     });
 };
 
+/** Sends a request to Creeper's API to lookup a block.  We want these timestamps. */
 export const populateBlockTimestamps = async (missingBlocks: string[]): Promise<void> => {
     const start = LOG_INFO('Searching for Missing Block Timestamps');
 
