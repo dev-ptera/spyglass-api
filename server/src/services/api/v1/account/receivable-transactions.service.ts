@@ -1,12 +1,5 @@
 import { accountsPendingRpc } from '@app/rpc';
-import {
-    LOG_ERR,
-    blockInfoPromise,
-    getAccurateHashTimestamp,
-    convertFromRaw,
-    isValidAddress,
-} from '@app/services';
-import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
+import { blockInfoPromise, isValidAddress, LOG_ERR } from '@app/services';
 import { ReceivableTransactionDto } from '@app/types';
 
 const MAX_PENDING_SIZE = 500;
@@ -77,7 +70,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
         });
         return dtos;
     } catch (err) {
-        Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size }))
+        Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size }));
     }
 };
 
