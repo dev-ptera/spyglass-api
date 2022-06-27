@@ -5,8 +5,8 @@ import { accountHistoryRpc } from '@app/rpc';
 const getAccountBlockPromise = async (address: string, height: number): Promise<BlockDto> => {
     try {
         const accountHistory = await accountHistoryRpc(address, height - 1, 1, true);
-        const block = await blockInfoPromise([accountHistory.history[0].hash]);
-        return block[0];
+        const blocks = await blockInfoPromise([accountHistory.history[0].hash]);
+        return blocks[0];
     } catch (err) {
         return Promise.reject(LOG_ERR('getAccountBlockPromise', err, { address, height }));
     }
