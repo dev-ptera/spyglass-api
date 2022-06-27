@@ -46,8 +46,9 @@ export const getBlockInfoV1 = async (req, res): Promise<void> => {
     const parts = req.url.split('/');
     const hash = parts[parts.length - 1];
     try {
-        const dtos = await blockInfoPromise([hash]);
-        res.send(dtos);
+        const blocks = await blockInfoPromise([hash]);
+        const block = blocks[0];
+        res.send(block);
     } catch (err) {
         res.status(500).send(err);
     }
