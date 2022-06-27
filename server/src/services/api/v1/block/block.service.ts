@@ -3,18 +3,8 @@ import { convertFromRaw, getAccurateHashTimestamp, LOG_ERR } from '@app/services
 import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
-/** DEPRECATED */
-export const blockInfoPromise = (blocks: string[]): Promise<BlocksInfoResponse> =>
-    blocksInfoRpc(blocks)
-        .then((blocks: BlocksInfoResponse) => {
-            return Promise.resolve(blocks);
-        })
-        .catch((err) => {
-            return Promise.reject(LOG_ERR('blocksInfoPromise', err, { blocks }));
-        });
-
 /** Given a list of hashes, returns a BlockDto array. */
-export const blockInfoPromiseV2 = (hashes: string[]): Promise<BlockDto[]> =>
+export const blockInfoPromise = (hashes: string[]): Promise<BlockDto[]> =>
     blocksInfoRpc(hashes)
         .then((blocksInfo: BlocksInfoResponse) => {
             const dtos: BlockDto[] = [];
@@ -38,6 +28,7 @@ export const blockInfoPromiseV2 = (hashes: string[]): Promise<BlockDto[]> =>
                         signature: contents.signature,
                         work: contents.work,
                     },
+                    hash,
                     height: Number(block.height),
                     timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
                     sourceAccount: block.source_account,
@@ -55,7 +46,7 @@ export const getBlockInfoV1 = async (req, res): Promise<void> => {
     const parts = req.url.split('/');
     const hash = parts[parts.length - 1];
     try {
-        const dtos = await blockInfoPromiseV2([hash]);
+        const dtos = await blockInfoPromise([hash]);
         res.send(dtos);
     } catch (err) {
         res.status(500).send(err);

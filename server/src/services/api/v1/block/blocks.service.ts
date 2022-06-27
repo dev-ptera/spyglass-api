@@ -1,5 +1,5 @@
 import { blocksInfoRpc } from '@app/rpc';
-import { blockInfoPromiseV2, LOG_ERR } from '@app/services';
+import { blockInfoPromise, LOG_ERR } from '@app/services';
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 
 type RequestBody = {
@@ -35,7 +35,7 @@ export const getBlocksInfoV1 = async (req, res): Promise<void> => {
     }
 
     try {
-        const dtos = await blockInfoPromiseV2(hashes);
+        const dtos = await blockInfoPromise(hashes);
         res.send(dtos);
     } catch (err) {
         res.status(500).send(err);

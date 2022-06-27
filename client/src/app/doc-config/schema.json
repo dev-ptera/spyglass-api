@@ -13,7 +13,10 @@
                     "type": "string"
                 }
             },
-            "required": ["address", "amount"],
+            "required": [
+                "address",
+                "amount"
+            ],
             "type": "object"
         },
         "AccountDistributionStatsDto": {
@@ -79,6 +82,57 @@
             ],
             "type": "object"
         },
+        "AccountNFTDto": {
+            "properties": {
+                "certain": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "properties": {
+                    "properties": {
+                        "issuer": {
+                            "type": "string"
+                        },
+                        "supply_block_hash": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "issuer",
+                        "supply_block_hash"
+                    ],
+                    "type": "object"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "receive_hash": {
+                    "type": "string"
+                },
+                "rep": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "certain",
+                "description",
+                "image",
+                "name",
+                "properties",
+                "quantity",
+                "receive_hash",
+                "rep"
+            ],
+            "type": "object"
+        },
         "AccountOverviewDto": {
             "properties": {
                 "address": {
@@ -133,7 +187,9 @@
                     "type": "string"
                 }
             },
-            "required": ["representative"],
+            "required": [
+                "representative"
+            ],
             "type": "object"
         },
         "AliasedRepresentativeDto": {
@@ -145,7 +201,10 @@
                     "type": "string"
                 }
             },
-            "required": ["address", "alias"],
+            "required": [
+                "address",
+                "alias"
+            ],
             "type": "object"
         },
         "BasicAccount": {
@@ -157,7 +216,10 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "pending"],
+            "required": [
+                "address",
+                "pending"
+            ],
             "type": "object"
         },
         "BasicRep": {
@@ -169,7 +231,10 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "weight"],
+            "required": [
+                "address",
+                "weight"
+            ],
             "type": "object"
         },
         "BlockDto": {
@@ -213,7 +278,9 @@
                             "type": "string"
                         },
                         "type": {
-                            "enum": ["state"],
+                            "enum": [
+                                "state"
+                            ],
                             "type": "string"
                         },
                         "work": {
@@ -233,6 +300,9 @@
                     ],
                     "type": "object"
                 },
+                "hash": {
+                    "type": "string"
+                },
                 "height": {
                     "type": "number"
                 },
@@ -240,7 +310,11 @@
                     "type": "string"
                 },
                 "subtype": {
-                    "enum": ["change", "receive", "send"],
+                    "enum": [
+                        "change",
+                        "receive",
+                        "send"
+                    ],
                     "type": "string"
                 },
                 "timestamp": {
@@ -254,6 +328,7 @@
                 "blockAccount",
                 "confirmed",
                 "contents",
+                "hash",
                 "height",
                 "sourceAccount",
                 "subtype",
@@ -273,7 +348,10 @@
                                 "type": "number"
                             }
                         },
-                        "required": ["address", "pending"],
+                        "required": [
+                            "address",
+                            "pending"
+                        ],
                         "type": "object"
                     },
                     "type": "array"
@@ -282,7 +360,10 @@
                     "type": "number"
                 }
             },
-            "required": ["burnAccounts", "totalAmount"],
+            "required": [
+                "burnAccounts",
+                "totalAmount"
+            ],
             "type": "object"
         },
         "ConfirmedTransactionDto": {
@@ -312,11 +393,21 @@
                     "type": "number"
                 },
                 "type": {
-                    "enum": ["change", "receive", "send"],
+                    "enum": [
+                        "change",
+                        "receive",
+                        "send"
+                    ],
                     "type": "string"
                 }
             },
-            "required": ["date", "hash", "height", "timestamp", "type"],
+            "required": [
+                "date",
+                "hash",
+                "height",
+                "timestamp",
+                "type"
+            ],
             "type": "object"
         },
         "DelegatorDto": {
@@ -328,7 +419,10 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "weight"],
+            "required": [
+                "address",
+                "weight"
+            ],
             "type": "object"
         },
         "DelegatorsOverviewDto": {
@@ -346,7 +440,10 @@
                                 "type": "number"
                             }
                         },
-                        "required": ["address", "weight"],
+                        "required": [
+                            "address",
+                            "weight"
+                        ],
                         "type": "object"
                     },
                     "type": "array"
@@ -361,7 +458,13 @@
                     "type": "number"
                 }
             },
-            "required": ["count", "delegators", "emptyCount", "fundedCount", "weightSum"],
+            "required": [
+                "count",
+                "delegators",
+                "emptyCount",
+                "fundedCount",
+                "weightSum"
+            ],
             "type": "object"
         },
         "DeveloperFundsDto": {
@@ -379,13 +482,19 @@
                                 "type": "number"
                             }
                         },
-                        "required": ["address", "balance"],
+                        "required": [
+                            "address",
+                            "balance"
+                        ],
                         "type": "object"
                     },
                     "type": "array"
                 }
             },
-            "required": ["totalBalance", "wallets"],
+            "required": [
+                "totalBalance",
+                "wallets"
+            ],
             "type": "object"
         },
         "EulenMonitoredRepresentativeDto": {
@@ -527,9 +636,57 @@
             ],
             "type": "object"
         },
+        "ExplorerSummaryDto": {
+            "properties": {
+                "bananoPriceUsd": {
+                    "type": "number"
+                },
+                "circulatingCount": {
+                    "type": "number"
+                },
+                "confirmedTransactionsCount": {
+                    "type": "number"
+                },
+                "devFundCount": {
+                    "type": "number"
+                },
+                "knownAccountsCount": {
+                    "type": "number"
+                },
+                "ledgerDatabaseType": {
+                    "type": "string"
+                },
+                "ledgerSizeMB": {
+                    "type": "number"
+                },
+                "principalRepsOnlineCount": {
+                    "type": "number"
+                },
+                "representativesOnlineCount": {
+                    "type": "number"
+                },
+                "totalPrincipalRepsCount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "bananoPriceUsd",
+                "circulatingCount",
+                "confirmedTransactionsCount",
+                "devFundCount",
+                "knownAccountsCount",
+                "ledgerDatabaseType",
+                "ledgerSizeMB",
+                "principalRepsOnlineCount",
+                "representativesOnlineCount",
+                "totalPrincipalRepsCount"
+            ],
+            "type": "object"
+        },
         "Function": {
             "properties": {
-                "arguments": {},
+                "arguments": {
+                },
                 "caller": {
                     "$ref": "#/definitions/Function"
                 },
@@ -539,9 +696,16 @@
                 "name": {
                     "type": "string"
                 },
-                "prototype": {}
+                "prototype": {
+                }
             },
-            "required": ["arguments", "caller", "length", "name", "prototype"],
+            "required": [
+                "arguments",
+                "caller",
+                "length",
+                "name",
+                "prototype"
+            ],
             "type": "object"
         },
         "HostNodeStatsDto": {
@@ -562,6 +726,9 @@
                     "type": "number"
                 },
                 "location": {
+                    "type": "string"
+                },
+                "monitorUrl": {
                     "type": "string"
                 },
                 "nodeUptimeSeconds": {
@@ -721,7 +888,9 @@
                             "type": "number"
                         }
                     },
-                    "required": ["totalTxChange"],
+                    "required": [
+                        "totalTxChange"
+                    ],
                     "type": "object"
                 },
                 "heightBalances": {
@@ -772,7 +941,11 @@
                                         "type": "number"
                                     }
                                 },
-                                "required": ["address", "amount", "count"],
+                                "required": [
+                                    "address",
+                                    "amount",
+                                    "count"
+                                ],
                                 "type": "object"
                             },
                             "type": "array"
@@ -842,7 +1015,11 @@
                                         "type": "number"
                                     }
                                 },
-                                "required": ["address", "amount", "count"],
+                                "required": [
+                                    "address",
+                                    "amount",
+                                    "count"
+                                ],
                                 "type": "object"
                             },
                             "type": "array"
@@ -866,7 +1043,14 @@
                     "type": "object"
                 }
             },
-            "required": ["blockCount", "changeStats", "maxBalance", "maxBalanceHash", "receiveStats", "sentStats"],
+            "required": [
+                "blockCount",
+                "changeStats",
+                "maxBalance",
+                "maxBalanceHash",
+                "receiveStats",
+                "sentStats"
+            ],
             "type": "object"
         },
         "KnownAccountDto": {
@@ -884,11 +1068,23 @@
                     "$ref": "#/definitions/KnownAccountType"
                 }
             },
-            "required": ["address", "alias"],
+            "required": [
+                "address",
+                "alias"
+            ],
             "type": "object"
         },
         "KnownAccountType": {
-            "enum": ["", "burn", "citizen", "distribution", "exchange", "explorer", "faucet", "representative"],
+            "enum": [
+                "",
+                "burn",
+                "citizen",
+                "distribution",
+                "exchange",
+                "explorer",
+                "faucet",
+                "representative"
+            ],
             "type": "string"
         },
         "LastOutage": {
@@ -909,7 +1105,13 @@
                     "type": "number"
                 }
             },
-            "required": ["durationMinutes", "offlineDate", "offlineUnixTimestamp", "onlineDate", "onlineUnixTimestamp"],
+            "required": [
+                "durationMinutes",
+                "offlineDate",
+                "offlineUnixTimestamp",
+                "onlineDate",
+                "onlineUnixTimestamp"
+            ],
             "type": "object"
         },
         "LedgerSizeDto": {
@@ -918,7 +1120,9 @@
                     "type": "number"
                 }
             },
-            "required": ["ledgerSizeMB"],
+            "required": [
+                "ledgerSizeMB"
+            ],
             "type": "object"
         },
         "MonitoredRepresentativeDto": {
@@ -935,7 +1139,9 @@
                             "type": "number"
                         }
                     },
-                    "required": ["average"],
+                    "required": [
+                        "average"
+                    ],
                     "type": "object"
                 },
                 "currentBlock": {
@@ -987,7 +1193,10 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "systemLoad"],
+            "required": [
+                "address",
+                "systemLoad"
+            ],
             "type": "object"
         },
         "NakamotoCoefficientDto": {
@@ -1008,7 +1217,10 @@
                                 "type": "number"
                             }
                         },
-                        "required": ["address", "weight"],
+                        "required": [
+                            "address",
+                            "weight"
+                        ],
                         "type": "object"
                     },
                     "type": "array"
@@ -1017,7 +1229,12 @@
                     "type": "number"
                 }
             },
-            "required": ["delta", "nakamotoCoefficient", "ncRepresentatives", "ncRepsWeight"],
+            "required": [
+                "delta",
+                "nakamotoCoefficient",
+                "ncRepresentatives",
+                "ncRepsWeight"
+            ],
             "type": "object"
         },
         "Object": {
@@ -1026,7 +1243,9 @@
                     "$ref": "#/definitions/Function"
                 }
             },
-            "required": ["constructor"],
+            "required": [
+                "constructor"
+            ],
             "type": "object"
         },
         "PRWeightRequirementDto": {
@@ -1035,7 +1254,9 @@
                     "type": "number"
                 }
             },
-            "required": ["weight"],
+            "required": [
+                "weight"
+            ],
             "type": "object"
         },
         "PeerVersionsDto": {
@@ -1047,7 +1268,10 @@
                     "type": "string"
                 }
             },
-            "required": ["count", "version"],
+            "required": [
+                "count",
+                "version"
+            ],
             "type": "object"
         },
         "PingStats": {
@@ -1070,7 +1294,10 @@
                     "type": "number"
                 }
             },
-            "required": ["bananoPriceUsd", "bitcoinPriceUsd"],
+            "required": [
+                "bananoPriceUsd",
+                "bitcoinPriceUsd"
+            ],
             "type": "object"
         },
         "QuorumDto": {
@@ -1142,7 +1369,13 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "amount", "amountRaw", "hash", "timestamp"],
+            "required": [
+                "address",
+                "amount",
+                "amountRaw",
+                "hash",
+                "timestamp"
+            ],
             "type": "object"
         },
         "RepScoreDto": {
@@ -1206,7 +1439,13 @@
                             "type": "number"
                         }
                     },
-                    "required": ["day", "month", "semiAnnual", "week", "year"],
+                    "required": [
+                        "day",
+                        "month",
+                        "semiAnnual",
+                        "week",
+                        "year"
+                    ],
                     "type": "object"
                 },
                 "weight": {
@@ -1216,7 +1455,15 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "daysAge", "online", "principal", "score", "weight", "weightPercentage"],
+            "required": [
+                "address",
+                "daysAge",
+                "online",
+                "principal",
+                "score",
+                "weight",
+                "weightPercentage"
+            ],
             "type": "object"
         },
         "RepresentativeDto": {
@@ -1244,7 +1491,9 @@
                                     "type": "number"
                                 }
                             },
-                            "required": ["average"],
+                            "required": [
+                                "average"
+                            ],
                             "type": "object"
                         },
                         "currentBlock": {
@@ -1359,18 +1608,32 @@
                                     "type": "number"
                                 }
                             },
-                            "required": ["day", "month", "semiAnnual", "week", "year"],
+                            "required": [
+                                "day",
+                                "month",
+                                "semiAnnual",
+                                "week",
+                                "year"
+                            ],
                             "type": "object"
                         }
                     },
-                    "required": ["trackingStartDate", "trackingStartUnixTimestamp", "uptimePercentages"],
+                    "required": [
+                        "trackingStartDate",
+                        "trackingStartUnixTimestamp",
+                        "uptimePercentages"
+                    ],
                     "type": "object"
                 },
                 "weight": {
                     "type": "number"
                 }
             },
-            "required": ["address", "online", "weight"],
+            "required": [
+                "address",
+                "online",
+                "weight"
+            ],
             "type": "object"
         },
         "RepresentativeUptimeDto": {
@@ -1448,11 +1711,23 @@
                             "type": "number"
                         }
                     },
-                    "required": ["day", "month", "semiAnnual", "week", "year"],
+                    "required": [
+                        "day",
+                        "month",
+                        "semiAnnual",
+                        "week",
+                        "year"
+                    ],
                     "type": "object"
                 }
             },
-            "required": ["address", "online", "trackingStartDate", "trackingStartUnixTimestamp", "uptimePercentages"],
+            "required": [
+                "address",
+                "online",
+                "trackingStartDate",
+                "trackingStartUnixTimestamp",
+                "uptimePercentages"
+            ],
             "type": "object"
         },
         "SupplyDto": {
@@ -1498,8 +1773,13 @@
                     "type": "number"
                 }
             },
-            "required": ["address", "amount", "count"],
+            "required": [
+                "address",
+                "amount",
+                "count"
+            ],
             "type": "object"
         }
     }
 }
+

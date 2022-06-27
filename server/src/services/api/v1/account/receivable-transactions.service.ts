@@ -1,5 +1,11 @@
 import { accountsPendingRpc } from '@app/rpc';
-import { LOG_ERR, blockInfoPromise, getAccurateHashTimestamp, convertFromRaw, isValidAddress } from '@app/services';
+import {
+    LOG_ERR,
+    blockInfoPromise,
+    getAccurateHashTimestamp,
+    convertFromRaw,
+    isValidAddress,
+} from '@app/services';
 import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ReceivableTransactionDto } from '@app/types';
 
@@ -57,25 +63,22 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
     }
 
     /* For each hash, look up details. */
-    const dtos: ReceivableTransactionDto[] = [];
-    await blockInfoPromise(hashes)
-        .then((blocksResponse: BlocksInfoResponse) => {
-            for (const hash in blocksResponse.blocks) {
-                const block = blocksResponse.blocks[hash];
-                dtos.push({
-                    address: block.block_account,
-                    amount: convertFromRaw(block.amount, 10),
-                    amountRaw: block.amount,
-                    hash,
-                    timestamp: getAccurateHashTimestamp(hash, block.local_timestamp),
-                });
-            }
-        })
-        .catch((err) =>
-            Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size }))
-        );
-
-    return dtos;
+    try {
+        const dtos: ReceivableTransactionDto[] = [];
+        const blocks = await blockInfoPromise(hashes);
+        blocks.map((block) => {
+            dtos.push({
+                address: block.blockAccount,
+                amount: block.amount,
+                amountRaw: block.amountRaw,
+                hash: block.hash,
+                timestamp: block.timestamp,
+            });
+        });
+        return dtos;
+    } catch (err) {
+        Promise.reject(LOG_ERR('pendingTransactionsPromise.blocksInfoPromise', err, { address, size }))
+    }
 };
 
 /** Looks ups pending transactions for a given account. */

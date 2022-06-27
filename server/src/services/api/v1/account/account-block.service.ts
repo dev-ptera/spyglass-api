@@ -1,11 +1,11 @@
-import { blockInfoPromiseV2, isValidAddress, LOG_ERR } from '@app/services';
+import { blockInfoPromise, isValidAddress, LOG_ERR } from '@app/services';
 import { BlockDto } from '@app/types';
 import { accountHistoryRpc } from '@app/rpc';
 
 const getAccountBlockPromise = async (address: string, height: number): Promise<BlockDto> => {
     try {
         const accountHistory = await accountHistoryRpc(address, height - 1, 1, true);
-        const block = await blockInfoPromiseV2([accountHistory.history[0].hash]);
+        const block = await blockInfoPromise([accountHistory.history[0].hash]);
         return block[0];
     } catch (err) {
         return Promise.reject(LOG_ERR('getAccountBlockPromise', err, { address, height }));

@@ -4,6 +4,7 @@ export type BlockDto = {
     amountRaw: string;
     balance: string;
     height: number;
+    hash: string;
     timestamp: number;
     confirmed: boolean;
     subtype: 'send' | 'receive' | 'change';
