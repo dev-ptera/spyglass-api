@@ -939,6 +939,18 @@
         "type": "exchange"
     },
     {
+        "address": "ban_3hfe17gwpi75ducquep38dcrnits9ffw36dhebuj4ej1adzzsxuq3b3mjcxz",
+        "alias": "ViteX Ban-001 Wallet",
+        "illicit": 0,
+        "owner": "ViNo",
+        "type": "exchange"
+    },
+    {
+        "address": "ban_1337wcbi9enjxb339ma9w9o87eiz11oix8gxgoxxmkmskddsyc3oo51ma9kh",
+        "alias": "ViNo",
+        "type": "representative"
+    },
+    {
         "address": "ban_3j67xu1yuhfbezm7myw7bhzekj1mdzjkhhtctrqz5d9sanar8wt6hkgexzwn",
         "alias": "Volcano",
         "illicit": 0,
