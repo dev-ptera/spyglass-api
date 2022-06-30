@@ -1186,5 +1186,41 @@
         "address": "ban_1ricex9kie3if1qros9s84joa6hnqd97nqc9fo58ca4ro3b1hnpyujjixoyt",
         "alias": "Freerice donation",
         "type": "donation"
+    },
+    {
+        "address": "ban_1rp1aceaawpub5zyztzs4tn7gcugm5bc3o6oga16bb18bquqm1bjnoomynze",
+        "alias": "r/place on-chain NFT (2022)",
+        "illicit": 0
+    },
+    {
+        "address": "ban_1rp1aceaawpub5zyztzs4tn7gcugm5bc3o6oga16bb18bquqm1bjnoomynze",
+        "alias": "Crypto For The Homeless donation",
+        "illicit": 0,
+        "type": "donation"
+    },
+    {
+        "address": "ban_1dpe11rjii8r4k448gbgfpbg18p8444edayaq4to3hsquha4qhy65cjbtk8b",
+        "alias": "Old Creeper donation",
+        "illicit": 0,
+        "owner": "meltingice",
+        "type": "donation"
+    },
+    {
+        "address": "ban_1gxx3dbrprrh9ycf1p5wo9qgmftppg6z7688njum14aybjkaiweqmwpuu9py",
+        "alias": "BananoLooker donation",
+        "illicit": 0,
+        "type": "donation"
+    },
+    {
+        "address": "ban_1benisgqfid7nuaod79ijaa53knw9nd6gssi6ar6qw5d8bj1j5bg6946smy9",
+        "alias": "Benis",
+        "illicit": 0,
+        "type": "representative"
+    },
+    {
+        "address": "ban_3tor3b9sh9ufkgsth1dir3hi6bbwqtcc7xn6zbfhu4ofprktxz8ygysx7rq3",
+        "alias": "Banano Tor",
+        "illicit": 0,
+        "type": "representative"
     }
 ]
