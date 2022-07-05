@@ -6,6 +6,8 @@ export const URL_WHITE_LIST = [
     'https://www.spyglass-api.web.app',
     'https://www.creeper.banano.cc',
     'https://creeper.banano.cc',
+    'https://brpd-creeper.web.app',
+    'https://www.brpd-creeper.web.app'
 ];
 
 export const LEDGER_LOCATION = '/home/batman/BananoData/data.ldb';
