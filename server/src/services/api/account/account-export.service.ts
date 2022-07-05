@@ -1,6 +1,8 @@
 import { ConfirmedTransactionDto } from '@app/types';
 import { convertToConfirmedTransactionDto, isValidAddress, LOG_ERR } from '@app/services';
 import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
+import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from './account-history.service';
+import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -32,16 +34,20 @@ const getAccountExportPromise = async (body: { address: string }): Promise<strin
         Promise.reject(LOG_ERR('getAccountExportPromise.accountBlockCountRpc', err, { address }))
     );
 
-    if (Number(blockCountResponse.block_count) > MAX_TRANSACTION_COUNT) {
+    const blockCount = Number(blockCountResponse.block_count);
+    if (blockCount > MAX_TRANSACTION_COUNT) {
         return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
     }
 
-    const accountTx = await accountHistoryRpc(address, 0, -1).catch((err) =>
-        Promise.reject(LOG_ERR('getAccountExportPromise.accountHistoryRpc', err, { body }))
-    );
+    const dtos: ConfirmedTransactionDto[] = [];
+    const iterationSettings: IterateHistoryConfig = {
+        address,
+        reverse: true,
+    };
 
-    const dtos = [];
-    accountTx.history.map((tx) => dtos.push(convertToConfirmedTransactionDto(tx)));
+    await iterateHistory(iterationSettings, (tx: RpcConfirmedTransaction) =>
+        dtos.push(convertToConfirmedTransactionDto(tx))
+    );
 
     try {
         const csv = convertToCSV(dtos);

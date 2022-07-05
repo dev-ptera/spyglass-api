@@ -1,7 +1,8 @@
-import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
+import { accountBlockCountRpc } from '@app/rpc';
 import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 import { AccountHistoryResponse, Subtype } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
+import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from '../account-history.service';
 
 const SUBTYPE = {
     change: 'change',
@@ -77,75 +78,48 @@ const convertToConfirmedTransactionDto = (
     return dto;
 };
 
-/** Uses RPC commands to sift through an accounts list of confirmed transactions.
- *  Returns true when either there are no more search results, or the number of requests records is met.
- * */
-const discoverConfirmedTransactions = async (
-    body: RequestBody,
-    searches: number,
-    confirmedTx: ConfirmedTransactionDto[]
-): Promise<boolean> => {
-    const rpcSearchSize = 2000;
-    const address = body.address;
-    const offset = Number(body.offset) + rpcSearchSize * searches;
+const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody): boolean => {
+    const type = getTransactionType(tx);
     const hasMaxAmountFilter = Boolean(body.maxAmount);
     const hasMinAmountFilter = Boolean(body.minAmount);
     const addressFilterSet = new Set(body.filterAddresses);
-
-    const accountTx = await accountHistoryRpc(address, offset, rpcSearchSize);
-
-    // If we run out of search results, it's time to exit.
-    if (!accountTx.history || accountTx.history.length === 0) {
-        return true;
+    if (!body.includeSend && type === 'send') {
+        return;
+    }
+    if (!body.includeChange && type === 'change') {
+        return;
+    }
+    if (!body.includeReceive && type === 'receive') {
+        return;
     }
 
-    // Iterate through each transaction history, filtering out types we don't need.
-    for (const transaction of accountTx.history) {
-        const type = getTransactionType(transaction);
-        if (!body.includeSend && type === 'send') {
-            continue;
+    // Amount Filters
+    if ((hasMinAmountFilter || hasMaxAmountFilter) && type !== 'change') {
+        if (hasMaxAmountFilter && convertFromRaw(tx.amount, 10) > body.maxAmount) {
+            return;
         }
-        if (!body.includeChange && type === 'change') {
-            continue;
-        }
-        if (!body.includeReceive && type === 'receive') {
-            continue;
-        }
-
-        // Amount Filters
-        if ((hasMinAmountFilter || hasMaxAmountFilter) && type !== 'change') {
-            if (hasMaxAmountFilter && convertFromRaw(transaction.amount, 10) > body.maxAmount) {
-                continue;
-            }
-            if (hasMinAmountFilter && convertFromRaw(transaction.amount, 10) < body.minAmount) {
-                continue;
-            }
-        }
-
-        // Address Filters
-        if (addressFilterSet.size > 0) {
-            if (type === 'change') {
-                if (!addressFilterSet.has(transaction['representative'])) {
-                    continue;
-                }
-            } else if (!addressFilterSet.has(transaction.account)) {
-                continue;
-            }
-        }
-        confirmedTx.push(convertToConfirmedTransactionDto(transaction));
-        if (confirmedTx.length === body.size) {
-            return true;
+        if (hasMinAmountFilter && convertFromRaw(tx.amount, 10) < body.minAmount) {
+            return;
         }
     }
 
-    // Continue search.
-    return false;
+    // Address Filters
+    if (addressFilterSet.size > 0) {
+        if (type === 'change') {
+            if (!addressFilterSet.has(tx['representative'])) {
+                return;
+            }
+        } else if (!addressFilterSet.has(tx.account)) {
+            return;
+        }
+    }
+    return true;
 };
 
 /** Returns type for a transaction; defaults to subtype, but fallbacks to use type when subtype is undefined. */
 const getTransactionType = (tx: AccountHistoryResponse['history'][0]): Subtype => tx['subtype'] || tx['type'];
 
-/** For a given address, return a list of confirmed transactions. */
+/** For a given address, return a list of confirmed transactions.  Includes options for filtering.  */
 const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<ConfirmedTransactionDto[]> => {
     const address = body.address;
 
@@ -160,27 +134,34 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
         await accountBlockCountRpc(address);
     } catch (err) {
         if (err.error === 'Account not found') {
-            // RPC error.
+            // Handle RPC error.
             return Promise.reject({ errorMsg: 'Unopened Account', errorCode: 3 });
         }
-        return Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err));
+        return Promise.reject(LOG_ERR('getConfirmedTransactionsPromise.getAccountBlockHeight', err));
     }
 
-    let searchPage = 0;
-    let completedSearch = false;
-    const confirmedTransactions: ConfirmedTransactionDto[] = [];
+    const iterationSettings: IterateHistoryConfig = {
+        address,
+        hasTerminatedSearch: false,
+        transactionsPerRequest: 2_000,
+        reverse: false,
+        offset: body.offset,
+    };
 
-    try {
-        while (!completedSearch) {
-            completedSearch = await discoverConfirmedTransactions(body, searchPage++, confirmedTransactions);
+    const confirmedTransactions = [];
+    await iterateHistory(iterationSettings, (tx: RpcConfirmedTransaction) => {
+        if (confirmedTransactions.length === body.size) {
+            iterationSettings.hasTerminatedSearch = true;
+            return;
         }
-        return confirmedTransactions;
-    } catch (err) {
-        return Promise.reject(LOG_ERR('accountHistoryPromise.discoverConfirmedTransactions', err));
-    }
+        if (shouldIncludeTransaction(tx, body)) {
+            confirmedTransactions.push(convertToConfirmedTransactionDto(tx));
+        }
+    });
+    return confirmedTransactions;
 };
 
-/** For a given address, return a list of confirmed transactions. */
+/** For a given address, return a list of confirmed transactions.  Includes options for filtering.  */
 export const getConfirmedTransactionsV2 = (req, res): void => {
     setBodyDefaults(req.body);
     getConfirmedTransactionsPromise(req.body)

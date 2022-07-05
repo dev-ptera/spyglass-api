@@ -1,9 +1,9 @@
 import { ExplorerSummaryDto, HostNodeStatsDto, SupplyDto } from '@app/types';
 import { getSupplyPromise } from '../distribution/supply.service';
-import { LOG_ERR } from '../../../log/error.service';
+import { LOG_ERR } from '@app/services';
 import { AppCache } from '@app/config';
 import { getNodeStatsPromise } from '../network/node-stats.service';
-import { blockCountRpc } from '../../../../rpc/calls/block-count.rpc';
+import { blockCountRpc } from '@app/rpc';
 import { getRepresentativesPromise } from '../representatives/representatives-service';
 
 const getSummaryPromise = async (): Promise<ExplorerSummaryDto> => {

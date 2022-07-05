@@ -1,14 +1,9 @@
-import {
-    convertFromRaw,
-    getAccurateHashTimestamp,
-    getTransactionType,
-    isValidAddress,
-    LOG_ERR,
-    sleep,
-} from '@app/services';
-import { accountBlockCountRpc, accountHistoryRpc } from '@app/rpc';
+import { convertFromRaw, getAccurateHashTimestamp, getTransactionType, isValidAddress, LOG_ERR } from '@app/services';
+import { accountBlockCountRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { Subject } from 'rxjs';
+import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from './account-history.service';
+import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -117,69 +112,50 @@ const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean)
 };
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
-const iterateAccountHistory = async (address: string, blockCount: number): Promise<InsightsDto> => {
-    const accountHistoryCalls = [];
-    let blocksRequested = 0;
-    const transactionsPerRequest = 10_000;
-    while (blocksRequested < blockCount) {
-        accountHistoryCalls.push(accountHistoryRpc(address, blocksRequested, transactionsPerRequest, true));
-        blocksRequested += transactionsPerRequest;
-    }
-
-    /* Map of <recipient address, balance> for each account a given `address` has interacted with. */
-    const accountSentMap = new Map<string, number>();
-    const accountReceivedMap = new Map<string, number>();
+const gatherInsights = async (address: string): Promise<InsightsDto> => {
     let balance = 0;
     let height = 0;
-
     const insightsDto = createBlankDto();
+    const accountSentMap = new Map<string, number>();
+    const accountReceivedMap = new Map<string, number>();
+    const iterationSettings: IterateHistoryConfig = {
+        address,
+        reverse: true,
+    };
 
-    for (const request of accountHistoryCalls) {
-        const accountHistory = await request.catch((err) =>
-            Promise.reject(LOG_ERR('getAccountInsights.accountHistoryRpc', err, { address }))
-        );
+    await iterateHistory(iterationSettings, (transaction: RpcConfirmedTransaction) => {
+        insightsDto.blockCount++;
 
-        /* Iterate through the list of transactions, perform insight calculations. */
-        for (const transaction of accountHistory.history) {
-            insightsDto.blockCount++;
+        const type = getTransactionType(transaction);
 
-            const type = getTransactionType(transaction);
-
-            // Count Change Blocks
-            if (!transaction.amount) {
-                if (type === 'change') {
-                    insightsDto.totalTxChange++;
-                }
-                continue;
+        // Count Change Blocks
+        if (!transaction.amount) {
+            if (type === 'change') {
+                insightsDto.totalTxChange++;
             }
-
-            // Count Send / Receive Blocks & aggregate balances.
-            const amount = convertFromRaw(transaction.amount, 6);
-            if (type === 'receive') {
-                balance += amount;
-                handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
-            } else if (type === 'send') {
-                balance -= amount;
-                handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
-            }
-
-            // Audit max balance
-            if (balance >= insightsDto.maxBalance) {
-                insightsDto.maxBalance = balance;
-                insightsDto.maxBalanceHash = transaction.hash;
-            }
-
-            // Append new block to the list (change blocks are omitted.)
-            height = Number(transaction.height);
-            insightsDto.heightBalances[height] = Number(balance.toFixed(8));
+            return;
         }
 
-        // If we pulled down all transactions, continue.
-        // Otherwise pause before pulling down more transactions.
-        if (height !== blockCount) {
-            await sleep(500);
+        // Count Send / Receive Blocks & aggregate balances.
+        const amount = convertFromRaw(transaction.amount, 6);
+        if (type === 'receive') {
+            balance += amount;
+            handleReceiveTransaction(insightsDto, transaction, amount, accountReceivedMap);
+        } else if (type === 'send') {
+            balance -= amount;
+            handleSendTransaction(insightsDto, transaction, amount, accountSentMap);
         }
-    }
+
+        // Audit max balance
+        if (balance >= insightsDto.maxBalance) {
+            insightsDto.maxBalance = balance;
+            insightsDto.maxBalanceHash = transaction.hash;
+        }
+
+        // Append new block to the list (change blocks are omitted.)
+        height = Number(transaction.height);
+        insightsDto.heightBalances[height] = Number(balance.toFixed(8));
+    });
 
     // Set most common sender/recipient.
     let accountMaxSentCount = 0; // Calc Recipient Data
@@ -221,27 +197,26 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
         return Promise.reject({ error: 'Account has too many transactions to perform insights.' });
     }
 
-    const subject = new Subject<InsightsDto>();
-
-    // If duplicated request has been received, listen for the emitted resulted.
+    // If a duplicated request has been received, listen for the emitted resulted.
     if (activeInsightsRequests.has(address)) {
         return new Promise((resolve) => {
             activeInsightsRequests.get(address).subscribe((data) => {
                 resolve(formatHeightBalances(data, body.includeHeightBalances));
             });
         });
-        // Otherwise iterate account balances, emit result when complete.
-    } else {
-        activeInsightsRequests.set(address, subject);
-        try {
-            const data = await iterateAccountHistory(address, blockCount);
-            subject.next(data);
-            return formatHeightBalances(data, body.includeHeightBalances);
-        } catch (err) {
-            LOG_ERR('iterateAccountHistory', err);
-        } finally {
-            activeInsightsRequests.delete(address);
-        }
+    }
+
+    // Otherwise, iterate account balances, emit result when complete.
+    const requestFinishedSubject = new Subject<InsightsDto>();
+    activeInsightsRequests.set(address, requestFinishedSubject);
+    try {
+        const data = await gatherInsights(address);
+        requestFinishedSubject.next(data);
+        return formatHeightBalances(data, body.includeHeightBalances);
+    } catch (err) {
+        LOG_ERR('iterateAccountHistory', err);
+    } finally {
+        activeInsightsRequests.delete(address);
     }
 };
 
