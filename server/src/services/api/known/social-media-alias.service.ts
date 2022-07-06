@@ -36,7 +36,7 @@ type TwitterApiResponse = {
     user_name: string;
 };
 
-const getTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
+const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
             .get(`https://ba.nanotipbot.com/users/${address}`)
@@ -65,10 +65,11 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         return Promise.reject({ errorMsg: 'Invalid address', errorCode: 2 });
     }
 
-    return Promise.all([getDiscordAlias(address), getTwitterAlias(address)]).then(([discord, twitter]) => ({
+    return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)])
+        .then(([discord, teleTwitter]) => ({
         address,
-        alias: discord.alias || twitter.alias,
-        platform: discord.alias ? 'discord' : twitter.alias ? 'twitter' : undefined,
+        alias: discord.alias || teleTwitter.alias,
+        platform: discord.platform || teleTwitter.platform
     }));
 };
 
