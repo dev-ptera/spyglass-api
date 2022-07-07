@@ -1188,6 +1188,12 @@
         "type": "donation"
     },
     {
+        "address": "ban_1rxpayorfy18zp5ospz89njtu3akhmyszot4b16z6yxy8tkeffqfkc6r84ok",
+        "alias": "BanRX",
+        "owner": "Shay",
+        "type": "faucet"
+    },
+    {
         "address": "ban_1waifusa1tnk3eo7dstc4z9tt7puurh5jyettyj59mis5m86ofiwywahcccm",
         "alias": "bananochan",
         "type": "citizen"

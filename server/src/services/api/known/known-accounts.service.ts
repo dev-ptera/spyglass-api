@@ -42,51 +42,27 @@ const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
             });
     });
 
-/** Responsible for fetching known accounts from local/remote sources.
- *
- * Order of insertion:
- * 1. Local entries via KNOWN_ACCOUNTS.
- * 2. Kirby API
- * 3. Remote KNOWN_ACCOUNTS via spyglass-api master branch.
- * */
-const getKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
+/** Responsible for fetching known accounts from GitHub.  If there is a conflict, use the remote data. */
+const getRemoteKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const start = LOG_INFO('Refreshing Known Accounts');
     const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
 
-    /* Spyglass entries are entered next & override any duplicate fields. */
-    spyglassKnownAccountsRemote.map((account) => {
-        insertEntries(account, knownAccountMap);
-    });
+    KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
 
-    const accounts = Array.from(knownAccountMap.values());
-    accounts.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
-    LOG_INFO('Known Accounts Updated', start);
-    return accounts;
-};
+    try {
+        // We want to use the remote data rather than what we originally had, since it is updated more frequently.
+        spyglassKnownAccountsRemote.map((account) => {
+            knownAccountMap.set(account.address, account);
+        });
 
-const insertEntries = (newInfo: KnownAccountDto, map: Map<string, KnownAccountDto>): void => {
-    // Make sure this field is all lowercase.
-    if (newInfo.type) {
-        newInfo.type = newInfo.type.toLowerCase() as any;
-    }
-
-    // Handle new insertions.
-    const previouslyKnown = map.get(newInfo.address);
-    if (!previouslyKnown) {
-        map.set(newInfo.address, newInfo);
-        return;
-    }
-
-    // Handle overwriting existing entries.
-    if (newInfo.type) {
-        previouslyKnown.type = newInfo.type;
-    }
-    if (newInfo.alias) {
-        previouslyKnown.alias = newInfo.alias;
-    }
-    if (newInfo.owner) {
-        previouslyKnown.owner = newInfo.owner;
+        const knownList = Array.from(knownAccountMap.values());
+        knownList.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
+        LOG_INFO('Known Accounts Updated', start);
+        return knownList;
+    } catch (err) {
+        LOG_ERR('getRemoteKnownAccountsPromise', err);
+        return KNOWN_ACCOUNTS;
     }
 };
 
@@ -119,5 +95,5 @@ export const getKnownAccountsV1 = (req, res): void => {
 
 /** Call this method to update the known accounts in the AppCache. */
 export const cacheKnownAccounts = async (): Promise<void> => {
-    AppCache.knownAccounts = await getKnownAccountsPromise();
+    AppCache.knownAccounts = await getRemoteKnownAccountsPromise();
 };
