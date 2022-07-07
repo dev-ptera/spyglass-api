@@ -1,7 +1,33 @@
-import { isValidAddress } from '@app/services';
+import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
+type OldTelegramAlias = {
+    account: string;
+    user_name: string;
+};
+
+const legacyTelegramAliasMap = new Map<string, string>();
+/** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
+ *  Call this function when the API initializes and store the response in a local map for reference.
+ * */
+export const getOldTelegramAliases = (): Promise<void> => {
+    LOG_INFO('Fetching legacy telegram aliases');
+    return new Promise<void>((resolve) => {
+        axios
+            .get(`https://raw.githubusercontent.com/Kirby1997/Banano/master/telegram_old.json`)
+            .then((response: AxiosResponse<OldTelegramAlias[]>) => {
+                response.data.map((entry) => {
+                    legacyTelegramAliasMap.set(entry.account, entry.user_name);
+                });
+                resolve();
+            })
+            .catch((err: AxiosError) => {
+                LOG_ERR('getOldTelegramAliases', err);
+                resolve();
+            });
+    });
+};
 
 type DiscordApiResponse = {
     user_id: number;
@@ -30,8 +56,8 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
             });
     });
 
-type TwitterApiResponse = {
-    system: string;
+type TwitGramApiResponse = {
+    system: 'twitter' | 'telegram';
     user_id: number;
     user_name: string;
 };
@@ -40,7 +66,7 @@ const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccount
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
             .get(`https://ba.nanotipbot.com/users/${address}`)
-            .then((response: AxiosResponse<TwitterApiResponse>) => {
+            .then((response: AxiosResponse<TwitGramApiResponse>) => {
                 resolve({
                     address,
                     alias: response.data.user_name,
@@ -65,12 +91,23 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         return Promise.reject({ errorMsg: 'Invalid address', errorCode: 2 });
     }
 
-    return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)])
-        .then(([discord, teleTwitter]) => ({
-        address,
-        alias: discord.alias || teleTwitter.alias,
-        platform: discord.platform || teleTwitter.platform
-    }));
+    // Check legacy telegram map first.
+    if (legacyTelegramAliasMap.has(address)) {
+        return Promise.resolve({
+            address,
+            alias: legacyTelegramAliasMap.get(address),
+            platform: 'telegram',
+        });
+    }
+
+    // Check remote APIs (discord, twitter, telegram)
+    return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)]).then(
+        ([discord, teleTwitter]) => ({
+            address,
+            alias: discord.alias || teleTwitter.alias,
+            platform: discord.platform || teleTwitter.platform,
+        })
+    );
 };
 
 /** Checks to see if an account has an alias using the BRPD twitter & discord APIs.  */

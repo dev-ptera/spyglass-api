@@ -1186,5 +1186,10 @@
         "address": "ban_1ricex9kie3if1qros9s84joa6hnqd97nqc9fo58ca4ro3b1hnpyujjixoyt",
         "alias": "Freerice donation",
         "type": "donation"
-    }
+    },
+    {
+        "address": "ban_1waifusa1tnk3eo7dstc4z9tt7puurh5jyettyj59mis5m86ofiwywahcccm",
+        "alias": "bananochan",
+        "type": "citizen"
+    },
 ]

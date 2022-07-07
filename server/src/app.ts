@@ -56,6 +56,7 @@ import {
     getLedgerSizeV1,
     getNakamotoCoefficientV1,
     getNodeStatsV1,
+    getOldTelegramAliases,
     getPeerVersionsV1,
     getPRWeightV1,
     getQuorumV1,
@@ -176,6 +177,7 @@ server.listen(port, async () => {
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile();
     void importHistoricHashTimestamps();
+    void getOldTelegramAliases();
     await readLocalConfig();
 
     const onlineRepresentatives = {
