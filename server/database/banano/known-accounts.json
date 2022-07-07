@@ -1154,8 +1154,8 @@
         "type": "faucet"
     },
     {
-        "address": "ban_1rxpayorfy18zp5ospz89njtu3akhmyszot4b16z6yxy8tkeffqfkc6r84ok",
-        "alias": "BanRX",
+        "address": "ban_1p1ay3gdxnb5gx69muqjo4zthcgmb5tzarupa7cirykwccp6mzr7eu8jjnh8",
+        "alias": "PlayBanano",
         "owner": "Shay",
         "type": "faucet"
     },
@@ -1191,5 +1191,5 @@
         "address": "ban_1waifusa1tnk3eo7dstc4z9tt7puurh5jyettyj59mis5m86ofiwywahcccm",
         "alias": "bananochan",
         "type": "citizen"
-    },
+    }
 ]
