@@ -827,14 +827,14 @@
     },
     {
         "address": "ban_1po1yco1cnoyymrm3xnf7h9iaway1bg5kqxq3cfb3za98gq73tfmjm4mp11n",
-        "alias": "WBan Polygon Cold Wallet",
+        "alias": "wBan Polygon Cold Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
     },
     {
         "address": "ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4",
-        "alias": "WBan Polygon Hot Wallet",
+        "alias": "wBan Polygon Hot Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
@@ -990,14 +990,14 @@
     },
     {
         "address": "ban_3bsco1dfwmwpnnjjqyqb9f7f83gtxsrmgdzdjdz58u6dhga5ajsgtsdz1g8h",
-        "alias": "WBan BSC Cold Wallet",
+        "alias": "wBan BSC Cold Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
     },
     {
         "address": "ban_1wbanktxc5mtnydsjq6doy81wsnn7fw1z7yzw4zzieb6dfkihjtbwzgrxt9i",
-        "alias": "WBan BSC Hot Wallet",
+        "alias": "wBan BSC Hot Wallet",
         "illicit": 0,
         "owner": "Banano",
         "type": "exchange"
