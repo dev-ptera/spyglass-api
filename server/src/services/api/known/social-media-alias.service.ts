@@ -10,6 +10,7 @@ type OldTelegramAlias = {
 const legacyTelegramAliasMap = new Map<string, string>();
 /** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
  *  Call this function when the API initializes and store the response in a local map for reference.
+ *  Ask Kirby when this will no longer be required.
  * */
 export const getOldTelegramAliases = (): Promise<void> => {
     LOG_INFO('Fetching legacy telegram aliases');

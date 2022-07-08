@@ -175,8 +175,8 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
 server.listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
-    void parseRichListFromFile();
-    void importHistoricHashTimestamps();
+    void parseRichListFromFile(); // TODO: replace file-storing with Redis
+    void importHistoricHashTimestamps(); // TODO: Update local database with historic timestamps instead of using CSV
     void getOldTelegramAliases();
     await readLocalConfig();
 
