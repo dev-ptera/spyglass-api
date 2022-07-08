@@ -16,4 +16,4 @@ jobs:
 
       - name: Build and tag
         shell: bash
-        run: cd server && yarn build
+        run: cd server && yarn && yarn build
