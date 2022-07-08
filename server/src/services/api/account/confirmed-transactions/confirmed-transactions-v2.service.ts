@@ -149,24 +149,32 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
     };
 
     const confirmedTransactions = [];
+    let exceededSearchSize = false;
     let blocksChecked = 0;
+
     await iterateHistory(iterationSettings, (tx: RpcConfirmedTransaction) => {
         blocksChecked++;
         if (confirmedTransactions.length === body.size) {
             iterationSettings.hasTerminatedSearch = true;
             return;
         }
-        if (blocksChecked > 100_000) {
+        if (blocksChecked === 100_000) {
             iterationSettings.hasTerminatedSearch = true;
-            return Promise.reject({
-                errorMsg: 'Max blocks (100_000) checked.  Adjust your transaction filters to return less records.',
-                errorCode: 4
-            });
+            exceededSearchSize = true;
+            return;
         }
         if (shouldIncludeTransaction(tx, body)) {
             confirmedTransactions.push(convertToConfirmedTransactionDto(tx));
         }
-    }).catch((err) => Promise.reject(LOG_ERR('iterateHistory', err)));
+    });
+
+    if (exceededSearchSize) {
+        return Promise.reject({
+            errorMsg: 'Max blocks (100_000) checked.  Adjust your transaction filters to return less records.',
+            errorCode: 4
+        });
+    }
+
     return confirmedTransactions;
 };
 

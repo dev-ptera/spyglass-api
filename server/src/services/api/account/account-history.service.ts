@@ -49,7 +49,11 @@ export const iterateHistory = async (
             if (config.hasTerminatedSearch) {
                 return;
             }
-            callback(tx);
+            try {
+                callback(tx);
+            } catch (err) {
+                LOG_ERR('iterateHistory', err);
+            }
         });
 
         // Check to see if we should perform the next account_history RPC call.
