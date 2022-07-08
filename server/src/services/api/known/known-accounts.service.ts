@@ -43,7 +43,13 @@ const updateKnownAccountsFromRemote = (knownAccountMap: Map<string, KnownAccount
         .then((knownAccountsResponses) => {
             knownAccountsResponses.map((response) => {
                 response.data.map((account) => {
-                    knownAccountMap.set(account.address, account);
+                    if (knownAccountMap.has(account.address)) {
+                        knownAccountMap.get(account.address).alias = account.alias;
+                        knownAccountMap.get(account.address).owner = account.owner;
+                        // TODO: Cannot update type/category remotely.  This functionality might be removed in future releases.
+                    } else {
+                        knownAccountMap.set(account.address, account);
+                    }
                 });
             });
             return Promise.resolve();
