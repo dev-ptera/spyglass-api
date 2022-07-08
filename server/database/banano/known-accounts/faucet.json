@@ -58,16 +58,6 @@
         "owner": "Banano"
     },
     {
-        "address": "ban_3boost5r4bosii4c3ad6yubf5npmkgm5rb7kecyzmnu337p9bta8kgikb1a4",
-        "alias": "Booster",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1bonusncatu5rsrctx1djmgrragfwpj4ujsk939utmtdwskhtiourh8997eh",
-        "alias": "Contributor Bonuses",
-        "owner": "Banano"
-    },
-    {
         "address": "ban_1crane864e1cn1g3p9mrduf49hp86gfgfosp8rib43smxxuqp3phq1yiu58k",
         "alias": "Crane Faucet",
         "owner": "Banano"
@@ -108,66 +98,6 @@
         "owner": "IMalFect"
     },
     {
-        "address": "ban_1fundm3d7zritekc8bdt4oto5ut8begz6jnnt7n3tdxzjq3t46aiuse1h7gj",
-        "alias": "Giveaway Fund: 1",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_3fundbxxzrzfy3k9jbnnq8d44uhu5sug9rkh135bzqncyy9dw91dcrjg67wf",
-        "alias": "Giveaway Fund: 3",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1acaih1rhhczkfayd3iadpjroyfbbrzm1jrkx77qfep7fnuzky7mmwzx4544",
-        "alias": "Giveaway Fund: Acai",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1app1es6zce5943ydasp5r5ma77cdcqt6be8qz7f88woayuqstzrjjmob4eb",
-        "alias": "Giveaway Fund: Apple",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_3carobzdy3ah8pq1xzn38jkc46ozuu8qfx7eqzr8nyiy5yefwbaua6rkh3of",
-        "alias": "Giveaway Fund: Carob",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_3gojim9wh3t9w5aa8nhjbmkue8mes9frmrhy6wpqb34ikajw8h39hnbbap31",
-        "alias": "Giveaway Fund: Goji",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1grapemjtr5n684bu1x38th57x3te8qt6xpsyusjyi4s3u1zdoh8s1czfjz4",
-        "alias": "Giveaway Fund: Grape",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_3kiwizqifxokn47pp6fh5jmytoaiaeynjhx4u5r6ug13apx3345enf4mr1ep",
-        "alias": "Giveaway Fund: Kiwi",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1ycheefobbddbde1p7874ky4ifiwebfuabkyqptunwwk84z3rgzktbqeo9fk",
-        "alias": "Giveaway Fund: Lychee",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1mangozo4tnfq97hdtu8z9rdjsqnyo33i7o9aohoxsfbpx8kgwhrfu1rggj8",
-        "alias": "Giveaway Fund: Mango",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1me1onk3a11nw3kou14776fuyxtnmoatuqmpeioybffqx6okd53mo1iqmrym",
-        "alias": "Giveaway Fund: Melon",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1pearw95xajkzq1nmo6cixo1ugijk6gpm1ifwyegz6un4mt71qb1iw3fhmj4",
-        "alias": "Giveaway Fund: Pear",
-        "owner": "Banano"
-    },
-    {
         "address": "ban_1jung1eb3uomk1gsx7w6w7toqrikxm5pgn5wbsg5fpy96ckpdf6wmiuuzpca",
         "alias": "JungleTV",
         "owner": "gbl08ma"
@@ -191,12 +121,6 @@
         "address": "ban_3kucodzfu56iiqxa5krw4wk1hqgw15ifzqriiouyp66x4nkaqup4tf53hihc",
         "alias": "KuCoin IT AMA",
         "owner": "Banano"
-    },
-    {
-        "address": "ban_1oaocnrcaystcdtaae6woh381wftyg4k7bespu19m5w18ze699refhyzu6bo",
-        "alias": "Kuyumcu",
-        "owner": "mail@nano.trade",
-        "type": "exchange"
     },
     {
         "address": "ban_3faucb1o9ifundznqw6xn1xkybztz4zfbn4fw95ujfy48ds1ebayzycfsspk",
@@ -273,15 +197,5 @@
     {
         "address": "ban_3faubo4bfzexkbodi67c74ut1a6it64chofgobbag87yfmy1x457jbsdccd4",
         "alias": "Bonobo Banano faucet"
-    },
-    {
-        "address": "ban_1p1ay3gdxnb5gx69muqjo4zthcgmb5tzarupa7cirykwccp6mzr7eu8jjnh8",
-        "alias": "PlayBanano",
-        "owner": "Shay"
-    },
-    {
-        "address": "ban_1rxpayorfy18zp5ospz89njtu3akhmyszot4b16z6yxy8tkeffqfkc6r84ok",
-        "alias": "BanRX",
-        "owner": "Shay"
     }
 ]

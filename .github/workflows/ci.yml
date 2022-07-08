@@ -17,3 +17,7 @@ jobs:
       - name: Build and tag
         shell: bash
         run: cd server && yarn && yarn build
+
+      - name: Test Unique Known Accounts
+        shell: bash
+        run: cd server && yarn && yarn test:unique-known-accounts
