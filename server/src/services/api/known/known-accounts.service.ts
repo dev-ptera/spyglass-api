@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { KnownAccountDto, KnownAccountType } from '@app/types';
+import { KnownAccountDto } from '@app/types';
 import { LOG_ERR, LOG_INFO } from '@app/services';
-import { AppCache, KNOWN_ACCOUNTS, PROFILE } from '@app/config';
+import { AppCache, KNOWN_ACCOUNTS, KNOWN_ACCOUNTS_FILES, PROFILE } from '@app/config';
 
 type RequestBody = {
     includeOwner?: boolean;
     includeType?: boolean;
-    typeFilter?: KnownAccountType;
+    typeFilter?: string;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -28,42 +28,42 @@ const setBodyDefaults = (body: RequestBody): void => {
 };
 
 /** Fetches remote spyglass known accounts, falls back to local known accounts data. */
-const fetchSpyglassRemoteKnownAccounts = (): Promise<KnownAccountDto[]> =>
-    new Promise<KnownAccountDto[]>((resolve) => {
-        axios
-            .request({
+const updateKnownAccountsFromRemote = (knownAccountMap: Map<string, KnownAccountDto>): Promise<void> => {
+    const remoteCalls: Array<Promise<AxiosResponse<KnownAccountDto[]>>> = [];
+    KNOWN_ACCOUNTS_FILES.map((file) => {
+        remoteCalls.push(
+            axios.request<KnownAccountDto[]>({
                 method: 'GET',
-                url: `https://raw.githubusercontent.com/dev-ptera/spyglass-api/master/server/database/${PROFILE}/known-accounts.json`,
+                url: `https://raw.githubusercontent.com/dev-ptera/spyglass-api/master/server/database/${PROFILE}/known-accounts/${file}.json`,
             })
-            .then((response: AxiosResponse<KnownAccountDto[]>) => resolve(response.data))
-            .catch((err) => {
-                LOG_ERR('fetchSpyglassRemoteKnownAccounts', err);
-                resolve(KNOWN_ACCOUNTS);
-            });
+        );
     });
+
+    return Promise.all(remoteCalls)
+        .then((knownAccountsResponses) => {
+            knownAccountsResponses.map((response) => {
+                response.data.map((account) => {
+                    knownAccountMap.set(account.address, account);
+                });
+            });
+            return Promise.resolve();
+        })
+        .catch((err) => {
+            LOG_ERR('updateKnownAccountsFromRemote', err);
+            return Promise.resolve();
+        });
+};
 
 /** Responsible for fetching known accounts from GitHub.  If there is a conflict, use the remote data. */
 const getRemoteKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     const start = LOG_INFO('Refreshing Known Accounts');
-    const spyglassKnownAccountsRemote = await fetchSpyglassRemoteKnownAccounts();
     const knownAccountMap = new Map<string, KnownAccountDto>();
-
     KNOWN_ACCOUNTS.map((account) => knownAccountMap.set(account.address, account));
-
-    try {
-        // We want to use the remote data rather than what we originally had, since it is updated more frequently.
-        spyglassKnownAccountsRemote.map((account) => {
-            knownAccountMap.set(account.address, account);
-        });
-
-        const knownList = Array.from(knownAccountMap.values());
-        knownList.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
-        LOG_INFO('Known Accounts Updated', start);
-        return knownList;
-    } catch (err) {
-        LOG_ERR('getRemoteKnownAccountsPromise', err);
-        return KNOWN_ACCOUNTS;
-    }
+    await updateKnownAccountsFromRemote(knownAccountMap);
+    const knownList = Array.from(knownAccountMap.values());
+    knownList.sort((a, b) => (a.alias?.toUpperCase() > b.alias?.toUpperCase() ? 1 : -1));
+    LOG_INFO('Known Accounts Updated', start);
+    return knownList;
 };
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {

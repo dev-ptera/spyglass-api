@@ -5,7 +5,7 @@ import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
 import { NanoClient } from '@dev-ptera/nano-node-rpc';
 import { KnownAccountDto } from '@app/types';
-import { readFileContents } from '@app/services';
+import { LOG_INFO, readFileContents } from '@app/services';
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -67,10 +67,31 @@ export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig()
     ? BAN.UPTIME_TRACKING_MIN_WEIGHT
     : NANO.UPTIME_TRACKING_MIN_WEIGHT;
 
+export const KNOWN_ACCOUNTS_FILES = useBananoConfig() ? BAN.KNOWN_ACCOUNTS_FILES : NANO.KNOWN_ACCOUNTS_FILES;
+
+const loadKnownAccount = (file: string): void => {
+    const type = file.split('/')[3].replace('.json', '');
+    LOG_INFO(`Loaded local known-account: ${type}`);
+    const accounts = readFileContents(file);
+    accounts.map((account) => (account.type = type));
+
+    if (type === 'burn') {
+        BURN_ADDRESSES.push(...accounts.map((account) => account.address));
+    }
+    if (type === 'team-fund') {
+        DEVELOPER_FUNDS.push(...accounts.map((account) => account.address));
+    }
+
+    KNOWN_ACCOUNTS.push(...accounts);
+};
+
 export const readLocalConfig = async (): Promise<void> => {
-    KNOWN_ACCOUNTS.push(...readFileContents(`database/${PROFILE}/known-accounts.json`));
-    KNOWN_VANITIES.push(...readFileContents(`database/${PROFILE}/known-vanities.json`));
-    MANUAL_PEER_MONITOR_URLS.push(...readFileContents(`database/${PROFILE}/monitored-reps.json`));
-    BURN_ADDRESSES.push(...readFileContents(`database/${PROFILE}/burn.json`));
-    DEVELOPER_FUNDS.push(...readFileContents(`database/${PROFILE}/developer-funds.json`));
+    LOG_INFO('Reading Local Known Accounts');
+    KNOWN_ACCOUNTS_FILES.map((file) => {
+        loadKnownAccount(`database/${PROFILE}/known-accounts/${file}.json`);
+    });
+    KNOWN_VANITIES.push(...readFileContents(`database/${PROFILE}/known-accounts/vanity.json`));
+    MANUAL_PEER_MONITOR_URLS.push(
+        ...readFileContents(`database/${PROFILE}/monitored-representative.json`)
+    );
 };

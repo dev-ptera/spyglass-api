@@ -10,6 +10,19 @@ export const URL_WHITE_LIST = [
     'https://www.brpd-creeper.web.app',
 ];
 
+export const KNOWN_ACCOUNTS_FILES = [
+    'burn',
+    'donation',
+    'event',
+    'exchange',
+    'faucet',
+    'gambling',
+    'representative',
+    'service',
+    'team-fund',
+    'team-member',
+];
+
 export const LEDGER_LOCATION = '/home/batman/BananoData/data.ldb';
 export const BACKUP_NODES = [
     //  'http://159.69.198.59:7070',
