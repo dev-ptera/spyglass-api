@@ -1,5 +1,5 @@
 export type SocialMediaAccountAliasDto = {
     address: string;
     alias: string;
-    platform: 'twitter' | 'discord' | 'telegram';
+    platform: 'twitter' | 'discord' | 'telegram' | 'jungletv';
 };

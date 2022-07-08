@@ -41,6 +41,7 @@ ${known.address} (${known.alias}) ${known.file}`);
 
 let KNOWN_ACCOUNTS_FILES = [
     'burn',
+    'distribution',
     'donation',
     'event',
     'exchange',
@@ -48,7 +49,6 @@ let KNOWN_ACCOUNTS_FILES = [
     'gambling',
     'representative',
     'service',
-    'team-fund',
     'team-member',
 ]
 

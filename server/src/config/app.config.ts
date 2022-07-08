@@ -78,7 +78,7 @@ const loadKnownAccount = (file: string): void => {
     if (type === 'burn') {
         BURN_ADDRESSES.push(...accounts.map((account) => account.address));
     }
-    if (type === 'team-fund') {
+    if (type === 'distribution') {
         DEVELOPER_FUNDS.push(...accounts.map((account) => account.address));
     }
 

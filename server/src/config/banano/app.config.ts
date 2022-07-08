@@ -12,6 +12,7 @@ export const URL_WHITE_LIST = [
 
 export const KNOWN_ACCOUNTS_FILES = [
     'burn',
+    'distribution',
     'donation',
     'event',
     'exchange',
@@ -19,7 +20,6 @@ export const KNOWN_ACCOUNTS_FILES = [
     'gambling',
     'representative',
     'service',
-    'team-fund',
     'team-member',
 ];
 

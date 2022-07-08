@@ -1,6 +1,7 @@
 import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import {JTV_QUEUE_ADDRESSES} from "./jungle-tv";
 
 type OldTelegramAlias = {
     account: string;
@@ -101,6 +102,15 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         });
     }
 
+    // Check jungle tv enqueue addresses.
+    if (JTV_QUEUE_ADDRESSES.has(address)) {
+        return Promise.resolve({
+            address,
+            alias: 'JTV Queue',
+            platform: 'jungletv',
+        });
+    }
+
     // Check remote APIs (discord, twitter, telegram)
     return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)]).then(
         ([discord, teleTwitter]) => ({
@@ -127,3 +137,4 @@ export const getKnownSocialMediaAccountAliasV1 = (req, res): void => {
             res.status(500).send(err);
         });
 };
+
