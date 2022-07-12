@@ -46,6 +46,7 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
                     address,
                     alias: response.data[0].user_last_known_name,
                     platform: 'discord',
+                    platformUserId: response.data[0].user_id
                 });
             })
             .catch((err: AxiosError) => {
@@ -54,6 +55,7 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
                     address,
                     alias: undefined,
                     platform: undefined,
+                    platformUserId: undefined,
                 });
             });
     });
@@ -73,6 +75,7 @@ const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccount
                     address,
                     alias: response.data.user_name,
                     platform: response.data.system,
+                    platformUserId: response.data.user_id
                 });
             })
             .catch((err: AxiosError) => {
@@ -81,6 +84,7 @@ const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccount
                     address,
                     alias: undefined,
                     platform: undefined,
+                    platformUserId: undefined,
                 });
             });
     });
@@ -99,6 +103,7 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
             address,
             alias: legacyTelegramAliasMap.get(address),
             platform: 'telegram',
+            platformUserId: undefined,
         });
     }
 
@@ -108,6 +113,7 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
             address,
             alias: 'JTV Queue',
             platform: 'jungletv',
+            platformUserId: undefined,
         });
     }
 
@@ -117,6 +123,7 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
             address,
             alias: discord.alias || teleTwitter.alias,
             platform: discord.platform || teleTwitter.platform,
+            platformUserId: discord.platformUserId,
         })
     );
 };
