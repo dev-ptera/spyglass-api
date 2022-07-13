@@ -26,6 +26,8 @@ import {
     REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
+import * as expressWs from 'express-ws';
+
 import {
     cacheAccountDistribution,
     cacheDelegatorsCount,
@@ -37,6 +39,7 @@ import {
     getAccountBlockV1,
     getAccountExportV1,
     getAccountInsightsV1,
+    getAccountInsightsWSV1,
     getAccountNFTsV1,
     getAccountOverviewV1,
     getAccountRepresentativeV1,
@@ -82,7 +85,10 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
-const app = express();
+
+const appBase = express();
+let wsInstance = expressWs(appBase);
+let { app } = wsInstance;
 
 /* Middleware */
 if (!IS_PRODUCTION) {
@@ -111,10 +117,11 @@ app.post(`/${PATH_ROOT}/v1/account/confirmed-transactions`, (req, res) => getCon
 app.post(`/${PATH_ROOT}/v2/account/confirmed-transactions`, (req, res) => getConfirmedTransactionsV2(req, res));
 app.post(`/${PATH_ROOT}/v1/account/receivable-transactions`, (req, res) => getReceivableTransactionsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(req, res));
-app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req, res));
 app.get(`/${PATH_ROOT}/v1/account/nfts/:address`, (req, res) => getAccountNFTsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/block-at-height`, (req, res) => getAccountBlockV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
+app.ws(`/${PATH_ROOT}/v1/account/insights`, (ws) => ws.on('message', (msg) => getAccountInsightsWSV1(msg, ws)));
 
 /* Block */
 app.get(`/${PATH_ROOT}/v1/block/:block`, (req, res) => getBlockInfoV1(req, res));
@@ -160,7 +167,6 @@ app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(
 app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
 const port = Number(process.env.PORT || 3000);
-const server = http.createServer(app);
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {
@@ -172,7 +178,7 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
     }
 };
 
-server.listen(port, async () => {
+const server = http.createServer(app).listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile(); // TODO: replace file-storing with Redis
@@ -235,3 +241,4 @@ server.listen(port, async () => {
         accountsDistribution,
     ]);
 });
+expressWs(app, server);
