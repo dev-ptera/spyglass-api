@@ -91,7 +91,5 @@ export const readLocalConfig = async (): Promise<void> => {
         loadKnownAccount(`database/${PROFILE}/known-accounts/${file}.json`);
     });
     KNOWN_VANITIES.push(...readFileContents(`database/${PROFILE}/known-accounts/vanity.json`));
-    MANUAL_PEER_MONITOR_URLS.push(
-        ...readFileContents(`database/${PROFILE}/monitored-representative.json`)
-    );
+    MANUAL_PEER_MONITOR_URLS.push(...readFileContents(`database/${PROFILE}/monitored-representative.json`));
 };

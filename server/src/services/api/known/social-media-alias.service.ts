@@ -1,7 +1,7 @@
 import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import {JTV_QUEUE_ADDRESSES} from "./jungle-tv";
+import { JTV_QUEUE_ADDRESSES } from './jungle-tv';
 
 type OldTelegramAlias = {
     account: string;
@@ -46,7 +46,7 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
                     address,
                     alias: response.data[0].user_last_known_name,
                     platform: 'discord',
-                    platformUserId: response.data[0].user_id
+                    platformUserId: response.data[0].user_id,
                 });
             })
             .catch((err: AxiosError) => {
@@ -75,7 +75,7 @@ const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccount
                     address,
                     alias: response.data.user_name,
                     platform: response.data.system,
-                    platformUserId: response.data.user_id
+                    platformUserId: response.data.user_id,
                 });
             })
             .catch((err: AxiosError) => {
@@ -144,4 +144,3 @@ export const getKnownSocialMediaAccountAliasV1 = (req, res): void => {
             res.status(500).send(err);
         });
 };
-

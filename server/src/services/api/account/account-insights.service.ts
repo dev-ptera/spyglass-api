@@ -3,7 +3,6 @@ import { accountBlockCountRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { Subject } from 'rxjs';
 import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from './account-history.service';
-import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 
 const MAX_TRANSACTION_COUNT = 100_000;
 
@@ -112,7 +111,7 @@ const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean)
 };
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
-const gatherInsights = async (address: string): Promise<InsightsDto> => {
+const gatherInsights = async (address: string, ws?: WebSocket): Promise<InsightsDto> => {
     let balance = 0;
     let height = 0;
     const insightsDto = createBlankDto();
@@ -125,6 +124,11 @@ const gatherInsights = async (address: string): Promise<InsightsDto> => {
 
     await iterateHistory(iterationSettings, (transaction: RpcConfirmedTransaction) => {
         insightsDto.blockCount++;
+
+        // Send incremental updates to the client.  Every 10K transactions counted.
+        if (insightsDto.blockCount % 10_000 === 0 && ws) {
+            ws.send(String(insightsDto.blockCount));
+        }
 
         const type = getTransactionType(transaction);
 
@@ -180,7 +184,7 @@ const gatherInsights = async (address: string): Promise<InsightsDto> => {
 
 const activeInsightsRequests = new Map<string, Subject<InsightsDto>>();
 
-const confirmedTransactionsPromise = async (body: RequestBody): Promise<InsightsDto> => {
+const confirmedTransactionsPromise = async (body: RequestBody, ws?: WebSocket): Promise<InsightsDto> => {
     setBodyDefaults(body);
     const address = body.address;
 
@@ -210,7 +214,7 @@ const confirmedTransactionsPromise = async (body: RequestBody): Promise<Insights
     const requestFinishedSubject = new Subject<InsightsDto>();
     activeInsightsRequests.set(address, requestFinishedSubject);
     try {
-        const data = await gatherInsights(address);
+        const data = await gatherInsights(address, ws);
         requestFinishedSubject.next(data);
         return formatHeightBalances(data, body.includeHeightBalances);
     } catch (err) {
@@ -227,4 +231,18 @@ export const getAccountInsightsV1 = (req, res): void => {
     confirmedTransactionsPromise(req.body)
         .then((data) => res.send(data))
         .catch((err) => res.status(500).send(err));
+};
+
+export const getAccountInsightsWSV1 = async (msg, ws): Promise<void> => {
+    if (!msg) {
+        return;
+    }
+
+    try {
+        const body = JSON.parse(msg);
+        const data = await confirmedTransactionsPromise(body, ws);
+        ws.send(JSON.stringify(data));
+    } catch (err) {
+        LOG_ERR('getAccountInsightsWSV1', err);
+    }
 };
