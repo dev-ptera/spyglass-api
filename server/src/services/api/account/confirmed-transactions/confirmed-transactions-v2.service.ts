@@ -171,7 +171,7 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
     if (exceededSearchSize) {
         return Promise.reject({
             errorMsg: 'Max blocks (100_000) checked.  Adjust your transaction filters to return less records.',
-            errorCode: 4
+            errorCode: 4,
         });
     }
 
