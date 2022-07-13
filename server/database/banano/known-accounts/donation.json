@@ -18,21 +18,21 @@
     },
     {
         "address": "ban_1xhertod5q3w8o5zuu893epgnyb3f8oobwy81kozs3pyhw3hbmsboqiodmfr",
-        "alias": "Nanners donation";
+        "alias": "Nanners Donation",
         "owner": "VØID"
     },
     {
         "address": "ban_3r7xbz8u5wj4wgkhmojzq6mmiq7ekawtarnfgwsneeck8ktn6zy58ax3ejkn",
-        "alias": "F@H Points-to-Banano Calculator donation";
+        "alias": "F@H Points-to-Banano Calculator Donation",
         "owner": "TurtleByte"
     },
     {
         "address": "ban_3huffb6oj7uppkxu6su9fii943w61gf4cmyzc9tex6izrf6xqaopwdiiib9b",
-        "alias": "Crypto For The Homeless donation"
+        "alias": "Crypto For The Homeless Donation"
     },
     {
         "address": "ban_1gscd7w9bke8ex8hbtyspw5eqamjpdn8xop593w9uhuqmoumk4k7ucht8gs3",
-        "alias": "TNV donation";
+        "alias": "TNV Donation",
         "owner": "TNV"
     }
 ]

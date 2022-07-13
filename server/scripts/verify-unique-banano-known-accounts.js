@@ -54,6 +54,7 @@ let KNOWN_ACCOUNTS_FILES = [
 
 
 KNOWN_ACCOUNTS_FILES.map((file) => {
+    console.log(`reading ${file}`);
     readKnownAccountFiles(`database/banano/known-accounts/${file}.json`);
 });
 
