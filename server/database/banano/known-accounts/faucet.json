@@ -197,5 +197,17 @@
     {
         "address": "ban_3faubo4bfzexkbodi67c74ut1a6it64chofgobbag87yfmy1x457jbsdccd4",
         "alias": "Bonobo Banano faucet"
+    },
+    {
+        "address": "ban_1gori11a7fz3tee6aydqxcehttzbuk93pjsctanfkgqmesa3dmo1cyw89xex",
+        "alias": "Gorilla Nation"
+    },
+    {
+        "address": "ban_33umod1td1x1szyjxj1a4c66j8s5escrii6ptnykz9axcsce93dqguwgwf78",
+        "alias": "Try Banano!"
+    },
+    {
+        "address": "ban_1barre1777qqdcg86788tk6ojy9jmkyb8ridreezbgkhr7btnoqcntejrxhf",
+        "alias": "Barrel O' Bananos"
     }
 ]
