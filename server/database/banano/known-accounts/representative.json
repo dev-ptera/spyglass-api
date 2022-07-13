@@ -217,5 +217,17 @@
         "address": "ban_1hoot5p5jibm84pir458nmfnyt8jc3xfsbyfahk5fxwythz8ogkdcy3hdbka",
         "alias": "Old Eulentier",
         "owner": "Eulentier"
+    },
+    {
+        "address": "ban_3tor3b9sh9ufkgsth1dir3hi6bbwqtcc7xn6zbfhu4ofprktxz8ygysx7rq3",
+        "alias": "Banano Tor"
+    },
+    {
+        "address": "ban_1benisgqfid7nuaod79ijaa53knw9nd6gssi6ar6qw5d8bj1j5bg6946smy9",
+        "alias": "Benis"
+    },
+    {
+        "address": "ban_1nunu9z3puk3dehuoh3djesa4psro1mcqoi48pr64jxzf6osm6iqkmjupwfh",
+        "alias": "Nunu"
     }
 ]
