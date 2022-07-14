@@ -123,7 +123,7 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
             address,
             alias: discord.alias || teleTwitter.alias,
             platform: discord.platform || teleTwitter.platform,
-            platformUserId: discord.platformUserId,
+            platformUserId: discord.platformUserId || teleTwitter.platformUserId
         })
     );
 };
