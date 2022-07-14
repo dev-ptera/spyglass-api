@@ -111,7 +111,7 @@ const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean)
 };
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
-const gatherInsights = async (address: string, ws?: WebSocket): Promise<InsightsDto> => {
+const gatherInsights = async (address: string): Promise<InsightsDto> => {
     let balance = 0;
     let height = 0;
     const insightsDto = createBlankDto();
@@ -126,8 +126,11 @@ const gatherInsights = async (address: string, ws?: WebSocket): Promise<Insights
         insightsDto.blockCount++;
 
         // Send incremental updates to the client.  Every 10K transactions counted.
-        if (insightsDto.blockCount % 10_000 === 0 && ws) {
-            ws.send(String(insightsDto.blockCount));
+        if (insightsDto.blockCount % 10_000 === 0) {
+            const sockets = Array.from(websocketProgressMap.get(address) || []);
+            sockets.map((ws) => {
+                ws.send(String(insightsDto.blockCount));
+            });
         }
 
         const type = getTransactionType(transaction);
@@ -182,7 +185,11 @@ const gatherInsights = async (address: string, ws?: WebSocket): Promise<Insights
     return insightsDto;
 };
 
+// A map of pending requests.  If a request is already in progress, do not re-iterate the account's history; instead subscribe and listen until the original request has ended.
 const activeInsightsRequests = new Map<string, Subject<InsightsDto>>();
+
+// A map of pending requests that have websocket listeners.
+const websocketProgressMap = new Map<string, Set<WebSocket>>();
 
 const confirmedTransactionsPromise = async (body: RequestBody, ws?: WebSocket): Promise<InsightsDto> => {
     setBodyDefaults(body);
@@ -204,24 +211,41 @@ const confirmedTransactionsPromise = async (body: RequestBody, ws?: WebSocket): 
     // If a duplicated request has been received, listen for the emitted resulted.
     if (activeInsightsRequests.has(address)) {
         return new Promise((resolve) => {
+            addProgressWebsocket(address, ws);
             activeInsightsRequests.get(address).subscribe((data) => {
+                removeProgressWebsocket(address, ws);
                 resolve(formatHeightBalances(data, body.includeHeightBalances));
             });
         });
     }
+    ``;
 
     // Otherwise, iterate account balances, emit result when complete.
     const requestFinishedSubject = new Subject<InsightsDto>();
     activeInsightsRequests.set(address, requestFinishedSubject);
     try {
-        const data = await gatherInsights(address, ws);
+        addProgressWebsocket(address, ws);
+        const data = await gatherInsights(address);
         requestFinishedSubject.next(data);
         return formatHeightBalances(data, body.includeHeightBalances);
     } catch (err) {
         LOG_ERR('iterateAccountHistory', err);
     } finally {
+        // requestFinishedSubject.next(data);
+        // TODO: Handle error here where the original request never finishes.  Currently listeners wait forever until refresh.
         activeInsightsRequests.delete(address);
+        removeProgressWebsocket(address, ws);
     }
+};
+
+const addProgressWebsocket = (address: string, ws?: WebSocket): void => {
+    websocketProgressMap.has(address)
+        ? websocketProgressMap.get(address).add(ws)
+        : websocketProgressMap.set(address, new Set([ws]));
+};
+
+const removeProgressWebsocket = (address: string, ws?: WebSocket): void => {
+    websocketProgressMap.get(address).delete(ws);
 };
 
 /** Given an account address, it will return chart datapoints that represent that account's balance over time,
