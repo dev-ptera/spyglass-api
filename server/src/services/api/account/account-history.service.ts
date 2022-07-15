@@ -1,6 +1,7 @@
 import { accountHistoryRpc } from '@app/rpc';
-import { LOG_ERR, sleep } from '@app/services';
+import {LOG_ERR, LOG_INFO, sleep} from '@app/services';
 import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc';
+import {performance} from "perf_hooks";
 
 export type RpcConfirmedTransaction = AccountHistoryResponse['history'][0];
 
@@ -28,15 +29,20 @@ export const iterateHistory = async (
     const transactionsPerRequest = config.transactionsPerRequest || 10_000;
 
     let totalBlocksRequested = 0;
+    let totalTransactionsCounted = 0;
     let resume = true;
+    let head: string;
+
+    const totalStart =  performance.now();
     while (resume) {
+
         // Make the RPC call.
-        const startBlock = offset + totalBlocksRequested;
         const accountHistory = await accountHistoryRpc(
             address,
-            startBlock,
+            head ? 1 : offset,  // If we have a head block to use, manually set the offset.
             transactionsPerRequest,
-            config.reverse
+            config.reverse,
+            head
         ).catch((err) => Promise.reject(LOG_ERR('iterateHistory.accountHistoryRpc', err, { address })));
 
         // Check if anything is weird.
@@ -46,11 +52,18 @@ export const iterateHistory = async (
 
         // Allow the callback per transaction to happen.
         accountHistory.history.map((tx) => {
+
+            // Tip:
+            // If a block is missing in an account history, take the height difference between every block & its next.
+            // If the difference is not 1, there is a missing block.
+
             if (config.hasTerminatedSearch) {
                 return;
             }
             try {
                 callback(tx);
+                head = tx.hash;
+                totalTransactionsCounted++;
             } catch (err) {
                 LOG_ERR('iterateHistory', err);
             }
@@ -61,10 +74,6 @@ export const iterateHistory = async (
         const hasExceededRequestedBlocks = blockCount && totalBlocksRequested >= blockCount;
         const hasSearchedAllBlocks = accountHistory.history.length < transactionsPerRequest;
         resume = !config.hasTerminatedSearch && !hasExceededRequestedBlocks && !hasSearchedAllBlocks;
-
-        // If performing a subsequent call, sleep for a moment.
-        if (resume) {
-            await sleep(500);
-        }
     }
+    LOG_INFO(`Insights Loaded of size: ${totalTransactionsCounted}`, totalStart);
 };

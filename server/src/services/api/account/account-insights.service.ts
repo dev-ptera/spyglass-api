@@ -239,13 +239,17 @@ const confirmedTransactionsPromise = async (body: RequestBody, ws?: WebSocket): 
 };
 
 const addProgressWebsocket = (address: string, ws?: WebSocket): void => {
-    websocketProgressMap.has(address)
-        ? websocketProgressMap.get(address).add(ws)
-        : websocketProgressMap.set(address, new Set([ws]));
+    if (ws) {
+        websocketProgressMap.has(address)
+            ? websocketProgressMap.get(address).add(ws)
+            : websocketProgressMap.set(address, new Set([ws]));
+    }
 };
 
 const removeProgressWebsocket = (address: string, ws?: WebSocket): void => {
-    websocketProgressMap.get(address).delete(ws);
+    if (ws) {
+        websocketProgressMap.get(address).delete(ws);
+    }
 };
 
 /** Given an account address, it will return chart datapoints that represent that account's balance over time,

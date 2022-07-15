@@ -143,7 +143,7 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
     const iterationSettings: IterateHistoryConfig = {
         address,
         hasTerminatedSearch: false,
-        transactionsPerRequest: 2_000,
+        transactionsPerRequest: 2,
         reverse: false,
         offset: body.offset,
     };
@@ -197,4 +197,23 @@ export const getConfirmedTransactionsV2 = (req, res): void => {
             }
             res.status(500).send(err);
         });
+};
+
+/** For a given address, return a list of confirmed transactions.  Includes options for filtering.  */
+export const getConfirmedTransactionsWSV2 = (msg: string, ws: WebSocket): Promise<void> => {
+    if (!msg) {
+        return;
+    }
+
+    try {
+        const body = JSON.parse(msg);
+        setBodyDefaults(body);
+        getConfirmedTransactionsPromise(body) // body, ws
+            .catch((err) => {
+                ws.send(JSON.stringify(err));
+                ws.close();
+            });
+    } catch (err) {
+        LOG_ERR('getConfirmedTransactionsWSV2', err);
+    }
 };
