@@ -111,7 +111,7 @@ const formatHeightBalances = (data: InsightsDto, includeHeightBalances: boolean)
 };
 
 /** Fetches account history in 10_000 transaction increments, tracking balance & sender/receiver info. */
-const gatherInsights = async (address: string): Promise<InsightsDto> => {
+const gatherInsights = async (address: string, blockCount: number): Promise<InsightsDto> => {
     let balance = 0;
     let height = 0;
     const insightsDto = createBlankDto();
@@ -120,28 +120,24 @@ const gatherInsights = async (address: string): Promise<InsightsDto> => {
     const iterationSettings: IterateHistoryConfig = {
         address,
         reverse: true,
+        raw: false, // Simplified RPC results & omits change blocks.
     };
 
+    insightsDto.blockCount = blockCount;
+
+    let transactionsCount = 0;
     await iterateHistory(iterationSettings, (transaction: RpcConfirmedTransaction) => {
-        insightsDto.blockCount++;
+        transactionsCount++;
 
         // Send incremental updates to the client.  Every 10K transactions counted.
-        if (insightsDto.blockCount % 10_000 === 0) {
+        if (transactionsCount % 10_000 === 0) {
             const sockets = Array.from(websocketProgressMap.get(address) || []);
             sockets.map((ws) => {
-                ws.send(String(insightsDto.blockCount));
+                ws.send(String(transactionsCount));
             });
         }
 
         const type = getTransactionType(transaction);
-
-        // Count Change Blocks
-        if (!transaction.amount) {
-            if (type === 'change') {
-                insightsDto.totalTxChange++;
-            }
-            return;
-        }
 
         // Count Send / Receive Blocks & aggregate balances.
         const amount = convertFromRaw(transaction.amount, 6);
@@ -163,6 +159,9 @@ const gatherInsights = async (address: string): Promise<InsightsDto> => {
         height = Number(transaction.height);
         insightsDto.heightBalances[height] = Number(balance.toFixed(8));
     });
+
+    // Count Change Blocks
+    insightsDto.totalTxChange = insightsDto.blockCount - insightsDto.totalTxSent - insightsDto.totalTxReceived;
 
     // Set most common sender/recipient.
     let accountMaxSentCount = 0; // Calc Recipient Data
@@ -225,7 +224,7 @@ const confirmedTransactionsPromise = async (body: RequestBody, ws?: WebSocket): 
     activeInsightsRequests.set(address, requestFinishedSubject);
     try {
         addProgressWebsocket(address, ws);
-        const data = await gatherInsights(address);
+        const data = await gatherInsights(address, blockCount);
         requestFinishedSubject.next(data);
         return formatHeightBalances(data, body.includeHeightBalances);
     } catch (err) {

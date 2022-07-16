@@ -1,10 +1,12 @@
 import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc';
 import { NANO_CLIENT } from '@app/config';
 
+// TODO: Pass in a config object, this is too many params
 export const accountHistoryRpc = async (
     address: string,
     offset: number,
     size: number,
+    raw = true,
     reverse = false,
     head?: string
 ): Promise<AccountHistoryResponse> => {
@@ -16,6 +18,7 @@ export const accountHistoryRpc = async (
     if (head) {
         body.head = head;
     }
+    body.raw = raw;
 
     return NANO_CLIENT.account_history(address, size, body)
         .then((accountHistory: AccountHistoryResponse) => Promise.resolve(accountHistory))

@@ -1,17 +1,24 @@
 import { accountHistoryRpc } from '@app/rpc';
-import {LOG_ERR, LOG_INFO, sleep} from '@app/services';
+import { LOG_ERR, LOG_INFO } from '@app/services';
 import { AccountHistoryResponse } from '@dev-ptera/nano-node-rpc';
-import {performance} from "perf_hooks";
+import { performance } from 'perf_hooks';
 
 export type RpcConfirmedTransaction = AccountHistoryResponse['history'][0];
 
 export type IterateHistoryConfig = {
     address: string;
-    offset?: number; // The number of records to skip before starting the search, defaults to 0.
-    blockCount?: number; // The number of records to iterate, defaults to all.
-    transactionsPerRequest?: number; // Defaults to 10,000
-    hasTerminatedSearch?: boolean; // This can be used to cancel the account history iteration.
-    reverse?: boolean; // Start counting from 0 block height instead of current account block height, defaults to false;
+    // The number of records to skip before starting the search, defaults to 0.
+    offset?: number;
+    // The number of records to iterate, defaults to all.
+    blockCount?: number;
+    // Defaults to 10,000
+    transactionsPerRequest?: number;
+    // This can be used to cancel the account history iteration.
+    hasTerminatedSearch?: boolean;
+    // Start counting from 0 block height instead of current account block height, defaults to false;
+    reverse?: boolean;
+    // Raw RPC account_history param, includes change blocks & adds more complex return data type https://docs.nano.org/commands/rpc-protocol/#account_history
+    raw?: boolean;
 };
 
 /** Iterates through an account's confirmed transaction history & for each transaction, performs a callback action.
@@ -33,14 +40,15 @@ export const iterateHistory = async (
     let resume = true;
     let head: string;
 
-    const totalStart =  performance.now();
+    const totalStart = performance.now();
     while (resume) {
-
         // Make the RPC call.
         const accountHistory = await accountHistoryRpc(
+            // TODO: Pass this in as a config object.
             address,
-            head ? 1 : offset,  // If we have a head block to use, manually set the offset.
+            head ? 1 : offset, // If we have a head block to use, manually set the offset.
             transactionsPerRequest,
+            config.raw,
             config.reverse,
             head
         ).catch((err) => Promise.reject(LOG_ERR('iterateHistory.accountHistoryRpc', err, { address })));
@@ -52,7 +60,6 @@ export const iterateHistory = async (
 
         // Allow the callback per transaction to happen.
         accountHistory.history.map((tx) => {
-
             // Tip:
             // If a block is missing in an account history, take the height difference between every block & its next.
             // If the difference is not 1, there is a missing block.
