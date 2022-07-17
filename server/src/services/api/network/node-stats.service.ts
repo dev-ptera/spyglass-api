@@ -1,25 +1,11 @@
 import { getPeerVersionsPromise } from './peer-versions.service';
 import { HostNodeStatsDto } from '@app/types';
 import { uptimeRpc, blockCountRpc, versionRpc } from '@app/rpc';
-import { AppCache, HOST_NODE_STATS_PAIR, LEDGER_LOCATION } from '@app/config';
-import { LOG_ERR } from '@app/services';
+import { AppCache, HOST_NODE_STATS_PAIR } from '@app/config';
+import {getLedgerSizePromise, LOG_ERR} from '@app/services';
 
-const getSize = require('get-folder-size');
 const spawn = require('child_process');
 const os = require('os');
-
-/** Gets the ledger size, requires read permissions enabled. */
-const calcLedgerSizeMB = async (): Promise<number> =>
-    new Promise((resolve) => {
-        getSize(LEDGER_LOCATION, (err, size) => {
-            if (err) {
-                LOG_ERR('getNodeStats.getLedgerSize', err);
-                resolve(undefined);
-            } else {
-                resolve(Number((size / 1000 / 1000).toFixed(2)));
-            }
-        });
-    });
 
 const calcDiskSpaceGB = async (): Promise<number> =>
     new Promise((resolve) => {
@@ -44,7 +30,7 @@ export const getNodeStatsPromise = async (): Promise<HostNodeStatsDto> => {
     const usedMemoryGB = totalMemoryGB - freeMemoryGB;
     const addressAsRepresentative = String(process.env.PUBLIC_REP_ADDRESS || '').trim();
     const availableDiskSpaceGB = await calcDiskSpaceGB();
-    const ledgerSizeMB = await calcLedgerSizeMB();
+    const ledgerSize = await getLedgerSizePromise();
 
     const peerStats = await getPeerVersionsPromise();
     let peerCount = 0;
@@ -69,7 +55,7 @@ export const getNodeStatsPromise = async (): Promise<HostNodeStatsDto> => {
         availableDiskSpaceGB,
         cementedBlocks: Number(blockCount.cemented),
         currentBlock: Number(blockCount.count),
-        ledgerSizeMB: ledgerSizeMB,
+        ledgerSizeMB: ledgerSize ? ledgerSize.ledgerSizeMB : undefined,
         location: location,
         nodeVendor: version.node_vendor,
         nodeUptimeSeconds: Number(uptime.seconds),

@@ -41,9 +41,6 @@ export const KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS = calcMinutes(60);
 /** These sites can endlessly request resources without throttling. */
 export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
 
-/** Ledger location, used to populate ledger size stats.  Must have read permission granted. */
-export const LEDGER_LOCATION = useBananoConfig() ? BAN.LEDGER_LOCATION : NANO.LEDGER_LOCATION;
-
 /** These nodes are currently only used for the `representatives_online` rpc call to help ensure more accurate results. */
 export const BACKUP_NODES: string[] = useBananoConfig() ? BAN.BACKUP_NODES : NANO.BACKUP_NODES;
 
