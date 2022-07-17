@@ -79,14 +79,17 @@ const writeRepStatistics = async (repAddress: string, isOnline: boolean) => {
 
     // 1 === ONLINE | 0 === OFFLINE
     if (emptyDoc) {
-        const initialPing = isOnline ? { 1: 1 } : { 0: 1 };
-        const timestamp = new Date().getTime();
-        await writeRepDoc({
-            address: repAddress,
-            trackStartDate: formatStingDate(timestamp),
-            trackStartUnixTimestamp: timestamp,
-            pingStats: [initialPing],
-        });
+        // Only write stats for representatives that are online.
+        if (isOnline) {
+            const initialPing = isOnline ? { 1: 1 } : { 0: 1 };
+            const timestamp = new Date().getTime();
+            await writeRepDoc({
+                address: repAddress,
+                trackStartDate: formatStingDate(timestamp),
+                trackStartUnixTimestamp: timestamp,
+                pingStats: [initialPing],
+            });
+        }
     } else {
         const pingStats = data.pingStats;
         const lastPing = pingStats[pingStats.length - 1];
