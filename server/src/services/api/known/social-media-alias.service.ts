@@ -32,7 +32,7 @@ export const getOldTelegramAliases = (): Promise<void> => {
 };
 
 type DiscordApiResponse = {
-    user_id: number;
+    user_id: string;
     user_last_known_name: string;
     address: string;
 };
@@ -62,7 +62,7 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
 
 type TwitGramApiResponse = {
     system: 'twitter' | 'telegram';
-    user_id: number;
+    user_id: string;
     user_name: string;
 };
 

@@ -1,4 +1,4 @@
-import { convertFromRaw, getAccurateHashTimestamp, getTransactionType, isValidAddress, LOG_ERR } from '@app/services';
+import { convertFromRaw, getTransactionType, isValidAddress, LOG_ERR } from '@app/services';
 import { accountBlockCountRpc } from '@app/rpc';
 import { InsightsDto } from '@app/types';
 import { Subject } from 'rxjs';
@@ -62,10 +62,10 @@ const handleReceiveTransaction = (
 
     if (!insightsDto.firstInTxHash) {
         insightsDto.firstInTxHash = transaction.hash;
-        insightsDto.firstInTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+        insightsDto.firstInTxUnixTimestamp = Number(transaction.local_timestamp);
     }
     insightsDto.lastInTxHash = transaction.hash;
-    insightsDto.lastInTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    insightsDto.lastInTxUnixTimestamp = Number(transaction.local_timestamp);
 
     const count = accountReceivedMap.get(sender) || 0;
     accountReceivedMap.set(sender, count + 1);
@@ -87,10 +87,10 @@ const handleSendTransaction = (
     insightsDto.totalAmountSent += amount;
     if (!insightsDto.firstOutTxHash) {
         insightsDto.firstOutTxHash = transaction.hash;
-        insightsDto.firstOutTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+        insightsDto.firstOutTxUnixTimestamp = Number(transaction.local_timestamp);
     }
     insightsDto.lastOutTxHash = transaction.hash;
-    insightsDto.lastOutTxUnixTimestamp = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    insightsDto.lastOutTxUnixTimestamp = Number(transaction.local_timestamp);
 
     const count = accountSentMap.get(recipient) || 0;
     accountSentMap.set(recipient, count + 1);

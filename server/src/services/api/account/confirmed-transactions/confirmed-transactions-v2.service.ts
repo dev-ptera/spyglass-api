@@ -1,5 +1,5 @@
 import { accountBlockCountRpc } from '@app/rpc';
-import { convertFromRaw, getAccurateHashTimestamp, isValidAddress, LOG_ERR } from '@app/services';
+import { convertFromRaw, isValidAddress, LOG_ERR } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 import { AccountHistoryResponse, Subtype } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from '../account-history.service';
@@ -57,7 +57,7 @@ const convertToConfirmedTransactionDto = (
 ): ConfirmedTransactionDto => {
     const type = getTransactionType(transaction);
     const rep = type === SUBTYPE.change ? transaction['representative'] : undefined;
-    const unix = getAccurateHashTimestamp(transaction.hash, transaction.local_timestamp);
+    const unix = Number(transaction.local_timestamp);
     const amount = transaction.amount;
 
     const dto: ConfirmedTransactionDto = {
