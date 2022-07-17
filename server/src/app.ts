@@ -182,7 +182,7 @@ const server = http.createServer(app).listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
     void parseRichListFromFile(); // TODO: replace file-storing with Redis
-    void importHistoricHashTimestamps(); // TODO: Update local database with historic timestamps instead of using CSV
+ //   void importHistoricHashTimestamps(); // TODO: Update local database with historic timestamps instead of using CSV
     void getOldTelegramAliases();
     await readLocalConfig();
 
