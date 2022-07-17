@@ -2,6 +2,7 @@ import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { JTV_QUEUE_ADDRESSES } from './jungle-tv';
+const JSONBig = require('json-bigint');
 
 type OldTelegramAlias = {
     account: string;
@@ -40,13 +41,18 @@ type DiscordApiResponse = {
 const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
-            .get(`https://bananobotapi.banano.cc/ufw/${address}`)
+            .get(`https://bananobotapi.banano.cc/ufw/${address}`, {
+                transformResponse: [(data) => {
+                    // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
+                    return JSONBig.parse(data);
+                }],
+            })
             .then((response: AxiosResponse<DiscordApiResponse[]>) => {
                 resolve({
                     address,
                     alias: response.data[0].user_last_known_name,
                     platform: 'discord',
-                    platformUserId: response.data[0].user_id,
+                    platformUserId: String(response.data[0].user_id),
                 });
             })
             .catch((err: AxiosError) => {
@@ -66,16 +72,18 @@ type TwitGramApiResponse = {
     user_name: string;
 };
 
+// Example: ban_1rt8orkbkw9jnfyy8gcy88c96jqhsq6henz6h35sepniikt5qkea6nzdwqsf
 const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
             .get(`https://ba.nanotipbot.com/users/${address}`)
             .then((response: AxiosResponse<TwitGramApiResponse>) => {
+                console.log(response);
                 resolve({
                     address,
                     alias: response.data.user_name,
                     platform: response.data.system,
-                    platformUserId: response.data.user_id,
+                    platformUserId: String(response.data.user_id),
                 });
             })
             .catch((err: AxiosError) => {
