@@ -203,5 +203,10 @@
         "address": "ban_3hfe17gwpi75ducquep38dcrnits9ffw36dhebuj4ej1adzzsxuq3b3mjcxz",
         "alias": "ViteX Ban-001 Wallet",
         "owner": "ViNo"
+    },
+        {
+        "address": "ban_3r8txi61ppg5ekw6aa5gsdsk3cj6jpxe3towd4jmxswr8pckgiqs9muneey5",
+        "alias": "HitBTC",
+        "owner": "HitBTC"
     }
 ]
