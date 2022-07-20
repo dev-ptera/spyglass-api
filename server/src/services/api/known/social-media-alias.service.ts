@@ -78,7 +78,6 @@ const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccount
         axios
             .get(`https://ba.nanotipbot.com/users/${address}`)
             .then((response: AxiosResponse<TwitGramApiResponse>) => {
-                console.log(response);
                 resolve({
                     address,
                     alias: response.data.user_name,

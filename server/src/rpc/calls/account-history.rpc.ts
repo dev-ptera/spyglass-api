@@ -3,7 +3,7 @@ import { NANO_CLIENT } from '@app/config';
 
 // TODO: Pass in a config object, this is too many params
 export const accountHistoryRpc = async (
-    address: string,
+    address: string, // TODO: Pass in a config object, this is too many params
     offset: number,
     size: number,
     raw = true,

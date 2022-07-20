@@ -46,7 +46,7 @@ const updateKnownAccountsFromRemote = (knownAccountMap: Map<string, KnownAccount
                     if (knownAccountMap.has(account.address)) {
                         knownAccountMap.get(account.address).alias = account.alias;
                         knownAccountMap.get(account.address).owner = account.owner;
-                        // TODO: Cannot update type/category remotely.  This functionality might be removed in future releases.
+                        // TODO: Add ability to update update type/category after fetching remotely.  This functionality might be removed in future releases.
                     } else {
                         knownAccountMap.set(account.address, account);
                     }
@@ -72,12 +72,17 @@ const getRemoteKnownAccountsPromise = async (): Promise<KnownAccountDto[]> => {
     return knownList;
 };
 
-export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
-    if (!body || !body.typeFilter) {
-        return AppCache.knownAccounts;
+const getFilterType = (body: RequestBody): string => {
+    if (body && body.typeFilter) {
+        return body.typeFilter.toLowerCase().trim();
     }
+    return undefined;
+}
+
+export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
-    const filter = body.typeFilter.toLowerCase().trim();
+    const filter = getFilterType(body);
+
     AppCache.knownAccounts.map((account) => {
         if (!filter || (filter && account.type === filter)) {
             accounts.push({
