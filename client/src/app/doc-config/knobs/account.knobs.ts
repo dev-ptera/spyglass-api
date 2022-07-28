@@ -123,7 +123,7 @@ export const ACCOUNT_CONFIRMED_KNOB: Array<Knob> = [
     {
         propertyName: 'offset',
         propertyType: 'number',
-        notes: 'Results will be returned starting from this block height',
+        notes: 'Skips the specified number of records in the result set. Used for pagination.',
     },
     {
         propertyName: 'size',
