@@ -208,5 +208,10 @@
         "address": "ban_3r8txi61ppg5ekw6aa5gsdsk3cj6jpxe3towd4jmxswr8pckgiqs9muneey5",
         "alias": "HitBTC/XGo",
         "owner": "HitBTC/XGo"
+    },
+    {
+        "address": "ban_3bonoyw4qx6ngp5bcg4azyqqb49gunp8je1k898opk1fgp3qf8fbobgr8nbu",
+        "alias": "Bonobo",
+        "owner": "Bonobo"
     }
 ]
