@@ -9,7 +9,7 @@ export type IterateHistoryConfig = {
     address: string;
     // The number of records to iterate.
     blockCount: number;
-    // The number of records to skip before starting the search, defaults to 0.
+    // The number of records to skip, relateive to the starting block.  Starting block can either be at account_block_height or 0, relative to the reverse prop.
     offset?: number;
     // Defaults to 10,000
     transactionsPerRequest?: number;
@@ -50,15 +50,12 @@ export const iterateHistory = async (
     const totalStart = performance.now();
 
     let startBlockNumber = offset;
-    if (!config.reverse && maxBlock) {
+    if (!config.reverse && maxBlock && !offset) {
         startBlockNumber = offset + (blockCount - maxBlock);
     }
-    if (config.reverse && minBlock) {
+    if (config.reverse && minBlock && !offset) {
         startBlockNumber = offset + minBlock - 1;
     }
-
-    console.log(config);
-    console.log(startBlockNumber);
 
     while (!terminateSearch) {
         // Make the RPC call.
