@@ -187,7 +187,7 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
         address,
         blockCount,
         hasTerminatedSearch: false,
-        transactionsPerRequest: 600,
+        transactionsPerRequest: 600, // Keep this number small to prevent a slowdown for large account pagination.
         reverse: body.reverse,
         offset: body.offset,
         maxBlock: body.maxBlock,
