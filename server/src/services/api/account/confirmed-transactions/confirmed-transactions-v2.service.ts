@@ -11,15 +11,32 @@ const SUBTYPE = {
 };
 
 type RequestBody = {
+    // Address to search
     address: string;
+    // Include send blocks
     includeSend?: boolean;
+    // Include Receive blocks
     includeReceive?: boolean;
+    // Include Change blocks
     includeChange?: boolean;
+    // Only include these addresses in the result set
     filterAddresses?: string[];
+    // Ignore these addresses in the result set
+    excludedAddresses?: string[];
+    // Transactions must meet this amount or greater (BAN)
     minAmount?: number;
+    // Transactions must be less than this amount (BAN)
     maxAmount?: number;
+    // Transaction height must exceed this block height
+    minBlock?: number,
+    // Transaction height must not exceed this block height
+    maxBlock?: number,
+    // Number of records to skip before beginning search, this number is added onto min/max block
     offset?: number;
+    // Number of records to return (page)
     size?: number;
+    // Start search from block 1 instead of current block height
+    reverse?: boolean;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -28,8 +45,12 @@ const DEFAULT_BODY: RequestBody = {
     includeReceive: true,
     includeChange: true,
     filterAddresses: [],
+    excludedAddresses: [],
+    minBlock: 0,
+    maxBlock: 0,
     offset: 0,
     size: 25,
+    reverse: false,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
@@ -43,11 +64,20 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.includeChange === undefined) {
         body.includeChange = DEFAULT_BODY.includeChange;
     }
+    if (body.excludedAddresses === undefined) {
+        body.excludedAddresses = DEFAULT_BODY.excludedAddresses;
+    }
+    if (body.filterAddresses === undefined) {
+        body.filterAddresses = DEFAULT_BODY.filterAddresses;
+    }
     if (body.offset === undefined) {
         body.offset = DEFAULT_BODY.offset;
     }
     if (body.size === undefined) {
         body.size = DEFAULT_BODY.size;
+    }
+    if (body.reverse === undefined) {
+        body.reverse = DEFAULT_BODY.reverse;
     }
     body.size = Math.min(body.size, 500);
 };
@@ -82,7 +112,9 @@ const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody
     const type = getTransactionType(tx);
     const hasMaxAmountFilter = Boolean(body.maxAmount);
     const hasMinAmountFilter = Boolean(body.minAmount);
-    const addressFilterSet = new Set(body.filterAddresses);
+    const includedAddresses = new Set(body.filterAddresses);
+    const excludedAddresses = new Set(body.excludedAddresses);
+
     if (!body.includeSend && type === 'send') {
         return;
     }
@@ -104,12 +136,21 @@ const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody
     }
 
     // Address Filters
-    if (addressFilterSet.size > 0) {
+    if (includedAddresses.size > 0) {
         if (type === 'change') {
-            if (!addressFilterSet.has(tx['representative'])) {
+            if (!includedAddresses.has(tx['representative'])) {
                 return;
             }
-        } else if (!addressFilterSet.has(tx.account)) {
+        } else if (!includedAddresses.has(tx.account)) {
+            return;
+        }
+    }
+    if (excludedAddresses.size > 0) {
+        if (type === 'change') {
+            if (excludedAddresses.has(tx['representative'])) {
+                return;
+            }
+        } else if (excludedAddresses.has(tx.account)) {
             return;
         }
     }
@@ -130,8 +171,10 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
         return Promise.reject({ errorMsg: 'Invalid address', errorCode: 2 });
     }
 
+    let blockCount = 0;
     try {
-        await accountBlockCountRpc(address);
+        const blockCountResponse = await accountBlockCountRpc(address);
+        blockCount = Number(blockCountResponse.block_count);
     } catch (err) {
         if (err.error === 'Account not found') {
             // Handle RPC error.
@@ -142,10 +185,13 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
 
     const iterationSettings: IterateHistoryConfig = {
         address,
+        blockCount,
         hasTerminatedSearch: false,
-        transactionsPerRequest: 2,
-        reverse: false,
+        transactionsPerRequest: 600,
+        reverse: body.reverse,
         offset: body.offset,
+        maxBlock: body.maxBlock,
+        minBlock: body.minBlock
     };
 
     const confirmedTransactions = [];

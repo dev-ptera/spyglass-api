@@ -119,6 +119,7 @@ const gatherInsights = async (address: string, blockCount: number): Promise<Insi
     const accountReceivedMap = new Map<string, number>();
     const iterationSettings: IterateHistoryConfig = {
         address,
+        blockCount,
         reverse: true,
         raw: false, // Simplified RPC results & omits change blocks.
     };

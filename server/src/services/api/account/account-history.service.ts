@@ -7,10 +7,10 @@ export type RpcConfirmedTransaction = AccountHistoryResponse['history'][0];
 
 export type IterateHistoryConfig = {
     address: string;
-    // The number of records to skip before starting the search, defaults to 0.
+    // The number of records to iterate.
+    blockCount: number;
+    // The number of records to skip, relateive to the starting block.  Starting block can either be at account_block_height or 0, relative to the reverse prop.
     offset?: number;
-    // The number of records to iterate, defaults to all.
-    blockCount?: number;
     // Defaults to 10,000
     transactionsPerRequest?: number;
     // This can be used to cancel the account history iteration.
@@ -19,6 +19,10 @@ export type IterateHistoryConfig = {
     reverse?: boolean;
     // Raw RPC account_history param, includes change blocks & adds more complex return data type https://docs.nano.org/commands/rpc-protocol/#account_history
     raw?: boolean;
+    // Search results happening before this block number shall be omitted.
+    minBlock?: number;
+    // Search results happening after this block number shall be omitted.
+    maxBlock?: number;
 };
 
 /** Iterates through an account's confirmed transaction history & for each transaction, performs a callback action.
@@ -31,22 +35,34 @@ export const iterateHistory = async (
     callback: (tx: RpcConfirmedTransaction) => void
 ): Promise<void> => {
     const address = config.address;
+    const minBlock = config.minBlock || 0;
+    const maxBlock = config.maxBlock || config.blockCount;
     const offset = config.offset || 0;
     const blockCount = config.blockCount;
     const transactionsPerRequest = config.transactionsPerRequest || 10_000;
 
     let totalBlocksRequested = 0;
     let totalTransactionsCounted = 0;
-    let resume = true;
+    let terminateSearch = false;
+    let hasExceededBlockRange = false;
     let head: string;
 
     const totalStart = performance.now();
-    while (resume) {
+
+    let startBlockNumber = offset;
+    if (!config.reverse && maxBlock && !offset) {
+        startBlockNumber = offset + (blockCount - maxBlock);
+    }
+    if (config.reverse && minBlock && !offset) {
+        startBlockNumber = offset + minBlock - 1;
+    }
+
+    while (!terminateSearch) {
         // Make the RPC call.
         const accountHistory = await accountHistoryRpc(
             // TODO: Pass this in as a config object.
             address,
-            head ? 1 : offset, // If we have a head block to use, manually set the offset.
+            head ? 1 : startBlockNumber, // If we have a head block to use, manually set the offset.
             transactionsPerRequest,
             config.raw,
             config.reverse,
@@ -64,6 +80,20 @@ export const iterateHistory = async (
             // If a block is missing in an account history, take the height difference between every block & its next.
             // If the difference is not 1, there is a missing block.
 
+            // Have we exceeded our block range?
+            const height = Number(tx.height);
+            if (config.reverse) {
+                if (height > maxBlock) {
+                    hasExceededBlockRange = true;
+                    return;
+                }
+            } else {
+                if (height < minBlock) {
+                    hasExceededBlockRange = true;
+                    return;
+                }
+            }
+
             if (config.hasTerminatedSearch) {
                 return;
             }
@@ -78,9 +108,11 @@ export const iterateHistory = async (
 
         // Check to see if we should perform the next account_history RPC call.
         totalBlocksRequested += transactionsPerRequest;
-        const hasExceededRequestedBlocks = blockCount && totalBlocksRequested >= blockCount;
         const hasSearchedAllBlocks = accountHistory.history.length < transactionsPerRequest;
-        resume = !config.hasTerminatedSearch && !hasExceededRequestedBlocks && !hasSearchedAllBlocks;
+        terminateSearch =
+            hasExceededBlockRange
+            || hasSearchedAllBlocks
+            || config.hasTerminatedSearch;
     }
-    LOG_INFO(`Insights Loaded of size: ${totalTransactionsCounted}`, totalStart);
+    LOG_INFO(`History Loaded of size: ${totalTransactionsCounted}`, totalStart);
 };

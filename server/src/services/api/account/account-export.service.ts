@@ -42,6 +42,7 @@ const getAccountExportPromise = async (body: { address: string }): Promise<strin
     const dtos: ConfirmedTransactionDto[] = [];
     const iterationSettings: IterateHistoryConfig = {
         address,
+        blockCount,
         reverse: true,
     };
 
