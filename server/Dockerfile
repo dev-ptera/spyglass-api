@@ -1,6 +1,6 @@
 FROM node:lts-alpine AS builder
 
-WORKDIR /
+WORKDIR /app
 
 COPY . .
 
