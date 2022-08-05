@@ -14,6 +14,9 @@ export const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
         }
 
         console.log(__dirname);
+        var currentPath = process.cwd();
+        console.log(currentPath);
+        console.log(process.env.pwd);
 
         console.log(`Ledger Location: ${LEDGER_LOCATION}`);
 
