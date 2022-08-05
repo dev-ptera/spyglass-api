@@ -8,6 +8,11 @@ moduleAlias.addAlias('@app/types', __dirname + '/types');
 import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
+
+const dotenv = require('dotenv'); // Import before @app/config.
+dotenv.config();
+
+
 import {
     AppCache,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
@@ -78,9 +83,6 @@ import {
     writeNewRepresentativeUptimePings,
 } from '@app/services';
 import {memCache, rateLimiter, serverRestart} from '@app/middleware';
-
-const dotenv = require('dotenv'); // Import before @app/config.
-dotenv.config();
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
