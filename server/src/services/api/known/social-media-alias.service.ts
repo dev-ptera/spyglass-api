@@ -9,7 +9,45 @@ type OldTelegramAlias = {
     user_name: string;
 };
 
+
 const legacyTelegramAliasMap = new Map<string, string>();
+const discordKnownAccounts = new Map<string, SocialMediaAccountAliasDto>();
+export const knownSocialMediaAccounts = new Set<string>(JTV_QUEUE_ADDRESSES);
+
+export const cacheSocialMediaAccounts = (): void => {
+        const start = LOG_INFO('Fetching all discord aliases');
+        axios.get('https://bananobotapi.banano.cc/users', {
+            transformResponse: [
+                (data) => {
+                    // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
+                    return JSONBig.parse(data);
+                },
+            ],
+        })
+            .then((response: AxiosResponse<DiscordApiResponse[]>) => {
+                response.data.map((account) => {
+                    if (account.user_last_known_name) {
+                        discordKnownAccounts.set(account.address, {
+                            address: account.address,
+                            alias: account.user_last_known_name,
+                            platform: 'discord',
+                            platformUserId: account.user_id
+                        });
+                    }
+                    if (account.user_id) {
+                        knownSocialMediaAccounts.add(account.address);
+                    }
+                })
+                LOG_INFO('Discord users updated', start);
+
+        })
+        .catch((err: AxiosError) => {
+             LOG_ERR('fetchAllDiscordAccount', err);
+        })
+}
+
+
+
 /** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
  *  Call this function when the API initializes and store the response in a local map for reference.
  *  Ask Kirby when this will no longer be required.
@@ -21,7 +59,10 @@ export const getOldTelegramAliases = (): Promise<void> => {
             .get(`https://raw.githubusercontent.com/Kirby1997/Banano/master/telegram_old.json`)
             .then((response: AxiosResponse<OldTelegramAlias[]>) => {
                 response.data.map((entry) => {
-                    legacyTelegramAliasMap.set(entry.account, entry.user_name);
+                    if (entry.user_name) {
+                        legacyTelegramAliasMap.set(entry.account, entry.user_name);
+                        knownSocialMediaAccounts.add(entry.account);
+                    }
                 });
                 resolve();
             })
@@ -126,6 +167,12 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         });
     }
 
+    // Check if the cache has the account.
+    if (discordKnownAccounts.has(address)) {
+        // Discord is the only platform where all known accounts are refreshed on an interval. Go use the API for telegram/twitter.
+        return Promise.resolve(discordKnownAccounts.get(address));
+    }
+
     // Check remote APIs (discord, twitter, telegram)
     return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)]).then(
         ([discord, teleTwitter]) => ({
@@ -144,6 +191,9 @@ export const getKnownSocialMediaAccountAliasV1 = (req, res): void => {
 
     getKnownSocialMediaAccountAliasPromise(address)
         .then((data) => {
+            if (data.platformUserId) {
+                knownSocialMediaAccounts.add(address);
+            }
             res.send(data);
         })
         .catch((err) => {

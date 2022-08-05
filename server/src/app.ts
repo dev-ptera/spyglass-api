@@ -8,18 +8,15 @@ moduleAlias.addAlias('@app/types', __dirname + '/types');
 import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
-
-const dotenv = require('dotenv'); // Import before @app/config.
-dotenv.config();
-
 import {
     AppCache,
-    readLocalConfig,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
     PRICE_DATA_REFRESH_INTERVAL_MS,
+    readLocalConfig,
+    REFRESH_SOCIAL_MEDIA_ACCOUNTS_MS,
     REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS,
@@ -36,6 +33,7 @@ import {
     cacheOnlineRepresentatives,
     cachePriceData,
     cacheRepresentativeScores,
+    cacheSocialMediaAccounts,
     getAccountBlockV1,
     getAccountBlockV2,
     getAccountExportV1,
@@ -79,7 +77,10 @@ import {
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
-import { memCache, rateLimiter, serverRestart } from '@app/middleware';
+import {memCache, rateLimiter, serverRestart} from '@app/middleware';
+
+const dotenv = require('dotenv'); // Import before @app/config.
+dotenv.config();
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -230,6 +231,11 @@ const server = http.createServer(app).listen(port, async () => {
         interval: REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     };
 
+    const socialMediaAccounts = {
+        method: cacheSocialMediaAccounts,
+        interval: REFRESH_SOCIAL_MEDIA_ACCOUNTS_MS,
+    };
+
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
@@ -242,6 +248,7 @@ const server = http.createServer(app).listen(port, async () => {
         writeUptimePings,
         representativeScores,
         knownAccounts,
+        socialMediaAccounts,
         accountsDistribution,
     ]);
 });

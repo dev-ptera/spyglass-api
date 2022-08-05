@@ -1,8 +1,9 @@
 import { accountBlockCountRpc } from '@app/rpc';
-import { convertFromRaw, isValidAddress, LOG_ERR } from '@app/services';
+import {convertFromRaw, isValidAddress, LOG_ERR, knownSocialMediaAccounts} from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 import { AccountHistoryResponse, Subtype } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from '../account-history.service';
+import {AppCache} from "@app/config";
 
 const SUBTYPE = {
     change: 'change',
@@ -37,6 +38,10 @@ type RequestBody = {
     size?: number;
     // Start search from block 1 instead of current block height
     reverse?: boolean;
+    // Only include known accounts
+    onlyIncludeKnownAccounts?: boolean;
+    // Only include unknown accounts
+    onlyIncludeUnknownAccounts?: boolean;
 };
 
 const DEFAULT_BODY: RequestBody = {
@@ -51,6 +56,8 @@ const DEFAULT_BODY: RequestBody = {
     offset: 0,
     size: 25,
     reverse: false,
+    onlyIncludeKnownAccounts: false,
+    onlyIncludeUnknownAccounts: false,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
@@ -78,6 +85,9 @@ const setBodyDefaults = (body: RequestBody): void => {
     }
     if (body.reverse === undefined) {
         body.reverse = DEFAULT_BODY.reverse;
+    }
+    if (body.onlyIncludeKnownAccounts === undefined) {
+        body.onlyIncludeKnownAccounts = DEFAULT_BODY.onlyIncludeKnownAccounts;
     }
     body.size = Math.min(body.size, 500);
 };
@@ -108,12 +118,14 @@ const convertToConfirmedTransactionDto = (
     return dto;
 };
 
-const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody): boolean => {
+const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody, knownAccounts: Set<string>): boolean => {
     const type = getTransactionType(tx);
     const hasMaxAmountFilter = Boolean(body.maxAmount);
     const hasMinAmountFilter = Boolean(body.minAmount);
     const includedAddresses = new Set(body.filterAddresses);
     const excludedAddresses = new Set(body.excludedAddresses);
+    const onlyIncludeKnownAccounts = body.onlyIncludeKnownAccounts;
+    const onlyIncludeUnknownAccounts = body.onlyIncludeUnknownAccounts;
 
     if (!body.includeSend && type === 'send') {
         return;
@@ -145,12 +157,25 @@ const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody
             return;
         }
     }
+
     if (excludedAddresses.size > 0) {
         if (type === 'change') {
             if (excludedAddresses.has(tx['representative'])) {
                 return;
             }
         } else if (excludedAddresses.has(tx.account)) {
+            return;
+        }
+    }
+
+    if (onlyIncludeKnownAccounts) {
+        if (!knownAccounts.has(tx.account) && !knownSocialMediaAccounts.has(tx.account)) {
+            return;
+        }
+    }
+
+    if (onlyIncludeUnknownAccounts) {
+        if (knownAccounts.has(tx.account) || knownSocialMediaAccounts.has(tx.account)) {
             return;
         }
     }
@@ -209,7 +234,13 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
             exceededSearchSize = true;
             return;
         }
-        if (shouldIncludeTransaction(tx, body)) {
+
+
+        const knownAddresses = [];
+        AppCache.knownAccounts.map((account) => knownAddresses.push(account.address));
+        const knownSet = new Set(knownAddresses);
+
+        if (shouldIncludeTransaction(tx, body, knownSet)) {
             confirmedTransactions.push(convertToConfirmedTransactionDto(tx));
         }
     });
