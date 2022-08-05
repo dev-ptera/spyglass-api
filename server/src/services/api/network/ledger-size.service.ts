@@ -13,6 +13,8 @@ export const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
             resolve(undefined);
         }
 
+        console.log(__dirname);
+
         console.log(`Ledger Location: ${LEDGER_LOCATION}`);
 
         getSize(LEDGER_LOCATION, (err, size) => {
