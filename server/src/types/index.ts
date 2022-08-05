@@ -5,6 +5,7 @@ export * from './AccountNFTDto';
 export * from './AccountRepresentativeDto';
 export * from './AliasedRepresentativeDto';
 export * from './AccountOverviewDto';
+export * from './BlockAtHeightDto';
 export * from './BlockDto';
 export * from './BurnAccountsDto';
 export * from './CMCPriceData';

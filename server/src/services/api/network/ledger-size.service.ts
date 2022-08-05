@@ -22,7 +22,7 @@ export const getLedgerSizeV1 = (res): void => {
     getLedgerSizePromise()
         .then((data) => {
             if (data) {
-                cacheSend(res, data, LEDGER_SIZE_CACHE_PAIR)
+                cacheSend(res, data, LEDGER_SIZE_CACHE_PAIR);
             } else {
                 res.status(500).send({ error: 'Unable to read ledger size' });
             }

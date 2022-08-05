@@ -109,10 +109,7 @@ export const iterateHistory = async (
         // Check to see if we should perform the next account_history RPC call.
         totalBlocksRequested += transactionsPerRequest;
         const hasSearchedAllBlocks = accountHistory.history.length < transactionsPerRequest;
-        terminateSearch =
-            hasExceededBlockRange
-            || hasSearchedAllBlocks
-            || config.hasTerminatedSearch;
+        terminateSearch = hasExceededBlockRange || hasSearchedAllBlocks || config.hasTerminatedSearch;
     }
     LOG_INFO(`History Loaded of size: ${totalTransactionsCounted}`, totalStart);
 };

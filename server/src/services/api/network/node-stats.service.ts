@@ -2,7 +2,7 @@ import { getPeerVersionsPromise } from './peer-versions.service';
 import { HostNodeStatsDto } from '@app/types';
 import { uptimeRpc, blockCountRpc, versionRpc } from '@app/rpc';
 import { AppCache, HOST_NODE_STATS_PAIR } from '@app/config';
-import {getLedgerSizePromise, LOG_ERR} from '@app/services';
+import { getLedgerSizePromise, LOG_ERR } from '@app/services';
 
 const spawn = require('child_process');
 const os = require('os');

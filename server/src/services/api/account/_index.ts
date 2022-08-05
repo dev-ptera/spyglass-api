@@ -7,4 +7,5 @@ export * from './confirmed-transactions/confirmed-transactions-v1.service';
 export * from './confirmed-transactions/confirmed-transactions-v2.service';
 export * from './account-export.service';
 export * from './account-nfts.service';
-export * from './account-block.service';
+export * from './account-block/account-block-v1.service';
+export * from './account-block/account-block-v2.service';

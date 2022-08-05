@@ -1,5 +1,5 @@
 import { accountsPendingRpc } from '@app/rpc';
-import { blockInfoPromise, isValidAddress, LOG_ERR } from '@app/services';
+import { blockInfoPromiseV1, isValidAddress, LOG_ERR } from '@app/services';
 import { ReceivableTransactionDto } from '@app/types';
 
 const MAX_PENDING_SIZE = 500;
@@ -58,7 +58,7 @@ export const receivableTransactionsPromise = async (body: RequestBody): Promise<
     /* For each hash, look up details. */
     try {
         const dtos: ReceivableTransactionDto[] = [];
-        const blocks = await blockInfoPromise(hashes);
+        const blocks = await blockInfoPromiseV1(hashes);
         blocks.map((block) => {
             dtos.push({
                 address: block.blockAccount,

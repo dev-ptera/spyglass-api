@@ -37,6 +37,7 @@ import {
     cachePriceData,
     cacheRepresentativeScores,
     getAccountBlockV1,
+    getAccountBlockV2,
     getAccountExportV1,
     getAccountInsightsV1,
     getAccountInsightsWSV1,
@@ -45,7 +46,9 @@ import {
     getAccountRepresentativeV1,
     getAliasedRepresentativesV1,
     getBlockInfoV1,
+    getBlockInfoV2,
     getBlocksInfoV1,
+    getBlocksInfoV2,
     getBurnV1,
     getConfirmedTransactionsV1,
     getConfirmedTransactionsV2,
@@ -119,12 +122,15 @@ app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(re
 app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req, res));
 app.get(`/${PATH_ROOT}/v1/account/nfts/:address`, (req, res) => getAccountNFTsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/block-at-height`, (req, res) => getAccountBlockV1(req, res));
+app.post(`/${PATH_ROOT}/v2/account/block-at-height`, (req, res) => getAccountBlockV2(req, res));
 app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
 app.ws(`/${PATH_ROOT}/v1/account/insights`, (ws) => ws.on('message', (msg) => getAccountInsightsWSV1(msg, ws)));
 
 /* Block */
 app.get(`/${PATH_ROOT}/v1/block/:block`, (req, res) => getBlockInfoV1(req, res));
 app.post(`/${PATH_ROOT}/v1/blocks`, (req, res) => getBlocksInfoV1(req, res));
+app.get(`/${PATH_ROOT}/v2/block/:block`, (req, res) => getBlockInfoV2(req, res));
+app.post(`/${PATH_ROOT}/v2/blocks`, (req, res) => getBlocksInfoV2(req, res));
 
 /* Distribution */
 app.get(`/${PATH_ROOT}/v1/distribution/burn`, (req, res) => getBurnV1(res));

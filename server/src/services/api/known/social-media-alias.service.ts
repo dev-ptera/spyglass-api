@@ -42,10 +42,12 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
             .get(`https://bananobotapi.banano.cc/ufw/${address}`, {
-                transformResponse: [(data) => {
-                    // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
-                    return JSONBig.parse(data);
-                }],
+                transformResponse: [
+                    (data) => {
+                        // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
+                        return JSONBig.parse(data);
+                    },
+                ],
             })
             .then((response: AxiosResponse<DiscordApiResponse[]>) => {
                 resolve({

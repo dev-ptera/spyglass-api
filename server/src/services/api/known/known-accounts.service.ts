@@ -77,7 +77,7 @@ const getFilterType = (body: RequestBody): string => {
         return body.typeFilter.toLowerCase().trim();
     }
     return undefined;
-}
+};
 
 export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];

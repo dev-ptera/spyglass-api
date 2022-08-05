@@ -28,9 +28,9 @@ type RequestBody = {
     // Transactions must be less than this amount (BAN)
     maxAmount?: number;
     // Transaction height must exceed this block height
-    minBlock?: number,
+    minBlock?: number;
     // Transaction height must not exceed this block height
-    maxBlock?: number,
+    maxBlock?: number;
     // Number of records to skip before beginning search, this number is added onto min/max block
     offset?: number;
     // Number of records to return (page)
@@ -191,7 +191,7 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
         reverse: body.reverse,
         offset: body.offset,
         maxBlock: body.maxBlock,
-        minBlock: body.minBlock
+        minBlock: body.minBlock,
     };
 
     const confirmedTransactions = [];

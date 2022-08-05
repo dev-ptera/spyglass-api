@@ -4,7 +4,7 @@ import { BlockDto } from '@app/types';
 import { BlocksInfoResponse, BlocksInfoResponseContents } from '@dev-ptera/nano-node-rpc';
 
 /** Given a list of hashes, returns a BlockDto array. */
-export const blockInfoPromise = (hashes: string[]): Promise<BlockDto[]> =>
+export const blockInfoPromiseV1 = (hashes: string[]): Promise<BlockDto[]> =>
     blocksInfoRpc(hashes)
         .then((blocksInfo: BlocksInfoResponse) => {
             const dtos: BlockDto[] = [];
@@ -17,6 +17,8 @@ export const blockInfoPromise = (hashes: string[]): Promise<BlockDto[]> =>
                     balance: block.balance,
                     blockAccount: block.block_account,
                     confirmed: block.confirmed,
+                    // @ts-ignore
+                    successor: block.successor,
                     contents: {
                         account: contents.account,
                         balance: contents.balance,
@@ -46,7 +48,7 @@ export const getBlockInfoV1 = async (req, res): Promise<void> => {
     const parts = req.url.split('/');
     const hash = parts[parts.length - 1];
     try {
-        const blocks = await blockInfoPromise([hash]);
+        const blocks = await blockInfoPromiseV1([hash]);
         const block = blocks[0];
         res.send(block);
     } catch (err) {
