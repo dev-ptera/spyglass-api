@@ -1,4 +1,4 @@
-import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
+import { isValidAddress, LOG_ERR, LOG_INFO, sleep } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { JTV_QUEUE_ADDRESSES } from './jungle-tv';
@@ -8,15 +8,27 @@ type OldTelegramAlias = {
     account: string;
     user_name: string;
 };
+type DiscordApiResponse = {
+    user_id: string;
+    user_last_known_name: string;
+    address: string;
+};
+type TwitGramApiResponse = {
+    account: string;
+    system: 'twitter' | 'telegram';
+    user_id: string;
+    user_name: string;
+};
 
 
 const legacyTelegramAliasMap = new Map<string, string>();
-const discordKnownAccounts = new Map<string, SocialMediaAccountAliasDto>();
-export const knownSocialMediaAccounts = new Set<string>(JTV_QUEUE_ADDRESSES);
+export const knownSocialMediaAccounts = new Map<string, SocialMediaAccountAliasDto>();
 
-export const cacheSocialMediaAccounts = (): void => {
-        const start = LOG_INFO('Fetching all discord aliases');
-        axios.get('https://bananobotapi.banano.cc/users', {
+export const cacheSocialMediaAccounts = async (): Promise<void> => {
+    /* Discord */
+    const startDiscord = LOG_INFO('Refreshing all Discord Aliases');
+    axios
+        .get('https://bananobotapi.banano.cc/users', {
             transformResponse: [
                 (data) => {
                     // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
@@ -24,29 +36,72 @@ export const cacheSocialMediaAccounts = (): void => {
                 },
             ],
         })
-            .then((response: AxiosResponse<DiscordApiResponse[]>) => {
-                response.data.map((account) => {
-                    if (account.user_last_known_name) {
-                        discordKnownAccounts.set(account.address, {
-                            address: account.address,
-                            alias: account.user_last_known_name,
-                            platform: 'discord',
-                            platformUserId: account.user_id
-                        });
-                    }
-                    if (account.user_id) {
-                        knownSocialMediaAccounts.add(account.address);
-                    }
-                })
-                LOG_INFO('Discord users updated', start);
-
+        .then((response: AxiosResponse<DiscordApiResponse[]>) => {
+            response.data.map((account) => {
+                if (account.user_id) {
+                    knownSocialMediaAccounts.set(account.address, {
+                        address: account.address,
+                        alias: account.user_last_known_name,
+                        platform: 'discord',
+                        platformUserId: account.user_id,
+                    });
+                }
+            });
+            LOG_INFO('Discord users updated', startDiscord);
+            LOG_INFO(`Known Social Media Account Size: ${knownSocialMediaAccounts.size}`);
         })
         .catch((err: AxiosError) => {
-             LOG_ERR('fetchAllDiscordAccount', err);
+            LOG_ERR('fetchAllDiscordAccount', err);
+        });
+
+    await sleep(5000);
+
+    /* Twitter */
+    const startTwitter = LOG_INFO('Refreshing all Twitter Aliases');
+    axios
+        .get(`https://ba.nanotipbot.com/users/twitter`)
+        .then((response: AxiosResponse<TwitGramApiResponse[]>) => {
+            response.data.map((account) => {
+                if (account.user_id) {
+                    knownSocialMediaAccounts.set(account.account, {
+                        address: account.account,
+                        alias: account.user_name,
+                        platform: 'twitter',
+                        platformUserId: account.user_id,
+                    });
+                }
+            });
+            LOG_INFO('Twitter users updated', startTwitter);
+            LOG_INFO(`Known Social Media Account Size: ${knownSocialMediaAccounts.size}`);
         })
-}
+        .catch((err: AxiosError) => {
+            LOG_ERR('fetchAllTwitterAccount', err);
+        });
 
+    await sleep(5000);
 
+    /* Telegram */
+    const startTelegram = LOG_INFO('Refreshing all Telegram Aliases');
+    axios
+        .get(`https://ba.nanotipbot.com/users/telegram`)
+        .then((response: AxiosResponse<TwitGramApiResponse[]>) => {
+            response.data.map((account) => {
+                if (account.user_id) {
+                    knownSocialMediaAccounts.set(account.account, {
+                        address: account.account,
+                        alias: account.user_name,
+                        platform: 'telegram',
+                        platformUserId: account.user_id,
+                    });
+                }
+            });
+            LOG_INFO('Telegram users updated', startTelegram);
+            LOG_INFO(`Known Social Media Account Size: ${knownSocialMediaAccounts.size}`);
+        })
+        .catch((err: AxiosError) => {
+            LOG_ERR('fetchAllTelegramAccount', err);
+        });
+};
 
 /** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
  *  Call this function when the API initializes and store the response in a local map for reference.
@@ -58,10 +113,15 @@ export const getOldTelegramAliases = (): Promise<void> => {
         axios
             .get(`https://raw.githubusercontent.com/Kirby1997/Banano/master/telegram_old.json`)
             .then((response: AxiosResponse<OldTelegramAlias[]>) => {
-                response.data.map((entry) => {
-                    if (entry.user_name) {
-                        legacyTelegramAliasMap.set(entry.account, entry.user_name);
-                        knownSocialMediaAccounts.add(entry.account);
+                response.data.map((account) => {
+                    if (account.user_name) {
+                        legacyTelegramAliasMap.set(account.account, account.user_name);
+                        knownSocialMediaAccounts.set(account.account, {
+                            address: account.account,
+                            alias: account.user_name,
+                            platform: 'telegram',
+                            platformUserId: undefined,
+                        });
                     }
                 });
                 resolve();
@@ -71,12 +131,6 @@ export const getOldTelegramAliases = (): Promise<void> => {
                 resolve();
             });
     });
-};
-
-type DiscordApiResponse = {
-    user_id: string;
-    user_last_known_name: string;
-    address: string;
 };
 
 const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
@@ -108,12 +162,6 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
                 });
             });
     });
-
-type TwitGramApiResponse = {
-    system: 'twitter' | 'telegram';
-    user_id: string;
-    user_name: string;
-};
 
 // Example: ban_1rt8orkbkw9jnfyy8gcy88c96jqhsq6henz6h35sepniikt5qkea6nzdwqsf
 const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
@@ -167,10 +215,9 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         });
     }
 
-    // Check if the cache has the account.
-    if (discordKnownAccounts.has(address)) {
-        // Discord is the only platform where all known accounts are refreshed on an interval. Go use the API for telegram/twitter.
-        return Promise.resolve(discordKnownAccounts.get(address));
+    // Check if the account is in the cache.
+    if (knownSocialMediaAccounts.has(address)) {
+        return Promise.resolve(knownSocialMediaAccounts.get(address));
     }
 
     // Check remote APIs (discord, twitter, telegram)
@@ -192,7 +239,7 @@ export const getKnownSocialMediaAccountAliasV1 = (req, res): void => {
     getKnownSocialMediaAccountAliasPromise(address)
         .then((data) => {
             if (data.platformUserId) {
-                knownSocialMediaAccounts.add(address);
+                knownSocialMediaAccounts.set(address, data);
             }
             res.send(data);
         })

@@ -12,7 +12,6 @@ import 'express-async-errors';
 const dotenv = require('dotenv'); // Import before @app/config.
 dotenv.config();
 
-
 import {
     AppCache,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
@@ -82,7 +81,7 @@ import {
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
-import {memCache, rateLimiter, serverRestart} from '@app/middleware';
+import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 

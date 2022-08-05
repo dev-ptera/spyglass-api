@@ -8,7 +8,6 @@ const LEDGER_LOCATION = process.env.LEDGER_LOCATION;
 /** Calculates ledger size. Requires the LEDGER_LOCATION env config variable is set & directory is readable. */
 export const getLedgerSizePromise = async (): Promise<LedgerSizeDto> =>
     new Promise((resolve) => {
-
         if (!LEDGER_LOCATION) {
             LOG_ERR('getLedgerSizePromise', { error: 'No Ledger Location Provided' });
             resolve(undefined);

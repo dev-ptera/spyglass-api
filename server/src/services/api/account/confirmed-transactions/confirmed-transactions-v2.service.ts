@@ -1,9 +1,9 @@
 import { accountBlockCountRpc } from '@app/rpc';
-import {convertFromRaw, isValidAddress, LOG_ERR, knownSocialMediaAccounts} from '@app/services';
+import { convertFromRaw, isValidAddress, knownSocialMediaAccounts, LOG_ERR } from '@app/services';
 import { ConfirmedTransactionDto } from '@app/types';
 import { AccountHistoryResponse, Subtype } from '@dev-ptera/nano-node-rpc/dist/types/rpc-response';
 import { iterateHistory, IterateHistoryConfig, RpcConfirmedTransaction } from '../account-history.service';
-import {AppCache} from "@app/config";
+import { AppCache } from '@app/config';
 
 const SUBTYPE = {
     change: 'change',
@@ -118,7 +118,11 @@ const convertToConfirmedTransactionDto = (
     return dto;
 };
 
-const shouldIncludeTransaction = (tx: RpcConfirmedTransaction, body: RequestBody, knownAccounts: Set<string>): boolean => {
+const shouldIncludeTransaction = (
+    tx: RpcConfirmedTransaction,
+    body: RequestBody,
+    knownAccounts: Set<string>
+): boolean => {
     const type = getTransactionType(tx);
     const hasMaxAmountFilter = Boolean(body.maxAmount);
     const hasMinAmountFilter = Boolean(body.minAmount);
@@ -234,7 +238,6 @@ const getConfirmedTransactionsPromise = async (body: RequestBody): Promise<Confi
             exceededSearchSize = true;
             return;
         }
-
 
         const knownAddresses = [];
         AppCache.knownAccounts.map((account) => knownAddresses.push(account.address));
