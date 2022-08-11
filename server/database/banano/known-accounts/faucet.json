@@ -209,5 +209,10 @@
     {
         "address": "ban_1barre1777qqdcg86788tk6ojy9jmkyb8ridreezbgkhr7btnoqcntejrxhf",
         "alias": "Barrel O' Bananos"
+    },
+    {
+        "address": "ban_3swiperfi43zpunak44hw6rfbrruwfj1aobm6gwjcbd65sy6b3kjfeunkjxc",
+        "alias": "Banano Swiper",
+        "owner": "Shay#5787"
     }
 ]
