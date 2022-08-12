@@ -213,6 +213,11 @@
     {
         "address": "ban_3swiperfi43zpunak44hw6rfbrruwfj1aobm6gwjcbd65sy6b3kjfeunkjxc",
         "alias": "Banano Swiper",
-        "owner": "Shay#5787"
+        "owner": "Shay"
+    },
+    {
+        "address": "ban_1rxpayorfy18zp5ospz89njtu3akhmyszot4b16z6yxy8tkeffqfkc6r84ok",
+        "alias": "BanRX",
+        "owner": "Shay"
     }
 ]
