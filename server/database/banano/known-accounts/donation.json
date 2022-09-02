@@ -34,5 +34,25 @@
         "address": "ban_1gscd7w9bke8ex8hbtyspw5eqamjpdn8xop593w9uhuqmoumk4k7ucht8gs3",
         "alias": "TNV Donation",
         "owner": "TNV"
+    },
+    {
+        "address": "ban_3greenxg9oxkaei556wrxwzwdxie4ehmzhmi7fyztofhantxjysntceq5sx5",
+        "alias": "BananoForest Organization 1",
+        "owner": "BananoForest"
+    },
+    {
+        "address": "ban_3green9hp4hg8ejbpiq5fykktaz3scjoop9nzinq8m8kxu1xi6fi5ds3gwm8",
+        "alias": "BananoForest Organization 2",
+        "owner": "BananoForest"
+    },
+    {
+        "address": "ban_3greengegg8of5dqjqfzqzkjkkygtaptn39uyja4xncd13eqftcpw4r4xmfb",
+        "alias": "BananoForest Organization 3",
+        "owner": "BananoForest"
+    },
+    {
+        "address": "ban_3greenp7kzetigfjcfgbis1ad63m4hyyyit9usd1g4byuxg81g79fc8aiwtr",
+        "alias": "BananoForest Organization 4",
+        "owner": "BananoForest"
     }
 ]
