@@ -219,5 +219,10 @@
         "address": "ban_1rxpayorfy18zp5ospz89njtu3akhmyszot4b16z6yxy8tkeffqfkc6r84ok",
         "alias": "BanRX",
         "owner": "Shay"
+    },
+    {
+        "address": "ban_1picturessx4aedsf59gm6qjkm6e3od4384m1qpfnotgsuoczbmhdb3e1zkh",
+        "alias": "Banano.pictures",
+        "owner": "Randomblock1"
     }
 ]
