@@ -50,6 +50,7 @@ let KNOWN_ACCOUNTS_FILES = [
     'representative',
     'service',
     'team-member',
+    'inactive-team-member',
 ]
 
 

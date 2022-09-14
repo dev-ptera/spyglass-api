@@ -1,7 +1,7 @@
 [
     {
         "name": "batman",
-        "url": "108.39.199.48"
+        "url": "http://batman.dev-ptera.com/api.php"
     },
     {
         "name": "Cabbit",
@@ -94,5 +94,9 @@
     {
         "name": "Goob Cum",
         "url": "https://home.goob-bi.com/node/api.php"
+    },
+    {
+        "name": "V23.3",
+        "url": "http://node.coranos.cc/api.php"
     }
 ]
