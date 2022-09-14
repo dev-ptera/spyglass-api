@@ -18,6 +18,7 @@ export const KNOWN_ACCOUNTS_FILES = [
     'exchange',
     'faucet',
     'gambling',
+    'inactive-team-member',
     'representative',
     'service',
     'team-member',
