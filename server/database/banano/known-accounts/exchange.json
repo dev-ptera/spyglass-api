@@ -100,6 +100,11 @@
         "owner": "mail@nano.trade"
     },
     {
+        "address": "ban_1usdc1u6y9ixwx6f66xiezsza5eqsriwhwqzaopuf9musmsgm5pfjfkr7bpu  ",
+        "alias": "usdc[.]banano[.]trade",
+        "owner": "mail@nano.trade"
+    },
+    {
         "address": "ban_1w5q77ocgfrjn6sqwudfuygtomwyij8ijes3y5g8kaydxsf8f4jpz4n9q9a3",
         "alias": "Nanogames Hot Wallet",
         "owner": "Nanogames.io"
@@ -199,7 +204,7 @@
         "alias": "ViteX Ban-001 Wallet",
         "owner": "ViNo"
     },
-        {
+    {
         "address": "ban_3r8txi61ppg5ekw6aa5gsdsk3cj6jpxe3towd4jmxswr8pckgiqs9muneey5",
         "alias": "HitBTC/XGo",
         "owner": "HitBTC/XGo"
