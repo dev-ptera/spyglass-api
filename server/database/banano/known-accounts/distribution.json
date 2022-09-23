@@ -70,8 +70,13 @@
         "owner": "Banano"
     },
     {
+        "address": "ban_3bonus9fwjnwjoyawbdbokze51iucgqwtdyk6e4kqdu39rw8nyzmew5ptxoj ",
+        "alias": "Contributor Bonus 3",
+        "owner": "Banano"
+    },
+    {
         "address": "ban_1bonusncatu5rsrctx1djmgrragfwpj4ujsk939utmtdwskhtiourh8997eh",
-        "alias": "Contributor Bonuses",
+        "alias": "Contributor Bonus 1",
         "owner": "Banano"
     }
 ]
