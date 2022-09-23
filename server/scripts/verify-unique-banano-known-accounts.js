@@ -24,6 +24,12 @@ const readKnownAccountFiles = (file) => {
   //  console.log(`Tested unique address for local known-account: ${type}`);
     const accounts = readFileContents(file);
     accounts.map((account) => {
+
+        if (/\s/g.test(account.address)) {
+            failure = true;
+            console.error(`${account.address} has whitespace ${file}`);
+        }
+
         if (!knownAddressSet.has(account.address)) {
             knownAddressSet.add(account.address);
             account.file = file;
@@ -60,7 +66,7 @@ KNOWN_ACCOUNTS_FILES.map((file) => {
 });
 
 if (failure) {
-    throw new Error('Duplicate accounts found');
+    throw new Error('Something is wrong.');
 } else {
     console.log('No duplicate known accounts found');
 }
