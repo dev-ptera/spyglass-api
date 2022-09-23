@@ -224,5 +224,15 @@
         "address": "ban_1picturessx4aedsf59gm6qjkm6e3od4384m1qpfnotgsuoczbmhdb3e1zkh",
         "alias": "Banano.pictures",
         "owner": "Randomblock1"
+    },
+    {
+        "address": "ban_19pe1ionxqi6eu1uxs1k3tqxd36rkdjue8f3b5t3sbzwy13jg6z5ujfm76d6",
+        "alias": "Pelion Vault faucet",
+        "owner": "RobStalone"
+    },
+    {
+        "address": "ban_1bmcmeowun9kpehd3mx8zjnkda8kg6cdrhw9f6q41jq78sj3gym9zznkd1a6",
+        "alias": "Black Monkey CryptomonKeys",
+        "owner": "Banano"
     }
 ]
