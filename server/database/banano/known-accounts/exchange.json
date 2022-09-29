@@ -159,6 +159,21 @@
         "owner": "Banano"
     },
     {
+        "address": "ban_3ethco1d34b1mmerybpw6pdgi3zt6p7ieb4aqcmbfn8i7af5w43d8ag8s7hk",
+        "alias": "wBAN Ethereum Cold Wallet",
+        "owner": "Banano"
+    },
+    {
+        "address": "ban_3ethhot3otmrcizy8kxkxbfmb3qjswatr4pnixexpdy6u18e1mjgxteynmay",
+        "alias": "wBAN Ethereum Hot Wallet",
+        "owner": "Banano"
+    },
+    {
+        "address": "ban_3ethwrap7kzguicmh3birwszzyg5giw93o7zkrqj7sxbcw8z83ihd3k4hps9",
+        "alias": "wBAN Ethereum Wrap Wallet",
+        "owner": "Banano"
+    },
+    {
         "address": "ban_1wbanhr5jr179uw34793g96qihwmisd6bypp9ofy6yy77hchge96tqmwhq9a",
         "alias": "wBAN Old",
         "owner": "Banano"
