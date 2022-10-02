@@ -163,7 +163,8 @@
     },
     {
         "address": "ban_1questzx4ym4ncmswhz3r4upwrxosh1hnic8ry8sbh694r48ajq95d1ckpay",
-        "alias": "BananoBrowserQuest"
+        "alias": "BananoBrowserQuest",
+        "owner": "running-coder"
     },
     {
         "address": "ban_3sinkoff1yj9z5fougwao1gbjtsmb98u1j5p9kcrndqcc4irdxgzsjbem96e",
@@ -237,7 +238,8 @@
     },
     {
         "address": "ban_1monkecrqoqr6j6qzhtd9i8x49ujdnoqt7ramt9jmhd543icsrx5accoqtd5",
-        "alias": "icanhaznano.monke42.tk"
+        "alias": "icanhaznano.monke42.tk",
+        "owner": "monke42"
     },
     {
         "address": "ban_36seefx46pwcpyp6a8kukybamqioam6a7jef88s8esjpubyc8urccebjqgyj",
@@ -245,7 +247,8 @@
     },
     {
         "address": "ban_3jyqzypmcn94dmyp7eb3k85sug1568xwehzx738o5jniaxaf1jpxdakjz96r",
-        "alias": "CSquared's Faucet"
+        "alias": "CSquared's Faucet",
+        "owner": "CSquared"
     },
     {
         "address": "ban_3jzi3modbcrfq7gds5nmudstw3kghndqb1k48twhqxds3ytyj4k7cf79q5ij",
@@ -254,5 +257,10 @@
     {
         "address": "ban_3w91yp9ufjhpzt98xzddfmnoo8bm51ic3fp3mmx4mqbocqqde7dii1w8g4b6",
         "alias": "GoBanano"
+    },
+    {
+        "address": "ban_3sbqs38uoi9z34z5xeof5y4qjfc41n9rgr4hhhcu5zh5two9xrh4she1n8hs",
+        "alias": "BananoTime! Giveaway Bot",
+        "owner": "u/MrNoSock"
     }
 ]
