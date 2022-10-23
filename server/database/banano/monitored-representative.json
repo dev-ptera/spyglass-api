@@ -98,5 +98,9 @@
     {
         "name": "V23.3",
         "url": "http://node.coranos.cc/api.php"
+    },
+    {
+        "name": "Twister32",
+        "url": "https://twister32.ddns.info/api.php"
     }
 ]
