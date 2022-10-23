@@ -2,6 +2,7 @@ import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativ
 import { convertFromRaw, LOG_ERR, LOG_INFO, printResourceUsage } from '@app/services';
 import { AppCache, PROFILE } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
+import {REDIS_CLIENT} from "../../../redis/client";
 const fs = require('fs');
 
 type FrontiersData = {
@@ -123,6 +124,8 @@ export const parseRichListFromFile = async (): Promise<void> =>
                         const parsed = JSON.parse(data);
                         AppCache.accountDistributionStats = parsed.distributionStats;
                         AppCache.richList = parsed.richList;
+                        //REDIS_CLIENT.set('SPYGLASS_API_RICHLIST', data);
+                        REDIS_CLIENT.set('SPYGLASS_API_ACCOUNT_DISTRIBUTION_STATS', JSON.stringify(parsed.distributionStats));
                         LOG_INFO('Rich List File Updated', start);
                     } catch (err) {
                         LOG_ERR('parseRichListFromFile.parseFile', err);

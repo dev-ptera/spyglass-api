@@ -1,3 +1,4 @@
+
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/middleware', __dirname + '/middleware');
@@ -28,6 +29,7 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import * as expressWs from 'express-ws';
+import {connectRedisDatabase} from "./redis/client";
 
 import {
     cacheAccountDistribution,
@@ -188,6 +190,7 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
 const server = http.createServer(app).listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
+    await connectRedisDatabase();
     void parseRichListFromFile(); // TODO: replace file-storing with Redis
     void getOldTelegramAliases();
     await readLocalConfig();
