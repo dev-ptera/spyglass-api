@@ -271,5 +271,10 @@
     {
         "address":"ban_3k1x6ekfwh513bgkzimh53ud5ijq1k4fdcems7otzxomumzt69fh4rca7emy",
         "alias": "banfaucet.com"
+    },
+    {
+        "address": "ban_1moondripyui11a5bode7q7gf4m9itad7m8gd3e9wu4qortrdpyj9d4ngw5z",
+        "alias": "Moonano Faucet",
+        "owner": "Somoon"
     }
 ]
