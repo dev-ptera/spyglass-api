@@ -269,12 +269,17 @@
         "owner": "u/MrNoSock"
     },
     {
-        "address":"ban_3k1x6ekfwh513bgkzimh53ud5ijq1k4fdcems7otzxomumzt69fh4rca7emy",
+        "address": "ban_3k1x6ekfwh513bgkzimh53ud5ijq1k4fdcems7otzxomumzt69fh4rca7emy",
         "alias": "banfaucet.com"
     },
     {
         "address": "ban_1moondripyui11a5bode7q7gf4m9itad7m8gd3e9wu4qortrdpyj9d4ngw5z",
         "alias": "Moonano Faucet",
         "owner": "Somoon"
+    },
+    {
+        "address": "ban_3ze6byhismfpj8jhuda6fq1a7nkniq7t5soet9k58y3egt3rco66j69fdksg",
+        "alias": "EARNS.CC faucet",
+        "owner": "ZOYANX"
     }
 ]
