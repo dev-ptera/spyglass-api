@@ -231,12 +231,12 @@
     },
     {
         "address": "ban_1arbhot3nd1ocih46ocoa7xsaqn6u8qrfqaswe3ygg8xmzno5of1zq5sp3r6",
-        "alias": "wBAN Arbitrum Cold Wallet",
+        "alias": "wBAN Arbitrum Hot Wallet",
         "owner": "Banano"
     },
     {
         "address": "ban_3arbc1d3usn8not6ddbegexdi7qdabp4d1g3emcgtirign1c6akjc55bexko",
-        "alias": "wBAN Arbitrum Hot Wallet",
+        "alias": "wBAN Arbitrum Cold Wallet",
         "owner": "Banano"
     },
     {
