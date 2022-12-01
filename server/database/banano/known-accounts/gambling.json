@@ -46,7 +46,22 @@
     },
     {
         "address": "ban_3sprts3a8hzysquk4mcy4ct4f6izp1mxtbnybiyrriprtjrn9da9cbd859qf",
-        "alias": "Banano Sports Pools",
+        "alias": "Banano Sports Pools NFL",
+        "owner": "Elementalennui"
+    },
+    {
+        "address": "ban_15sxnajaaztcbeewrs7yyih4teiz4jsxur1j393yi8xhytuza5jty6emdogo",
+        "alias": "Banano Sports Pools World Cup Match",
+        "owner": "Elementalennui"
+    },
+    {
+        "address": "ban_1wu6rxojhgjwy1mzci1jmkm7az7nntf31h6ptuoqmetwp64j3sxo7het6e3m",
+        "alias": "Banano Sports Pools World Cup Team and Groups",
+        "owner": "Elementalennui"
+    },
+    {
+        "address": "ban_1eub1ezmefs1im56oomprzddwhp5s9c6brhx755ftjfjz45uytputarmcwto",
+        "alias": "Banano Sports Pools MLB playoffs and teams",
         "owner": "Elementalennui"
     }
 ]
