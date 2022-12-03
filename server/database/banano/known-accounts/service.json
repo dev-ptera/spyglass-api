@@ -22,5 +22,10 @@
         "address": "ban_1waxf5j83w7eqqz3kph7u843wh3p5ddf1n48rh4i9m41zhk9nnquzwbnz9pb",
         "alias": "waxp.rentals",
         "owner": "homelab-express"
+    },
+    {
+        "address": "ban_1greenntagzbysqsk3ypbwx1oouojus8gmcawdb4jtu6t3czuacxtznnrues",
+        "alias": "cryptomonKeys connect linking",
+        "owner": "Green"
     }
 ]
