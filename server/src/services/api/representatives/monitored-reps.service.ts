@@ -4,6 +4,7 @@ import { AppCache, MANUAL_PEER_MONITOR_URLS } from '@app/config';
 import { EulenMonitoredRepresentativeDto, KnownAccountDto, MonitoredRepresentativeDto } from '@app/types';
 import { getPRWeightPromise, LOG_ERR, LOG_INFO } from '@app/services';
 import { sortMonitoredRepsByName } from './rep-utils';
+import * as https from 'https';
 
 type NanoNodeMonitorStats = {
     nanoNodeAccount: string;
@@ -38,12 +39,17 @@ export const getMonitoredUrl = (url: string): string => {
 };
 
 /** Given a peer IP or HTTP address, queries node monitor stats. */
-const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> =>
-    axios
+const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> => {
+    const httpsAgent = new https.Agent({
+        rejectUnauthorized: false, // Allow reps whose certifications have expired.
+    });
+
+    return axios
         .request<NanoNodeMonitorStats>({
             method: 'get',
             timeout: 15000,
             url: getMonitoredUrl(url),
+            httpsAgent,
         })
         .then((response: AxiosResponse<NanoNodeMonitorStats | EulenMonitoredRepresentativeDto>) => {
             // Convert alternative monitor schemas to match the default NanoNodeMonitor response type.
@@ -66,7 +72,6 @@ const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> =>
                 translatedStats.version = eulenNm.version;
                 response.data = translatedStats;
             }
-
             const nanoNodeMonitorStats = response.data as NanoNodeMonitorStats;
             nanoNodeMonitorStats.ip = url;
             if (!nanoNodeMonitorStats.nanoNodeAccount.includes('ban_')) {
@@ -74,7 +79,15 @@ const getPeerMonitorStats = (url: string): Promise<NanoNodeMonitorStats> =>
             }
             return Promise.resolve(nanoNodeMonitorStats);
         })
-        .catch(() => Promise.resolve(undefined));
+        .catch((err) => {
+            /*
+            if (url.includes('http:')) {
+                console.error(err);
+                console.log(url);
+            } */
+            Promise.resolve(undefined);
+        });
+};
 
 /** Prunes & grooms data that is returned to client.
  *  Only monitors with an online-reps.3 representative will be returned to the client.
