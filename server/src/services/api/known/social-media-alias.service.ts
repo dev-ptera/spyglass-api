@@ -20,7 +20,6 @@ type TwitGramApiResponse = {
     user_name: string;
 };
 
-
 const legacyTelegramAliasMap = new Map<string, string>();
 export const knownSocialMediaAccounts = new Map<string, SocialMediaAccountAliasDto>();
 
