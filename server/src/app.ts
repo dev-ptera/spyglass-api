@@ -28,6 +28,7 @@ import {
     WALLETS_REFRESH_INTERVAL_MS,
 } from '@app/config';
 import * as expressWs from 'express-ws';
+import { connectRedisDatabase } from './redis/client';
 
 import {
     cacheAccountDistribution,
@@ -77,7 +78,7 @@ import {
     getScoresV1,
     getSupplyCreeperLegacy,
     getSupplyV1,
-    parseRichListFromFile,
+    readRichListDB,
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
@@ -188,7 +189,8 @@ export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; i
 const server = http.createServer(app).listen(port, async () => {
     console.log(`Running Spyglass API on port ${port}.`);
     console.log(`Production mode enabled? : ${IS_PRODUCTION}`);
-    void parseRichListFromFile(); // TODO: replace file-storing with Redis
+    await connectRedisDatabase();
+    void readRichListDB();
     void getOldTelegramAliases();
     await readLocalConfig();
 
