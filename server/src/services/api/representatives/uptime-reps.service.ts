@@ -75,10 +75,10 @@ const formatStingDate = (timestamp: number) =>
  *  This is called every interval & only by the writeNewRepresentativeUptimePings service. */
 const writeRepStatistics = async (repAddress: string, isOnline: boolean) => {
     const data = await getRepDoc(repAddress);
-    const emptyDoc = !data || !data.pingStats || !data.pingStats[data.pingStats.length - 1];
+    const isEmptyDoc = !data || !data.pingStats || !data.pingStats[data.pingStats.length - 1];
 
     // 1 === ONLINE | 0 === OFFLINE
-    if (emptyDoc) {
+    if (isEmptyDoc) {
         // Only write stats for representatives that are online.
         if (isOnline) {
             const initialPing = isOnline ? { 1: 1 } : { 0: 1 };

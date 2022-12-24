@@ -1,14 +1,15 @@
 import { frontiersRpc, frontierCountRpc, accountBalanceRpc, accountRepresentativeRpc } from '@app/rpc';
 import { convertFromRaw, LOG_ERR, LOG_INFO, printResourceUsage } from '@app/services';
-import { AppCache, PROFILE } from '@app/config';
+import { AppCache } from '@app/config';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types';
-const fs = require('fs');
+import { REDIS_CLIENT } from '../../../redis/client';
 
 type FrontiersData = {
     distributionStats: AccountDistributionStatsDto;
     richList: AccountBalanceDto[];
 };
 
+const DISTRIBUTION_STATS_KEY = 'creeper_distribution_stats';
 const createEmptyStats = (): AccountDistributionStatsDto => ({
     number0_0001: 0,
     number0_001: 0,
@@ -104,45 +105,28 @@ const getFrontiersData = async (): Promise<FrontiersData> => {
     });
 };
 
-/** File which is used to store the list of top holders. */
-const getAllBalancesFileName = (): string => `database/${PROFILE}/balances.json`;
-
-/** Whenever the rich list is still loading due to a server restart, read from a stored file. */
-export const parseRichListFromFile = async (): Promise<void> =>
-    new Promise((resolve) => {
-        const start = LOG_INFO('Refreshing / Importing Rich List File');
-        try {
-            fs.readFile(getAllBalancesFileName(), 'utf8', (err, data) => {
-                if (err) {
-                    LOG_ERR(
-                        'parseRichListFromFile.readFile',
-                        'Could not import the rich list; this file will be auto-generated in a production setting.'
-                    );
-                } else {
-                    try {
-                        const parsed = JSON.parse(data);
-                        AppCache.accountDistributionStats = parsed.distributionStats;
-                        AppCache.richList = parsed.richList;
-                        LOG_INFO('Rich List File Updated', start);
-                    } catch (err) {
-                        LOG_ERR('parseRichListFromFile.parseFile', err);
-                    }
-                }
-                resolve();
-            });
-        } catch (err) {
-            resolve();
+/** Read rich list from redis. */
+export const readRichListDB = async (): Promise<void> => {
+    try {
+        const data = await REDIS_CLIENT.get(DISTRIBUTION_STATS_KEY);
+        if (!data) {
+            return;
         }
-    });
+        const balances = JSON.parse(data) as FrontiersData;
+        AppCache.richList = balances.richList;
+        AppCache.accountDistributionStats = balances.distributionStats;
+    } catch (err) {
+        LOG_ERR('readRichListDB', err);
+    }
+};
 
-/** Writes the rich list to a local json file.
- * Whenever the server is restarted, this file is parsed & stored into the AppCache to quickly deliver a snapshot of data. */
-const writeLocalRichListJson = (data: FrontiersData): void => {
-    fs.writeFile(getAllBalancesFileName(), JSON.stringify(data), { flag: 'w' }, (err) => {
-        if (err) {
-            LOG_ERR('cacheAccountDistribution.writeFile', err);
-        }
-    });
+/** Stores rich list in redis. */
+const storeRichListDB = async (data: FrontiersData): Promise<void> => {
+    try {
+        await REDIS_CLIENT.set(DISTRIBUTION_STATS_KEY, JSON.stringify(data));
+    } catch (err) {
+        LOG_ERR('storeRichListDB', err);
+    }
 };
 
 /** Call this to repopulate the rich list in the AppCache. */
@@ -157,9 +141,9 @@ export const cacheAccountDistribution = async (): Promise<void> => {
         });
     });
 
-    writeLocalRichListJson(data);
     AppCache.accountDistributionStats = data.distributionStats;
     AppCache.richList = data.richList;
+    await storeRichListDB(data);
     printResourceUsage();
     return LOG_INFO('Rich List Updated', start);
 };
