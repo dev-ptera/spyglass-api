@@ -4,18 +4,6 @@
         "url": "http://batman.dev-ptera.com/api.php"
     },
     {
-        "name": "Cabbit",
-        "url": "45.77.190.142"
-    },
-    {
-        "name": "hentai",
-        "url": "192.210.243.189"
-    },
-    {
-        "name": "Nunu",
-        "url": "142.93.243.3"
-    },
-    {
         "name": "Baanodeee",
         "url": "103.169.35.129"
     },
@@ -28,20 +16,8 @@
         "url": "167.99.176.22"
     },
     {
-        "name": "bananOslo",
+        "name": "BananOslo",
         "url": "37.191.205.25"
-    },
-    {
-        "name": "bananode.eu",
-        "url": "176.10.199.150"
-    },
-    {
-        "name": "banano italiano",
-        "url": "95.216.138.47"
-    },
-    {
-        "name": "Banano节点",
-        "url": "93.93.246.6"
     },
     {
         "name": "https://node.jungletv.live",
@@ -88,15 +64,15 @@
         "url": "https://moonano.sumuun.net/api.php"
     },
     {
-        "name": "percy",
-        "url": "https://node.otahirs.cz/api.php"
-    },
-    {
-        "name": "Goob Cum",
-        "url": "https://home.goob-bi.com/node/api.php"
+        "name": "Goob",
+        "url": "http://home.goob-bi.com/node/api.php"
     },
     {
         "name": "V23.3",
         "url": "http://node.coranos.cc/api.php"
+    },
+    {
+        "name": "Twister32",
+        "url": "https://twister32.ddns.info/api.php"
     }
 ]

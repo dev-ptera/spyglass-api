@@ -246,6 +246,11 @@
         "alias": "nanswap Faucet"
     },
     {
+        "address": "ban_3dybnpbt61kokfk6u8c1uuyyed4apy8349qwb5ip9m71kschfoeukeepfzr7",
+        "alias": "Nanswap Referral Rewards",
+        "owner": "Nanswap"
+    },
+    {
         "address": "ban_3jyqzypmcn94dmyp7eb3k85sug1568xwehzx738o5jniaxaf1jpxdakjz96r",
         "alias": "CSquared's Faucet",
         "owner": "CSquared"
@@ -262,5 +267,24 @@
         "address": "ban_3sbqs38uoi9z34z5xeof5y4qjfc41n9rgr4hhhcu5zh5two9xrh4she1n8hs",
         "alias": "BananoTime! Giveaway Bot",
         "owner": "u/MrNoSock"
+    },
+    {
+        "address": "ban_3k1x6ekfwh513bgkzimh53ud5ijq1k4fdcems7otzxomumzt69fh4rca7emy",
+        "alias": "banfaucet.com"
+    },
+    {
+        "address": "ban_1moondripyui11a5bode7q7gf4m9itad7m8gd3e9wu4qortrdpyj9d4ngw5z",
+        "alias": "Moonano Faucet",
+        "owner": "Somoon"
+    },
+    {
+        "address": "ban_3ze6byhismfpj8jhuda6fq1a7nkniq7t5soet9k58y3egt3rco66j69fdksg",
+        "alias": "EARNS.CC faucet",
+        "owner": "ZOYANX"
+    },
+    {
+        "address": "ban_1j6yu5w885996tgmmgsy7j61wuca65oc493j4xx6dn3eh5yrgaf94oseg4ui",
+        "alias": "Vertical's Ban faucet",
+        "owner": "VerticalThings"
     }
 ]
