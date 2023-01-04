@@ -54,5 +54,30 @@
         "address": "ban_3greenp7kzetigfjcfgbis1ad63m4hyyyit9usd1g4byuxg81g79fc8aiwtr",
         "alias": "BananoForest Organization 4",
         "owner": "BananoForest"
+    },
+    {
+        "address": "ban_1o7ija3mdbmpzt8qfnck583tn99fiupgbyzxtbk5h4g6j57a7rawge6yzxqp",
+        "alias": "Prussia donation",
+        "owner": "Prussia"
+    },
+    {
+        "address": "ban_3banobotojqz8pkm1uectwb8baqjkfhq38e6fbwdrp51qjnwemepzc4ytowy",
+        "alias": "Banoboto donation",
+        "owner": "Banoboto"
+    },
+    {
+        "address": "ban_36ik1fxkiihc7rzeb7zg7ttkirynf5fsonx3jcdqarxre9qf5u8qqoo53jt5",
+        "alias": "i can haz nano donation",
+        "owner": "monke42"
+    },
+    {
+        "address": "ban_1upgmfaoycc17cc88u68xeee3qe7ct6remkq3g3t9rqf9nb81ygb6h3xn13i",
+        "alias": "CSquared donation",
+        "owner": "u/csquarednz"
+    },
+    {
+        "address": "ban_1dpe11rjii8r4k448gbgfpbg18p8444edayaq4to3hsquha4qhy65cjbtk8b",
+        "alias": "Legacy Creeper Donation",
+        "owner": "meltingice"
     }
 ]
