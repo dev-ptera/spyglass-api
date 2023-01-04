@@ -243,7 +243,8 @@
     },
     {
         "address": "ban_36seefx46pwcpyp6a8kukybamqioam6a7jef88s8esjpubyc8urccebjqgyj",
-        "alias": "nanswap Faucet"
+        "alias": "Nanswap Faucet",
+        "owner": "Nanswap"
     },
     {
         "address": "ban_3dybnpbt61kokfk6u8c1uuyyed4apy8349qwb5ip9m71kschfoeukeepfzr7",
@@ -290,15 +291,5 @@
     {
         "address": "ban_3f1o95qeeg1zignw11ew5sfaxhzogsj3hzm377xjtmab8hwz535p6f96i5uu",
         "alias": "Yet Another BAN Faucet"
-    },
-    {
-        "address": "ban_3jyqzypmcn94dmyp7eb3k85sug1568xwehzx738o5jniaxaf1jpxdakjz96r",
-        "alias": "CSquared's Banano Dispensary",
-        "owner": "u/csquared"
-    },
-    {
-        "address": "ban_1picturessx4aedsf59gm6qjkm6e3od4384m1qpfnotgsuoczbmhdb3e1zkh",
-        "alias": "Banano Forager",
-        "owner": "Randomblock1"
     }
 ]
