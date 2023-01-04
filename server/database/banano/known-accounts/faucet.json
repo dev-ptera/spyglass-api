@@ -286,5 +286,32 @@
         "address": "ban_1j6yu5w885996tgmmgsy7j61wuca65oc493j4xx6dn3eh5yrgaf94oseg4ui",
         "alias": "Vertical's Ban faucet",
         "owner": "VerticalThings"
+    },
+    {
+        "address": "ban_1moondripyui11a5bode7q7gf4m9itad7m8gd3e9wu4qortrdpyj9d4ngw5z",
+        "alias": "Moonano Faucet"
+    },
+    {
+        "address": "ban_3ze6byhismfpj8jhuda6fq1a7nkniq7t5soet9k58y3egt3rco66j69fdksg",
+        "alias": "EARNS.CC Banano Faucet"
+    },
+    {
+        "address": "ban_1monkecrqoqr6j6qzhtd9i8x49ujdnoqt7ramt9jmhd543icsrx5accoqtd5",
+        "alias": "i can haz nano",
+        "owner": "monke42"
+    },
+    {
+        "address": "ban_1monkecrqoqr6j6qzhtd9i8x49ujdnoqt7ramt9jmhd543icsrx5accoqtd5",
+        "alias": "Yet Another BAN Faucet"
+    },
+    {
+        "address": "ban_3jyqzypmcn94dmyp7eb3k85sug1568xwehzx738o5jniaxaf1jpxdakjz96r",
+        "alias": "CSquared's Banano Dispensary",
+        "owner": "u/csquared"
+    },
+    {
+        "address": "ban_1picturessx4aedsf59gm6qjkm6e3od4384m1qpfnotgsuoczbmhdb3e1zkh",
+        "alias": "Banano Forager",
+        "owner": "Randomblock1"
     }
 ]
