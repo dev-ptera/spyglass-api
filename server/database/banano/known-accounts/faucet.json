@@ -243,7 +243,8 @@
     },
     {
         "address": "ban_36seefx46pwcpyp6a8kukybamqioam6a7jef88s8esjpubyc8urccebjqgyj",
-        "alias": "nanswap Faucet"
+        "alias": "Nanswap Faucet",
+        "owner": "Nanswap"
     },
     {
         "address": "ban_3dybnpbt61kokfk6u8c1uuyyed4apy8349qwb5ip9m71kschfoeukeepfzr7",
@@ -286,5 +287,9 @@
         "address": "ban_1j6yu5w885996tgmmgsy7j61wuca65oc493j4xx6dn3eh5yrgaf94oseg4ui",
         "alias": "Vertical's Ban faucet",
         "owner": "VerticalThings"
+    },
+    {
+        "address": "ban_3f1o95qeeg1zignw11ew5sfaxhzogsj3hzm377xjtmab8hwz535p6f96i5uu",
+        "alias": "Yet Another BAN Faucet"
     }
 ]
