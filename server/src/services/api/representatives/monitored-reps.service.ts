@@ -163,6 +163,8 @@ const getRepDetails = (rpcData: Peers): Promise<MonitoredRepresentativeDto[]> =>
     // Even if this node isn't directly connected to these monitors as a peer, we can still display their node stats.
     MANUAL_PEER_MONITOR_URLS.map((rep: { name: string; url: string }) => {
         peerIpAddresses.add(rep.url);
+        // Manual entries are inserted first so that they can get processed later first & take precedence
+        // i.e Manual entries are known before a duplicate peered node.
         peerMonitorStatsPromises.push(getPeerMonitorStats(rep.url));
     });
 

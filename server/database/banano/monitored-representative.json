@@ -74,5 +74,9 @@
     {
         "name": "Twister32",
         "url": "https://twister32.ddns.info/api.php"
+    },
+    {
+        "name": "banarchy",
+        "url": "https://banarchy.boo/api.php"
     }
 ]

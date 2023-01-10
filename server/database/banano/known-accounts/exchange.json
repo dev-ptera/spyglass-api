@@ -85,6 +85,11 @@
         "owner": "mail@nano.trade"
     },
     {
+        "address": "ban_1waxp1c6c3jnonceb7io7xrmqwuc8ab3fh3wfytoruze97wxkipzaadh33nx",
+        "alias": "wax[.]banano[.]trade",
+        "owner": "mail@nano.trade"
+    },
+    {
         "address": "ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad",
         "alias": "Mercatox Cold Wallet",
         "owner": "Mercatox"
@@ -214,7 +219,7 @@
         "alias": "ViteX Ban-001 Wallet",
         "owner": "ViNo"
     },
-        {
+    {
         "address": "ban_3r8txi61ppg5ekw6aa5gsdsk3cj6jpxe3towd4jmxswr8pckgiqs9muneey5",
         "alias": "HitBTC/XGo",
         "owner": "HitBTC/XGo"
