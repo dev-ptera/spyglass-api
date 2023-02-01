@@ -1,3 +1,5 @@
+import {interval} from "rxjs";
+
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
 moduleAlias.addAlias('@app/middleware', __dirname + '/middleware');
@@ -77,7 +79,7 @@ import {
     getRichListV1,
     getScoresV1,
     getSupplyCreeperLegacy,
-    getSupplyV1,
+    getSupplyV1, LOG_ERR,
     readRichListDB,
     sleep,
     writeNewRepresentativeUptimePings,
@@ -176,13 +178,20 @@ app.get(`/supply`, (req, res) => getSupplyCreeperLegacy(res));
 
 const port = Number(process.env.PORT || 3000);
 
+const safeRunFn = async (fn) => {
+    try {
+        await sleep(2000);
+        fn.method();
+    } catch (err) {
+        LOG_ERR('SAFE_RUN_FN', err);
+    }
+}
+
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {
-        try {
-            await sleep(2000);
-            fn.method();
-        } catch (err) {}
-        setInterval(() => fn.method(), fn.interval);
+        await sleep(1000);
+        await safeRunFn(fn);
+        setInterval(() => safeRunFn(fn), fn.interval);
     }
 };
 
