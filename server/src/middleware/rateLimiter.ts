@@ -1,5 +1,5 @@
 import { readFileContents } from '@app/services';
-import { PROFILE, URL_WHITE_LIST } from '@app/config';
+import { PROFILE, URL_ALLOW_LIST } from '@app/config';
 
 export const REQUESTS_PER_MINUTE = 50;
 
@@ -10,7 +10,7 @@ export const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: async (request) => {
         const origin = request.headers.origin;
-        if (origin && URL_WHITE_LIST.includes(origin)) {
+        if (origin && URL_ALLOW_LIST.includes(origin)) {
             return 1000;
         }
         if (API_ACCESS_TOKENS.includes(request.get('Authorization'))) {

@@ -1,5 +1,5 @@
 export const PATH_ROOT = 'banano';
-export const URL_WHITE_LIST = [
+export const URL_ALLOW_LIST = [
     'http://localhost:4200',
     'https://localhost:4200',
     'https://spyglass-api.web.app',
@@ -8,6 +8,8 @@ export const URL_WHITE_LIST = [
     'https://creeper.banano.cc',
     'https://brpd-creeper.web.app',
     'https://www.brpd-creeper.web.app',
+    'https://www.thebananostand.com',
+    'https://thebananostand.com'
 ];
 
 export const KNOWN_ACCOUNTS_FILES = [

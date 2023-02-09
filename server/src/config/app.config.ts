@@ -40,7 +40,7 @@ export const WALLETS_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);
 export const KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS = calcMinutes(60);
 
 /** These sites can endlessly request resources without throttling. */
-export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
+export const URL_ALLOW_LIST = useBananoConfig() ? BAN.URL_ALLOW_LIST : NANO.URL_ALLOW_LIST;
 
 /** These nodes are currently only used for the `representatives_online` rpc call to help ensure more accurate results. */
 export const BACKUP_NODES: string[] = useBananoConfig() ? BAN.BACKUP_NODES : NANO.BACKUP_NODES;
