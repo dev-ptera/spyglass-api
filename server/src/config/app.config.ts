@@ -69,8 +69,12 @@ const loadKnownAccountFile = (file: string): void => {
     const type = file.split('/')[3].replace('.json', '');
     LOG_INFO(`Loaded local known-account: ${type}`);
     const accounts = readFileContents(file);
-    accounts.map((account) => (account.type = type));
 
+    // Basic transform.
+    accounts.forEach((account) => {
+        account.hasLore = Boolean(account.lore);
+        account.type = type;
+    });
     if (type === 'burn') {
         BURN_ADDRESSES.push(...accounts.map((account) => account.address));
     }
