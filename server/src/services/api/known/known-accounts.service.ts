@@ -8,6 +8,7 @@ type RequestBody = {
     includeOwner?: boolean;
     includeType?: boolean;
     includeLore?: boolean;
+    includeBalance?: boolean;
     typeFilter?: string;
 };
 
@@ -15,12 +16,22 @@ const DEFAULT_BODY: RequestBody = {
     includeOwner: false,
     includeType: false,
     includeLore: false,
+    includeBalance: false,
     typeFilter: '',
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
     if (body.includeOwner === undefined) {
         body.includeOwner = DEFAULT_BODY.includeOwner;
+    }
+    if (body.includeType === undefined) {
+        body.includeType = DEFAULT_BODY.includeType;
+    }
+    if (body.includeBalance === undefined) {
+        body.includeBalance = DEFAULT_BODY.includeBalance;
+    }
+    if (body.includeLore === undefined) {
+        body.includeLore = DEFAULT_BODY.includeLore;
     }
     if (body.includeType === undefined) {
         body.includeType = DEFAULT_BODY.includeType;
@@ -47,7 +58,18 @@ export const getKnownAccountsV1 = (req, res): void => {
     const body = req.body as RequestBody;
     setBodyDefaults(req.body);
     const accounts = filterKnownAccountsByType(body);
-    res.send(accounts);
+    const copied: KnownAccountDto[] = [];
+    accounts.forEach((account) => {
+        const copy: KnownAccountDto = {} as any;
+        copy.address = account.address;
+        copy.alias = account.alias;
+        copy.lore = body.includeLore ? account.lore : undefined;
+        copy.balance = body.includeBalance ? account.balance : undefined;
+        copy.owner = body.includeOwner ? account.owner : undefined;
+        copy.type = body.includeType ? account.type : undefined;
+        copied.push(copy);
+    });
+    res.send(copied);
 };
 
 export const refreshKnownAccountBalances = async (): Promise<void> => {
