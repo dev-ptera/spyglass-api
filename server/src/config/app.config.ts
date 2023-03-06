@@ -38,6 +38,7 @@ export const REPRESENTATIVES_ONLINE_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REFRESH_SOCIAL_MEDIA_ACCOUNTS_MS = calcMinutes(10);
+export const REFRESH_KNOWN_ACCOUNTS_BALANCES = calcMinutes(10);
 export const WALLETS_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);
 
 /** These sites can endlessly request resources without throttling. */

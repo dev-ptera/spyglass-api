@@ -22,7 +22,7 @@ export const getUnopenedAccount = (): AccountInfoResponse => {
 };
 
 /** Given an address, returns account balance using RPC commands. */
-const accountBalancePromise = (address: string): Promise<AccountBalanceResponse> =>
+export const accountBalancePromise = (address: string): Promise<AccountBalanceResponse> =>
     accountBalanceRpc(address)
         .then((accountInfo: AccountBalanceResponse) => {
             return Promise.resolve(accountInfo);

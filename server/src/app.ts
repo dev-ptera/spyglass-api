@@ -20,7 +20,7 @@ import {
     IS_PRODUCTION,
     PATH_ROOT,
     PRICE_DATA_REFRESH_INTERVAL_MS,
-    readLocalConfig,
+    readLocalConfig, REFRESH_KNOWN_ACCOUNTS_BALANCES,
     REFRESH_SOCIAL_MEDIA_ACCOUNTS_MS,
     REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS,
     REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS,
@@ -80,7 +80,7 @@ import {
     getSupplyCreeperLegacy,
     getSupplyV1,
     LOG_ERR,
-    readRichListDB,
+    readRichListDB, refreshKnownAccountBalances,
     sleep,
     writeNewRepresentativeUptimePings,
 } from '@app/services';
@@ -224,6 +224,11 @@ const server = http.createServer(app).listen(port, async () => {
         interval: REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     };
 
+    const knownAccountBalances = {
+        method: refreshKnownAccountBalances,
+        interval: REFRESH_KNOWN_ACCOUNTS_BALANCES,
+    };
+
     const priceData = {
         method: cachePriceData,
         interval: PRICE_DATA_REFRESH_INTERVAL_MS,
@@ -247,6 +252,7 @@ const server = http.createServer(app).listen(port, async () => {
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
+        knownAccountBalances,
         onlineRepresentatives,
         delegatorCount,
         priceData,

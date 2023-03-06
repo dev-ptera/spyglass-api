@@ -1,5 +1,8 @@
 import { KnownAccountDto } from '@app/types';
 import { AppCache } from '@app/config';
+import {accountBalancePromise} from "../account/account-overview.service";
+import {LOG_ERR} from "../../log/error.service";
+import {convertFromRaw, sleep} from "../../etc/generic-utils";
 
 type RequestBody = {
     includeOwner?: boolean;
@@ -46,6 +49,18 @@ export const getKnownAccountsV1 = (req, res): void => {
     const accounts = filterKnownAccountsByType(body);
     res.send(accounts);
 };
+
+export const refreshKnownAccountBalances = async (): Promise<void> => {
+    for (const knownAccount of AppCache.knownAccounts) {
+        try {
+            const response = await accountBalancePromise(knownAccount.address);
+            knownAccount.balance = convertFromRaw(response.balance);
+        }
+        catch (err) {
+            LOG_ERR('refreshKnownAccountBalances', err, { address: knownAccount.address });
+        }
+    }
+}
 
 export const getKnownAccountLoreV1 = (req, res): void => {
     const parts = req.url.split('/');
