@@ -13,6 +13,7 @@ export const URL_ALLOW_LIST = [
 ];
 
 export const KNOWN_ACCOUNTS_FILES = [
+    // blocklist? // TODO
     'burn',
     'distribution',
     'donation',

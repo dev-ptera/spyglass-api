@@ -214,6 +214,9 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
         });
     }
 
+    // Check if account is registered as a known account, (non social media)
+    // TODO
+
     // Check if the account is in the cache.
     if (knownSocialMediaAccounts.has(address)) {
         return Promise.resolve(knownSocialMediaAccounts.get(address));

@@ -219,6 +219,7 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
                 address: rep.address,
                 alias: rep.name,
                 type: 'representative',
+                hasLore: false
             });
         }
     });
@@ -226,13 +227,19 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
 
 /** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
 export const cacheMonitoredReps = async (): Promise<void> => {
-    const start = LOG_INFO('Refreshing Monitored Reps');
-    const monitoredReps = await getMonitoredRepsPromise();
-    updateKnownAccountAliases(monitoredReps);
 
-    // Required in v22; may be removed in the future.
-    await markNonPRsOnline(monitoredReps);
+    try {
 
-    AppCache.monitoredReps = monitoredReps;
-    LOG_INFO('Monitored Reps Updated', start);
+        const start = LOG_INFO('Refreshing Monitored Reps');
+        const monitoredReps = await getMonitoredRepsPromise();
+        updateKnownAccountAliases(monitoredReps);
+
+        // Required in v22; may be removed in the future.
+        await markNonPRsOnline(monitoredReps);
+
+        AppCache.monitoredReps = monitoredReps;
+        LOG_INFO('Monitored Reps Updated', start);
+    } catch (err) {
+        LOG_ERR('cacheMonitoredReps', err);
+    }
 };

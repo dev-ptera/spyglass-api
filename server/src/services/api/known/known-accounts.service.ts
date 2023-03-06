@@ -6,12 +6,14 @@ import { AppCache, KNOWN_ACCOUNTS, KNOWN_ACCOUNTS_FILES, PROFILE } from '@app/co
 type RequestBody = {
     includeOwner?: boolean;
     includeType?: boolean;
+    includeLore?: boolean;
     typeFilter?: string;
 };
 
 const DEFAULT_BODY: RequestBody = {
     includeOwner: false,
     includeType: false,
+    includeLore: false,
     typeFilter: '',
 };
 
@@ -79,7 +81,7 @@ const getFilterType = (body: RequestBody): string => {
     return undefined;
 };
 
-export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
+export const filterKnownAccountsByType = (body: RequestBody): KnownAccountDto[] => {
     const accounts: KnownAccountDto[] = [];
     const filter = getFilterType(body);
 
@@ -90,6 +92,8 @@ export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
                 alias: account.alias,
                 owner: body.includeOwner ? account.owner : undefined,
                 type: body.includeType ? account.type : undefined,
+                lore: body.includeLore ? account.lore : undefined,
+                hasLore: Boolean(account.lore)
             });
         }
     });
@@ -100,11 +104,21 @@ export const filterKnownAccounts = (body: RequestBody): KnownAccountDto[] => {
 export const getKnownAccountsV1 = (req, res): void => {
     const body = req.body as RequestBody;
     setBodyDefaults(req.body);
-    const accounts = filterKnownAccounts(body);
+    const accounts = filterKnownAccountsByType(body);
     res.send(accounts);
 };
 
+export const getKnownAccountLoreV1 = (req, res): void => {
+    const parts = req.url.split('/');
+    const address = parts[parts.length - 1];
+    const knownAccount = AppCache.knownAccounts.filter((account) => account.address === address)[0];
+    if (knownAccount) {
+        res.send({ lore: knownAccount.lore });
+    }
+    res.status(404).send();
+}
+
 /** Call this method to update the known accounts in the AppCache. */
 export const cacheKnownAccounts = async (): Promise<void> => {
-    AppCache.knownAccounts = await getRemoteKnownAccountsPromise();
+    AppCache.knownAccounts = await getRemoteKnownAccountsPromise(); // TODO: Why even do this?  Just read the local files once.
 };

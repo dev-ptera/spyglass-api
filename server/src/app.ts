@@ -60,7 +60,7 @@ import {
     getDelegatorsV1,
     getDeveloperFundsV1,
     getDistributionBucketsV1,
-    getExplorerSummaryV1,
+    getExplorerSummaryV1, getKnownAccountLoreV1,
     getKnownAccountsV1,
     getKnownSocialMediaAccountAliasV1,
     getKnownVanitiesV1,
@@ -150,6 +150,7 @@ app.post(`/${PATH_ROOT}/v1/distribution/rich-list`, (req, res) => getRichListV1(
 app.get(`/${PATH_ROOT}/v1/known/vanities`, (req, res) => getKnownVanitiesV1(res));
 app.get(`/${PATH_ROOT}/v1/known/social-media/:address`, (req, res) => getKnownSocialMediaAccountAliasV1(req, res));
 app.post(`/${PATH_ROOT}/v1/known/accounts`, (req, res) => getKnownAccountsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/known/account/lore/:address`, (req, res) => getKnownAccountLoreV1(req, res));
 
 /* Network */
 app.get(`/${PATH_ROOT}/v1/network/ledger-size`, (req, res) => getLedgerSizeV1(res));

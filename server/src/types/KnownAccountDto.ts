@@ -3,4 +3,6 @@ export type KnownAccountDto = {
     alias: string;
     owner?: string;
     type?: string;
+    lore?: string;
+    hasLore: boolean
 };
