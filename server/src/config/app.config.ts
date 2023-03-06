@@ -1,3 +1,5 @@
+import { AppCache } from './app.cache';
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -37,7 +39,6 @@ export const REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REPRESENTATIVES_MONITORED_REFRESH_INTERVAL_MS = calcMinutes(1);
 export const REFRESH_SOCIAL_MEDIA_ACCOUNTS_MS = calcMinutes(10);
 export const WALLETS_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);
-export const KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS = calcMinutes(60);
 
 /** These sites can endlessly request resources without throttling. */
 export const URL_ALLOW_LIST = useBananoConfig() ? BAN.URL_ALLOW_LIST : NANO.URL_ALLOW_LIST;
@@ -50,9 +51,6 @@ export const MANUAL_PEER_MONITOR_URLS: { name: string; url: string }[] = [];
 
 /** A list of accounts with custom vanity addresses. */
 export const KNOWN_VANITIES: string[] = [];
-
-/** A list of known accounts within the ecosystem (e.g. exchanges, developer funds, burn account) */
-export const KNOWN_ACCOUNTS: KnownAccountDto[] = [];
 
 /** A list of addresses that no one owns; funds sent to these addresses are considered inaccessible. */
 export const BURN_ADDRESSES: string[] = [];
@@ -67,7 +65,7 @@ export const UPTIME_TRACKING_MIN_WEIGHT = useBananoConfig()
 
 export const KNOWN_ACCOUNTS_FILES = useBananoConfig() ? BAN.KNOWN_ACCOUNTS_FILES : NANO.KNOWN_ACCOUNTS_FILES;
 
-const loadKnownAccount = (file: string): void => {
+const loadKnownAccountFile = (file: string): void => {
     const type = file.split('/')[3].replace('.json', '');
     LOG_INFO(`Loaded local known-account: ${type}`);
     const accounts = readFileContents(file);
@@ -79,14 +77,13 @@ const loadKnownAccount = (file: string): void => {
     if (type === 'distribution') {
         DEVELOPER_FUNDS.push(...accounts.map((account) => account.address));
     }
-
-    KNOWN_ACCOUNTS.push(...accounts);
+    AppCache.knownAccounts.push(...accounts);
 };
 
 export const readLocalConfig = async (): Promise<void> => {
     LOG_INFO('Reading Local Known Accounts');
     KNOWN_ACCOUNTS_FILES.map((file) => {
-        loadKnownAccount(`database/${PROFILE}/known-accounts/${file}.json`);
+        loadKnownAccountFile(`database/${PROFILE}/known-accounts/${file}.json`);
     });
     KNOWN_VANITIES.push(...readFileContents(`database/${PROFILE}/known-accounts/vanity.json`));
     MANUAL_PEER_MONITOR_URLS.push(...readFileContents(`database/${PROFILE}/monitored-representative.json`));

@@ -18,7 +18,6 @@ import {
     AppCache,
     DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
-    KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
     PATH_ROOT,
     PRICE_DATA_REFRESH_INTERVAL_MS,
     readLocalConfig,
@@ -35,7 +34,6 @@ import { connectRedisDatabase } from './redis/client';
 import {
     cacheAccountDistribution,
     cacheDelegatorsCount,
-    cacheKnownAccounts,
     cacheMonitoredReps,
     cacheOnlineRepresentatives,
     cachePriceData,
@@ -226,11 +224,6 @@ const server = http.createServer(app).listen(port, async () => {
         interval: REPRESENTATIVES_UPTIME_REFRESH_INTERVAL_MS,
     };
 
-    const knownAccounts = {
-        method: cacheKnownAccounts,
-        interval: KNOWN_ACCOUNTS_REFRESH_INTERVAL_MS,
-    };
-
     const priceData = {
         method: cachePriceData,
         interval: PRICE_DATA_REFRESH_INTERVAL_MS,
@@ -262,7 +255,6 @@ const server = http.createServer(app).listen(port, async () => {
         // In V22, small reps are not online via rpc so use monitor software to mark as online.
         writeUptimePings,
         representativeScores,
-        knownAccounts,
         socialMediaAccounts,
         accountsDistribution,
     ]);

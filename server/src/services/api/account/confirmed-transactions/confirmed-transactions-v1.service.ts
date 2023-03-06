@@ -159,8 +159,6 @@ export const getConfirmedTransactionsPromise = async (body: RequestBody): Promis
         Promise.reject(LOG_ERR('accountHistoryPromise.getAccountBlockHeight', err))
     );
 
-    console.log(accountBlockCount.block_count);
-
     let searchPage = 0;
     let completedSearch = false;
     const confirmedTransactions: ConfirmedTransactionDto[] = [];
