@@ -1,4 +1,4 @@
-import {interval} from "rxjs";
+import { interval } from 'rxjs';
 
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@app/config', __dirname + '/config');
@@ -60,7 +60,8 @@ import {
     getDelegatorsV1,
     getDeveloperFundsV1,
     getDistributionBucketsV1,
-    getExplorerSummaryV1, getKnownAccountLoreV1,
+    getExplorerSummaryV1,
+    getKnownAccountLoreV1,
     getKnownAccountsV1,
     getKnownSocialMediaAccountAliasV1,
     getKnownVanitiesV1,
@@ -79,7 +80,8 @@ import {
     getRichListV1,
     getScoresV1,
     getSupplyCreeperLegacy,
-    getSupplyV1, LOG_ERR,
+    getSupplyV1,
+    LOG_ERR,
     readRichListDB,
     sleep,
     writeNewRepresentativeUptimePings,
@@ -186,7 +188,7 @@ const safeRunFn = async (fn) => {
     } catch (err) {
         LOG_ERR('SAFE_RUN_FN', err);
     }
-}
+};
 
 export const setRefreshIncrements = async (cacheFns: Array<{ method: Function; interval: number }>) => {
     for (const fn of cacheFns) {

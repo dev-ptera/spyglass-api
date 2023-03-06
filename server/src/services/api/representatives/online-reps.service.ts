@@ -2,7 +2,7 @@ import { AppCache, BACKUP_NODES, NANO_CLIENT } from '@app/config';
 import { getRepresentativesPromise, LOG_ERR, LOG_INFO } from '@app/services';
 import * as RPC from '@dev-ptera/nano-node-rpc';
 import axios, { AxiosResponse } from 'axios';
-import { representativesOnlineWithoutWeightRpc} from "@app/rpc";
+import { representativesOnlineWithoutWeightRpc } from '@app/rpc';
 
 /** Number of a pings a representative has be omitted from the `representatives_online` rpc command list to be considered offline. */
 const OFFLINE_AFTER_PINGS = 5;
@@ -44,9 +44,7 @@ export const getOnlineRepsPromise = async (): Promise<string[]> => {
     BACKUP_NODES.map((external) => externalCalls.push(getOnlineRepsFromExternalApi(external)));
 
     // Iterate through the results, add all unique reps to a set.
-    await Promise.all(
-        [representativesOnlineWithoutWeightRpc(),
-        ...externalCalls]).then(
+    await Promise.all([representativesOnlineWithoutWeightRpc(), ...externalCalls]).then(
         (rpcResponses: Array<RPC.RepresentativesOnlineResponse>) => {
             for (const response of rpcResponses) {
                 response.representatives.map((rep) => {

@@ -219,7 +219,7 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
                 address: rep.address,
                 alias: rep.name,
                 type: 'representative',
-                hasLore: false
+                hasLore: false,
             });
         }
     });
@@ -227,9 +227,7 @@ const updateKnownAccountAliases = (reps: MonitoredRepresentativeDto[]): void => 
 
 /** Using a combination of hard-coded ips & the peers RPC command, returns a list of representatives running the Nano Node Monitor software. */
 export const cacheMonitoredReps = async (): Promise<void> => {
-
     try {
-
         const start = LOG_INFO('Refreshing Monitored Reps');
         const monitoredReps = await getMonitoredRepsPromise();
         updateKnownAccountAliases(monitoredReps);

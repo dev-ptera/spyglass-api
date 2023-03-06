@@ -9,7 +9,7 @@ export const URL_ALLOW_LIST = [
     'https://brpd-creeper.web.app',
     'https://www.brpd-creeper.web.app',
     'https://www.thebananostand.com',
-    'https://thebananostand.com'
+    'https://thebananostand.com',
 ];
 
 export const KNOWN_ACCOUNTS_FILES = [

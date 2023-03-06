@@ -1,4 +1,4 @@
-import {RepresentativesOnlineResponse, RepresentativesOnlineWeightResponse} from '@dev-ptera/nano-node-rpc';
+import { RepresentativesOnlineResponse, RepresentativesOnlineWeightResponse } from '@dev-ptera/nano-node-rpc';
 import { NANO_CLIENT } from '@app/config';
 
 export const representativesOnlineWithWeightRpc = async (): Promise<RepresentativesOnlineWeightResponse> =>

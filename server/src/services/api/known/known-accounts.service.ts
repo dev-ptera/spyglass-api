@@ -93,7 +93,7 @@ export const filterKnownAccountsByType = (body: RequestBody): KnownAccountDto[] 
                 owner: body.includeOwner ? account.owner : undefined,
                 type: body.includeType ? account.type : undefined,
                 lore: body.includeLore ? account.lore : undefined,
-                hasLore: Boolean(account.lore)
+                hasLore: Boolean(account.lore),
             });
         }
     });
@@ -116,7 +116,7 @@ export const getKnownAccountLoreV1 = (req, res): void => {
         res.send({ lore: knownAccount.lore });
     }
     res.status(404).send();
-}
+};
 
 /** Call this method to update the known accounts in the AppCache. */
 export const cacheKnownAccounts = async (): Promise<void> => {
