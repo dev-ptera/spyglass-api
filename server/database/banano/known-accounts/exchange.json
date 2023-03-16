@@ -52,7 +52,8 @@
     {
         "address": "ban_3a1dokzzuc334kpsedakxz5hw4cauexjori8spcf7pninujry43dxkbam4o6",
         "alias": "BNswap",
-        "owner": "BNSwap"
+        "owner": "BNSwap",
+        "lore": "A swap allowing users to quickly swap between Banano and Nano. This servive has been shutdown."
     },
     {
         "address": "ban_3wwd51yoxeafubpn84gy7tje7yw6ccqcach9m4yfn46sf15itnysap9dd1xc",
@@ -62,7 +63,8 @@
     {
         "address": "ban_1nrcne47secz1hnm9syepdoob7t1r4xrhdzih3zohb1c3z178edd7b6ygc4x",
         "alias": "Coinex Deposits",
-        "owner": "CoinEx"
+        "owner": "CoinEx",
+        "lore": "CoinEx is a global centralised cryptocurrency exchange with headquarters in Hong Kong."
     },
     {
         "address": "ban_1fxc48dynhbjb69uuyue4bsfuymxick8js14synwznduy61g6i9esdeasmem",
@@ -116,7 +118,8 @@
     },
     {
         "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
-        "alias": "Nanswap Sending Account"
+        "alias": "Nanswap Sending Account",
+        "lore": "Nanswap is a swap service where users can swap a variety of cryptocurrencies, including Banano and Nano."
     },
     {
         "address": "ban_3bsco1dfwmwpnnjjqyqb9f7f83gtxsrmgdzdjdz58u6dhga5ajsgtsdz1g8h",
@@ -212,12 +215,14 @@
     {
         "address": "ban_39cbuas38tfnoikkn38d15n94qokaciwx8mhh5ia4n5pqn4e3y9dw4x9jzic",
         "alias": "ViteX New",
-        "owner": "ViteX"
+        "owner": "ViteX",
+        "lore": "ViteX is a decentralised exchange on Vite blockchain."
     },
     {
         "address": "ban_3hfe17gwpi75ducquep38dcrnits9ffw36dhebuj4ej1adzzsxuq3b3mjcxz",
-        "alias": "ViteX Ban-001 Wallet",
-        "owner": "ViNo"
+        "alias": "ViteX BAN-001 Wallet",
+        "owner": "ViNo",
+        "lore": "Hot wallet for bridging Banano to Vite network (BAN-001 token), operated by ViNo gateway."
     },
     {
         "address": "ban_3r8txi61ppg5ekw6aa5gsdsk3cj6jpxe3towd4jmxswr8pckgiqs9muneey5",
@@ -233,7 +238,8 @@
     {
         "address": "ban_3bonoyw4qx6ngp5bcg4azyqqb49gunp8je1k898opk1fgp3qf8fbobgr8nbu",
         "alias": "Bonobo",
-        "owner": "Bonobo"
+        "owner": "Bonobo",
+        "lore": "Bonobo offers a swap service which you can swap popular cryptocurrencies."
     },
     {
         "address": "ban_1arbhot3nd1ocih46ocoa7xsaqn6u8qrfqaswe3ygg8xmzno5of1zq5sp3r6",
