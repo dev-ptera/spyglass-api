@@ -10,7 +10,8 @@
     {
         "address": "ban_3boost5r4bosii4c3ad6yubf5npmkgm5rb7kecyzmnu337p9bta8kgikb1a4",
         "alias": "Booster 2021",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Banano Booster 2021 was a hackathon from which many loved projects such as JungleTV originated."
     },
     {
         "address": "ban_3he11oi45zcfe3i65wogyikf1569mu1jcf9kj4o7jojpebmmkbhrpf38qrqx",
@@ -55,12 +56,14 @@
     {
         "address": "ban_1boostrgirszkussnf48y5mnxqqysqxaxp6bpeni8zyfzgyghgsshnubp16c",
         "alias": "Booster2 Rewards",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Distribution address for the second Banano Booster hackathon."
     },
     {
         "address": "ban_1bonusd89osnxs6yeyetshho11pfy5mcqn61q3yyu74k7anidsqansgmxf43",
         "alias": "Booster2 Bonus",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Address from which bonus reward for Booster 2 entries were sent from."
     },
     {
         "address": "ban_1mi11iitod8i9nm3td8waxfra5hanffcohn8d9e6qsfb78ynb6sr9r3k8f8s",
@@ -75,7 +78,8 @@
     {
         "address": "ban_1rp1aceaawpub5zyztzs4tn7gcugm5bc3o6oga16bb18bquqm1bjnoomynze",
         "alias": "r/place Contribution Rewards - 2022",
-        "owner": "Airtune/Prussia/Majic"
+        "owner": "Airtune/Prussia/Majic",
+        "lore": "Address from which rewards (BAN & on-chain NFTs) were sent to all the monkeys that helped represent Banano in the 2022 r/place event!"
     },
     {
         "address": "ban_1dr4qxwjkh4ndua9akjsza46513exot9po57ydy77wobzekhypi1uu4a34tm",

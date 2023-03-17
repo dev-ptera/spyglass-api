@@ -89,7 +89,8 @@
     {
         "address": "ban_1waxp1c6c3jnonceb7io7xrmqwuc8ab3fh3wfytoruze97wxkipzaadh33nx",
         "alias": "wax[.]banano[.]trade",
-        "owner": "mail@nano.trade"
+        "owner": "mail@nano.trade",
+        "lore": "A swap service between Banano & Waxp"
     },
     {
         "address": "ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad",
