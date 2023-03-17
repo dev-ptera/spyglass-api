@@ -67,8 +67,9 @@
     },
     {
         "address": "ban_1mi11iitod8i9nm3td8waxfra5hanffcohn8d9e6qsfb78ynb6sr9r3k8f8s",
-        "alias": "Official Reddit Giveaway - July 2022",
-        "owner": "Banano"
+        "alias": "Official Reddit Giveaway",
+        "owner": "Banano",
+        "lore": "Address used for multiple large official reddit giveaways, such that the July 2022 one."
     },
     {
         "address": "ban_1tixkw3trrrbsrpcsmeendfpjy9rssqu7b5naqmixpmrgcaf8nfakupxi9a8",
@@ -84,7 +85,8 @@
     {
         "address": "ban_1dr4qxwjkh4ndua9akjsza46513exot9po57ydy77wobzekhypi1uu4a34tm",
         "alias": "Banano NBA Pickem - 2022",
-        "owner": "Maily"
+        "owner": "Maily",
+        "lore": "Reward address for the Banano NBA Pickem event in 2022. A weekly event, where participants submitted their predictions for that weeks NBA games."
     },
     {
         "address": "ban_3f51sihxjn7mzmcpk1548bjofnn834fywtdqnoibcxapiahmo3s6thg35rzc",
@@ -94,11 +96,13 @@
     {
         "address": "ban_3pickempqc4jzaz4b1umjeo544oa6u7i9znhrniiw5p3nioc8f7dzcxchwzs",
         "alias": "Banano NFL and NHL Pickem - 2022",
-        "owner": "Ovi"
+        "owner": "Ovi",
+        "lore": "Reward address for the Banano NFL and NHL Pickem events in 2022. A weekly event, where participants submitted their predictions for that weeks games."
     },
     {
         "address": "ban_1cmairy7iqd1ank9b5dturk6uuc7yqkyukgjc9qw974fbmg1ggiykiewswo6",
         "alias": "Santa 2022 and cryptomonKeys connect",
-        "owner": "cryptomonKeys"
+        "owner": "cryptomonKeys",
+        "lore": "Address used to send Banano rewards to Santa claimers. Also used by cryptomonKeys connect for any other Banano distribution occuring through that."
     }
 ]
