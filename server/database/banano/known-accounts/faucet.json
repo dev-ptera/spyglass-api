@@ -55,7 +55,8 @@
     {
         "address": "ban_1boompow14irck1yauquqypt7afqrh8b6bbu5r93pc6hgbqs7z6o99frcuym",
         "alias": "BoomPoW",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Payment address for contributing towards the distributed proof-of-work system for the Banano and Nano blockchains."
     },
     {
         "address": "ban_1crane864e1cn1g3p9mrduf49hp86gfgfosp8rib43smxxuqp3phq1yiu58k",
@@ -90,7 +91,8 @@
     {
         "address": "ban_3fo1d1ng6mfqumfoojqby13nahaugqbe5n6n3trof4q8kg5amo9mribg4muo",
         "alias": "Folding",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Banano Miner payout address. Earn Banano for supporting science by running folding@home."
     },
     {
         "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt",
