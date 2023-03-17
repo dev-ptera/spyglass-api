@@ -2,7 +2,8 @@
     {
         "address": "ban_3imophzbk9ruq3ju18jyw37376h3wdeon15asw4yj3kfgxs6m1eg7784a4im",
         "alias": "Tip[.]cc",
-        "owner": "Tip.cc"
+        "owner": "Tip.cc",
+        "lore": "Hot wallet for Tip.cc, a free-to-use custodial cryptocurrency wallet service for Discord instant messaging platform."
     },
     {
         "address": "ban_1defi11tou1nbhyp8y4onwsiq5jcur19xe54mcmew1xonnz6e1d1sw74yefu",
@@ -16,7 +17,8 @@
     {
         "address": "ban_1casino1h3fjnmotzpf5q37sxf6ybwsk6g4nryjd7q9ttupz4fkiousdgaj8",
         "alias": "Banano Casino",
-        "owner": "Klicer"
+        "owner": "Klicer",
+        "lore": "Hot wallet for the gambling site Banano Casino."
     },
     {
         "address": "ban_1waxf5j83w7eqqz3kph7u843wh3p5ddf1n48rh4i9m41zhk9nnquzwbnz9pb",
