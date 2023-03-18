@@ -84,13 +84,14 @@
     {
         "address": "ban_1oaocnrcaystcdtaae6woh381wftyg4k7bespu19m5w18ze699refhyzu6bo",
         "alias": "Kuyumcu",
-        "owner": "mail@nano.trade"
+        "owner": "mail@nano.trade",
+        "lore": "Kuyumcu is a cryptocurrency swap service. It allows you to exchange Banano for various other coins."
     },
     {
         "address": "ban_1waxp1c6c3jnonceb7io7xrmqwuc8ab3fh3wfytoruze97wxkipzaadh33nx",
         "alias": "wax[.]banano[.]trade",
         "owner": "mail@nano.trade",
-        "lore": "A swap service between Banano & Waxp"
+        "lore": "A swap service between Banano & Waxp. Part of the Kuyumcu swap service."
     },
     {
         "address": "ban_31dhbgirwzd3ce7naor6o94woefws9hpxu4q8uxm1bz98w89zqpfks5rk3ad",
@@ -105,7 +106,8 @@
     {
         "address": "ban_1ddaz5y8jk47hkicpi1kc38kg359r74y38gmmq6moiki11gx1g4a9qb4r7c6",
         "alias": "moon[.]banano[.]trade",
-        "owner": "mail@nano.trade"
+        "owner": "mail@nano.trade",
+        "lore": "A swap service between Banano & Reddit Moons. Part of the Kuyumcu swap service."
     },
     {
         "address": "ban_1w5q77ocgfrjn6sqwudfuygtomwyij8ijes3y5g8kaydxsf8f4jpz4n9q9a3",
@@ -115,7 +117,8 @@
     {
         "address": "ban_3kuyumcu9yj65b51kqu9cbohio9oeysymxt51fxkrg5idw8qaxqpk4yq6nzy",
         "alias": "Nano[.]trade airdrop",
-        "owner": "mail@nano.trade"
+        "owner": "mail@nano.trade",
+        "lore": "Address used by the Kuyumcu swap service for airdrops to past traders."
     },
     {
         "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
@@ -125,62 +128,92 @@
     {
         "address": "ban_3bsco1dfwmwpnnjjqyqb9f7f83gtxsrmgdzdjdz58u6dhga5ajsgtsdz1g8h",
         "alias": "wBAN BSC Cold Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Cold wallet for Binance Smart Chain wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_1wbanktxc5mtnydsjq6doy81wsnn7fw1z7yzw4zzieb6dfkihjtbwzgrxt9i",
         "alias": "wBAN BSC Hot Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Hot wallet for Binance Smart Chain wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_1benisborxg1xdyiszp561t8dtu193cmirdue3gqanwubj8gm5ak87c5j8e7",
         "alias": "wBAN BSC Wrap Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Wrap wallet for Binance Smart Chain wrapped Banano, used to wrap LP farm rewards."
     },
     {
         "address": "ban_1po1yco1cnoyymrm3xnf7h9iaway1bg5kqxq3cfb3za98gq73tfmjm4mp11n",
         "alias": "wBAN Polygon Cold Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Cold wallet for Polygon wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3po1yhotz68w6mogy6budr7g8y7gw5wjqhbgc5gt549emeoof9npf315xmn4",
         "alias": "wBAN Polygon Hot Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Hot wallet for Polygon wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3po1ywrp9m967z9xpd9cwwfdg1gteuk4n7dcyoatkgpjgne5yx459wyoyxzj",
         "alias": "wBAN Polygon Wrap Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Wrap wallet for Polygon wrapped Banano, used to wrap LP farm rewards."
     },
     {
         "address": "ban_3ftmco1d3sogpnq9j8gsa7t95xugtzj116hkudxj1spkw86476pzicua61ek",
         "alias": "wBAN Fantom Cold Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Cold wallet for Fantom wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3ftmhot3nssj1ae3gt4o4ksa6p1wamub3jaet4odjt67wp9wy9ahn83umw81",
         "alias": "wBAN Fantom Hot Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Hot wallet for Fantom wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3ftmwrap5qeirm53wndr6811tbnnraho587awkxn1xgrwfgry97cb4bouiwh",
         "alias": "wBAN Fantom Wrap Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Wrap wallet for Fantom wrapped Banano, used to wrap LP farm rewards."
     },
     {
         "address": "ban_3ethco1d34b1mmerybpw6pdgi3zt6p7ieb4aqcmbfn8i7af5w43d8ag8s7hk",
         "alias": "wBAN Ethereum Cold Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Cold wallet for Ethereum mainnet wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3ethhot3otmrcizy8kxkxbfmb3qjswatr4pnixexpdy6u18e1mjgxteynmay",
         "alias": "wBAN Ethereum Hot Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Hot wallet for Ethereum mainnet wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
     },
     {
         "address": "ban_3ethwrap7kzguicmh3birwszzyg5giw93o7zkrqj7sxbcw8z83ihd3k4hps9",
         "alias": "wBAN Ethereum Wrap Wallet",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Wrap wallet for Ethereum mainnet wrapped Banano, used to wrap LP farm rewards."
+    },
+    {
+        "address": "ban_3arbc1d3usn8not6ddbegexdi7qdabp4d1g3emcgtirign1c6akjc55bexko",
+        "alias": "wBAN Arbitrum Cold Wallet",
+        "owner": "Banano",
+        "lore": "Cold wallet for Arbitrum wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
+    },
+    {
+        "address": "ban_1arbhot3nd1ocih46ocoa7xsaqn6u8qrfqaswe3ygg8xmzno5of1zq5sp3r6",
+        "alias": "wBAN Arbitrum Hot Wallet",
+        "owner": "Banano",
+        "lore": "Hot wallet for Arbitrum wrapped Banano. wBAN lets you get a token version of your ban, to trade them on various DEXs or provide liquidity."
+    },
+    {
+        "address": "ban_1arbwrp3rk8us7m7nwox9xbqky59dmeez7k4k7hpettfcay357qx6615xx7w",
+        "alias": "wBAN Arbitrum Wrap Wallet",
+        "owner": "Banano",
+        "lore": "Wrap wallet for Arbitrum wrapped Banano, used to wrap LP farm rewards."
     },
     {
         "address": "ban_1wbanhr5jr179uw34793g96qihwmisd6bypp9ofy6yy77hchge96tqmwhq9a",
@@ -234,27 +267,13 @@
     {
         "address": "ban_1usdc1u6y9ixwx6f66xiezsza5eqsriwhwqzaopuf9musmsgm5pfjfkr7bpu",
         "alias": "usdc[.]banano[.]trade",
-        "owner": "mail@nano.trade"
+        "owner": "mail@nano.trade",
+        "lore": "A swap service between Banano & USDC. Part of the Kuyumcu swap service."
     },
     {
         "address": "ban_3bonoyw4qx6ngp5bcg4azyqqb49gunp8je1k898opk1fgp3qf8fbobgr8nbu",
         "alias": "Bonobo",
         "owner": "Bonobo",
         "lore": "Bonobo offers a swap service which you can swap popular cryptocurrencies."
-    },
-    {
-        "address": "ban_1arbhot3nd1ocih46ocoa7xsaqn6u8qrfqaswe3ygg8xmzno5of1zq5sp3r6",
-        "alias": "wBAN Arbitrum Hot Wallet",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_3arbc1d3usn8not6ddbegexdi7qdabp4d1g3emcgtirign1c6akjc55bexko",
-        "alias": "wBAN Arbitrum Cold Wallet",
-        "owner": "Banano"
-    },
-    {
-        "address": "ban_1arbwrp3rk8us7m7nwox9xbqky59dmeez7k4k7hpettfcay357qx6615xx7w",
-        "alias": "wBAN Arbitrum Wrap Wallet",
-        "owner": "Banano"
     }
 ]
