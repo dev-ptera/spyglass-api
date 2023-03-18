@@ -67,16 +67,19 @@
     {
         "address": "ban_1zookix8zpo13go1xrbwcmodjfsr8xw5e18smbmz8mh4orkmd33t8zmescpo",
         "alias": "Allowances",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "The allowances wallet is used to send the banano team their allowances, which they then distribute to the community."
     },
     {
         "address": "ban_3bonus9fwjnwjoyawbdbokze51iucgqwtdyk6e4kqdu39rw8nyzmew5ptxoj",
         "alias": "Contributor Bonus 3",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Payout address for rewards members of the community who have contributed to the ecosystem."
     },
     {
         "address": "ban_1bonusncatu5rsrctx1djmgrragfwpj4ujsk939utmtdwskhtiourh8997eh",
         "alias": "Contributor Bonus 1",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Payout address for rewards members of the community who have contributed to the ecosystem."
     }
 ]
