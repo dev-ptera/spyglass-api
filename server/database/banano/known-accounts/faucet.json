@@ -302,6 +302,7 @@
     {
         "address": "ban_1akutedg199khq5ujhy8a9yaywhwigihja8baoqn6pwjpquiejrkcdpoo1yx",
         "alias": "Banano Tree NFT Faucet",
-        "owner": "Aku"
+        "owner": "Aku",
+        "lore": "A Banano faucet of Aku that distributes on-chain Banano AKU NFTs."
     }
 ]
