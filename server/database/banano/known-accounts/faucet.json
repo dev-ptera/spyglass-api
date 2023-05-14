@@ -97,22 +97,26 @@
     {
         "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt",
         "alias": "getbanano[.]cc",
-        "owner": "IMalFect"
+        "owner": "IMalFect",
+        "lore": "Banano faucet, but with Black Monkey captchas."
     },
     {
         "address": "ban_1jung1eb3uomk1gsx7w6w7toqrikxm5pgn5wbsg5fpy96ckpdf6wmiuuzpca",
         "alias": "JungleTV",
-        "owner": "gbl08ma"
+        "owner": "gbl08ma",
+        "lore": "Hot wallet of JungleTV, a jukebox where you watch videos and earn Banano." 
     },
     {
         "address": "ban_1jtprixunfus5mozkzj5gtfm79b54p3pwnje8snh9ugu998cfk13qceepwn5",
         "alias": "JungleTV Prize Faucet",
-        "owner": "gbl08ma"
+        "owner": "gbl08ma",
+        "lore": "This wallet holds funds for reward payouts of JungleTV events."
     },
     {
         "address": "ban_1rainrjfauss66rbormm3td5gucnnza41w78qepdmzy15dprgb6qrp6x516h",
         "alias": "JungleTV Rain",
-        "owner": "gbl08ma"
+        "owner": "gbl08ma",
+        "lore": "Wallet for raining on JungleTV. Funds sent to this wallet are splitted amongst active users."
     },
     {
         "address": "ban_1skiph85moxba9eqzpxejazxcaqfddq8xwsdgjn7yy4t1ano81oncieo6bib",
@@ -256,7 +260,8 @@
     {
         "address": "ban_3jyqzypmcn94dmyp7eb3k85sug1568xwehzx738o5jniaxaf1jpxdakjz96r",
         "alias": "CSquared's Faucet",
-        "owner": "CSquared"
+        "owner": "CSquared",
+        "lore": "The faucet [has been closed](https://redd.it/13h0qfg)."
     },
     {
         "address": "ban_3jzi3modbcrfq7gds5nmudstw3kghndqb1k48twhqxds3ytyj4k7cf79q5ij",
@@ -304,5 +309,10 @@
         "alias": "Banano Tree NFT Faucet",
         "owner": "Aku",
         "lore": "A Banano faucet of Aku that distributes on-chain Banano AKU NFTs."
+    },
+    {
+        "address": "ban_3nuq9s1ot8dzk4i1w1zxejnk6qgbr7zgaw9rxagokbwdxw96z4fbk85girf6",
+        "alias": "Nanosquares withdrawal wallet",
+        "owner": "httpete"
     }
 ]
