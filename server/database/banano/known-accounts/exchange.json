@@ -275,5 +275,11 @@
         "alias": "Bonobo",
         "owner": "Bonobo",
         "lore": "Bonobo offers a swap service which you can swap popular cryptocurrencies."
+    },
+    {
+        "address": "ban_1em9ej7jdcmuhwhwydwohb63xf5bjajzob5hp4x9fzzyhants5jckn684e3f",
+        "alias": "CryptoFuse.net",
+        "owner": "CryptoFuse",
+        "lore": "CryptoFuse.net is a Crypto Swap service that allows users to exchange their cryptocurrencies for other cryptocurrencies. "
     }
 ]
