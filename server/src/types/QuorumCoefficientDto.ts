@@ -1,4 +1,4 @@
-export type MinWeightCoefficientDto = {
+export type QuorumCoefficientDto = {
     delta: number;
     onlineWeight: number;
     onlineWeightMinimum: number;

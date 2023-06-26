@@ -29,7 +29,7 @@ export * from './RepresentativeDto';
 export * from './RepresentativeUptimeDto';
 export * from './RepScoreDto';
 export * from './RequestBody';
-export * from './MinWeightCoefficientDto';
+export * from './QuorumCoefficientDto';
 export * from './SocialMediaAccountAliasDto';
 export * from './Subtype';
 export * from './SupplyDto';
