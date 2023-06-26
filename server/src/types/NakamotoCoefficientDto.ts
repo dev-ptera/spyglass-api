@@ -5,7 +5,7 @@ export type NakamotoCoefficientDto = {
     ncRepsWeight: number;
 };
 
-type BasicRep = {
+export type BasicRep = {
     address: string;
     weight: number;
 };

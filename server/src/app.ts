@@ -87,6 +87,7 @@ import {
     writeNewRepresentativeUptimePings,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
+import { getMinWeightCoefficientV1 } from './services/api/network/min-weight-coefficient.service';
 
 process.env.UV_THREADPOOL_SIZE = String(16);
 
@@ -160,6 +161,7 @@ app.get(`/${PATH_ROOT}/v1/network/node-stats`, (req, res) => getNodeStatsV1(res)
 app.get(`/${PATH_ROOT}/v1/network/quorum`, (req, res) => getQuorumV1(res));
 app.get(`/${PATH_ROOT}/v1/network/peers`, (req, res) => getPeerVersionsV1(res));
 app.get(`/${PATH_ROOT}/v1/network/nakamoto-coefficient`, (req, res) => getNakamotoCoefficientV1(res));
+app.get(`/${PATH_ROOT}/v1/network/min-weight-coefficient`, (req, res) => getMinWeightCoefficientV1(res));
 
 /* Representatives */
 app.get(`/${PATH_ROOT}/v1/representatives/pr-weight`, (req, res) => getPRWeightV1(res));

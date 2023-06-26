@@ -1,6 +1,7 @@
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
+    BasicRep,
     KnownAccountDto,
     MonitoredRepresentativeDto,
     PriceDataDto,
@@ -31,7 +32,7 @@ export type AppCache = {
     onlineRepresentatives: string[];
 
     /** Online representatives, sorted by weight. */
-    onlineRepresentativesWithWeights: { address: string; weight: number }[];
+    onlineRepresentativesWithWeights: BasicRep[];
 
     /** Populated by CoinMarketCap API. */
     priceData: PriceDataDto;
@@ -89,6 +90,11 @@ export const HOST_NODE_STATS_PAIR = {
 
 export const NAKAMOTO_COEFFICIENT_CACHE_PAIR = {
     key: 'nc',
+    duration: minutesToMs(1),
+};
+
+export const MIN_WEIGHT_COEFFICIENT_CACHE_PAIR = {
+    key: 'qc',
     duration: minutesToMs(1),
 };
 

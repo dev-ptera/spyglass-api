@@ -1,21 +1,17 @@
 import { cacheSend, getQuorumPromise } from '@app/services';
 import { AppCache, NAKAMOTO_COEFFICIENT_CACHE_PAIR, QUORUM_CACHE_PAIR } from '@app/config';
-import { NakamotoCoefficientDto } from '@app/types';
+import { BasicRep, NakamotoCoefficientDto } from '@app/types';
 
-/** Calculates nakamoto coefficient. */
-const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
-    // Use a cached delta value if it's available, otherwise call the Quorum service.
-    let delta: number;
-    if (AppCache.temp.has(QUORUM_CACHE_PAIR.key)) {
-        delta = AppCache.temp.get(QUORUM_CACHE_PAIR.key).quorumDelta;
-    } else {
-        const quorum = await getQuorumPromise().catch(Promise.reject);
-        delta = quorum.quorumDelta;
-    }
-
+export const countRepsRequiredToOverflowBanAmount = (
+    delta: number
+): {
+    repsRequiredNumber: number;
+    representatives: BasicRep[];
+    repsWeightSum: number;
+} => {
     let ncRepsWeight = 0;
     let nakamotoCoefficient = 0;
-    const ncRepresentatives = [];
+    const ncRepresentatives: BasicRep[] = [];
 
     // Iterate through the list of online reps & aggregate their weights until it exceeds the delta.
     // The number of representatives required to match or surpass the delta is the nakamoto coefficient.
@@ -28,14 +24,31 @@ const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto>
         }
     }
 
-    // Remove the 'online' attribute from the reps.
-    ncRepresentatives.map((rep) => (rep.online = undefined));
+    return {
+        repsRequiredNumber: nakamotoCoefficient,
+        representatives: ncRepresentatives,
+        repsWeightSum: ncRepsWeight,
+    };
+};
+
+/** Calculates nakamoto coefficient. */
+const calcNakamotoCoefficientPromise = async (): Promise<NakamotoCoefficientDto> => {
+    // Use a cached delta value if it's available, otherwise call the Quorum service.
+    let delta: number;
+    if (AppCache.temp.has(QUORUM_CACHE_PAIR.key)) {
+        delta = AppCache.temp.get(QUORUM_CACHE_PAIR.key).quorumDelta;
+    } else {
+        const quorum = await getQuorumPromise().catch(Promise.reject);
+        delta = quorum.quorumDelta;
+    }
+
+    const { repsRequiredNumber, representatives, repsWeightSum } = countRepsRequiredToOverflowBanAmount(delta);
 
     return {
         delta,
-        nakamotoCoefficient,
-        ncRepresentatives,
-        ncRepsWeight,
+        nakamotoCoefficient: repsRequiredNumber,
+        ncRepresentatives: representatives,
+        ncRepsWeight: repsWeightSum,
     };
 };
 

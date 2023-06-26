@@ -84,5 +84,6 @@ export const cacheOnlineRepresentatives = async (): Promise<void> => {
     const onlineRepsWithWeights = await getRepresentativesPromise({
         addresses: AppCache.onlineRepresentatives,
     });
+    onlineRepsWithWeights.map((rep) => (rep.online = undefined));
     AppCache.onlineRepresentativesWithWeights = onlineRepsWithWeights;
 };
