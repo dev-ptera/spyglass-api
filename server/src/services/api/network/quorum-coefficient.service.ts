@@ -27,7 +27,7 @@ const calcQuorumCoefficientPromise = async (): Promise<QuorumCoefficientDto> => 
 };
 
 /** The Nakamoto coefficient represents the minimum number of entities to compromise a given subsystem.
- *  In this context, it represents the number of representatives that must collude together to achieve consensus. */
+ *  In this context, it represents the number of representatives that must collude together to disrupt consensus & stall the network. */
 export const getQuorumCoefficientV1 = (res): void => {
     calcQuorumCoefficientPromise()
         .then((qc) => cacheSend(res, qc, MIN_WEIGHT_COEFFICIENT_CACHE_PAIR))
