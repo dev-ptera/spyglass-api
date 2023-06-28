@@ -78,5 +78,9 @@
     {
         "name": "banarchy",
         "url": "https://banarchy.boo/api.php"
+    },
+    {
+        "name": "bananocat",
+        "url": "https://bananocat.com/api.php"
     }
 ]
