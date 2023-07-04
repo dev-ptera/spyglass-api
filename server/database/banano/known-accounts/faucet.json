@@ -16,7 +16,8 @@
     {
         "address": "ban_3runnerrxm74165sfmystpktzsyp7eurixwpk59tejnn8xamn8zog18abrda",
         "alias": "Banano Runner",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Distribution address for Banano Runner, a game launched back in 2018."
     },
     {
         "address": "ban_3uf1gx114fqm9ppiwp3sw1mywzzr9d8uwhrw9e85zpgdt48eopruqnqpdb68",
@@ -107,12 +108,14 @@
     {
         "address": "ban_1jtprixunfus5mozkzj5gtfm79b54p3pwnje8snh9ugu998cfk13qceepwn5",
         "alias": "JungleTV Prize Faucet",
-        "owner": "gbl08ma"
+        "owner": "gbl08ma",
+        "lore": "Payout address for JungleTV prizes and events suchs as Tunesdays."
     },
     {
         "address": "ban_1rainrjfauss66rbormm3td5gucnnza41w78qepdmzy15dprgb6qrp6x516h",
         "alias": "JungleTV Rain",
-        "owner": "gbl08ma"
+        "owner": "gbl08ma",
+        "lore": "JungleTV rain address. Any funds here will be split between all active viewers at the end of the next video."
     },
     {
         "address": "ban_1skiph85moxba9eqzpxejazxcaqfddq8xwsdgjn7yy4t1ano81oncieo6bib",
@@ -236,7 +239,8 @@
     {
         "address": "ban_1bmcmeowun9kpehd3mx8zjnkda8kg6cdrhw9f6q41jq78sj3gym9zznkd1a6",
         "alias": "Black Monkey CryptomonKeys",
-        "owner": "Banano"
+        "owner": "Banano",
+        "lore": "Distribution address for the Black Monkey discord-based game, available in the CryptomonKeys discord."
     },
     {
         "address": "ban_1monkecrqoqr6j6qzhtd9i8x49ujdnoqt7ramt9jmhd543icsrx5accoqtd5",

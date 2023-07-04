@@ -28,6 +28,7 @@
     {
         "address": "ban_1greenntagzbysqsk3ypbwx1oouojus8gmcawdb4jtu6t3czuacxtznnrues",
         "alias": "cryptomonKeys connect linking",
-        "owner": "Green"
+        "owner": "Green",
+        "lore": "Address used for linking Banano addresses to your connect.cryptomonkeys.cc account."
     }
 ]

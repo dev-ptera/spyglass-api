@@ -281,5 +281,11 @@
         "alias": "CryptoFuse.net",
         "owner": "CryptoFuse",
         "lore": "CryptoFuse.net is a Crypto Swap service that allows users to exchange their cryptocurrencies for other cryptocurrencies. "
+    },
+    {
+        "address": "ban_3xx98po6ws9hjsdmjqr3yhuhqzfhrigoz3xfazykq5acfeehfss81k4mekfk",
+        "alias": "Nanswap Tipbot",
+        "owner": "Nanswap",
+        "lore": "Address of the Nanswap Tipbot, which provides swaps between various cryptocurrencies."
     }
 ]
