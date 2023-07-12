@@ -60,6 +60,12 @@
         "lore": "Distribution address for the second Banano Booster hackathon."
     },
     {
+        "address": "ban_1boostrke1fzbpxpoxsjfxybye388n4z18pj51ujtocpi9scsnzb1jfx3h9q",
+        "alias": "Booster3 Rewards",
+        "owner": "Banano",
+        "lore": "Distribution address for the third Banano Booster hackathon."
+    },
+    {
         "address": "ban_1bonusd89osnxs6yeyetshho11pfy5mcqn61q3yyu74k7anidsqansgmxf43",
         "alias": "Booster2 Bonus",
         "owner": "Banano",
