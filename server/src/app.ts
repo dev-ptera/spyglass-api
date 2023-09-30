@@ -175,7 +175,7 @@ app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentat
 
 /* Price */
 app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
-app.get(`/${PATH_ROOT}/v1/price/exchange-rate`, (req, res) => sendCached(res, 'exchangeRates'));
+app.get(`/${PATH_ROOT}/v1/price/exchange-rates`, (req, res) => sendCached(res, 'exchangeRates'));
 
 /* Explorer Summary */
 app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(res));
