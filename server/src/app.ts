@@ -16,7 +16,7 @@ dotenv.config();
 
 import {
     AppCache,
-    DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
+    DELEGATORS_COUNT_REFRESH_INTERVAL_MS, EXCHANGE_RATE_REFRESH_INTERVAL_MS,
     IS_PRODUCTION,
     PATH_ROOT,
     PRICE_DATA_REFRESH_INTERVAL_MS,
@@ -86,6 +86,7 @@ import {
     sleep,
     getQuorumCoefficientV1,
     writeNewRepresentativeUptimePings,
+    cacheExchangeRateData,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -174,6 +175,7 @@ app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentat
 
 /* Price */
 app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
+app.get(`/${PATH_ROOT}/v1/price/exchange-rate`, (req, res) => sendCached(res, 'exchangeRates'));
 
 /* Explorer Summary */
 app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(res));
@@ -238,6 +240,11 @@ const server = http.createServer(app).listen(port, async () => {
         interval: PRICE_DATA_REFRESH_INTERVAL_MS,
     };
 
+    const exchangeRates = {
+        method: cacheExchangeRateData,
+        interval: EXCHANGE_RATE_REFRESH_INTERVAL_MS,
+    };
+
     const delegatorCount = {
         method: cacheDelegatorsCount,
         interval: DELEGATORS_COUNT_REFRESH_INTERVAL_MS,
@@ -256,6 +263,7 @@ const server = http.createServer(app).listen(port, async () => {
     /* Updating the network metrics are now staggered so that during each reset interval, not all calls are fired at once.
      *  This will put a little less strain on the node running the API.  */
     void setRefreshIncrements([
+        exchangeRates,
         knownAccountBalances,
         onlineRepresentatives,
         delegatorCount,

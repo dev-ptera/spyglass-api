@@ -8,7 +8,7 @@ import {
     RepScoreDto,
 } from '@app/types';
 import { CacheClass } from 'memory-cache';
-import { minutesToMs, PingDoc } from '@app/services';
+import { ExchangeRate, minutesToMs, PingDoc } from '@app/services';
 
 const cache = require('memory-cache');
 
@@ -51,6 +51,9 @@ export type AppCache = {
 
     /** Stores representative uptime metrics in memory to reduce number of file reads. */
     pingDocMap: Map<string, PingDoc>;
+
+    /** Currency conversion snapshots */
+    exchangeRates: ExchangeRate[];
 };
 
 export const AppCache: AppCache = {
@@ -67,6 +70,7 @@ export const AppCache: AppCache = {
     delegatorCount: new Map<string, { total: number; funded: number }>(),
     representativeScores: [],
     pingDocMap: new Map<string, PingDoc>(),
+    exchangeRates: [],
 };
 
 AppCache.temp.has = (key: string): boolean => AppCache.temp.get(key) !== null;
