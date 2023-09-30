@@ -53,7 +53,7 @@ const getConversions = async () => {
         if (currency.id !== 'USD') {
             currency.rate = quotes[`USD${currency.id}`];
         }
-        AppCache.exchangeRates.sort((a,b) => (a.desc > b.desc) ? 1 : ((b.desc > a.desc) ? -1 : 0))
+        AppCache.exchangeRates.sort((a, b) => (a.desc > b.desc ? 1 : b.desc > a.desc ? -1 : 0));
     }
 };
 
