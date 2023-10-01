@@ -51,6 +51,8 @@ const getConversions = async () => {
     for (const currency of AppCache.exchangeRates) {
         if (currency.id !== 'USD') {
             currency.rate = quotes[`USD${currency.id}`];
+        } else {
+            currency.rate = 1;
         }
         AppCache.exchangeRates.sort((a, b) => (a.desc > b.desc ? 1 : b.desc > a.desc ? -1 : 0));
     }
