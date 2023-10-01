@@ -50,7 +50,10 @@ const getConversions = async () => {
     });
     const quotes = response.data.quotes;
     for (const currency of AppCache.exchangeRates) {
-        currency.rate = quotes[`USD${currency.id}`] || currency.id === 'USD' ? 1 : 0;
+        if (currency.id !== 'USD') {
+            currency.rate = quotes[`USD${currency.id}`];
+        }
+        AppCache.exchangeRates.sort((a, b) => (a.desc > b.desc ? 1 : b.desc > a.desc ? -1 : 0));
     }
 };
 
