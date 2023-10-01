@@ -30,7 +30,6 @@ const getSymbols = async () => {
     });
     AppCache.exchangeRates = [];
     const currencies = response.data.currencies;
-    AppCache.exchangeRates.push({ id: 'USD', desc: 'United States Dollar', rate: 1 });
     for (const key in currencies) {
         AppCache.exchangeRates.push({
             id: key,
