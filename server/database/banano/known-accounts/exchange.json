@@ -62,9 +62,15 @@
     },
     {
         "address": "ban_1nrcne47secz1hnm9syepdoob7t1r4xrhdzih3zohb1c3z178edd7b6ygc4x",
-        "alias": "Coinex Deposits",
+        "alias": "CoinEx Deposits OLD",
         "owner": "CoinEx",
-        "lore": "CoinEx is a global centralised cryptocurrency exchange with headquarters in Hong Kong."
+        "lore": "CoinEx is a global centralised cryptocurrency exchange with headquarters in Hong Kong. Wallet until 20/11/2023"
+    },
+    {
+        "address": "ban_1w4unoqatatkpsztgdg4zfa4ucqsijsziapqqb7j53wm6e3es8zwgeooywi6",
+        "alias": "Coinex Deposits NEW",
+        "owner": "CoinEx",
+        "lore": "CoinEx is a global centralised cryptocurrency exchange with headquarters in Hong Kong. Wallet from 20/11/2023"
     },
     {
         "address": "ban_1fxc48dynhbjb69uuyue4bsfuymxick8js14synwznduy61g6i9esdeasmem",
