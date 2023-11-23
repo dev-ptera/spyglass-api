@@ -308,5 +308,20 @@
         "alias": "Banano Tree NFT Faucet",
         "owner": "Aku",
         "lore": "A Banano faucet of Aku that distributes on-chain Banano AKU NFTs."
+    },
+    {
+        "address": "ban_3mkys1ot6iqq7ebmawpdognrbgzkos6hs765c8xjrp7gnce7akbntouxr4m5",
+        "alias": "MonkeySlots Cold",
+        "owner": "Banano"
+    },
+    {
+        "address": "ban_1s1hot8adygxuj96f35dicnmd47cctazoaiia9uduk731nqt6fuenfax9ckt",
+        "alias": "MonkeySlots Hot",
+        "owner": "Banano"
+    },
+    {
+        "address": "ban_3fww7iebi9xq4a9j4mujxmqtfke1ad6g6ta13fijcxni4scasoyzdxauegj3",
+        "alias": "MonkeySlots Warm",
+        "owner": "Banano"
     }
 ]
