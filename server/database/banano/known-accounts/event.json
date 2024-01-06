@@ -107,8 +107,20 @@
     },
     {
         "address": "ban_1cmairy7iqd1ank9b5dturk6uuc7yqkyukgjc9qw974fbmg1ggiykiewswo6",
-        "alias": "Santa 2022 and cryptomonKeys connect",
+        "alias": "Santa, Halloween and cryptomonKeys connect",
         "owner": "cryptomonKeys",
-        "lore": "Address used to send Banano rewards to Santa claimers. Also used by cryptomonKeys connect for any other Banano distribution occuring through that."
+        "lore": "Address used by cryptomonKeys connect for Telegram, Twitch and Green Wizard based distribution. Includes popular events such as Santa and Halloween."
+    },
+    {
+        "address": "ban_3191wobykrnzck9oaepxxkkyfkszxmmkaxeftahxpnpez9af5w3sti9dn8wa",
+        "alias": "Telegram Events",
+        "owner": "/dev/aux",
+        "lore": "Address used for the bi-weekly banano drawing and other events taking place in the Banano Telegram."
+    },
+    {
+        "address": "ban_11awizjp9r1sfoyy6ruurfuk3wzksu9uug53x7waxuar7jxp71epfxmsqy69",
+        "alias": "Banano NFL and NHL Pickems - 2023-2024",
+        "owner": "Jimothy",
+        "lore": "Address used to fund the prizes for the NFL and NHL pickems as well as the discord sports guessing mini-events."
     }
 ]
