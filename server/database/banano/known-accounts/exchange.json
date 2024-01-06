@@ -293,5 +293,11 @@
         "alias": "Nanswap Tipbot",
         "owner": "Nanswap",
         "lore": "Address of the Nanswap Tipbot, which provides swaps between various cryptocurrencies."
+    },
+    {
+        "address": "ban_3defi9s34k5w63meqg3q9u7ibsx5ihtcctc1146rtjp1w1dw8a578wqno186",
+        "alias": "Temporary wBAN Wallet",
+        "owner": "Banano",
+        "lore": "Temporary wallet used for wBAN wraps."
     }
 ]
