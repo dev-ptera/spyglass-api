@@ -89,7 +89,7 @@
     },
     {
         "address": "ban_1oaocnrcaystcdtaae6woh381wftyg4k7bespu19m5w18ze699refhyzu6bo",
-        "alias": "Kuyumcu",
+        "alias": "banano[.]nano[.]trade",
         "owner": "mail@nano.trade",
         "lore": "Kuyumcu is a cryptocurrency swap service. It allows you to exchange Banano for various other coins."
     },
@@ -122,9 +122,9 @@
     },
     {
         "address": "ban_3kuyumcu9yj65b51kqu9cbohio9oeysymxt51fxkrg5idw8qaxqpk4yq6nzy",
-        "alias": "Nano[.]trade airdrop",
+        "alias": "nano[.]trade airdrop",
         "owner": "mail@nano.trade",
-        "lore": "Address used by the Kuyumcu swap service for airdrops to past traders."
+        "lore": "Address used by the Kuyumcu swap service for airdrops."
     },
     {
         "address": "ban_3zz761jb16zowd148jb6xpxszgpnk3fw35wnhfatuzah89uruginfdrw8sk7",
@@ -273,6 +273,12 @@
     {
         "address": "ban_1usdc1u6y9ixwx6f66xiezsza5eqsriwhwqzaopuf9musmsgm5pfjfkr7bpu",
         "alias": "usdc[.]banano[.]trade",
+        "owner": "mail@nano.trade",
+        "lore": "A swap service between Banano & USDC. Part of the Kuyumcu swap service."
+    },
+    {
+        "address": "ban_1usdt1pyw5edifbk4dezy7rkxocz78kte63ppo1o1kkfdknnc4zqcsb9zqkp",
+        "alias": "usdt[.]banano[.]trade",
         "owner": "mail@nano.trade",
         "lore": "A swap service between Banano & USDC. Part of the Kuyumcu swap service."
     },
