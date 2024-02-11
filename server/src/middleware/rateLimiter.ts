@@ -1,7 +1,7 @@
 import { readFileContents } from '@app/services';
 import { PROFILE, URL_ALLOW_LIST } from '@app/config';
 
-export const REQUESTS_PER_MINUTE = 100;
+export const REQUESTS_PER_MINUTE = 200;
 
 const rateLimit = require('express-rate-limit');
 const API_ACCESS_TOKENS = readFileContents(`database/${PROFILE}/api-access-tokens.json`);
