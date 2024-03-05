@@ -82,5 +82,9 @@
     {
         "name": "bananocat",
         "url": "https://bananocat.com/api.php"
+    },
+    {
+        "name": "banano.lugia",
+        "url": "http://banano.lugia.ovh/api.php"
     }
 ]
