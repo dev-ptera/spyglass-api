@@ -305,5 +305,10 @@
         "alias": "Temporary wBAN Wallet",
         "owner": "Banano",
         "lore": "Temporary wallet used for wBAN wraps."
+    },
+        {
+        "address": "ban_14cng4wpbmu5qpmuonsna6zbycwisr7ui73afkgya1gqmiuywhmmes443a3d",
+        "alias": "MEXC",
+        "owner": "MEXC"
     }
 ]
