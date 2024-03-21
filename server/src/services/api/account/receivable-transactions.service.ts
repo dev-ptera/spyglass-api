@@ -3,6 +3,7 @@ import { blockInfoPromiseV1, isValidAddress, LOG_ERR } from '@app/services';
 import { ReceivableTransactionDto } from '@app/types';
 
 const MAX_PENDING_SIZE = 500;
+const MAX_THRESHOLD_SIZE = 2_000_000_000;
 
 type RequestBody = {
     address: string;
@@ -29,6 +30,8 @@ const setBodyDefaults = (body: RequestBody): void => {
         body.threshold = 0;
     }
     body.size = Math.min(MAX_PENDING_SIZE, body.size);
+    body.threshold = Math.min(body.threshold, MAX_THRESHOLD_SIZE); // Adjust for max-accepted.
+    body.threshold = Math.max(0, body.threshold); // Adjust for min-accepted.
 };
 
 /** Looks ups pending transactions for a given account. */
