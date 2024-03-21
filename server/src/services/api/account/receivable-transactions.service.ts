@@ -8,12 +8,14 @@ type RequestBody = {
     address: string;
     size: number;
     offset: number;
+    threshold: number;
 };
 
 const DEFAULT_BODY: RequestBody = {
     address: '',
     size: 50,
     offset: 0,
+    threshold: 0,
 };
 
 const setBodyDefaults = (body: RequestBody): void => {
@@ -23,23 +25,28 @@ const setBodyDefaults = (body: RequestBody): void => {
     if (body.offset === undefined) {
         body.offset = DEFAULT_BODY.offset;
     }
+    if (body.threshold === undefined) {
+        body.threshold = 0;
+    }
     body.size = Math.min(MAX_PENDING_SIZE, body.size);
 };
 
 /** Looks ups pending transactions for a given account. */
 export const receivableTransactionsPromise = async (body: RequestBody): Promise<ReceivableTransactionDto[]> => {
     setBodyDefaults(body);
+
     const address = body.address;
     const offset = body.offset;
     const size = body.size;
+    const threshold = body.threshold;
 
     if (!isValidAddress(address)) {
         return Promise.reject({ error: 'Address is required' });
     }
 
     /* Get a list of pending hashes for an account. */
-    const pendingResponse = await accountsPendingRpc([address]).catch((err) =>
-        Promise.reject(LOG_ERR('pendingTransactionsPromise.accountsPendingRpc', err, { address, size }))
+    const pendingResponse = await accountsPendingRpc([address], threshold).catch((err) =>
+        Promise.reject(LOG_ERR('pendingTransactionsPromise.accountsPendingRpc', err, { address, size, threshold }))
     );
 
     /* Add hashes to a list, accounting for offset & size restrictions. */
