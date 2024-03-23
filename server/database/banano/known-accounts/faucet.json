@@ -326,5 +326,11 @@
         "alias": "MonkeySlots Warm",
         "owner": "Banano",
         "lore": "Intermediary wallet for the monKeyslots faucet. Allows cryptomonKeys holders to win some Banano."
+    },
+    {
+        "address": "ban_1g3f1hjs4i54ztrkdftartpjc5fi9hi8pq7arggp6k16nbagiw63jnubondf",
+        "alias": "MEXC Refund Bot",
+        "owner": "King Saul",
+        "lore": "MEXC Refund Bot. Refunds Withdrawal Fee charged by MEXC."
     }
 ]
