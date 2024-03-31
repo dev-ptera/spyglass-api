@@ -122,5 +122,11 @@
         "alias": "Banano NFL and NHL Pickems - 2023-2024",
         "owner": "Jimothy",
         "lore": "Address used to fund the prizes for the NFL and NHL pickems as well as the discord sports guessing mini-events."
+    },
+    {
+        "address": "ban_3boostedcoc7i68wjom11xriyrbo37rm6j7rjbwdimfqfi6gcbnfuf9gsqop",
+        "alias": "Boosted AF Hackathon 2024",
+        "owner": "JungleTV",
+        "lore": "JungleTV's prize pool for Boosted AF Hackathon in 2024. The address also receives donations and match-ups."
     }
 ]
