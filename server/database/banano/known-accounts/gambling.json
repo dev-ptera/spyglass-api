@@ -16,7 +16,12 @@
     },
     {
         "address": "ban_1p3oxrfuqddcb4r7ercjwdnxiyn1bwqspzettum7c8x1awsnd5zqtj5f1d6m",
-        "alias": "BC[.]Game",
+        "alias": "BC.Game Old",
+        "owner": "BC.Game"
+    },
+    {
+        "address": "ban_1rjrdkeo5st74fwka1ww4w8oq9cpb5ncc3fejxtpn59jjic7ex764fwknw4f",
+        "alias": "BC.Game",
         "owner": "BC.Game"
     },
     {
@@ -48,5 +53,31 @@
         "address": "ban_1eub1ezmefs1im56oomprzddwhp5s9c6brhx755ftjfjz45uytputarmcwto",
         "alias": "Banano Sports Pools MLB playoffs and teams",
         "owner": "Elementalennui"
+    },
+    {
+        "address": "ban_1casino1h3fjnmotzpf5q37sxf6ybwsk6g4nryjd7q9ttupz4fkiousdgaj8",
+        "alias": "Banano Casino",
+        "owner": "Klicer",
+        "lore": "Hot wallet for the gambling site Banano Casino."
+    },
+    {
+        "address": "ban_1w5q77ocgfrjn6sqwudfuygtomwyij8ijes3y5g8kaydxsf8f4jpz4n9q9a3",
+        "alias": "Nanogames Hot Wallet Old",
+        "owner": "Nanogames.io"
+    },
+    {
+        "address": "ban_1p9a8o8e51ssh8onm8ym7fap91h6grzfzx9xs1yprfqiaj5ae77a61cbpoor",
+        "alias": "Nanogames Hot Wallet",
+        "owner": "Nanogames.io"
+    },
+    {
+        "address": "ban_3ei96iz4wj8d17zee1thbtgejkdwq9s1ikgz51jptyank1d3tr3uxjk3tezy",
+        "alias": "Nanosquares.io Deposit",
+        "owner": "Nanosquares.io"
+    },
+    {
+        "address": "ban_3nuq9s1ot8dzk4i1w1zxejnk6qgbr7zgaw9rxagokbwdxw96z4fbk85girf6",
+        "alias": "Nanosquares.io Withdrawal",
+        "owner": "Nanosquares.io"
     }
 ]
