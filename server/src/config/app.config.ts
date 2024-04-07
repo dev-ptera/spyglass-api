@@ -31,7 +31,7 @@ export const NANO_CLIENT = new NanoClient({
 });
 
 const calcMinutes = (mins: number) => 60000 * mins;
-export const EXCHANGE_RATE_REFRESH_INTERVAL_MS = calcMinutes(60 * 12);
+export const EXCHANGE_RATE_REFRESH_INTERVAL_MS = calcMinutes(60 * 24);
 export const PRICE_DATA_REFRESH_INTERVAL_MS = calcMinutes(IS_PRODUCTION ? 30 : 120);
 export const DELEGATORS_COUNT_REFRESH_INTERVAL_MS = calcMinutes(5);
 export const REPRESENTATIVE_SCORES_REFRESH_INTERVAL_MS = calcMinutes(1);
