@@ -124,6 +124,12 @@
         "lore": "Address used to fund the prizes for the NFL and NHL pickems as well as the discord sports guessing mini-events."
     },
     {
+        "address": "ban_3boostedcoc7i68wjom11xriyrbo37rm6j7rjbwdimfqfi6gcbnfuf9gsqop",
+        "alias": "Boosted AF Hackathon 2024",
+        "owner": "JungleTV",
+        "lore": "JungleTV's prize pool for Boosted AF Hackathon in 2024. The address also receives donations and match-ups."
+    },
+    {
         "address": "ban_1anusneesoxyd6ijr6zeman85nnt3fsjiqp18qk1i6npbeknun7cbe3rkdxq",
         "alias": "6th Banniversary Birthday Bonus",
         "owner": "Banano",
