@@ -17,12 +17,6 @@
         "lore": "Main wallet of bananosearch search engine"
     },
     {
-        "address": "ban_1casino1h3fjnmotzpf5q37sxf6ybwsk6g4nryjd7q9ttupz4fkiousdgaj8",
-        "alias": "Banano Casino",
-        "owner": "Klicer",
-        "lore": "Hot wallet for the gambling site Banano Casino."
-    },
-    {
         "address": "ban_1waxf5j83w7eqqz3kph7u843wh3p5ddf1n48rh4i9m41zhk9nnquzwbnz9pb",
         "alias": "waxp.rentals",
         "owner": "homelab-express"
@@ -32,5 +26,11 @@
         "alias": "cryptomonKeys connect linking",
         "owner": "Green",
         "lore": "Address used for linking Banano addresses to your connect.cryptomonkeys.cc account."
+    },
+    {
+        "address": "ban_3ri6m4wbjgrjkxjzobwwjyzfte3xbizifx6icqtb7oipccnpzxcn6p3y6wpq",
+        "alias": "TIPBOT#9374 Multicoin Discord Tipbot",
+        "owner": "pluton8888 ",
+        "lore": "Banano Wallet for community-made Discord Tipbot used, for example, in Nanswap Discord."
     }
 ]

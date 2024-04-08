@@ -81,5 +81,17 @@
         "alias": "Contributor Bonus 1",
         "owner": "Banano",
         "lore": "Payout address for rewards members of the community who have contributed to the ecosystem."
+    },
+    {
+        "address": "ban_3cmfundg444o8ynqhqu638dfdh3jrmdykhqa7c9dkymejobb44ok9sdqxgc6",
+        "alias": "Community Manager Fund",
+        "owner": "Banano",
+        "lore": "Fund used by Banano Community Managers for various events."
+    },
+    {
+        "address": "ban_1rec1ag4gcf6uxeno9xi8hipjh3ictt6wk1pu4hk5wh5836gfxnd75dfzmsm",
+        "alias": "Weak Seed Team Reclaim",
+        "owner": "Banano",
+        "lore": "Recovered Banano from people using addresses as their seeds. If your wallet was swept to this address, please reach out to the Banano team."
     }
 ]

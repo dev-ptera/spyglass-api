@@ -128,5 +128,11 @@
         "alias": "Boosted AF Hackathon 2024",
         "owner": "JungleTV",
         "lore": "JungleTV's prize pool for Boosted AF Hackathon in 2024. The address also receives donations and match-ups."
+    },
+    {
+        "address": "ban_1anusneesoxyd6ijr6zeman85nnt3fsjiqp18qk1i6npbeknun7cbe3rkdxq",
+        "alias": "6th Banniversary Birthday Bonus",
+        "owner": "Banano",
+        "lore": "Rewards were sent out to all wallets with at least 100 Banano that actively set an online representative, outside of the biggest two, to further decentralise the Banano network."
     }
 ]
