@@ -88,6 +88,7 @@ import {
     getQuorumCoefficientV1,
     writeNewRepresentativeUptimePings,
     cacheExchangeRateData,
+    getAddressFromDiscordUserId,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -175,6 +176,9 @@ app.get(`/${PATH_ROOT}/v1/representatives/online`, (req, res) => sendCached(res,
 app.get(`/${PATH_ROOT}/v1/representatives/scores`, (req, res) => getScoresV1(res));
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentativesV1(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptimeV1(req, res));
+
+/* Socials */
+app.get(`/${PATH_ROOT}/v1/wfu/:id`, (req, res) => getAddressFromDiscordUserId(req, res));
 
 /* Price */
 app.get(`/${PATH_ROOT}/v1/price`, (req, res) => {
