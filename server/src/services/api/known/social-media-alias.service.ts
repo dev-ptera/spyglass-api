@@ -1,4 +1,4 @@
-import { isValidAddress, LOG_ERR, LOG_INFO, sleep } from '@app/services';
+import { isValidAddress, LOG_ERR, LOG_INFO } from '@app/services';
 import { SocialMediaAccountAliasDto } from '@app/types';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { JTV_QUEUE_ADDRESSES } from './jungle-tv';
@@ -12,12 +12,6 @@ type DiscordApiResponse = {
     user_id: string;
     user_last_known_name: string;
     address: string;
-};
-type TwitGramApiResponse = {
-    account: string;
-    system: 'twitter' | 'telegram';
-    user_id: string;
-    user_name: string;
 };
 
 const legacyTelegramAliasMap = new Map<string, string>();
@@ -55,58 +49,6 @@ export const cacheSocialMediaAccounts = async (): Promise<void> => {
         .catch((err: AxiosError) => {
             LOG_ERR('fetchAllDiscordAccount', err);
         });
-
-    await sleep(5000);
-
-    /* Twitter */
-    /*
-    const startTwitter = LOG_INFO('Refreshing all Twitter Aliases');
-    axios
-        .get(`https://ba.nanotipbot.com/users/twitter`)
-        .then((response: AxiosResponse<TwitGramApiResponse[]>) => {
-            response.data.map((account) => {
-                if (account.user_id) {
-                    knownSocialMediaAccounts.set(account.account, {
-                        address: account.account,
-                        alias: account.user_name,
-                        platform: 'twitter',
-                        platformUserId: account.user_id,
-                    });
-                }
-            });
-            LOG_INFO('Twitter users updated', startTwitter);
-            LOG_INFO(`Known Social Media Account Size: ${knownSocialMediaAccounts.size}`);
-        })
-        .catch((err: AxiosError) => {
-            LOG_ERR('fetchAllTwitterAccount', err);
-        });
-
-    await sleep(5000);
-    */
-
-    /* Telegram */
-    /*
-    const startTelegram = LOG_INFO('Refreshing all Telegram Aliases');
-    axios
-        .get(`https://ba.nanotipbot.com/users/telegram`)
-        .then((response: AxiosResponse<TwitGramApiResponse[]>) => {
-            response.data.map((account) => {
-                if (account.user_id) {
-                    knownSocialMediaAccounts.set(account.account, {
-                        address: account.account,
-                        alias: account.user_name,
-                        platform: 'telegram',
-                        platformUserId: account.user_id,
-                    });
-                }
-            });
-            LOG_INFO('Telegram users updated', startTelegram);
-            LOG_INFO(`Known Social Media Account Size: ${knownSocialMediaAccounts.size}`);
-        })
-        .catch((err: AxiosError) => {
-            LOG_ERR('fetchAllTelegramAccount', err);
-        });
-     */
 };
 
 /** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
@@ -201,34 +143,6 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
             });
     });
 
-// Example: ban_1rt8orkbkw9jnfyy8gcy88c96jqhsq6henz6h35sepniikt5qkea6nzdwqsf
-const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
-    new Promise<SocialMediaAccountAliasDto>((resolve) => {
-        axios
-            .get(`https://ba.nanotipbot.com/users/${address}`, {
-                headers: {
-                    Authorization: process.env.BANANOBOTAPI_API_KEY || '',
-                },
-            })
-            .then((response: AxiosResponse<TwitGramApiResponse>) => {
-                resolve({
-                    address,
-                    alias: response.data.user_name,
-                    platform: response.data.system,
-                    platformUserId: String(response.data.user_id),
-                });
-            })
-            .catch((err: AxiosError) => {
-                // LOG_ERR('getTwitterAlias', err);
-                resolve({
-                    address,
-                    alias: undefined,
-                    platform: undefined,
-                    platformUserId: undefined,
-                });
-            });
-    });
-
 const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<SocialMediaAccountAliasDto> => {
     if (!address) {
         return Promise.reject({ errorMsg: 'Address is required', errorCode: 1 });
@@ -266,14 +180,12 @@ const getKnownSocialMediaAccountAliasPromise = (address: string): Promise<Social
     }
 
     // Check remote APIs (discord, twitter, telegram)
-    return Promise.all([getDiscordAlias(address), getTelegramAndTwitterAlias(address)]).then(
-        ([discord, teleTwitter]) => ({
-            address,
-            alias: discord.alias || teleTwitter.alias,
-            platform: discord.platform || teleTwitter.platform,
-            platformUserId: discord.platformUserId || teleTwitter.platformUserId,
-        })
-    );
+    return getDiscordAlias(address).then((discord) => ({
+        address,
+        alias: discord.alias,
+        platform: discord.platform,
+        platformUserId: discord.platformUserId,
+    }));
 };
 
 /** Checks to see if an account has an alias using the BRPD twitter & discord APIs.  */
