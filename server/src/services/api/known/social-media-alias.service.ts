@@ -28,6 +28,9 @@ export const cacheSocialMediaAccounts = async (): Promise<void> => {
     const startDiscord = LOG_INFO('Refreshing all Discord Aliases');
     axios
         .get('https://bananobotapi.banano.cc/users', {
+            headers: {
+                Authorization: process.env.BANANOBOTAPI_API_KEY || '',
+            },
             transformResponse: [
                 (data) => {
                     // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
@@ -56,6 +59,7 @@ export const cacheSocialMediaAccounts = async (): Promise<void> => {
     await sleep(5000);
 
     /* Twitter */
+    /*
     const startTwitter = LOG_INFO('Refreshing all Twitter Aliases');
     axios
         .get(`https://ba.nanotipbot.com/users/twitter`)
@@ -78,8 +82,10 @@ export const cacheSocialMediaAccounts = async (): Promise<void> => {
         });
 
     await sleep(5000);
+    */
 
     /* Telegram */
+    /*
     const startTelegram = LOG_INFO('Refreshing all Telegram Aliases');
     axios
         .get(`https://ba.nanotipbot.com/users/telegram`)
@@ -100,6 +106,7 @@ export const cacheSocialMediaAccounts = async (): Promise<void> => {
         .catch((err: AxiosError) => {
             LOG_ERR('fetchAllTelegramAccount', err);
         });
+     */
 };
 
 /** This list of telegram addresses is not currently (7.6.22) available in the `getTelegramAndTwitterAlias` response.
@@ -132,10 +139,42 @@ export const getOldTelegramAliases = (): Promise<void> => {
     });
 };
 
+export const getAddressFromDiscordUserId = (req, res): void => {
+    const parts = req.url.split('/');
+    const discordId = parts[parts.length - 1];
+    axios
+        .get(`https://bananobotapi.banano.cc/wfu/${discordId}`, {
+            headers: {
+                Authorization: process.env.BANANOBOTAPI_API_KEY || '',
+            },
+            transformResponse: [
+                (data) => {
+                    // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
+                    return JSONBig.parse(data);
+                },
+            ],
+        })
+        .then((response: AxiosResponse<DiscordApiResponse[]>) => {
+            res.send([
+                {
+                    address: response.data[0].address,
+                    user_last_known_name: response.data[0].user_last_known_name,
+                    user_id: String(response.data[0].user_id),
+                },
+            ]);
+        })
+        .catch((err: AxiosError) => {
+            LOG_ERR('getAddressFromDiscordUserId', err);
+        });
+};
+
 const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
             .get(`https://bananobotapi.banano.cc/ufw/${address}`, {
+                headers: {
+                    Authorization: process.env.BANANOBOTAPI_API_KEY || '',
+                },
                 transformResponse: [
                     (data) => {
                         // API returns `user_id` as a number, but it is a BigInt & the value is transformed during a normal JSON.parse.
@@ -166,7 +205,11 @@ const getDiscordAlias = (address: string): Promise<SocialMediaAccountAliasDto> =
 const getTelegramAndTwitterAlias = (address: string): Promise<SocialMediaAccountAliasDto> =>
     new Promise<SocialMediaAccountAliasDto>((resolve) => {
         axios
-            .get(`https://ba.nanotipbot.com/users/${address}`)
+            .get(`https://ba.nanotipbot.com/users/${address}`, {
+                headers: {
+                    Authorization: process.env.BANANOBOTAPI_API_KEY || '',
+                },
+            })
             .then((response: AxiosResponse<TwitGramApiResponse>) => {
                 resolve({
                     address,
