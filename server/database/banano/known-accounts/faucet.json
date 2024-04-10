@@ -244,7 +244,7 @@
     },
     {
         "address": "ban_1monkecrqoqr6j6qzhtd9i8x49ujdnoqt7ramt9jmhd543icsrx5accoqtd5",
-        "alias": "icanhaznano.monke42.tk",
+        "alias": "icanhaznano.monke42.link",
         "owner": "monke42"
     },
     {
@@ -332,5 +332,10 @@
         "alias": "MEXC Refund Bot",
         "owner": "King Saul",
         "lore": "MEXC Refund Bot. Refunds Withdrawal Fee charged by MEXC."
+    },
+    {
+        "address": "ban_3zew7e6kq45zukdgs7qf675ctn5wwa95igozbmhdsojza48mpsbwhjo5a3nu",
+        "alias": "thefreebananofaucet.com",
+        "owner": "Mall_Vacation"
     }
 ]

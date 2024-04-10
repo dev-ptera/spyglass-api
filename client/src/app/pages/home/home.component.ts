@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-home',
@@ -34,7 +35,7 @@ import { Component } from '@angular/core';
 
                 <div class="section-body" style="margin-bottom: 12px">
                     <div class="mat-h2 link" style="margin-bottom: 0; word-break: break-all">
-                        https://api.spyglass.pw/banano/&#60;request-path&#62;
+                        {{ apiUrl }}
                     </div>
                 </div>
                 <div class="section-body">
@@ -77,7 +78,8 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
     examplePost = `
-curl -X POST https://api.spyglass.pw/banano/v1/representatives
+curl -X POST ${environment.api}/v1/representatives
 -H 'Content-Type: application/json'
 -d '{"minimumWeight":"100000"}'`;
+    apiUrl = environment.api + '/<request-path>';
 }
