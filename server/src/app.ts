@@ -88,6 +88,7 @@ import {
     getQuorumCoefficientV1,
     writeNewRepresentativeUptimePings,
     cacheExchangeRateData,
+    getAddressFromDiscordUserId,
 } from '@app/services';
 import { memCache, rateLimiter, serverRestart } from '@app/middleware';
 
@@ -97,6 +98,8 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const sendCached = (res, cacheKey: keyof AppCache): void => res.send(JSON.stringify(AppCache[cacheKey]));
+const sendNotImplementedError = (res): void =>
+    res.status(501).send('This instance is missing the required external API-Token to provide data on this endpoint');
 
 const appBase = express();
 let wsInstance = expressWs(appBase);
@@ -174,9 +177,22 @@ app.get(`/${PATH_ROOT}/v1/representatives/scores`, (req, res) => getScoresV1(res
 app.post(`/${PATH_ROOT}/v1/representatives`, (req, res) => getRepresentativesV1(req, res));
 app.post(`/${PATH_ROOT}/v1/representatives/uptime`, (req, res) => getRepresentativesUptimeV1(req, res));
 
+/* Socials */
+app.get(`/${PATH_ROOT}/v1/wfu/:id`, (req, res) => getAddressFromDiscordUserId(req, res));
+
 /* Price */
-app.get(`/${PATH_ROOT}/v1/price`, (req, res) => sendCached(res, 'priceData'));
-app.get(`/${PATH_ROOT}/v1/price/exchange-rates`, (req, res) => sendCached(res, 'exchangeRates'));
+app.get(`/${PATH_ROOT}/v1/price`, (req, res) => {
+    if (typeof process.env.CMC_API_KEY === 'undefined') {
+        return sendNotImplementedError(res);
+    }
+    return sendCached(res, 'priceData');
+});
+app.get(`/${PATH_ROOT}/v1/price/exchange-rates`, (req, res) => {
+    if (typeof process.env.EXCHANGERATEHOST_API_KEY === 'undefined') {
+        return sendNotImplementedError(res);
+    }
+    return sendCached(res, 'exchangeRates');
+});
 
 /* Explorer Summary */
 app.get(`/${PATH_ROOT}/v1/explorer-summary`, (req, res) => getExplorerSummaryV1(res));

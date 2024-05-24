@@ -60,6 +60,7 @@ const getConversions = async () => {
 
 /** This is called to update the Exchange Rate Data in the AppCache.  Reads price data from https://exchangerate.host. */
 export const cacheExchangeRateData = async (): Promise<void> => {
+    if (typeof process.env.EXCHANGERATEHOST_API_KEY === 'undefined') return;
     try {
         const start = LOG_INFO('Refreshing Exchange Rate Data');
         await getSymbols();
