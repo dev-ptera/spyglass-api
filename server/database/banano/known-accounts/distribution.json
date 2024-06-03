@@ -93,5 +93,11 @@
         "alias": "Weak Seed Team Reclaim",
         "owner": "Banano",
         "lore": "Recovered Banano from people using addresses as their seeds. If your wallet was swept to this address, please reach out to the Banano team."
+    },
+    {
+        "address": "ban_1tw4ttt3ju6whgdgkhcujrznzy6u4smqok34m6zxffnk7cxprnw7sjaqhinu",
+        "alias": "Twitter Giveaway",
+        "owner": "Banano",
+        "lore": "Funds used to distribute Banano on Twitter for various giveaways and events."
     }
 ]
