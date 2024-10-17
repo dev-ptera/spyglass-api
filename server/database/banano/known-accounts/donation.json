@@ -80,5 +80,11 @@
         "address": "ban_1dpe11rjii8r4k448gbgfpbg18p8444edayaq4to3hsquha4qhy65cjbtk8b",
         "alias": "Legacy Creeper Donation",
         "owner": "meltingice"
+    },
+    {
+        "address": "ban_3rs5ne56m63pa77zrgcaj9s9g3g4iusa5w5tcoa1ehpotubarpdwrouu5wjc",
+        "alias": "BananoGPT deposit",
+        "owner": "Nano-GPT",
+        "lore": "Permanent Nanswap deposit address to top up balance for Nano-GPT's AI bot service on Banano's Discord server."
     }
 ]
