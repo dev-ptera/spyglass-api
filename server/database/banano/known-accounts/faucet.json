@@ -93,7 +93,7 @@
         "address": "ban_3fo1d1ng6mfqumfoojqby13nahaugqbe5n6n3trof4q8kg5amo9mribg4muo",
         "alias": "Folding",
         "owner": "Banano",
-        "lore": "Banano Miner payout address. Earn Banano for supporting science by running folding@home."
+        "lore": "Banano Miner payout address. Earn Banano for supporting science by running Folding@home."
     },
     {
         "address": "ban_1rp3ke75c8a3t5mkzekibo8w4mxzydrie8xzwqmkajfk9ww76f7wzbhd5bmt",
@@ -340,7 +340,13 @@
     },
     {
         "address": "ban_1ncto1yztp7xu98othx6t5qfifo4qag1o6ziuqkkydzu88gqz5wnb5yspke8",
-        "alias": " BANXNO Faucet",
+        "alias": "BANXNO Faucet",
         "owner": "chengen_geo"
+    },
+    {
+        "address": "ban_1bingof4zqro34ehxrcxnhcikgnh85jjw9axqggcifadj1mc88jsc3ct4di7",
+        "alias": "JungleTV application: Bingo",
+        "owner": "QRV",
+        "lore": "Wallet to distribute mini Banano rewards for users participating in Bingo on JungleTV."
     }
 ]
