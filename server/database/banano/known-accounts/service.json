@@ -30,7 +30,13 @@
     {
         "address": "ban_3ri6m4wbjgrjkxjzobwwjyzfte3xbizifx6icqtb7oipccnpzxcn6p3y6wpq",
         "alias": "TIPBOT#9374 Multicoin Discord Tipbot",
-        "owner": "pluton8888 ",
+        "owner": "pluton8888",
         "lore": "Banano Wallet for community-made Discord Tipbot used, for example, in Nanswap Discord."
-    }
+    },
+    {
+        "address": "ban_1p1ace69ji3qu5cpwnmm5uce4m7h8641jfrtn9cqh7rdhmk6brfcxfuc7ida",
+        "alias": "Banano Place",
+        "owner": "Banano Place",
+        "lore": "Inspired by Reddit's r/place, Banano Place is a collaborative canvas that users can place coloured pixels. The website can be reached at banano[.]place."
+    }  
 ]
