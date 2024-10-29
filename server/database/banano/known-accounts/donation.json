@@ -5,8 +5,9 @@
     },
     {
         "address": "ban_3j8gwrkc7qgx11rrncdw8bzuuo4ojwp3xkawspefm3sbac3s5i6f48dgewfd",
-        "alias": "BANANO HUB Donation",
+        "alias": "Banano HUB",
         "owner": "MKZI"
+        "lore": "Donation address for hub.banano.network, the information & link repository for monkeys using the Banano cryptocurrency network."
     },
     {
         "address": "ban_1gbtqa74cexnsm3fpaihi9mo6bo7fha9e5w5go5jphaoqb44ddft36i6utxp",
