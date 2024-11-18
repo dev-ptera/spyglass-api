@@ -43,6 +43,7 @@ import {
     cacheSocialMediaAccounts,
     getAccountBlockV1,
     getAccountBlockV2,
+    getAccountBNS,
     getAccountExportV1,
     getAccountInsightsV1,
     getAccountInsightsWSV1,
@@ -134,6 +135,7 @@ app.post(`/${PATH_ROOT}/v1/account/receivable-transactions`, (req, res) => getRe
 app.post(`/${PATH_ROOT}/v1/account/delegators`, (req, res) => getDelegatorsV1(req, res));
 app.post(`/${PATH_ROOT}/v1/account/export`, (req, res) => getAccountExportV1(req, res));
 app.get(`/${PATH_ROOT}/v1/account/nfts/:address`, (req, res) => getAccountNFTsV1(req, res));
+app.post(`/${PATH_ROOT}/v1/account/bns`, (req, res) => getAccountBNS(req, res));
 app.post(`/${PATH_ROOT}/v1/account/block-at-height`, (req, res) => getAccountBlockV1(req, res));
 app.post(`/${PATH_ROOT}/v2/account/block-at-height`, (req, res) => getAccountBlockV2(req, res));
 app.post(`/${PATH_ROOT}/v1/account/insights`, (req, res) => getAccountInsightsV1(req, res));
