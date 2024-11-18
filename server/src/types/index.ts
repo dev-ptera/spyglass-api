@@ -12,6 +12,7 @@ export * from './CMCPriceData';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorsOverviewDto';
 export * from './DeveloperFundsDto';
+export * from './Domain';
 export * from './EulenMonitoredRepresentativeDto';
 export * from './ExplorerSummaryDto';
 export * from './HostNodeStatsDto';

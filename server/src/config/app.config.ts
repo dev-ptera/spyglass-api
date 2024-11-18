@@ -22,9 +22,11 @@ export const PATH_ROOT = useBananoConfig() ? BAN.PATH_ROOT : NANO.PATH_ROOT;
 /** Domains allowed to use this API */
 // export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
 
+export const RPC_URL = process.env.RPC_URL;
+
 /** Used to read data from the BANANO node */
 export const NANO_CLIENT = new NanoClient({
-    url: process.env.RPC_URL,
+    url: RPC_URL,
     requestHeaders: {
         Authorization: process.env.RPC_AUTH || '',
     },
@@ -93,4 +95,10 @@ export const readLocalConfig = async (): Promise<void> => {
     });
     KNOWN_VANITIES.push(...readFileContents(`database/${PROFILE}/known-accounts/vanity.json`));
     MANUAL_PEER_MONITOR_URLS.push(...readFileContents(`database/${PROFILE}/monitored-representative.json`));
+};
+
+export const BNS_TLDS: Record<string, `ban_${string}`> = {
+    mictest: 'ban_1dzpfrgi8t4byzmdeidh57p14h5jwbursf1t3ztbmeqnqqdcbpgp9x8j3cw6',
+    jtv: 'ban_3gipeswotbnyemcc1dejyhy5a1zfgj35kw356dommbx4rdochiteajcsay56',
+    ban: 'ban_1fdo6b4bqm6pp1w55duuqw5ebz455975o4qcp8of85fjcdw9qhuzxsd3tjb9',
 };
