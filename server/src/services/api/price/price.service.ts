@@ -36,7 +36,7 @@ const getBitcoinPrice = (): Promise<CMCPriceData> =>
                 url,
                 headers,
                 params: {
-                    symbol: 'BTC',
+                    id: 1,
                 },
             })
             .then((response: AxiosResponse<CMCPriceData>) => resolve(response.data))
@@ -50,7 +50,7 @@ const getPrice = (): Promise<PriceDataDto> => {
         .then((results) => {
             const dto: PriceDataDto = {
                 bananoPriceUsd: results[0].data['4704'].quote.USD.price,
-                bitcoinPriceUsd: results[1].data.BTC.quote.USD.price,
+                bitcoinPriceUsd: results[1].data['1'].quote.USD.price,
             };
             return Promise.resolve(dto);
         })
