@@ -16,10 +16,14 @@ const getBNSDomainInfo = async (domain_name: string, tld: string): Promise<Domai
 };
 
 export const getAccountBNS = async (req, res): Promise<void> => {
-    console.log(req.body);
     const domain_name = req.body.domain_name;
     const tld = req.body.tld;
-
+    if (!domain_name) {
+        return res.status(400).send({ errorMsg: 'Domain Name is required', errorCode: 1 });
+    }
+    if (!tld) {
+        return res.status(400).send({ errorMsg: 'TLD is required', errorCode: 2 });
+    }
     try {
         const domain = await getBNSDomainInfo(domain_name, tld);
         //may be { domain: undefined } if no domain
