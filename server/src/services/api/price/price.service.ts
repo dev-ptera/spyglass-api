@@ -4,7 +4,7 @@ import { AppCache } from '@app/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const method = 'GET';
-const url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
+const url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest';
 const headers = {
     'X-CMC_PRO_API_KEY': process.env.CMC_API_KEY,
 };
@@ -17,10 +17,12 @@ const getBananoPrice = (): Promise<CMCPriceData> =>
                 url,
                 headers,
                 params: {
-                    symbol: 'BAN',
+                    id: 4704,
                 },
             })
-            .then((response: AxiosResponse<CMCPriceData>) => resolve(response.data))
+            .then((response: AxiosResponse<CMCPriceData>) => {
+                resolve(response.data);
+            })
             .catch((err: AxiosError) => {
                 reject(LOG_ERR('getBananoPrice', err));
             });
@@ -34,7 +36,7 @@ const getBitcoinPrice = (): Promise<CMCPriceData> =>
                 url,
                 headers,
                 params: {
-                    symbol: 'BTC',
+                    id: 1,
                 },
             })
             .then((response: AxiosResponse<CMCPriceData>) => resolve(response.data))
@@ -47,8 +49,8 @@ const getPrice = (): Promise<PriceDataDto> => {
     return Promise.all([getBananoPrice(), getBitcoinPrice()])
         .then((results) => {
             const dto: PriceDataDto = {
-                bananoPriceUsd: results[0].data.BAN.quote.USD.price,
-                bitcoinPriceUsd: results[1].data.BTC.quote.USD.price,
+                bananoPriceUsd: results[0].data['4704'].quote.USD.price,
+                bitcoinPriceUsd: results[1].data['1'].quote.USD.price,
             };
             return Promise.resolve(dto);
         })
