@@ -1,4 +1,4 @@
-import { RPC_URL, BNS_TLDS } from '@app/config';
+import { RPC_AUTH, RPC_URL, BNS_TLDS } from '@app/config';
 import { Domain } from '@app/types';
 import { LOG_ERR } from '@app/services';
 import { banani, Resolver } from 'banani-bns';
@@ -7,6 +7,12 @@ import { banani, Resolver } from 'banani-bns';
 
 const getBNSDomainInfo = async (domain_name: string, tld: string): Promise<Domain | undefined> => {
     const rpc = new banani.RPC(RPC_URL);
+    if (RPC_AUTH) {
+        rpc.headers = {
+            'Authorization': RPC_AUTH,
+            'Content-Type': 'application/json',
+        };
+    }
     const resolver = new Resolver(rpc, BNS_TLDS);
     try {
         return await resolver.resolve(domain_name, tld);

@@ -22,13 +22,15 @@ export const PATH_ROOT = useBananoConfig() ? BAN.PATH_ROOT : NANO.PATH_ROOT;
 /** Domains allowed to use this API */
 // export const URL_WHITE_LIST = useBananoConfig() ? BAN.URL_WHITE_LIST : NANO.URL_WHITE_LIST;
 
+export const RPC_AUTH = process.env.RPC_AUTH;
+
 export const RPC_URL = process.env.RPC_URL;
 
 /** Used to read data from the BANANO node */
 export const NANO_CLIENT = new NanoClient({
     url: RPC_URL,
     requestHeaders: {
-        Authorization: process.env.RPC_AUTH || '',
+        Authorization: RPC_AUTH || '',
     },
 });
 
