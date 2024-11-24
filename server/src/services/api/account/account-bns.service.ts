@@ -4,16 +4,16 @@ import { LOG_ERR } from '@app/services';
 import { banani, Resolver } from 'banani-bns';
 
 //in the future, store results in db, and on request, check if it needs to be updated (see stored history and see if last history block is still the head hash for the latest owner), if so, crawl the new sections, store in db and return
+const rpc = new banani.RPC(RPC_URL);
+const resolver = new Resolver(rpc, BNS_TLDS);
 
 const getBNSDomainInfo = async (domain_name: string, tld: string): Promise<Domain | undefined> => {
-    const rpc = new banani.RPC(RPC_URL);
     if (RPC_AUTH) {
         rpc.headers = {
-            'Authorization': RPC_AUTH,
+            Authorization: RPC_AUTH,
             'Content-Type': 'application/json',
         };
     }
-    const resolver = new Resolver(rpc, BNS_TLDS);
     try {
         return await resolver.resolve(domain_name, tld);
     } catch (err) {
