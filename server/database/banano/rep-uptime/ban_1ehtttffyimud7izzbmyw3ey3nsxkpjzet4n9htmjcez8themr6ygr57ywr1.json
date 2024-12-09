@@ -4,7 +4,10 @@
   "trackStartUnixTimestamp": 1732482648623,
   "pingStats": [
     {
-      "1": 20080
+      "1": 20524
+    },
+    {
+      "0": 995
     }
   ]
 }
