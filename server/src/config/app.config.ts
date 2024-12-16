@@ -1,4 +1,5 @@
 import { AppCache } from './app.cache';
+import { banani, Resolver } from 'banani-bns';
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -6,7 +7,6 @@ dotenv.config();
 import * as BAN from './banano/app.config';
 import * as NANO from './nano/app.config';
 import { NanoClient } from '@dev-ptera/nano-node-rpc';
-import { KnownAccountDto } from '@app/types';
 import { LOG_INFO, readFileContents } from '@app/services';
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -99,8 +99,16 @@ export const readLocalConfig = async (): Promise<void> => {
     MANUAL_PEER_MONITOR_URLS.push(...readFileContents(`database/${PROFILE}/monitored-representative.json`));
 };
 
-export const BNS_TLDS: Record<string, `ban_${string}`> = {
+const BNS_TLDS: Record<string, `ban_${string}`> = {
     mictest: 'ban_1dzpfrgi8t4byzmdeidh57p14h5jwbursf1t3ztbmeqnqqdcbpgp9x8j3cw6',
     jtv: 'ban_3gipeswotbnyemcc1dejyhy5a1zfgj35kw356dommbx4rdochiteajcsay56',
     ban: 'ban_1fdo6b4bqm6pp1w55duuqw5ebz455975o4qcp8of85fjcdw9qhuzxsd3tjb9',
 };
+
+//in the future, store results in db, and on request, check if it needs to be updated (see stored history and see if last history block is still the head hash for the latest owner), if so, crawl the new sections, store in db and return
+const BNS_RPC = new banani.RPC(RPC_URL);
+BNS_RPC.headers = {
+    Authorization: RPC_AUTH,
+    'Content-Type': 'application/json',
+};
+export const BNS_RESOLVER = new Resolver(BNS_RPC, BNS_TLDS);

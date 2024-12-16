@@ -234,10 +234,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-banani-bns@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/banani-bns/-/banani-bns-0.0.8.tgz#20dd5bdb28225de9d12053971434d066d467e141"
-  integrity sha512-RpkeU54J6dox9TyIkenfUxbizl2eh2g9YxZI4FCwbJgAltZidm1mzlcoOV4Fa8eOALTP0omWiBHVhOMtUQtKgA==
+banani-bns@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/banani-bns/-/banani-bns-0.0.9.tgz#30eea4c94fbc3f1c9cf6e0282731c7a3edc3d550"
+  integrity sha512-G9eRXk24ykHLqSCr2LgqNHyUvuzye0VTpNMZdyD4/8HtZRU05Pv1Dbk1lbINkz0ZVf1Y2Jl6dF0ivXMLWBqIRA==
   dependencies:
     banani "^1.0.4"
 

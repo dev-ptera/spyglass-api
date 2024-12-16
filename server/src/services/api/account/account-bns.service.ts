@@ -1,21 +1,10 @@
-import { RPC_AUTH, RPC_URL, BNS_TLDS } from '@app/config';
 import { Domain } from '@app/types';
 import { LOG_ERR } from '@app/services';
-import { banani, Resolver } from 'banani-bns';
-
-//in the future, store results in db, and on request, check if it needs to be updated (see stored history and see if last history block is still the head hash for the latest owner), if so, crawl the new sections, store in db and return
-const rpc = new banani.RPC(RPC_URL);
-const resolver = new Resolver(rpc, BNS_TLDS);
+import { BNS_RESOLVER } from '@app/config';
 
 const getBNSDomainInfo = async (domain_name: string, tld: string): Promise<Domain | undefined> => {
-    if (RPC_AUTH) {
-        rpc.headers = {
-            Authorization: RPC_AUTH,
-            'Content-Type': 'application/json',
-        };
-    }
     try {
-        return await resolver.resolve(domain_name, tld);
+        return await BNS_RESOLVER.resolve(domain_name, tld);
     } catch (err) {
         return Promise.reject(LOG_ERR('getBNSDomainInfo', err, { domain_name, tld }));
     }
