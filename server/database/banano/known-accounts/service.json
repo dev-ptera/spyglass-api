@@ -32,5 +32,10 @@
         "alias": "TIPBOT#9374 Multicoin Discord Tipbot",
         "owner": "pluton8888 ",
         "lore": "Banano Wallet for community-made Discord Tipbot used, for example, in Nanswap Discord."
+    },
+    {
+        "address": "ban_1fdo6b4bqm6pp1w55duuqw5ebz455975o4qcp8of85fjcdw9qhuzxsd3tjb9",
+        "alias": ".ban TLD",
+        "owner": "Prussia"
     }
 ]

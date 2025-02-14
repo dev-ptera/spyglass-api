@@ -99,5 +99,11 @@
         "alias": "Twitter Giveaway",
         "owner": "Banano",
         "lore": "Funds used to distribute Banano on Twitter for various giveaways and events."
+    },
+    {
+        "address": "ban_3n9c94tpktdt45sfz7mq4d7kwy5uowtnn4uzok4f89rki1mer8esrdfc33kj",
+        "alias": ".ban Registrar Cold Wallet",
+        "owner": "Banano",
+        "lore": "Funds raised by selling .ban domains, to be used to promote BNS and .ban"
     }
 ]
