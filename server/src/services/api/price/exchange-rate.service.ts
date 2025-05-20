@@ -28,7 +28,6 @@ const getSymbols = async () => {
             access_key: process.env.EXCHANGERATEHOST_API_KEY,
         },
     });
-    console.log(response);
     AppCache.exchangeRates = [];
     const currencies = response.data.currencies;
     for (const key in currencies) {
@@ -48,7 +47,6 @@ const getConversions = async () => {
             access_key: process.env.EXCHANGERATEHOST_API_KEY,
         },
     });
-    console.log(response);
     const quotes = response.data.quotes;
     for (const currency of AppCache.exchangeRates) {
         if (currency.id !== 'USD') {
