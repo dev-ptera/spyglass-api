@@ -64,7 +64,7 @@ export const cacheExchangeRateData = async (): Promise<void> => {
     try {
         const start = LOG_INFO('Refreshing Exchange Rate Data');
         await getSymbols();
-        await sleep(2000); // The exchangerate API requires a pause in-between requests, otherwise will vomit.
+        await sleep(4000); // The exchangerate API requires a pause in-between requests, otherwise will vomit.
         LOG_INFO('Exchange Symbols Updated');
         await getConversions();
         LOG_INFO('Exchange Rate Data Updated', start);
