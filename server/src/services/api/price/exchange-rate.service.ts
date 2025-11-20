@@ -1,4 +1,4 @@
-import { LOG_ERR, LOG_INFO } from '@app/services';
+import { LOG_ERR, LOG_INFO, sleep } from '@app/services';
 import { AppCache } from '@app/config';
 import axios from 'axios';
 
@@ -23,7 +23,7 @@ export type ExchangeRate = {
 const getSymbols = async () => {
     const response = await axios.request<SymbolsResponse>({
         method: 'GET',
-        url: 'http://api.exchangerate.host/list',
+        url: 'https://api.exchangerate.host/list',
         params: {
             access_key: process.env.EXCHANGERATEHOST_API_KEY,
         },
@@ -42,7 +42,7 @@ const getSymbols = async () => {
 const getConversions = async () => {
     const response = await axios.request<ConversionsResponse>({
         method: 'GET',
-        url: 'http://api.exchangerate.host/live',
+        url: 'https://api.exchangerate.host/live',
         params: {
             access_key: process.env.EXCHANGERATEHOST_API_KEY,
         },
@@ -64,6 +64,8 @@ export const cacheExchangeRateData = async (): Promise<void> => {
     try {
         const start = LOG_INFO('Refreshing Exchange Rate Data');
         await getSymbols();
+        await sleep(4000); // The exchangerate API requires a pause in-between requests, otherwise will vomit.
+        LOG_INFO('Exchange Symbols Updated');
         await getConversions();
         LOG_INFO('Exchange Rate Data Updated', start);
     } catch (err) {

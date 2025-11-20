@@ -305,5 +305,10 @@
         "address": "ban_14cng4wpbmu5qpmuonsna6zbycwisr7ui73afkgya1gqmiuywhmmes443a3d",
         "alias": "MEXC",
         "owner": "MEXC"
+    },
+        {
+        "address": "ban_33ow7p4w7oau48bh9aa39nnh8jcs8ekozwrgpkg19is87ru83wc18cmkm6kx",
+        "alias": "FluffySwap",
+        "owner": "revox"
     }
 ]

@@ -37,5 +37,10 @@
         "address": "ban_1fdo6b4bqm6pp1w55duuqw5ebz455975o4qcp8of85fjcdw9qhuzxsd3tjb9",
         "alias": ".ban TLD",
         "owner": "Prussia"
+    },
+        {
+        "address": "ban_38s9331919uquiehgdquemgj9y9yx44m1gi8ig6js88mtz35fd5bgjrcx16f",
+        "alias": "Cwallet",
+        "owner": "Cwallet"
     }
 ]
