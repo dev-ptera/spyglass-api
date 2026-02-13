@@ -84,6 +84,12 @@
     },
     {
         "address": "ban_3cmfundg444o8ynqhqu638dfdh3jrmdykhqa7c9dkymejobb44ok9sdqxgc6",
+        "alias": "Old Community Manager Fund",
+        "owner": "Banano",
+        "lore": "This wallet used to hold fund used by Banano Community Managers for various events."
+    },
+    {
+        "address": "ban_1cmfund8br44dfonxydjiouuatay4ranx9u3sd7groq6ke13yk78fxcgfjd3",
         "alias": "Community Manager Fund",
         "owner": "Banano",
         "lore": "Fund used by Banano Community Managers for various events."
