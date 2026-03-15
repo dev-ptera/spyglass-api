@@ -310,5 +310,11 @@
         "address": "ban_33ow7p4w7oau48bh9aa39nnh8jcs8ekozwrgpkg19is87ru83wc18cmkm6kx",
         "alias": "FluffySwap",
         "owner": "revox"
+    },
+        {
+        "address": "ban_171s675caxoai193nhykascaej5319n8sisjumbxx7gpje87ktshtj1a7h3c",
+        "alias": "CEXSwap",
+        "owner": "CEXSwap",
+        "lore": "Hot wallet of CEXSwap.cc"
     }
 ]
